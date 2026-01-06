@@ -23,6 +23,13 @@ import {
   Type,
   HardDrive,
   Link,
+  Check,
+  AlertCircle,
+  Cloud,
+  Copy,
+  Download,
+  FileSpreadsheet,
+  Presentation,
 } from "lucide-react"
 import { cn, formatRelativeTime } from "@/lib/utils"
 import { safeFetch } from "@/lib/safeFetch"
@@ -51,7 +58,8 @@ interface KnowledgeItem {
 }
 
 type FilterType = "all" | "document" | "procedure" | "policy" | "faq"
-type ModalType = "none" | "text" | "upload" | "url"
+type ModalType = "none" | "text" | "url"
+type UploadState = "idle" | "dragover" | "uploading" | "success" | "error"
 
 export default function KnowledgePage() {
   const [items, setItems] = useState<KnowledgeItem[]>([])
@@ -71,11 +79,30 @@ export default function KnowledgePage() {
   const [urlInput, setUrlInput] = useState("")
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
   const [saving, setSaving] = useState(false)
+  const [uploadState, setUploadState] = useState<UploadState>("idle")
+  const [uploadProgress, setUploadProgress] = useState(0)
+  const [uploadError, setUploadError] = useState<string | null>(null)
 
   // Storage stats (mock data)
   const storageUsed = 2.4 // GB
   const storageTotal = 10 // GB
   const storagePercent = (storageUsed / storageTotal) * 100
+
+  // File size limits
+  const fileSizeLimits: Record<string, number> = {
+    "application/pdf": 25,
+    "application/msword": 25,
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": 25,
+    "text/plain": 25,
+    "application/vnd.ms-excel": 15,
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": 15,
+    "text/csv": 15,
+    "application/vnd.ms-powerpoint": 30,
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation": 30,
+    "image/png": 10,
+    "image/jpeg": 10,
+    "image/jpg": 10,
+  }
 
   useEffect(() => {
     async function init() {
@@ -129,19 +156,93 @@ export default function KnowledgePage() {
     }
   }, [searchQuery, filterType, companyId])
 
+  const validateFile = (file: File): string | null => {
+    const maxSize = fileSizeLimits[file.type] || 10
+    const fileSizeMB = file.size / 1024 / 1024
+    if (fileSizeMB > maxSize) {
+      return `הקובץ "${file.name}" גדול מדי. מקסימום ${maxSize}MB`
+    }
+    return null
+  }
+
+  const simulateUpload = async (files: File[]) => {
+    setUploadState("uploading")
+    setUploadProgress(0)
+    setUploadError(null)
+
+    // Simulate upload progress
+    for (let i = 0; i <= 100; i += 5) {
+      await new Promise(resolve => setTimeout(resolve, 50))
+      setUploadProgress(i)
+    }
+
+    // Simulate API call
+    try {
+      if (!companyId) throw new Error("No company ID")
+
+      for (const file of files) {
+        const formDataUpload = new FormData()
+        formDataUpload.append("file", file)
+        formDataUpload.append("companyId", companyId)
+
+        await fetch("/api/upload", {
+          method: "POST",
+          body: formDataUpload,
+        })
+      }
+
+      setUploadState("success")
+      setTimeout(() => {
+        setUploadState("idle")
+        setUploadedFiles([])
+        loadItems()
+      }, 2000)
+    } catch (e) {
+      setUploadState("error")
+      setUploadError("שגיאה בהעלאה. נסו שנית.")
+      setTimeout(() => {
+        setUploadState("idle")
+        setUploadError(null)
+      }, 3000)
+    }
+  }
+
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    setUploadedFiles((prev) => [...prev, ...acceptedFiles])
-  }, [])
+    // Validate files
+    for (const file of acceptedFiles) {
+      const error = validateFile(file)
+      if (error) {
+        setUploadState("error")
+        setUploadError(error)
+        setTimeout(() => {
+          setUploadState("idle")
+          setUploadError(null)
+        }, 3000)
+        return
+      }
+    }
+
+    setUploadedFiles(acceptedFiles)
+    simulateUpload(acceptedFiles)
+  }, [companyId])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
+    onDragEnter: () => setUploadState("dragover"),
+    onDragLeave: () => setUploadState("idle"),
     accept: {
-      "image/*": [],
-      "video/*": [],
-      "application/pdf": [],
-      "application/msword": [],
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [],
+      "image/*": [".png", ".jpg", ".jpeg"],
+      "application/pdf": [".pdf"],
+      "application/msword": [".doc"],
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
+      "text/plain": [".txt"],
+      "application/vnd.ms-excel": [".xls"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "text/csv": [".csv"],
+      "application/vnd.ms-powerpoint": [".ppt"],
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation": [".pptx"],
     },
+    multiple: true,
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -151,23 +252,6 @@ export default function KnowledgePage() {
     setSaving(true)
 
     try {
-      const uploadedMediaUrls: string[] = []
-      for (const file of uploadedFiles) {
-        const formDataUpload = new FormData()
-        formDataUpload.append("file", file)
-        formDataUpload.append("companyId", companyId)
-
-        const uploadRes = await fetch("/api/upload", {
-          method: "POST",
-          body: formDataUpload,
-        })
-
-        if (uploadRes.ok) {
-          const uploadData = await uploadRes.json()
-          uploadedMediaUrls.push(uploadData.url)
-        }
-      }
-
       const method = editingItem ? "PUT" : "POST"
       const body = {
         ...(editingItem && { id: editingItem.id }),
@@ -277,6 +361,22 @@ export default function KnowledgePage() {
     faq: items.filter(i => i.type === "faq").length,
   }
 
+  // Get upload circle styles based on state
+  const getCircleStyles = () => {
+    switch (uploadState) {
+      case "dragover":
+        return "border-emerald-500 bg-emerald-50 scale-105 shadow-xl shadow-emerald-200"
+      case "uploading":
+        return "border-emerald-500 bg-white"
+      case "success":
+        return "border-emerald-500 bg-emerald-50"
+      case "error":
+        return "border-red-500 bg-red-50 animate-shake"
+      default:
+        return "border-gray-200 bg-gray-50 hover:border-emerald-400 hover:bg-emerald-50/30 hover:scale-[1.02]"
+    }
+  }
+
   if (loading && items.length === 0) {
     return (
       <div className="space-y-6">
@@ -284,132 +384,221 @@ export default function KnowledgePage() {
           <div className="h-8 w-32 bg-gray-200 rounded animate-pulse" />
           <div className="flex items-center gap-3">
             <div className="h-8 w-32 bg-gray-200 rounded animate-pulse" />
-            <div className="h-10 w-32 bg-gray-200 rounded animate-pulse" />
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-4">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-24 bg-gray-200 rounded-xl animate-pulse" />
-          ))}
+        <div className="flex justify-center py-12">
+          <div className="w-72 h-72 rounded-full bg-gray-200 animate-pulse" />
         </div>
-        <div className="flex gap-2">
-          {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-8 w-20 bg-gray-200 rounded-full animate-pulse" />
-          ))}
-        </div>
-        <div className="h-96 bg-gray-200 rounded-xl animate-pulse" />
       </div>
     )
   }
 
   return (
     <div className="space-y-6">
-      {/* Header with Storage Indicator */}
+      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">נכסי ידע</h1>
           <p className="text-sm text-gray-500">נהלו את התיעוד והמשאבים של החברה</p>
         </div>
         <div className="flex items-center gap-4">
+          {/* Search */}
+          <div className="relative w-64">
+            <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Input
+              placeholder="חיפוש..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pr-9"
+            />
+          </div>
           {/* Storage Indicator */}
           <div className="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-lg border border-gray-200">
             <HardDrive className="w-4 h-4 text-gray-400" />
             <div className="w-24">
               <div className="flex justify-between text-xs mb-1">
                 <span className="text-gray-500">אחסון</span>
-                <span className="text-gray-700">{storageUsed}GB / {storageTotal}GB</span>
+                <span className="text-gray-700">{storageUsed}/{storageTotal}GB</span>
               </div>
               <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gray-900 rounded-full transition-all"
+                  className="h-full bg-emerald-500 rounded-full transition-all"
                   style={{ width: `${storagePercent}%` }}
                 />
               </div>
             </div>
           </div>
-          <Button onClick={() => setModalType("text")} className="gap-2 bg-gray-900 hover:bg-gray-800">
-            <Plus className="w-4 h-4" />
-            העלאת נכס
-          </Button>
         </div>
       </div>
 
-      {/* Action Cards - ElevenLabs Style */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <button
-          onClick={() => setModalType("url")}
-          className="flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-sm transition-all text-right"
+      {/* Main Upload Circle - Pango Style */}
+      <div className="flex flex-col items-center py-8">
+        <div
+          {...getRootProps()}
+          className={cn(
+            "relative w-72 h-72 rounded-full cursor-pointer transition-all duration-300 ease-out",
+            "flex flex-col items-center justify-center",
+            "border-4 border-dashed",
+            getCircleStyles()
+          )}
+          style={{
+            // Progress ring using conic gradient
+            background: uploadState === "uploading"
+              ? `conic-gradient(#10B981 ${uploadProgress * 3.6}deg, #f3f4f6 0deg)`
+              : undefined,
+          }}
         >
-          <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
-            <Globe className="w-6 h-6 text-blue-600" />
-          </div>
-          <div>
-            <h3 className="font-medium text-gray-900">הוסף קישור</h3>
-            <p className="text-sm text-gray-500">הוסף URL לאינדקס</p>
-          </div>
-        </button>
-
-        <button
-          onClick={() => setModalType("upload")}
-          className="flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-sm transition-all text-right"
-        >
-          <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center shrink-0">
-            <FileUp className="w-6 h-6 text-green-600" />
-          </div>
-          <div>
-            <h3 className="font-medium text-gray-900">העלה קבצים</h3>
-            <p className="text-sm text-gray-500">PDF, Word, Excel</p>
-          </div>
-        </button>
-
-        <button
-          onClick={() => setModalType("text")}
-          className="flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-sm transition-all text-right"
-        >
-          <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center shrink-0">
-            <Type className="w-6 h-6 text-purple-600" />
-          </div>
-          <div>
-            <h3 className="font-medium text-gray-900">צור טקסט</h3>
-            <p className="text-sm text-gray-500">הזן תוכן ידנית</p>
-          </div>
-        </button>
-      </div>
-
-      {/* Search and Filters */}
-      <div className="flex flex-wrap items-center gap-4">
-        <div className="relative flex-1 min-w-[200px] max-w-md">
-          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <Input
-            placeholder="חפש במאגר הידע..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pr-9"
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-gray-400" />
-          {(["all", "document", "procedure", "policy", "faq"] as FilterType[]).map((type) => (
-            <button
-              key={type}
-              onClick={() => setFilterType(type)}
-              className={cn(
-                "px-3 py-1.5 text-sm rounded-full transition-colors",
-                filterType === type
-                  ? "bg-gray-900 text-white"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+          {/* Inner circle for uploading state */}
+          {uploadState === "uploading" && (
+            <div className="absolute inset-3 rounded-full bg-white flex flex-col items-center justify-center">
+              <span className="text-4xl font-bold text-emerald-600">{uploadProgress}%</span>
+              <span className="text-sm text-gray-500 mt-1">מעלה...</span>
+              {uploadedFiles[0] && (
+                <span className="text-xs text-gray-400 mt-2 max-w-[150px] truncate">
+                  {uploadedFiles[0].name}
+                </span>
               )}
-            >
-              {type === "all" ? "הכל" : typeLabels[type]} ({typeCounts[type]})
-            </button>
-          ))}
+            </div>
+          )}
+
+          {/* Default/Hover/Dragover state */}
+          {(uploadState === "idle" || uploadState === "dragover") && (
+            <>
+              <input {...getInputProps()} />
+              <div className={cn(
+                "w-24 h-24 rounded-full flex items-center justify-center mb-4 transition-all duration-300",
+                uploadState === "dragover"
+                  ? "bg-emerald-500 scale-110"
+                  : "bg-gradient-to-br from-emerald-400 to-emerald-600"
+              )}>
+                <Cloud className={cn(
+                  "w-12 h-12 text-white transition-transform",
+                  uploadState === "dragover" && "animate-bounce"
+                )} />
+              </div>
+              <p className={cn(
+                "font-semibold text-lg transition-colors text-center",
+                uploadState === "dragover" ? "text-emerald-600" : "text-gray-700"
+              )}>
+                {uploadState === "dragover" ? "שחררו להעלאה" : "גררו קבצים לכאן"}
+              </p>
+              <p className="text-sm text-gray-400 mt-1">או לחצו להעלאה</p>
+              <p className="text-xs text-gray-400 mt-3">PDF, Word, Excel עד 25MB</p>
+            </>
+          )}
+
+          {/* Success state */}
+          {uploadState === "success" && (
+            <div className="flex flex-col items-center justify-center animate-in zoom-in duration-300">
+              <div className="w-24 h-24 rounded-full bg-emerald-500 flex items-center justify-center mb-4">
+                <Check className="w-14 h-14 text-white" />
+              </div>
+              <p className="font-semibold text-lg text-emerald-600">הועלה בהצלחה!</p>
+            </div>
+          )}
+
+          {/* Error state */}
+          {uploadState === "error" && (
+            <div className="flex flex-col items-center justify-center">
+              <div className="w-24 h-24 rounded-full bg-red-500 flex items-center justify-center mb-4">
+                <AlertCircle className="w-14 h-14 text-white" />
+              </div>
+              <p className="font-semibold text-lg text-red-600">שגיאה</p>
+              <p className="text-sm text-red-500 mt-1 text-center px-8">{uploadError}</p>
+            </div>
+          )}
         </div>
+
+        {/* Supported formats badges */}
+        <div className="flex items-center justify-center gap-2 mt-6 flex-wrap">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full">
+            <FileText className="w-3.5 h-3.5 text-red-500" />
+            <span className="text-xs text-gray-600">PDF</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full">
+            <FileText className="w-3.5 h-3.5 text-blue-500" />
+            <span className="text-xs text-gray-600">Word</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full">
+            <FileSpreadsheet className="w-3.5 h-3.5 text-green-600" />
+            <span className="text-xs text-gray-600">Excel</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full">
+            <Presentation className="w-3.5 h-3.5 text-orange-500" />
+            <span className="text-xs text-gray-600">PowerPoint</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full">
+            <Image className="w-3.5 h-3.5 text-purple-500" />
+            <span className="text-xs text-gray-600">תמונות</span>
+          </div>
+        </div>
+
+        {/* Secondary Action Buttons */}
+        <div className="flex items-center justify-center gap-4 mt-8">
+          <button
+            onClick={() => setModalType("url")}
+            className="flex flex-col items-center gap-2 p-4 bg-white border border-gray-200 rounded-2xl hover:border-emerald-300 hover:shadow-md transition-all w-28"
+          >
+            <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
+              <Link className="w-6 h-6 text-blue-600" />
+            </div>
+            <span className="text-sm font-medium text-gray-700">קישור</span>
+          </button>
+
+          <button
+            onClick={() => setModalType("text")}
+            className="flex flex-col items-center gap-2 p-4 bg-white border border-gray-200 rounded-2xl hover:border-emerald-300 hover:shadow-md transition-all w-28"
+          >
+            <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center">
+              <Type className="w-6 h-6 text-purple-600" />
+            </div>
+            <span className="text-sm font-medium text-gray-700">טקסט</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setFormData({
+                title: "",
+                titleHe: "תבנית חדשה",
+                content: "",
+                contentHe: "תוכן התבנית...",
+                type: "procedure",
+              })
+              setModalType("text")
+            }}
+            className="flex flex-col items-center gap-2 p-4 bg-white border border-gray-200 rounded-2xl hover:border-emerald-300 hover:shadow-md transition-all w-28"
+          >
+            <div className="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center">
+              <Copy className="w-6 h-6 text-amber-600" />
+            </div>
+            <span className="text-sm font-medium text-gray-700">תבנית</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Filter Tabs */}
+      <div className="flex items-center gap-2 border-b border-gray-200 pb-4">
+        <Filter className="w-4 h-4 text-gray-400" />
+        {(["all", "document", "procedure", "policy", "faq"] as FilterType[]).map((type) => (
+          <button
+            key={type}
+            onClick={() => setFilterType(type)}
+            className={cn(
+              "px-4 py-2 text-sm rounded-full transition-colors",
+              filterType === type
+                ? "bg-gray-900 text-white"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            )}
+          >
+            {type === "all" ? "הכל" : typeLabels[type]} ({typeCounts[type]})
+          </button>
+        ))}
       </div>
 
       {/* URL Modal */}
       {modalType === "url" && (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-          <Card className="w-full max-w-md border border-gray-200">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+          <Card className="w-full max-w-md border border-gray-200 rounded-2xl">
             <CardHeader className="flex flex-row items-center justify-between border-b border-gray-200">
               <CardTitle className="text-lg font-medium">הוסף קישור</CardTitle>
               <button onClick={resetForm} className="p-2 hover:bg-gray-100 rounded-lg">
@@ -423,7 +612,7 @@ export default function KnowledgePage() {
                     כתובת URL
                   </label>
                   <div className="relative">
-                    <Link className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <Globe className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <Input
                       value={urlInput}
                       onChange={(e) => setUrlInput(e.target.value)}
@@ -437,7 +626,7 @@ export default function KnowledgePage() {
                   </p>
                 </div>
                 <div className="flex gap-3 pt-2">
-                  <Button type="submit" disabled={saving} className="bg-gray-900 hover:bg-gray-800">
+                  <Button type="submit" disabled={saving} className="bg-emerald-600 hover:bg-emerald-700">
                     {saving ? "מוסיף..." : "הוסף קישור"}
                   </Button>
                   <Button type="button" variant="outline" onClick={resetForm}>
@@ -450,139 +639,10 @@ export default function KnowledgePage() {
         </div>
       )}
 
-      {/* Upload Modal - Pango Style */}
-      {modalType === "upload" && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden">
-            {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-              <h2 className="text-xl font-semibold text-gray-900">העלאת קבצים</h2>
-              <button
-                onClick={resetForm}
-                className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-              >
-                <X className="w-5 h-5 text-gray-500" />
-              </button>
-            </div>
-
-            {/* Big Circular Upload Area */}
-            <div className="px-6 py-8">
-              <div
-                {...getRootProps()}
-                className={cn(
-                  "relative mx-auto w-56 h-56 rounded-full cursor-pointer transition-all duration-300 ease-out",
-                  "flex flex-col items-center justify-center",
-                  "border-4 border-dashed",
-                  isDragActive
-                    ? "border-green-500 bg-green-50 scale-105 shadow-lg shadow-green-200"
-                    : "border-gray-200 bg-gray-50 hover:border-green-400 hover:bg-green-50/50 hover:scale-102"
-                )}
-              >
-                <input {...getInputProps()} />
-                <div className={cn(
-                  "w-20 h-20 rounded-full flex items-center justify-center mb-4 transition-all duration-300",
-                  isDragActive
-                    ? "bg-green-500 scale-110"
-                    : "bg-gradient-to-br from-green-400 to-green-600"
-                )}>
-                  <Upload className="w-10 h-10 text-white" />
-                </div>
-                <p className={cn(
-                  "font-semibold text-lg transition-colors",
-                  isDragActive ? "text-green-600" : "text-gray-700"
-                )}>
-                  {isDragActive ? "שחרר כאן" : "גרור קבצים"}
-                </p>
-                <p className="text-sm text-gray-400 mt-1">או לחץ לבחירה</p>
-              </div>
-
-              {/* Supported formats */}
-              <div className="flex items-center justify-center gap-3 mt-6">
-                <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-500">PDF</span>
-                <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-500">Word</span>
-                <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-500">Excel</span>
-                <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-500">תמונות</span>
-                <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-500">וידאו</span>
-              </div>
-            </div>
-
-            {/* Uploaded Files List */}
-            {uploadedFiles.length > 0 && (
-              <div className="px-6 pb-4">
-                <div className="bg-gray-50 rounded-2xl p-4 space-y-2">
-                  <p className="text-xs font-medium text-gray-500 mb-2">קבצים שנבחרו ({uploadedFiles.length})</p>
-                  {uploadedFiles.map((file, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center justify-between bg-white p-3 rounded-xl shadow-sm"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                          <FileText className="w-5 h-5 text-green-600" />
-                        </div>
-                        <div>
-                          <span className="text-sm font-medium text-gray-700 truncate block max-w-[180px]">
-                            {file.name}
-                          </span>
-                          <span className="text-xs text-gray-400">
-                            {(file.size / 1024 / 1024).toFixed(2)} MB
-                          </span>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setUploadedFiles((prev) =>
-                            prev.filter((_, index) => index !== i)
-                          )
-                        }
-                        className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-50 transition-colors"
-                      >
-                        <X className="w-4 h-4 text-gray-400 hover:text-red-500" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Action Buttons */}
-            <div className="px-6 pb-6">
-              <Button
-                onClick={handleSubmit}
-                disabled={saving || uploadedFiles.length === 0}
-                className={cn(
-                  "w-full h-14 rounded-2xl text-lg font-semibold transition-all",
-                  uploadedFiles.length > 0
-                    ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg shadow-green-200"
-                    : "bg-gray-200 text-gray-400"
-                )}
-              >
-                {saving ? (
-                  <span className="flex items-center gap-2">
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    מעלה...
-                  </span>
-                ) : (
-                  `העלה ${uploadedFiles.length > 0 ? `(${uploadedFiles.length})` : ""}`
-                )}
-              </Button>
-              <button
-                type="button"
-                onClick={resetForm}
-                className="w-full mt-3 py-3 text-gray-500 hover:text-gray-700 font-medium transition-colors"
-              >
-                ביטול
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Text/Edit Modal */}
       {modalType === "text" && (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-          <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-gray-200">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+          <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-gray-200 rounded-2xl">
             <CardHeader className="flex flex-row items-center justify-between border-b border-gray-200">
               <CardTitle className="text-lg font-medium">
                 {editingItem ? "ערוך פריט ידע" : "צור פריט ידע חדש"}
@@ -669,7 +729,7 @@ export default function KnowledgePage() {
                 </div>
 
                 <div className="flex gap-3 pt-2">
-                  <Button type="submit" disabled={saving} className="bg-gray-900 hover:bg-gray-800">
+                  <Button type="submit" disabled={saving} className="bg-emerald-600 hover:bg-emerald-700">
                     {saving ? "שומר..." : editingItem ? "עדכן" : "שמור"}
                   </Button>
                   <Button type="button" variant="outline" onClick={resetForm}>
@@ -683,7 +743,7 @@ export default function KnowledgePage() {
       )}
 
       {/* Knowledge Items Table */}
-      <Card className="border border-gray-200 overflow-hidden">
+      <Card className="border border-gray-200 overflow-hidden rounded-xl">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -779,13 +839,32 @@ export default function KnowledgePage() {
                         variant="ghost"
                         size="sm"
                         onClick={() => handleEdit(item)}
+                        title="עריכה"
                       >
                         <Edit className="w-4 h-4 text-gray-500" />
                       </Button>
                       <Button
                         variant="ghost"
                         size="sm"
+                        title="שכפול"
+                        onClick={() => {
+                          setFormData({
+                            title: item.title,
+                            titleHe: (item.titleHe || "") + " (עותק)",
+                            content: item.content,
+                            contentHe: item.contentHe || "",
+                            type: item.type,
+                          })
+                          setModalType("text")
+                        }}
+                      >
+                        <Copy className="w-4 h-4 text-gray-500" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={() => handleDelete(item.id)}
+                        title="מחיקה"
                       >
                         <Trash2 className="w-4 h-4 text-red-500" />
                       </Button>
@@ -801,17 +880,22 @@ export default function KnowledgePage() {
           <div className="p-12 text-center">
             <BookOpen className="w-12 h-12 mx-auto mb-4 text-gray-300" />
             <p className="text-gray-500 font-medium">אין פריטי ידע</p>
-            <p className="text-sm text-gray-400 mt-1">התחל להוסיף נהלים, מדיניות והנחיות</p>
-            <Button
-              onClick={() => setModalType("text")}
-              className="mt-4 gap-2 bg-gray-900 hover:bg-gray-800"
-            >
-              <Plus className="w-4 h-4" />
-              הוסף פריט ראשון
-            </Button>
+            <p className="text-sm text-gray-400 mt-1">גררו קבצים לעיגול למעלה להתחלה</p>
           </div>
         )}
       </Card>
+
+      {/* Add shake animation to global styles */}
+      <style jsx global>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+          20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .animate-shake {
+          animation: shake 0.5s ease-in-out;
+        }
+      `}</style>
     </div>
   )
 }
