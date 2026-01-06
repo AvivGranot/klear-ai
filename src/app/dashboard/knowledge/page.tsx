@@ -450,45 +450,84 @@ export default function KnowledgePage() {
         </div>
       )}
 
-      {/* Upload Modal */}
+      {/* Upload Modal - Pango Style */}
       {modalType === "upload" && (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-          <Card className="w-full max-w-lg border border-gray-200">
-            <CardHeader className="flex flex-row items-center justify-between border-b border-gray-200">
-              <CardTitle className="text-lg font-medium">העלה קבצים</CardTitle>
-              <button onClick={resetForm} className="p-2 hover:bg-gray-100 rounded-lg">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden">
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+              <h2 className="text-xl font-semibold text-gray-900">העלאת קבצים</h2>
+              <button
+                onClick={resetForm}
+                className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+              >
                 <X className="w-5 h-5 text-gray-500" />
               </button>
-            </CardHeader>
-            <CardContent className="pt-6">
+            </div>
+
+            {/* Big Circular Upload Area */}
+            <div className="px-6 py-8">
               <div
                 {...getRootProps()}
                 className={cn(
-                  "border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors",
+                  "relative mx-auto w-56 h-56 rounded-full cursor-pointer transition-all duration-300 ease-out",
+                  "flex flex-col items-center justify-center",
+                  "border-4 border-dashed",
                   isDragActive
-                    ? "border-gray-900 bg-gray-50"
-                    : "border-gray-200 hover:border-gray-300"
+                    ? "border-green-500 bg-green-50 scale-105 shadow-lg shadow-green-200"
+                    : "border-gray-200 bg-gray-50 hover:border-green-400 hover:bg-green-50/50 hover:scale-102"
                 )}
               >
                 <input {...getInputProps()} />
-                <Upload className="w-10 h-10 mx-auto mb-3 text-gray-400" />
-                <p className="text-gray-600 font-medium">גרור קבצים לכאן</p>
-                <p className="text-sm text-gray-400 mt-1">או לחץ לבחירה</p>
-                <p className="text-xs text-gray-400 mt-3">
-                  PDF, Word, Excel, תמונות וסרטונים
+                <div className={cn(
+                  "w-20 h-20 rounded-full flex items-center justify-center mb-4 transition-all duration-300",
+                  isDragActive
+                    ? "bg-green-500 scale-110"
+                    : "bg-gradient-to-br from-green-400 to-green-600"
+                )}>
+                  <Upload className="w-10 h-10 text-white" />
+                </div>
+                <p className={cn(
+                  "font-semibold text-lg transition-colors",
+                  isDragActive ? "text-green-600" : "text-gray-700"
+                )}>
+                  {isDragActive ? "שחרר כאן" : "גרור קבצים"}
                 </p>
+                <p className="text-sm text-gray-400 mt-1">או לחץ לבחירה</p>
               </div>
 
-              {uploadedFiles.length > 0 && (
-                <div className="mt-4 space-y-2">
+              {/* Supported formats */}
+              <div className="flex items-center justify-center gap-3 mt-6">
+                <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-500">PDF</span>
+                <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-500">Word</span>
+                <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-500">Excel</span>
+                <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-500">תמונות</span>
+                <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-500">וידאו</span>
+              </div>
+            </div>
+
+            {/* Uploaded Files List */}
+            {uploadedFiles.length > 0 && (
+              <div className="px-6 pb-4">
+                <div className="bg-gray-50 rounded-2xl p-4 space-y-2">
+                  <p className="text-xs font-medium text-gray-500 mb-2">קבצים שנבחרו ({uploadedFiles.length})</p>
                   {uploadedFiles.map((file, i) => (
                     <div
                       key={i}
-                      className="flex items-center justify-between bg-gray-50 p-3 rounded-lg"
+                      className="flex items-center justify-between bg-white p-3 rounded-xl shadow-sm"
                     >
                       <div className="flex items-center gap-3">
-                        <FileText className="w-5 h-5 text-gray-400" />
-                        <span className="text-sm text-gray-700 truncate max-w-[200px]">{file.name}</span>
+                        <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                          <FileText className="w-5 h-5 text-green-600" />
+                        </div>
+                        <div>
+                          <span className="text-sm font-medium text-gray-700 truncate block max-w-[180px]">
+                            {file.name}
+                          </span>
+                          <span className="text-xs text-gray-400">
+                            {(file.size / 1024 / 1024).toFixed(2)} MB
+                          </span>
+                        </div>
                       </div>
                       <button
                         type="button"
@@ -497,29 +536,46 @@ export default function KnowledgePage() {
                             prev.filter((_, index) => index !== i)
                           )
                         }
-                        className="text-gray-400 hover:text-red-500"
+                        className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-50 transition-colors"
                       >
-                        <X className="w-4 h-4" />
+                        <X className="w-4 h-4 text-gray-400 hover:text-red-500" />
                       </button>
                     </div>
                   ))}
                 </div>
-              )}
-
-              <div className="flex gap-3 mt-6">
-                <Button
-                  onClick={handleSubmit}
-                  disabled={saving || uploadedFiles.length === 0}
-                  className="bg-gray-900 hover:bg-gray-800"
-                >
-                  {saving ? "מעלה..." : "העלה קבצים"}
-                </Button>
-                <Button type="button" variant="outline" onClick={resetForm}>
-                  ביטול
-                </Button>
               </div>
-            </CardContent>
-          </Card>
+            )}
+
+            {/* Action Buttons */}
+            <div className="px-6 pb-6">
+              <Button
+                onClick={handleSubmit}
+                disabled={saving || uploadedFiles.length === 0}
+                className={cn(
+                  "w-full h-14 rounded-2xl text-lg font-semibold transition-all",
+                  uploadedFiles.length > 0
+                    ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg shadow-green-200"
+                    : "bg-gray-200 text-gray-400"
+                )}
+              >
+                {saving ? (
+                  <span className="flex items-center gap-2">
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    מעלה...
+                  </span>
+                ) : (
+                  `העלה ${uploadedFiles.length > 0 ? `(${uploadedFiles.length})` : ""}`
+                )}
+              </Button>
+              <button
+                type="button"
+                onClick={resetForm}
+                className="w-full mt-3 py-3 text-gray-500 hover:text-gray-700 font-medium transition-colors"
+              >
+                ביטול
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
