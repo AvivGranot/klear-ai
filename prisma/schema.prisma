@@ -1,0 +1,187 @@
+// Klear AI Database Schema
+// AI-powered internal knowledge assistant for SMB retail chains
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Company/Organization (multi-tenant support)
+model Company {
+  id          String   @id @default(uuid())
+  name        String
+  industry    String?  // gas_station, coffee_shop, fashion, bakery
+  logo        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  users          User[]
+  knowledgeItems KnowledgeItem[]
+  conversations  Conversation[]
+  categories     Category[]
+}
+
+// Users (both managers and employees)
+model User {
+  id          String   @id @default(uuid())
+  phone       String   @unique
+  name        String
+  role        String   @default("employee") // employee, manager, admin
+  avatarUrl   String?
+  companyId   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  company       Company        @relation(fields: [companyId], references: [id])
+  conversations Conversation[]
+  messages      Message[]
+  corrections   AnswerCorrection[]
+}
+
+// Knowledge Base Categories
+model Category {
+  id          String   @id @default(uuid())
+  name        String
+  nameHe      String?  // Hebrew name
+  description String?
+  icon        String?
+  companyId   String
+  parentId    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  company        Company         @relation(fields: [companyId], references: [id])
+  parent         Category?       @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children       Category[]      @relation("CategoryHierarchy")
+  knowledgeItems KnowledgeItem[]
+}
+
+// Knowledge Base Items (procedures, policies, how-to guides)
+model KnowledgeItem {
+  id          String   @id @default(uuid())
+  title       String
+  titleHe     String?  // Hebrew title
+  content     String   // Main text content
+  contentHe   String?  // Hebrew content
+  type        String   @default("document") // document, procedure, policy, faq
+  categoryId  String?
+  companyId   String
+
+  // For RAG/AI retrieval
+  embedding   String?  // JSON array of embeddings
+
+  // Metadata
+  tags        String?  // JSON array of tags
+  priority    Int      @default(0)
+  isActive    Boolean  @default(true)
+  viewCount   Int      @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  company     Company      @relation(fields: [companyId], references: [id])
+  category    Category?    @relation(fields: [categoryId], references: [id])
+  media       MediaItem[]
+  usedInMessages Message[]
+}
+
+// Media Items (videos, images, PDFs)
+model MediaItem {
+  id              String   @id @default(uuid())
+  filename        String
+  originalName    String
+  mimeType        String
+  size            Int
+  url             String   // Local path or cloud URL
+  thumbnailUrl    String?
+  duration        Int?     // For videos (in seconds)
+  knowledgeItemId String?
+  companyId       String
+  createdAt       DateTime @default(now())
+
+  // Relations
+  knowledgeItem   KnowledgeItem? @relation(fields: [knowledgeItemId], references: [id])
+}
+
+// Conversations (chat sessions)
+model Conversation {
+  id          String   @id @default(uuid())
+  userId      String
+  companyId   String
+  status      String   @default("active") // active, resolved, pending_review
+  rating      Int?     // 1-5 satisfaction rating
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user        User      @relation(fields: [userId], references: [id])
+  company     Company   @relation(fields: [companyId], references: [id])
+  messages    Message[]
+}
+
+// Chat Messages
+model Message {
+  id              String   @id @default(uuid())
+  conversationId  String
+  senderId        String?  // null for bot messages
+  content         String
+  contentHe       String?  // Hebrew content if applicable
+  role            String   // user, assistant, system
+
+  // For AI responses
+  knowledgeItemId String?  // Source knowledge item used
+  confidence      Float?   // AI confidence score
+
+  // Media attachments
+  mediaUrls       String?  // JSON array of media URLs
+
+  // Metadata
+  isEdited        Boolean  @default(false)
+  editedAt        DateTime?
+
+  createdAt       DateTime @default(now())
+
+  // Relations
+  conversation    Conversation    @relation(fields: [conversationId], references: [id])
+  sender          User?           @relation(fields: [senderId], references: [id])
+  knowledgeItem   KnowledgeItem?  @relation(fields: [knowledgeItemId], references: [id])
+  corrections     AnswerCorrection[]
+}
+
+// Answer Corrections by Managers
+model AnswerCorrection {
+  id              String   @id @default(uuid())
+  messageId       String
+  managerId       String
+  originalContent String
+  correctedContent String
+  reason          String?
+
+  // Should this correction be learned?
+  shouldLearn     Boolean  @default(true)
+
+  createdAt       DateTime @default(now())
+
+  // Relations
+  message         Message  @relation(fields: [messageId], references: [id])
+  manager         User     @relation(fields: [managerId], references: [id])
+}
+
+// Analytics / Usage Tracking
+model QueryLog {
+  id          String   @id @default(uuid())
+  companyId   String
+  query       String
+  response    String?
+  wasHelpful  Boolean?
+  responseTime Int?    // in milliseconds
+  createdAt   DateTime @default(now())
+}
