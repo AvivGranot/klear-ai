@@ -94,6 +94,12 @@ export function ChatInterface({
     setIsLoading(true)
 
     try {
+      // Build conversation history for context (last 10 messages)
+      const conversationHistory = messages.slice(-10).map((msg) => ({
+        role: msg.role,
+        content: msg.content,
+      }))
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -101,6 +107,7 @@ export function ChatInterface({
           message: userMessage.content,
           companyId,
           userId,
+          conversationHistory,
         }),
       })
 

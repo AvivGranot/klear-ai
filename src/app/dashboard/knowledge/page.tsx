@@ -575,6 +575,14 @@ function StorageIndicator({ used, total }: { used: number; total: number }) {
   )
 }
 
+// Automation pattern status type
+type AutomationStatus = "pending" | "approved" | "rejected"
+
+interface PatternStatus {
+  status: AutomationStatus
+  updatedAt: string
+}
+
 // Main Page Component
 export default function KnowledgePage() {
   const [companyId, setCompanyId] = useState<string | null>(null)
@@ -585,10 +593,71 @@ export default function KnowledgePage() {
   const [totalItems, setTotalItems] = useState(0)
   const [recentItems, setRecentItems] = useState<RecentItem[]>([])
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null)
+  const [patternStatuses, setPatternStatuses] = useState<Record<string, PatternStatus>>({})
+  const [actionToast, setActionToast] = useState<{ message: string; type: "success" | "info" } | null>(null)
+  const [statusFilter, setStatusFilter] = useState<AutomationStatus | "all">("all")
 
   // Storage stats
   const storageUsed = 2.4
   const storageTotal = 10
+
+  // Load pattern statuses from localStorage
+  useEffect(() => {
+    const savedStatuses = localStorage.getItem("automationPatternStatuses")
+    if (savedStatuses) {
+      setPatternStatuses(JSON.parse(savedStatuses))
+    }
+  }, [])
+
+  // Save pattern statuses to localStorage
+  const savePatternStatus = (patternId: string, status: AutomationStatus) => {
+    const newStatuses = {
+      ...patternStatuses,
+      [patternId]: { status, updatedAt: new Date().toISOString() }
+    }
+    setPatternStatuses(newStatuses)
+    localStorage.setItem("automationPatternStatuses", JSON.stringify(newStatuses))
+  }
+
+  // Handle approve automation
+  const handleApprove = (managerName: string, patternIndex: number, patternAnswer: string) => {
+    const patternId = `${managerName}-${patternIndex}`
+    savePatternStatus(patternId, "approved")
+    setActionToast({ message: "התבנית אושרה ותפעל אוטומטית", type: "success" })
+    setTimeout(() => setActionToast(null), 3000)
+  }
+
+  // Handle reject automation
+  const handleReject = (managerName: string, patternIndex: number) => {
+    const patternId = `${managerName}-${patternIndex}`
+    savePatternStatus(patternId, "rejected")
+    setActionToast({ message: "התבנית נדחתה", type: "info" })
+    setTimeout(() => setActionToast(null), 3000)
+  }
+
+  // Get pattern status
+  const getPatternStatus = (managerName: string, patternIndex: number): AutomationStatus => {
+    const patternId = `${managerName}-${patternIndex}`
+    return patternStatuses[patternId]?.status || "pending"
+  }
+
+  // Count patterns by status
+  const getPatternCounts = () => {
+    const patterns = getAutomationPatterns()
+    const patternsByManager = getAutomationPatternsByManager()
+    let pending = 0, approved = 0, rejected = 0
+
+    Object.entries(patternsByManager).forEach(([managerName, managerPatterns]) => {
+      managerPatterns.forEach((_, index) => {
+        const status = getPatternStatus(managerName, index)
+        if (status === "pending") pending++
+        else if (status === "approved") approved++
+        else rejected++
+      })
+    })
+
+    return { pending, approved, rejected, total: patterns.length }
+  }
 
   // Initialize
   useEffect(() => {
@@ -771,107 +840,231 @@ export default function KnowledgePage() {
         </div>
       </div>
 
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {actionToast && (
+          <motion.div
+            initial={{ opacity: 0, y: -50, x: "-50%" }}
+            animate={{ opacity: 1, y: 0, x: "-50%" }}
+            exit={{ opacity: 0, y: -50, x: "-50%" }}
+            className={cn(
+              "fixed top-4 left-1/2 z-50 px-4 py-3 rounded-lg shadow-lg flex items-center gap-2",
+              actionToast.type === "success" ? "bg-green-500 text-white" : "bg-gray-700 text-white"
+            )}
+          >
+            {actionToast.type === "success" ? (
+              <Check className="w-5 h-5" />
+            ) : (
+              <AlertCircle className="w-5 h-5" />
+            )}
+            <span className="font-medium">{actionToast.message}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Automation Patterns Section - By Manager */}
-      <Card className="border border-gray-200">
+      <Card className="border border-gray-200" id="automations">
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-medium flex items-center gap-2">
-            <Zap className="w-5 h-5 text-green-500" />
-            תבניות אוטומציה לאישור
-            <Badge variant="outline" className="text-xs bg-amber-50 text-amber-600 border-amber-200">
-              {getAutomationPatterns().length} ממתינות לאישור
-            </Badge>
-          </CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-lg font-medium flex items-center gap-2">
+              <Zap className="w-5 h-5 text-green-500" />
+              תבניות אוטומציה
+            </CardTitle>
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="text-xs bg-amber-50 text-amber-600 border-amber-200">
+                {getPatternCounts().pending} ממתינות
+              </Badge>
+              <Badge variant="outline" className="text-xs bg-green-50 text-green-600 border-green-200">
+                {getPatternCounts().approved} אושרו
+              </Badge>
+              <Badge variant="outline" className="text-xs bg-gray-50 text-gray-600 border-gray-200">
+                {getPatternCounts().rejected} נדחו
+              </Badge>
+            </div>
+          </div>
           <p className="text-sm text-gray-500 mt-1">
-            תשובות חוזרות מהמנהלים שיכולות להיות אוטומטיות - ממתינות לאישור
+            תשובות חוזרות מהמנהלים שיכולות להיות אוטומטיות
           </p>
+          {/* Status Filter */}
+          <div className="flex items-center gap-2 mt-3">
+            <span className="text-xs text-gray-500">סנן לפי:</span>
+            {(["all", "pending", "approved", "rejected"] as const).map((status) => (
+              <button
+                key={status}
+                onClick={() => setStatusFilter(status)}
+                className={cn(
+                  "px-3 py-1 rounded-full text-xs font-medium transition-colors",
+                  statusFilter === status
+                    ? status === "all" ? "bg-gray-900 text-white"
+                      : status === "pending" ? "bg-amber-500 text-white"
+                      : status === "approved" ? "bg-green-500 text-white"
+                      : "bg-gray-500 text-white"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                )}
+              >
+                {status === "all" ? "הכל" : status === "pending" ? "ממתינות" : status === "approved" ? "אושרו" : "נדחו"}
+              </button>
+            ))}
+          </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
-            {Object.entries(getAutomationPatternsByManager()).map(([managerName, patterns]) => (
-              <div key={managerName} className="space-y-3">
-                {/* Manager Header */}
-                <div className="flex items-center gap-2 pb-2 border-b border-gray-100">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold">
-                    {managerName.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">{managerName}</p>
-                    <p className="text-xs text-gray-500">{patterns.length} תבניות</p>
-                  </div>
-                </div>
+            {Object.entries(getAutomationPatternsByManager()).map(([managerName, patterns]) => {
+              // Filter patterns based on status
+              const filteredPatterns = patterns.map((p, i) => ({ ...p, originalIndex: i }))
+                .filter((_, index) => {
+                  if (statusFilter === "all") return true
+                  return getPatternStatus(managerName, index) === statusFilter
+                })
 
-                {/* Manager's Patterns */}
-                {patterns.slice(0, 5).map((pattern, index) => (
-                  <motion.div
-                    key={index}
-                    className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-100"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <MessageSquare className="w-4 h-4 text-amber-600" />
-                        <Badge className="bg-amber-500 text-white text-xs">
-                          {pattern.frequency}x
-                        </Badge>
-                        <Badge variant="outline" className="text-xs bg-amber-50 text-amber-600 border-amber-200">
-                          ממתין לאישור
-                        </Badge>
-                      </div>
-                      <Badge variant="outline" className="text-xs">
-                        {pattern.topic}
-                      </Badge>
+              if (filteredPatterns.length === 0) return null
+
+              return (
+                <div key={managerName} className="space-y-3">
+                  {/* Manager Header */}
+                  <div className="flex items-center gap-2 pb-2 border-b border-gray-100">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold">
+                      {managerName.charAt(0)}
                     </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">{managerName}</p>
+                      <p className="text-xs text-gray-500">{filteredPatterns.length} תבניות</p>
+                    </div>
+                  </div>
 
-                    {/* Answer */}
-                    <p className="text-sm font-medium text-gray-900 mb-2">
-                      {pattern.rawAnswer.slice(0, 100)}{pattern.rawAnswer.length > 100 ? '...' : ''}
-                    </p>
+                  {/* Manager's Patterns */}
+                  {filteredPatterns.slice(0, 5).map((pattern) => {
+                    const patternStatus = getPatternStatus(managerName, pattern.originalIndex)
 
-                    {/* Associated Media */}
-                    {pattern.associatedMedia && pattern.associatedMedia.length > 0 && (
-                      <div className="mb-2 flex items-center gap-2">
-                        <Image className="w-4 h-4 text-purple-500" />
-                        <div className="flex flex-wrap gap-1">
-                          {pattern.associatedMedia.map((media, i) => (
-                            <Badge key={i} variant="outline" className="text-xs bg-purple-50 text-purple-600 border-purple-200">
-                              {media.type === 'image' ? '🖼️' : media.type === 'video' ? '🎬' : '📄'} {media.filename?.slice(0, 20) || 'מדיה'}
+                    return (
+                      <motion.div
+                        key={pattern.originalIndex}
+                        className={cn(
+                          "p-4 rounded-xl border",
+                          patternStatus === "pending" && "bg-gradient-to-r from-amber-50 to-orange-50 border-amber-100",
+                          patternStatus === "approved" && "bg-gradient-to-r from-green-50 to-emerald-50 border-green-200",
+                          patternStatus === "rejected" && "bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 opacity-60"
+                        )}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: pattern.originalIndex * 0.05 }}
+                      >
+                        <div className="flex items-start justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <MessageSquare className={cn(
+                              "w-4 h-4",
+                              patternStatus === "pending" && "text-amber-600",
+                              patternStatus === "approved" && "text-green-600",
+                              patternStatus === "rejected" && "text-gray-400"
+                            )} />
+                            <Badge className={cn(
+                              "text-white text-xs",
+                              patternStatus === "pending" && "bg-amber-500",
+                              patternStatus === "approved" && "bg-green-500",
+                              patternStatus === "rejected" && "bg-gray-400"
+                            )}>
+                              {pattern.frequency}x
                             </Badge>
-                          ))}
+                            <Badge variant="outline" className={cn(
+                              "text-xs",
+                              patternStatus === "pending" && "bg-amber-50 text-amber-600 border-amber-200",
+                              patternStatus === "approved" && "bg-green-50 text-green-600 border-green-200",
+                              patternStatus === "rejected" && "bg-gray-50 text-gray-500 border-gray-200"
+                            )}>
+                              {patternStatus === "pending" ? "ממתין לאישור" : patternStatus === "approved" ? "✓ אושר" : "נדחה"}
+                            </Badge>
+                          </div>
+                          <Badge variant="outline" className="text-xs">
+                            {pattern.topic}
+                          </Badge>
                         </div>
-                      </div>
-                    )}
 
-                    {/* Example Questions */}
-                    {pattern.exampleQuestions.length > 0 && (
-                      <div className="mt-2 pt-2 border-t border-amber-100">
-                        <p className="text-xs text-gray-500 mb-1">שאלות שמפעילות תשובה זו:</p>
-                        <div className="flex flex-wrap gap-1">
-                          {pattern.exampleQuestions.slice(0, 2).map((q, i) => (
-                            <span key={i} className="text-xs bg-white px-2 py-1 rounded border border-gray-200 text-gray-600 truncate max-w-[200px]">
-                              {q.slice(0, 40)}...
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                        {/* Answer */}
+                        <p className={cn(
+                          "text-sm font-medium mb-2",
+                          patternStatus === "rejected" ? "text-gray-500 line-through" : "text-gray-900"
+                        )}>
+                          {pattern.rawAnswer.slice(0, 100)}{pattern.rawAnswer.length > 100 ? '...' : ''}
+                        </p>
 
-                    {/* Approval Actions */}
-                    <div className="mt-3 pt-2 border-t border-amber-100 flex items-center gap-2">
-                      <Button size="sm" className="bg-green-600 hover:bg-green-700 text-xs h-7">
-                        <Check className="w-3 h-3 mr-1" />
-                        אשר אוטומציה
-                      </Button>
-                      <Button size="sm" variant="outline" className="text-xs h-7">
-                        <X className="w-3 h-3 mr-1" />
-                        דחה
-                      </Button>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            ))}
+                        {/* Associated Media */}
+                        {pattern.associatedMedia && pattern.associatedMedia.length > 0 && (
+                          <div className="mb-2 flex items-center gap-2">
+                            <Image className="w-4 h-4 text-purple-500" />
+                            <div className="flex flex-wrap gap-1">
+                              {pattern.associatedMedia.map((media, i) => (
+                                <Badge key={i} variant="outline" className="text-xs bg-purple-50 text-purple-600 border-purple-200">
+                                  {media.type === 'image' ? '🖼️' : media.type === 'video' ? '🎬' : '📄'} {media.filename?.slice(0, 20) || 'מדיה'}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Example Questions */}
+                        {pattern.exampleQuestions.length > 0 && patternStatus !== "rejected" && (
+                          <div className="mt-2 pt-2 border-t border-amber-100">
+                            <p className="text-xs text-gray-500 mb-1">שאלות שמפעילות תשובה זו:</p>
+                            <div className="flex flex-wrap gap-1">
+                              {pattern.exampleQuestions.slice(0, 2).map((q, i) => (
+                                <span key={i} className="text-xs bg-white px-2 py-1 rounded border border-gray-200 text-gray-600 truncate max-w-[200px]">
+                                  {q.slice(0, 40)}...
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Approval Actions */}
+                        {patternStatus === "pending" && (
+                          <div className="mt-3 pt-2 border-t border-amber-100 flex items-center gap-2">
+                            <Button
+                              size="sm"
+                              className="bg-green-600 hover:bg-green-700 text-xs h-7"
+                              onClick={() => handleApprove(managerName, pattern.originalIndex, pattern.rawAnswer)}
+                            >
+                              <Check className="w-3 h-3 mr-1" />
+                              אשר אוטומציה
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="text-xs h-7"
+                              onClick={() => handleReject(managerName, pattern.originalIndex)}
+                            >
+                              <X className="w-3 h-3 mr-1" />
+                              דחה
+                            </Button>
+                          </div>
+                        )}
+
+                        {/* Undo action for approved/rejected */}
+                        {patternStatus !== "pending" && (
+                          <div className="mt-3 pt-2 border-t border-gray-100 flex items-center gap-2">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-xs h-7 text-gray-500"
+                              onClick={() => {
+                                const patternId = `${managerName}-${pattern.originalIndex}`
+                                const newStatuses = { ...patternStatuses }
+                                delete newStatuses[patternId]
+                                setPatternStatuses(newStatuses)
+                                localStorage.setItem("automationPatternStatuses", JSON.stringify(newStatuses))
+                                setActionToast({ message: "הוחזר לממתין לאישור", type: "info" })
+                                setTimeout(() => setActionToast(null), 3000)
+                              }}
+                            >
+                              ↩ בטל והחזר לממתין
+                            </Button>
+                          </div>
+                        )}
+                      </motion.div>
+                    )
+                  })}
+                </div>
+              )
+            })}
           </div>
         </CardContent>
       </Card>

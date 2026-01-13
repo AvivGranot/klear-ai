@@ -16,6 +16,20 @@ interface User {
   phone: string
 }
 
+// Static company data for when database is unavailable
+const STATIC_COMPANIES: Record<string, Company> = {
+  "amir-gas-station": {
+    id: "amir-gas-station",
+    name: "תחנת דלק אמיר בני ברק",
+    logo: null,
+  },
+  "demo-company-001": {
+    id: "demo-company-001",
+    name: "חברת הדגמה",
+    logo: null,
+  },
+}
+
 export default function ChatPage() {
   const params = useParams()
   const companyId = params.companyId as string
@@ -28,7 +42,24 @@ export default function ChatPage() {
   useEffect(() => {
     async function loadData() {
       try {
-        // Get company info
+        // First try to use static company data
+        const staticCompany = STATIC_COMPANIES[companyId]
+
+        if (staticCompany) {
+          setCompany(staticCompany)
+
+          // Create a session user (no database needed)
+          const sessionUser: User = {
+            id: `session-${Date.now()}`,
+            name: "משתמש אורח",
+            phone: `session-${Date.now()}`,
+          }
+          setUser(sessionUser)
+          setLoading(false)
+          return
+        }
+
+        // Fallback: Try API for other companies
         const companyRes = await fetch(`/api/companies?id=${companyId}`)
         if (!companyRes.ok) throw new Error("Company not found")
         const companyData = await companyRes.json()
@@ -66,7 +97,19 @@ export default function ChatPage() {
         }
       } catch (e) {
         console.error("Error loading data:", e)
-        setError("Failed to load chat. Please try again.")
+
+        // Final fallback: use static data anyway
+        const staticCompany = STATIC_COMPANIES[companyId] || {
+          id: companyId,
+          name: "Klear AI",
+          logo: null,
+        }
+        setCompany(staticCompany)
+        setUser({
+          id: `session-${Date.now()}`,
+          name: "משתמש אורח",
+          phone: `session-${Date.now()}`,
+        })
       } finally {
         setLoading(false)
       }

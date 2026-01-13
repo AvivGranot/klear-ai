@@ -22,6 +22,8 @@ import {
   AlertCircle,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { GlobalSearch } from "@/components/dashboard/GlobalSearch"
+import { NotificationDropdown } from "@/components/dashboard/NotificationDropdown"
 
 interface SidebarItem {
   icon: React.ElementType
@@ -251,18 +253,8 @@ export default function DashboardLayout({
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Search */}
-            <div className="hidden md:flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-1.5 w-64">
-              <Search className="w-4 h-4 text-gray-400" />
-              <input
-                type="text"
-                placeholder="חיפוש..."
-                className="bg-transparent border-0 outline-none text-sm flex-1 placeholder-gray-400"
-              />
-              <kbd className="text-xs text-gray-400 bg-white px-1.5 py-0.5 rounded border border-gray-200">
-                ⌘K
-              </kbd>
-            </div>
+            {/* Global Search */}
+            <GlobalSearch />
 
             {/* Actions */}
             <Button variant="outline" size="sm" className="hidden sm:flex gap-1.5 text-gray-600">
@@ -271,10 +263,7 @@ export default function DashboardLayout({
             </Button>
 
             {/* Notifications */}
-            <button className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors">
-              <Bell className="w-5 h-5 text-gray-500" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
-            </button>
+            <NotificationDropdown />
 
             {/* User */}
             <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-2 py-1 cursor-pointer hover:bg-gray-200 transition-colors">
