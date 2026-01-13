@@ -87,6 +87,7 @@ export function getKBSummary() {
     totalItems: faqs.length,
     faqs: faqs.filter(f => f.type === 'faq').length,
     documents: faqs.filter(f => f.type === 'document').length,
+    instructions: faqs.filter(f => f.type === 'instruction').length,
     categories: categories.length,
   }
 }
