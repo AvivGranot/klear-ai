@@ -1,0 +1,4480 @@
+{
+  "total_items": 497,
+  "repeated_instructions": 5,
+  "qa_pairs": 492,
+  "items": [
+    {
+      "title": "נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "titleHe": "נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "content": "נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "instruction",
+      "source": "nevo_repeated",
+      "frequency": 9
+    },
+    {
+      "title": "רכב חשוד נכנס לתחנה",
+      "titleHe": "רכב חשוד נכנס לתחנה",
+      "content": "רכב חשוד נכנס לתחנה",
+      "contentHe": "רכב חשוד נכנס לתחנה",
+      "type": "instruction",
+      "source": "nevo_repeated",
+      "frequency": 4
+    },
+    {
+      "title": "מחקת את ההודעה הזו.",
+      "titleHe": "מחקת את ההודעה הזו.",
+      "content": "מחקת את ההודעה הזו.",
+      "contentHe": "מחקת את ההודעה הזו.",
+      "type": "instruction",
+      "source": "nevo_repeated",
+      "frequency": 3
+    },
+    {
+      "title": "לגשת אליו בבקשה",
+      "titleHe": "לגשת אליו בבקשה",
+      "content": "לגשת אליו בבקשה",
+      "contentHe": "לגשת אליו בבקשה",
+      "type": "instruction",
+      "source": "nevo_repeated",
+      "frequency": 2
+    },
+    {
+      "title": "לצאת לעזור לו בבקשה",
+      "titleHe": "לצאת לעזור לו בבקשה",
+      "content": "לצאת לעזור לו בבקשה",
+      "contentHe": "לצאת לעזור לו בבקשה",
+      "type": "instruction",
+      "source": "nevo_repeated",
+      "frequency": 2
+    },
+    {
+      "title": "הקבוצה נוצרה על ידי ישי פרץ",
+      "titleHe": "הקבוצה נוצרה על ידי ישי פרץ",
+      "content": "שאלה: הקבוצה נוצרה על ידי ישי פרץ\n\nתשובה (נבו פרץ - מנהל): חוסר של מתדלק",
+      "contentHe": "שאלה: הקבוצה נוצרה על ידי ישי פרץ\n\nתשובה (נבו פרץ - מנהל): חוסר של מתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בוקר טוב נבו ללא הטלפון שלו עקב גניבת המכשיר.",
+      "titleHe": "בוקר טוב נבו ללא הטלפון שלו עקב גניבת המכשיר.",
+      "content": "שאלה: בוקר טוב נבו ללא הטלפון שלו עקב גניבת המכשיר.\n\nתשובה (נבו פרץ - מנהל): חוסר של מתדלק",
+      "contentHe": "שאלה: בוקר טוב נבו ללא הטלפון שלו עקב גניבת המכשיר.\n\nתשובה (נבו פרץ - מנהל): חוסר של מתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הוא בקופה עכשיו",
+      "titleHe": "הוא בקופה עכשיו",
+      "content": "שאלה: הוא בקופה עכשיו\n\nתשובה (נבו פרץ - מנהל): חוסר של מתדלק",
+      "contentHe": "שאלה: הוא בקופה עכשיו\n\nתשובה (נבו פרץ - מנהל): חוסר של מתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "עקב מחסור בחלב אני מבקש למכור עד 2 יחידות ללקוח.",
+      "titleHe": "עקב מחסור בחלב אני מבקש למכור עד 2 יחידות ללקוח.",
+      "content": "שאלה: עקב מחסור בחלב אני מבקש למכור עד 2 יחידות ללקוח.\n\nתשובה (נבו פרץ - מנהל): חוסר של מתדלק",
+      "contentHe": "שאלה: עקב מחסור בחלב אני מבקש למכור עד 2 יחידות ללקוח.\n\nתשובה (נבו פרץ - מנהל): חוסר של מתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בחור בשם אור, ת.ז. 200921427 אמור להגיע בסביבות 11-12 בלילה.",
+      "titleHe": "בחור בשם אור, ת.ז. 200921427 אמור להגיע בסביבות 11-12 בלילה.",
+      "content": "שאלה: בחור בשם אור, ת.ז. 200921427 אמור להגיע בסביבות 11-12 בלילה.\n\nתשובה (נבו פרץ - מנהל): חוסר של מתדלק",
+      "contentHe": "שאלה: בחור בשם אור, ת.ז. 200921427 אמור להגיע בסביבות 11-12 בלילה.\n\nתשובה (נבו פרץ - מנהל): חוסר של מתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה 1 לא קולט דלקן ב95",
+      "titleHe": "משאבה 1 לא קולט דלקן ב95",
+      "content": "שאלה: משאבה 1 לא קולט דלקן ב95\n\nתשובה (נבו פרץ - מנהל): חוסר של מתדלק",
+      "contentHe": "שאלה: משאבה 1 לא קולט דלקן ב95\n\nתשובה (נבו פרץ - מנהל): חוסר של מתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "https://rotter.net/forum/scoops1/750930.shtml",
+      "titleHe": "https://rotter.net/forum/scoops1/750930.shtml",
+      "content": "שאלה: https://rotter.net/forum/scoops1/750930.shtml\n\nתשובה (נבו פרץ - מנהל): אני שאלתי אתמול את הסוכן אמר שאין להם במלאי",
+      "contentHe": "שאלה: https://rotter.net/forum/scoops1/750930.shtml\n\nתשובה (נבו פרץ - מנהל): אני שאלתי אתמול את הסוכן אמר שאין להם במלאי",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מספר הטלפון של בזי דלק הוחלף למספר חדש. הקש/י כדי לשלוח הודעה או להוסיף מספר חדש.",
+      "titleHe": "מספר הטלפון של בזי דלק הוחלף למספר חדש. הקש/י כדי לשלוח הודעה או להוסיף מספר חדש.",
+      "content": "שאלה: מספר הטלפון של בזי דלק הוחלף למספר חדש. הקש/י כדי לשלוח הודעה או להוסיף מספר חדש.\n\nתשובה (נבו פרץ - מנהל): בהליך מזורז",
+      "contentHe": "שאלה: מספר הטלפון של בזי דלק הוחלף למספר חדש. הקש/י כדי לשלוח הודעה או להוסיף מספר חדש.\n\nתשובה (נבו פרץ - מנהל): בהליך מזורז",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ממתינים להזמנה לחתונה שלך",
+      "titleHe": "ממתינים להזמנה לחתונה שלך",
+      "content": "שאלה: ממתינים להזמנה לחתונה שלך\n\nתשובה (נבו פרץ - מנהל): בהליך מזורז",
+      "contentHe": "שאלה: ממתינים להזמנה לחתונה שלך\n\nתשובה (נבו פרץ - מנהל): בהליך מזורז",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אם נבו יטפל בזה אז לא נזכה להזמנה לנצח 🤣",
+      "titleHe": "אם נבו יטפל בזה אז לא נזכה להזמנה לנצח 🤣",
+      "content": "שאלה: אם נבו יטפל בזה אז לא נזכה להזמנה לנצח 🤣\n\nתשובה (נבו פרץ - מנהל): שיוסיף אפס",
+      "contentHe": "שאלה: אם נבו יטפל בזה אז לא נזכה להזמנה לנצח 🤣\n\nתשובה (נבו פרץ - מנהל): שיוסיף אפס",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "0548443307 יחזקאל זלוטי טוען ש 99% שהוא לא שילם למתדלק בחוץ עבור תדלוק של קאיה נירו לבנה לפני רבע שע",
+      "titleHe": "0548443307 יחזקאל זלוטי טוען ש 99% שהוא לא שילם למתדלק בחוץ עבור תדלוק של קאיה נירו לבנה לפני רבע שע",
+      "content": "שאלה: 0548443307 יחזקאל זלוטי טוען ש 99% שהוא לא שילם למתדלק בחוץ עבור תדלוק של קאיה נירו לבנה לפני רבע שעה\n\nתשובה (נבו פרץ - מנהל): שיוסיף אפס",
+      "contentHe": "שאלה: 0548443307 יחזקאל זלוטי טוען ש 99% שהוא לא שילם למתדלק בחוץ עבור תדלוק של קאיה נירו לבנה לפני רבע שעה\n\nתשובה (נבו פרץ - מנהל): שיוסיף אפס",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לא להפעיל את עמדות השטיפה והשואב לבנתיים, עד להודעה ממני.",
+      "titleHe": "לא להפעיל את עמדות השטיפה והשואב לבנתיים, עד להודעה ממני.",
+      "content": "שאלה: לא להפעיל את עמדות השטיפה והשואב לבנתיים, עד להודעה ממני.\n\nתשובה (נבו פרץ - מנהל): שיוסיף אפס",
+      "contentHe": "שאלה: לא להפעיל את עמדות השטיפה והשואב לבנתיים, עד להודעה ממני.\n\nתשובה (נבו פרץ - מנהל): שיוסיף אפס",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מספר הטלפון של שוקי דלק הוחלף למספר חדש. הקש/י כדי לשלוח הודעה או להוסיף מספר חדש.",
+      "titleHe": "מספר הטלפון של שוקי דלק הוחלף למספר חדש. הקש/י כדי לשלוח הודעה או להוסיף מספר חדש.",
+      "content": "שאלה: מספר הטלפון של שוקי דלק הוחלף למספר חדש. הקש/י כדי לשלוח הודעה או להוסיף מספר חדש.\n\nתשובה (נבו פרץ - מנהל): גדי רוזנרט",
+      "contentHe": "שאלה: מספר הטלפון של שוקי דלק הוחלף למספר חדש. הקש/י כדי לשלוח הודעה או להוסיף מספר חדש.\n\nתשובה (נבו פרץ - מנהל): גדי רוזנרט",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "היי זה נועם בטעות לקחתי איתי בכיס את המפתח להחלפת הפיתקיות בטרמינל ים של התחנה אני יחזיר את זה ביום ",
+      "titleHe": "היי זה נועם בטעות לקחתי איתי בכיס את המפתח להחלפת הפיתקיות בטרמינל ים של התחנה אני יחזיר את זה ביום ",
+      "content": "שאלה: היי זה נועם בטעות לקחתי איתי בכיס את המפתח להחלפת הפיתקיות בטרמינל ים של התחנה אני יחזיר את זה ביום ראשון\n\nתשובה (נבו פרץ - מנהל): גדי רוזנרט",
+      "contentHe": "שאלה: היי זה נועם בטעות לקחתי איתי בכיס את המפתח להחלפת הפיתקיות בטרמינל ים של התחנה אני יחזיר את זה ביום ראשון\n\nתשובה (נבו פרץ - מנהל): גדי רוזנרט",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "צירפת את אוריאל עובד דלק ואת שמעון טפירו עובד דלק הבן של עמוס טפירו",
+      "titleHe": "צירפת את אוריאל עובד דלק ואת שמעון טפירו עובד דלק הבן של עמוס טפירו",
+      "content": "שאלה: צירפת את אוריאל עובד דלק ואת שמעון טפירו עובד דלק הבן של עמוס טפירו\n\nתשובה (נבו פרץ - מנהל): גדי רוזנרט",
+      "contentHe": "שאלה: צירפת את אוריאל עובד דלק ואת שמעון טפירו עובד דלק הבן של עמוס טפירו\n\nתשובה (נבו פרץ - מנהל): גדי רוזנרט",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תבקשו שישלם במזומן ,ככה הוא ילמד לפעם הבאה",
+      "titleHe": "תבקשו שישלם במזומן ,ככה הוא ילמד לפעם הבאה",
+      "content": "שאלה: תבקשו שישלם במזומן ,ככה הוא ילמד לפעם הבאה\n\nתשובה (נבו פרץ - מנהל): הינה את לא רואה?",
+      "contentHe": "שאלה: תבקשו שישלם במזומן ,ככה הוא ילמד לפעם הבאה\n\nתשובה (נבו פרץ - מנהל): הינה את לא רואה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תגידו לו שבטעות העסקה נסגרה במזומן ואנחנו חייבים מזומן",
+      "titleHe": "תגידו לו שבטעות העסקה נסגרה במזומן ואנחנו חייבים מזומן",
+      "content": "שאלה: תגידו לו שבטעות העסקה נסגרה במזומן ואנחנו חייבים מזומן\n\nתשובה (נבו פרץ - מנהל): הינה את לא רואה?",
+      "contentHe": "שאלה: תגידו לו שבטעות העסקה נסגרה במזומן ואנחנו חייבים מזומן\n\nתשובה (נבו פרץ - מנהל): הינה את לא רואה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יש גם עסקה במזומן וגם בתחנה שונות",
+      "titleHe": "יש גם עסקה במזומן וגם בתחנה שונות",
+      "content": "שאלה: יש גם עסקה במזומן וגם בתחנה שונות\n\nתשובה (נבו פרץ - מנהל): הינה את לא רואה?",
+      "contentHe": "שאלה: יש גם עסקה במזומן וגם בתחנה שונות\n\nתשובה (נבו פרץ - מנהל): הינה את לא רואה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כרטיס לתדלוקים של פלאח בלבד !!!!",
+      "titleHe": "כרטיס לתדלוקים של פלאח בלבד !!!!",
+      "content": "שאלה: כרטיס לתדלוקים של פלאח בלבד !!!!\n\nתשובה (נבו פרץ - מנהל): שימו לב יש שתי פלפלים חדשים בלו וסילבר",
+      "contentHe": "שאלה: כרטיס לתדלוקים של פלאח בלבד !!!!\n\nתשובה (נבו פרץ - מנהל): שימו לב יש שתי פלפלים חדשים בלו וסילבר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הכרטיס מתחת לשקלים שבקופה",
+      "titleHe": "הכרטיס מתחת לשקלים שבקופה",
+      "content": "שאלה: הכרטיס מתחת לשקלים שבקופה\n\nתשובה (נבו פרץ - מנהל): שימו לב יש שתי פלפלים חדשים בלו וסילבר",
+      "contentHe": "שאלה: הכרטיס מתחת לשקלים שבקופה\n\nתשובה (נבו פרץ - מנהל): שימו לב יש שתי פלפלים חדשים בלו וסילבר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מצוין כל הכבוד",
+      "titleHe": "מצוין כל הכבוד",
+      "content": "שאלה: מצוין כל הכבוד\n\nתשובה (נבו פרץ - מנהל): שימו לב יש שתי פלפלים חדשים בלו וסילבר",
+      "contentHe": "שאלה: מצוין כל הכבוד\n\nתשובה (נבו פרץ - מנהל): שימו לב יש שתי פלפלים חדשים בלו וסילבר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "היי שוקי, ברוך הבא.",
+      "titleHe": "היי שוקי, ברוך הבא.",
+      "content": "שאלה: היי שוקי, ברוך הבא.\n\nתשובה (נבו פרץ - מנהל): שימו לב יש שתי פלפלים חדשים בלו וסילבר",
+      "contentHe": "שאלה: היי שוקי, ברוך הבא.\n\nתשובה (נבו פרץ - מנהל): שימו לב יש שתי פלפלים חדשים בלו וסילבר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תקנו את התאריך 😍",
+      "titleHe": "תקנו את התאריך 😍",
+      "content": "שאלה: תקנו את התאריך 😍\n\nתשובה (נבו פרץ - מנהל): שימו לב יש שתי פלפלים חדשים בלו וסילבר",
+      "contentHe": "שאלה: תקנו את התאריך 😍\n\nתשובה (נבו פרץ - מנהל): שימו לב יש שתי פלפלים חדשים בלו וסילבר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הותקנה מערכת רמקולים חדשה בעמדת קופה ,לא לשחק או לגעת בה ללא אישור מנהל.",
+      "titleHe": "הותקנה מערכת רמקולים חדשה בעמדת קופה ,לא לשחק או לגעת בה ללא אישור מנהל.",
+      "content": "שאלה: הותקנה מערכת רמקולים חדשה בעמדת קופה ,לא לשחק או לגעת בה ללא אישור מנהל.\n\nתשובה (נבו פרץ - מנהל): הוא לא בא היום",
+      "contentHe": "שאלה: הותקנה מערכת רמקולים חדשה בעמדת קופה ,לא לשחק או לגעת בה ללא אישור מנהל.\n\nתשובה (נבו פרץ - מנהל): הוא לא בא היום",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "באישור נבו",
+      "titleHe": "באישור נבו",
+      "content": "שאלה: באישור נבו\n\nתשובה (נבו פרץ - מנהל): תעשה הפקדה על הסכום ותרשום סיבה",
+      "contentHe": "שאלה: באישור נבו\n\nתשובה (נבו פרץ - מנהל): תעשה הפקדה על הסכום ותרשום סיבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אפטו חבר של בזי עובד דלק יצא/ה",
+      "titleHe": "אפטו חבר של בזי עובד דלק יצא/ה",
+      "content": "שאלה: אפטו חבר של בזי עובד דלק יצא/ה\n\nתשובה (נבו פרץ - מנהל): תעשה הפקדה על הסכום ותרשום סיבה",
+      "contentHe": "שאלה: אפטו חבר של בזי עובד דלק יצא/ה\n\nתשובה (נבו פרץ - מנהל): תעשה הפקדה על הסכום ותרשום סיבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הסרת את שמעון טפירו עובד דלק הבן של עמוס טפירו",
+      "titleHe": "הסרת את שמעון טפירו עובד דלק הבן של עמוס טפירו",
+      "content": "שאלה: הסרת את שמעון טפירו עובד דלק הבן של עמוס טפירו\n\nתשובה (נבו פרץ - מנהל): תעשה הפקדה על הסכום ותרשום סיבה",
+      "contentHe": "שאלה: הסרת את שמעון טפירו עובד דלק הבן של עמוס טפירו\n\nתשובה (נבו פרץ - מנהל): תעשה הפקדה על הסכום ותרשום סיבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לא אישרתי . ואף אחד לא בירר איתי .  שלשום בלילה הוא ביקש ממני אישור לקחת 100 שח ואני אמרתי לו אל תיק",
+      "titleHe": "לא אישרתי . ואף אחד לא בירר איתי .  שלשום בלילה הוא ביקש ממני אישור לקחת 100 שח ואני אמרתי לו אל תיק",
+      "content": "שאלה: לא אישרתי . ואף אחד לא בירר איתי .  שלשום בלילה הוא ביקש ממני אישור לקחת 100 שח ואני אמרתי לו אל תיקח מהקופה אני אתן לך ממני בפרטי וכך היה . מעבר לכך לא נתתי אישור.\n\nתשובה (נבו פרץ - מנהל): תעשה הפקדה על הסכום ותרשום סיבה",
+      "contentHe": "שאלה: לא אישרתי . ואף אחד לא בירר איתי .  שלשום בלילה הוא ביקש ממני אישור לקחת 100 שח ואני אמרתי לו אל תיקח מהקופה אני אתן לך ממני בפרטי וכך היה . מעבר לכך לא נתתי אישור.\n\nתשובה (נבו פרץ - מנהל): תעשה הפקדה על הסכום ותרשום סיבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "האם מי שהיה במשמרת של אתמול בערב נתקל ב176 ש\"ח מיותרים בקופה?",
+      "titleHe": "האם מי שהיה במשמרת של אתמול בערב נתקל ב176 ש\"ח מיותרים בקופה?",
+      "content": "שאלה: האם מי שהיה במשמרת של אתמול בערב נתקל ב176 ש\"ח מיותרים בקופה?\n\nתשובה (נבו פרץ - מנהל): תעשה הפקדה על הסכום ותרשום סיבה",
+      "contentHe": "שאלה: האם מי שהיה במשמרת של אתמול בערב נתקל ב176 ש\"ח מיותרים בקופה?\n\nתשובה (נבו פרץ - מנהל): תעשה הפקדה על הסכום ותרשום סיבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הוא הוציא זיכוי על 1200 ומשהו שח",
+      "titleHe": "הוא הוציא זיכוי על 1200 ומשהו שח",
+      "content": "שאלה: הוא הוציא זיכוי על 1200 ומשהו שח\n\nתשובה (נבו פרץ - מנהל): יש לה כרטיס בקופה",
+      "contentHe": "שאלה: הוא הוציא זיכוי על 1200 ומשהו שח\n\nתשובה (נבו פרץ - מנהל): יש לה כרטיס בקופה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לקח את הפקאטים?",
+      "titleHe": "לקח את הפקאטים?",
+      "content": "שאלה: לקח את הפקאטים?\n\nתשובה (נבו פרץ - מנהל): יש לה כרטיס בקופה",
+      "contentHe": "שאלה: לקח את הפקאטים?\n\nתשובה (נבו פרץ - מנהל): יש לה כרטיס בקופה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אחיה שלח לי את הנייד שלו",
+      "titleHe": "אחיה שלח לי את הנייד שלו",
+      "content": "שאלה: אחיה שלח לי את הנייד שלו\n\nתשובה (נבו פרץ - מנהל): יש לה כרטיס בקופה",
+      "contentHe": "שאלה: אחיה שלח לי את הנייד שלו\n\nתשובה (נבו פרץ - מנהל): יש לה כרטיס בקופה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "דיבר עם יעקב אני לא יודע רם לקח",
+      "titleHe": "דיבר עם יעקב אני לא יודע רם לקח",
+      "content": "שאלה: דיבר עם יעקב אני לא יודע רם לקח\n\nתשובה (נבו פרץ - מנהל): יש לה כרטיס בקופה",
+      "contentHe": "שאלה: דיבר עם יעקב אני לא יודע רם לקח\n\nתשובה (נבו פרץ - מנהל): יש לה כרטיס בקופה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "״לקוח מרוצה מוכר שמח״ חד משמעית צריך להיות המשפט מעל הקופה 😂😂",
+      "titleHe": "״לקוח מרוצה מוכר שמח״ חד משמעית צריך להיות המשפט מעל הקופה 😂😂",
+      "content": "שאלה: ״לקוח מרוצה מוכר שמח״ חד משמעית צריך להיות המשפט מעל הקופה 😂😂\n\nתשובה (נבו פרץ - מנהל): יש לה כרטיס בקופה",
+      "contentHe": "שאלה: ״לקוח מרוצה מוכר שמח״ חד משמעית צריך להיות המשפט מעל הקופה 😂😂\n\nתשובה (נבו פרץ - מנהל): יש לה כרטיס בקופה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תבדוק בגוגל כמה עולה מוצר כזה",
+      "titleHe": "תבדוק בגוגל כמה עולה מוצר כזה",
+      "content": "שאלה: תבדוק בגוגל כמה עולה מוצר כזה\n\nתשובה (נבו פרץ - מנהל): תעבירו את הקפה בלילה על קפה רגיל ואז זה יוצא 12 שח",
+      "contentHe": "שאלה: תבדוק בגוגל כמה עולה מוצר כזה\n\nתשובה (נבו פרץ - מנהל): תעבירו את הקפה בלילה על קפה רגיל ואז זה יוצא 12 שח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שבוע טוב,לא להשתמש בהשהיית פתקית בפונקציות קופה כי זה תוקע את הסגירת יום.",
+      "titleHe": "שבוע טוב,לא להשתמש בהשהיית פתקית בפונקציות קופה כי זה תוקע את הסגירת יום.",
+      "content": "שאלה: שבוע טוב,לא להשתמש בהשהיית פתקית בפונקציות קופה כי זה תוקע את הסגירת יום.\n\nתשובה (נבו פרץ - מנהל): איך נסגרה העסקה?",
+      "contentHe": "שאלה: שבוע טוב,לא להשתמש בהשהיית פתקית בפונקציות קופה כי זה תוקע את הסגירת יום.\n\nתשובה (נבו פרץ - מנהל): איך נסגרה העסקה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "נא לצלם סיכום חשבונית של היום",
+      "titleHe": "נא לצלם סיכום חשבונית של היום",
+      "content": "שאלה: נא לצלם סיכום חשבונית של היום\n\nתשובה (נבו פרץ - מנהל): נתנאל בא לתקן את השלטי לד",
+      "contentHe": "שאלה: נא לצלם סיכום חשבונית של היום\n\nתשובה (נבו פרץ - מנהל): נתנאל בא לתקן את השלטי לד",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יש חשבונית ?!",
+      "titleHe": "יש חשבונית ?!",
+      "content": "שאלה: יש חשבונית ?!\n\nתשובה (נבו פרץ - מנהל): הוא אמר שהוא יביא",
+      "contentHe": "שאלה: יש חשבונית ?!\n\nתשובה (נבו פרץ - מנהל): הוא אמר שהוא יביא",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אין אף אחד על המשאבה בשעה הזאת",
+      "titleHe": "אין אף אחד על המשאבה בשעה הזאת",
+      "content": "שאלה: אין אף אחד על המשאבה בשעה הזאת\n\nתשובה (נבו פרץ - מנהל): לא נסגרה עדיין",
+      "contentHe": "שאלה: אין אף אחד על המשאבה בשעה הזאת\n\nתשובה (נבו פרץ - מנהל): לא נסגרה עדיין",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "עסקה נסגרה במזומן ????",
+      "titleHe": "עסקה נסגרה במזומן ????",
+      "content": "שאלה: עסקה נסגרה במזומן ????\n\nתשובה (נבו פרץ - מנהל): לא נסגרה עדיין",
+      "contentHe": "שאלה: עסקה נסגרה במזומן ????\n\nתשובה (נבו פרץ - מנהל): לא נסגרה עדיין",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אז לסגור במזומן",
+      "titleHe": "אז לסגור במזומן",
+      "content": "שאלה: אז לסגור במזומן\n\nתשובה (נבו פרץ - מנהל): תצלם גם את העסקה",
+      "contentHe": "שאלה: אז לסגור במזומן\n\nתשובה (נבו פרץ - מנהל): תצלם גם את העסקה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "פלאפון נייד דלק אמיר הצטרף/ה לקבוצה באמצעות קישור.",
+      "titleHe": "פלאפון נייד דלק אמיר הצטרף/ה לקבוצה באמצעות קישור.",
+      "content": "שאלה: פלאפון נייד דלק אמיר הצטרף/ה לקבוצה באמצעות קישור.\n\nתשובה (נבו פרץ - מנהל): תראה בארון של ארטוס",
+      "contentHe": "שאלה: פלאפון נייד דלק אמיר הצטרף/ה לקבוצה באמצעות קישור.\n\nתשובה (נבו פרץ - מנהל): תראה בארון של ארטוס",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "נא לדאוג את העסקאות שמשולמות בביט לסגור אך ורק במזומן !!!!",
+      "titleHe": "נא לדאוג את העסקאות שמשולמות בביט לסגור אך ורק במזומן !!!!",
+      "content": "שאלה: נא לדאוג את העסקאות שמשולמות בביט לסגור אך ורק במזומן !!!!\n\nתשובה (נבו פרץ - מנהל): כן של דודי",
+      "contentHe": "שאלה: נא לדאוג את העסקאות שמשולמות בביט לסגור אך ורק במזומן !!!!\n\nתשובה (נבו פרץ - מנהל): כן של דודי",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מה זה *_דלק באישור של ישי_* ?",
+      "titleHe": "מה זה *_דלק באישור של ישי_* ?",
+      "content": "שאלה: מה זה *_דלק באישור של ישי_* ?\n\nתשובה (נבו פרץ - מנהל): זה קוקטייל",
+      "contentHe": "שאלה: מה זה *_דלק באישור של ישי_* ?\n\nתשובה (נבו פרץ - מנהל): זה קוקטייל",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישראל מנהל תחנה דלק הסיר/ה את הרני דלק",
+      "titleHe": "ישראל מנהל תחנה דלק הסיר/ה את הרני דלק",
+      "content": "שאלה: ישראל מנהל תחנה דלק הסיר/ה את הרני דלק\n\nתשובה (נבו פרץ - מנהל): שמעון טפירו",
+      "contentHe": "שאלה: ישראל מנהל תחנה דלק הסיר/ה את הרני דלק\n\nתשובה (נבו פרץ - מנהל): שמעון טפירו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הוא יודע להכין כרטיסי מתדלק?",
+      "titleHe": "הוא יודע להכין כרטיסי מתדלק?",
+      "content": "שאלה: הוא יודע להכין כרטיסי מתדלק?\n\nתשובה (נבו פרץ - מנהל): בסדר אתה טעון בקדושה",
+      "contentHe": "שאלה: הוא יודע להכין כרטיסי מתדלק?\n\nתשובה (נבו פרץ - מנהל): בסדר אתה טעון בקדושה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כן אני יודע אבל אני סחוט אחרי כמעט 20 שעות בדרכים אני יבוא בלילה לסדר את המקשות והכרטיסים",
+      "titleHe": "כן אני יודע אבל אני סחוט אחרי כמעט 20 שעות בדרכים אני יבוא בלילה לסדר את המקשות והכרטיסים",
+      "content": "שאלה: כן אני יודע אבל אני סחוט אחרי כמעט 20 שעות בדרכים אני יבוא בלילה לסדר את המקשות והכרטיסים\n\nתשובה (נבו פרץ - מנהל): בסדר אתה טעון בקדושה",
+      "contentHe": "שאלה: כן אני יודע אבל אני סחוט אחרי כמעט 20 שעות בדרכים אני יבוא בלילה לסדר את המקשות והכרטיסים\n\nתשובה (נבו פרץ - מנהל): בסדר אתה טעון בקדושה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "נסגר במזומן",
+      "titleHe": "נסגר במזומן",
+      "content": "שאלה: נסגר במזומן\n\nתשובה (נבו פרץ - מנהל): יש לך תמונה שרואים את המספר?",
+      "contentHe": "שאלה: נסגר במזומן\n\nתשובה (נבו פרץ - מנהל): יש לך תמונה שרואים את המספר?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישראל מנהל תחנה דלק צירף/ה את זמטו דלק",
+      "titleHe": "ישראל מנהל תחנה דלק צירף/ה את זמטו דלק",
+      "content": "שאלה: ישראל מנהל תחנה דלק צירף/ה את זמטו דלק\n\nתשובה (נבו פרץ - מנהל): יש לך תמונה שרואים את המספר?",
+      "contentHe": "שאלה: ישראל מנהל תחנה דלק צירף/ה את זמטו דלק\n\nתשובה (נבו פרץ - מנהל): יש לך תמונה שרואים את המספר?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "דיברתי עם הבחור שתדלק את הרכב הכתום והוא יבוא לשלם",
+      "titleHe": "דיברתי עם הבחור שתדלק את הרכב הכתום והוא יבוא לשלם",
+      "content": "שאלה: דיברתי עם הבחור שתדלק את הרכב הכתום והוא יבוא לשלם\n\nתשובה (נבו פרץ - מנהל): מוצ״ש אוריאל וקובי פותחים",
+      "contentHe": "שאלה: דיברתי עם הבחור שתדלק את הרכב הכתום והוא יבוא לשלם\n\nתשובה (נבו פרץ - מנהל): מוצ״ש אוריאל וקובי פותחים",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישי פרץ צירף/ה את ישראל ווקסמן דלק",
+      "titleHe": "ישי פרץ צירף/ה את ישראל ווקסמן דלק",
+      "content": "שאלה: ישי פרץ צירף/ה את ישראל ווקסמן דלק\n\nתשובה (נבו פרץ - מנהל): מפתח למחסן שתיה מישהו ראה?",
+      "contentHe": "שאלה: ישי פרץ צירף/ה את ישראל ווקסמן דלק\n\nתשובה (נבו פרץ - מנהל): מפתח למחסן שתיה מישהו ראה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אני לא מבין למה מעבירים משמרת ככה זה לא הוגן לעובד שמגיע ומקבל משמרת כזאת.",
+      "titleHe": "אני לא מבין למה מעבירים משמרת ככה זה לא הוגן לעובד שמגיע ומקבל משמרת כזאת.",
+      "content": "שאלה: אני לא מבין למה מעבירים משמרת ככה זה לא הוגן לעובד שמגיע ומקבל משמרת כזאת.\n\nתשובה (נבו פרץ - מנהל): מפתח למחסן שתיה מישהו ראה?",
+      "contentHe": "שאלה: אני לא מבין למה מעבירים משמרת ככה זה לא הוגן לעובד שמגיע ומקבל משמרת כזאת.\n\nתשובה (נבו פרץ - מנהל): מפתח למחסן שתיה מישהו ראה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "זה העברת משמרת שלי טעות שלי לא יקרה שוב",
+      "titleHe": "זה העברת משמרת שלי טעות שלי לא יקרה שוב",
+      "content": "שאלה: זה העברת משמרת שלי טעות שלי לא יקרה שוב\n\nתשובה (נבו פרץ - מנהל): מפתח למחסן שתיה מישהו ראה?",
+      "contentHe": "שאלה: זה העברת משמרת שלי טעות שלי לא יקרה שוב\n\nתשובה (נבו פרץ - מנהל): מפתח למחסן שתיה מישהו ראה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אפשרי לשלם במשאבות דלק דרך האפליקציה?",
+      "titleHe": "אפשרי לשלם במשאבות דלק דרך האפליקציה?",
+      "content": "שאלה: אפשרי לשלם במשאבות דלק דרך האפליקציה?\n\nתשובה (נבו פרץ - מנהל): היא לא עובדת בתחנה יש איזה תקלה",
+      "contentHe": "שאלה: אפשרי לשלם במשאבות דלק דרך האפליקציה?\n\nתשובה (נבו פרץ - מנהל): היא לא עובדת בתחנה יש איזה תקלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "צריך ללחוץ באפליקציה על תדלוק",
+      "titleHe": "צריך ללחוץ באפליקציה על תדלוק",
+      "content": "שאלה: צריך ללחוץ באפליקציה על תדלוק\n\nתשובה (נבו פרץ - מנהל): היא לא עובדת בתחנה יש איזה תקלה",
+      "contentHe": "שאלה: צריך ללחוץ באפליקציה על תדלוק\n\nתשובה (נבו פרץ - מנהל): היא לא עובדת בתחנה יש איזה תקלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ואז מספר משאבה",
+      "titleHe": "ואז מספר משאבה",
+      "content": "שאלה: ואז מספר משאבה\n\nתשובה (נבו פרץ - מנהל): היא לא עובדת בתחנה יש איזה תקלה",
+      "contentHe": "שאלה: ואז מספר משאבה\n\nתשובה (נבו פרץ - מנהל): היא לא עובדת בתחנה יש איזה תקלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "חברים שימו לב עקב ריבוי גניבות של מארזי מים וקרח,אנחנו נועלים את הארונות ,לקוח שרוצה לקנות ישלם בקופ",
+      "titleHe": "חברים שימו לב עקב ריבוי גניבות של מארזי מים וקרח,אנחנו נועלים את הארונות ,לקוח שרוצה לקנות ישלם בקופ",
+      "content": "שאלה: חברים שימו לב עקב ריבוי גניבות של מארזי מים וקרח,אנחנו נועלים את הארונות ,לקוח שרוצה לקנות ישלם בקופה ואז המתדלק נותן לו לפי מה שרשום בקבלה.\n\nתשובה (נבו פרץ - מנהל): מה אתה מבלבל עברת על הראשון",
+      "contentHe": "שאלה: חברים שימו לב עקב ריבוי גניבות של מארזי מים וקרח,אנחנו נועלים את הארונות ,לקוח שרוצה לקנות ישלם בקופה ואז המתדלק נותן לו לפי מה שרשום בקבלה.\n\nתשובה (נבו פרץ - מנהל): מה אתה מבלבל עברת על הראשון",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "עובר קופה?",
+      "titleHe": "עובר קופה?",
+      "content": "שאלה: עובר קופה?\n\nתשובה (נבו פרץ - מנהל): הוא מבאר שבע",
+      "contentHe": "שאלה: עובר קופה?\n\nתשובה (נבו פרץ - מנהל): הוא מבאר שבע",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אתה עובד בשב״כ ולא ידענו?🤔🤔",
+      "titleHe": "אתה עובד בשב״כ ולא ידענו?🤔🤔",
+      "content": "שאלה: אתה עובד בשב״כ ולא ידענו?🤔🤔\n\nתשובה (נבו פרץ - מנהל): אל תשחררו אנשים לפני שווידאתם שהכרטיס עובר. שימתינו עד שתצא קבלה",
+      "contentHe": "שאלה: אתה עובד בשב״כ ולא ידענו?🤔🤔\n\nתשובה (נבו פרץ - מנהל): אל תשחררו אנשים לפני שווידאתם שהכרטיס עובר. שימתינו עד שתצא קבלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שלא יגישו תלונה לדלק",
+      "titleHe": "שלא יגישו תלונה לדלק",
+      "content": "שאלה: שלא יגישו תלונה לדלק\n\nתשובה (נבו פרץ - מנהל): הבאתי לו אותו",
+      "contentHe": "שאלה: שלא יגישו תלונה לדלק\n\nתשובה (נבו פרץ - מנהל): הבאתי לו אותו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שהקופה תיהיה מאורגנת",
+      "titleHe": "שהקופה תיהיה מאורגנת",
+      "content": "שאלה: שהקופה תיהיה מאורגנת\n\nתשובה (נבו פרץ - מנהל): הבאתי לו אותו",
+      "contentHe": "שאלה: שהקופה תיהיה מאורגנת\n\nתשובה (נבו פרץ - מנהל): הבאתי לו אותו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בקופה יש כרטיס לצורך תדלוקים של פלאח.  למה לא משתמשים בו ????",
+      "titleHe": "בקופה יש כרטיס לצורך תדלוקים של פלאח.  למה לא משתמשים בו ????",
+      "content": "שאלה: בקופה יש כרטיס לצורך תדלוקים של פלאח.  למה לא משתמשים בו ????\n\nתשובה (נבו פרץ - מנהל): הבאתי לו אותו",
+      "contentHe": "שאלה: בקופה יש כרטיס לצורך תדלוקים של פלאח.  למה לא משתמשים בו ????\n\nתשובה (נבו פרץ - מנהל): הבאתי לו אותו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "צוות דוגמנים",
+      "titleHe": "צוות דוגמנים",
+      "content": "שאלה: צוות דוגמנים\n\nתשובה (נבו פרץ - מנהל): משאבה 7 סולר דלקן לא תקין",
+      "contentHe": "שאלה: צוות דוגמנים\n\nתשובה (נבו פרץ - מנהל): משאבה 7 סולר דלקן לא תקין",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אתה בטוח שהם לא דוגמניות ?!",
+      "titleHe": "אתה בטוח שהם לא דוגמניות ?!",
+      "content": "שאלה: אתה בטוח שהם לא דוגמניות ?!\n\nתשובה (נבו פרץ - מנהל): משאבה 7 סולר דלקן לא תקין",
+      "contentHe": "שאלה: אתה בטוח שהם לא דוגמניות ?!\n\nתשובה (נבו פרץ - מנהל): משאבה 7 סולר דלקן לא תקין",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "למה הכלב מחוץ לכלוב?😂",
+      "titleHe": "למה הכלב מחוץ לכלוב?😂",
+      "content": "שאלה: למה הכלב מחוץ לכלוב?😂\n\nתשובה (נבו פרץ - מנהל): משאבה 7 סולר דלקן לא תקין",
+      "contentHe": "שאלה: למה הכלב מחוץ לכלוב?😂\n\nתשובה (נבו פרץ - מנהל): משאבה 7 סולר דלקן לא תקין",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב הגיע מגוון של אלכוהול  ,כל המוצרים מקודדים  עם מחיר",
+      "titleHe": "שימו לב הגיע מגוון של אלכוהול  ,כל המוצרים מקודדים  עם מחיר",
+      "content": "שאלה: שימו לב הגיע מגוון של אלכוהול  ,כל המוצרים מקודדים  עם מחיר\n\nתשובה (נבו פרץ - מנהל): משאבה 7 סולר דלקן לא תקין",
+      "contentHe": "שאלה: שימו לב הגיע מגוון של אלכוהול  ,כל המוצרים מקודדים  עם מחיר\n\nתשובה (נבו פרץ - מנהל): משאבה 7 סולר דלקן לא תקין",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לשים לב: *מגוון מוצרי אלכוהול למכירה בלבד, לא לשימוש עצמי*",
+      "titleHe": "לשים לב: *מגוון מוצרי אלכוהול למכירה בלבד, לא לשימוש עצמי*",
+      "content": "שאלה: לשים לב: *מגוון מוצרי אלכוהול למכירה בלבד, לא לשימוש עצמי*\n\nתשובה (נבו פרץ - מנהל): משאבה 7 סולר דלקן לא תקין",
+      "contentHe": "שאלה: לשים לב: *מגוון מוצרי אלכוהול למכירה בלבד, לא לשימוש עצמי*\n\nתשובה (נבו פרץ - מנהל): משאבה 7 סולר דלקן לא תקין",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישראל ווקסמן דלק יצא/ה",
+      "titleHe": "ישראל ווקסמן דלק יצא/ה",
+      "content": "שאלה: ישראל ווקסמן דלק יצא/ה\n\nתשובה (נבו פרץ - מנהל): לוז מעודכן להמשך השבוע",
+      "contentHe": "שאלה: ישראל ווקסמן דלק יצא/ה\n\nתשובה (נבו פרץ - מנהל): לוז מעודכן להמשך השבוע",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "להעביר לשרי את המזומן",
+      "titleHe": "להעביר לשרי את המזומן",
+      "content": "שאלה: להעביר לשרי את המזומן\n\nתשובה (נבו פרץ - מנהל): בדרך כלל בשישי הוא מגיע",
+      "contentHe": "שאלה: להעביר לשרי את המזומן\n\nתשובה (נבו פרץ - מנהל): בדרך כלל בשישי הוא מגיע",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי שרואה אותו להודיע לי או לנבו ולדרוש תשלום",
+      "titleHe": "מי שרואה אותו להודיע לי או לנבו ולדרוש תשלום",
+      "content": "שאלה: מי שרואה אותו להודיע לי או לנבו ולדרוש תשלום\n\nתשובה (נבו פרץ - מנהל): בדרך כלל בשישי הוא מגיע",
+      "contentHe": "שאלה: מי שרואה אותו להודיע לי או לנבו ולדרוש תשלום\n\nתשובה (נבו פרץ - מנהל): בדרך כלל בשישי הוא מגיע",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "צינור תלוש במשאבה 8 ,מישהו יודע מי עשה את זה והאם זה מיום שישי?",
+      "titleHe": "צינור תלוש במשאבה 8 ,מישהו יודע מי עשה את זה והאם זה מיום שישי?",
+      "content": "שאלה: צינור תלוש במשאבה 8 ,מישהו יודע מי עשה את זה והאם זה מיום שישי?\n\nתשובה (נבו פרץ - מנהל): כן מיום שישי יש לי מספר",
+      "contentHe": "שאלה: צינור תלוש במשאבה 8 ,מישהו יודע מי עשה את זה והאם זה מיום שישי?\n\nתשובה (נבו פרץ - מנהל): כן מיום שישי יש לי מספר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישראל מנהל תחנה דלק צירף/ה את נריה דלק",
+      "titleHe": "ישראל מנהל תחנה דלק צירף/ה את נריה דלק",
+      "content": "שאלה: ישראל מנהל תחנה דלק צירף/ה את נריה דלק\n\nתשובה (נבו פרץ - מנהל): סגור מעולה",
+      "contentHe": "שאלה: ישראל מנהל תחנה דלק צירף/ה את נריה דלק\n\nתשובה (נבו פרץ - מנהל): סגור מעולה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב כל מי שמכניס סחורה חלבית למקרר ,צריך להחליף בין הסחורה שבסוף המדף לסחורה החדשה,אחרת יהיה לנו",
+      "titleHe": "שימו לב כל מי שמכניס סחורה חלבית למקרר ,צריך להחליף בין הסחורה שבסוף המדף לסחורה החדשה,אחרת יהיה לנו",
+      "content": "שאלה: שימו לב כל מי שמכניס סחורה חלבית למקרר ,צריך להחליף בין הסחורה שבסוף המדף לסחורה החדשה,אחרת יהיה לנו הרבה חזרות.\n\nתשובה (נבו פרץ - מנהל): סגור מעולה",
+      "contentHe": "שאלה: שימו לב כל מי שמכניס סחורה חלבית למקרר ,צריך להחליף בין הסחורה שבסוף המדף לסחורה החדשה,אחרת יהיה לנו הרבה חזרות.\n\nתשובה (נבו פרץ - מנהל): סגור מעולה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הלקוח צריך להגיע היום לשלם 170 ש\"ח, לא להכניס לקופה ,פשוט לשים במעטפה ולהכניס לכספת",
+      "titleHe": "הלקוח צריך להגיע היום לשלם 170 ש\"ח, לא להכניס לקופה ,פשוט לשים במעטפה ולהכניס לכספת",
+      "content": "שאלה: הלקוח צריך להגיע היום לשלם 170 ש\"ח, לא להכניס לקופה ,פשוט לשים במעטפה ולהכניס לכספת\n\nתשובה (נבו פרץ - מנהל): סגור מעולה",
+      "contentHe": "שאלה: הלקוח צריך להגיע היום לשלם 170 ש\"ח, לא להכניס לקופה ,פשוט לשים במעטפה ולהכניס לכספת\n\nתשובה (נבו פרץ - מנהל): סגור מעולה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שים שלט ליד הקופה שכולם יזכרו",
+      "titleHe": "שים שלט ליד הקופה שכולם יזכרו",
+      "content": "שאלה: שים שלט ליד הקופה שכולם יזכרו\n\nתשובה (נבו פרץ - מנהל): שילמה ליהודית",
+      "contentHe": "שאלה: שים שלט ליד הקופה שכולם יזכרו\n\nתשובה (נבו פרץ - מנהל): שילמה ליהודית",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישראל מנהל תחנה דלק הסיר/ה את מרדכי",
+      "titleHe": "ישראל מנהל תחנה דלק הסיר/ה את מרדכי",
+      "content": "שאלה: ישראל מנהל תחנה דלק הסיר/ה את מרדכי\n\nתשובה (נבו פרץ - מנהל): מהיום ניתן למכור לחמניות ללקוחות לפי 3 שח",
+      "contentHe": "שאלה: ישראל מנהל תחנה דלק הסיר/ה את מרדכי\n\nתשובה (נבו פרץ - מנהל): מהיום ניתן למכור לחמניות ללקוחות לפי 3 שח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי שעובד בעבודה נוספת , נא לדאוג לתיאום מס",
+      "titleHe": "מי שעובד בעבודה נוספת , נא לדאוג לתיאום מס",
+      "content": "שאלה: מי שעובד בעבודה נוספת , נא לדאוג לתיאום מס\n\nתשובה (נבו פרץ - מנהל): ברוך הבא לקובי שחזר אלינו",
+      "contentHe": "שאלה: מי שעובד בעבודה נוספת , נא לדאוג לתיאום מס\n\nתשובה (נבו פרץ - מנהל): ברוך הבא לקובי שחזר אלינו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הגיעו לסדר את זה עכשיו",
+      "titleHe": "הגיעו לסדר את זה עכשיו",
+      "content": "שאלה: הגיעו לסדר את זה עכשיו\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: הגיעו לסדר את זה עכשיו\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שבוע טוב אפשר לשלוח לי מצב וי דה רוט",
+      "titleHe": "שבוע טוב אפשר לשלוח לי מצב וי דה רוט",
+      "content": "שאלה: שבוע טוב אפשר לשלוח לי מצב וי דה רוט\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: שבוע טוב אפשר לשלוח לי מצב וי דה רוט\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הוא הגיע עם עזרה",
+      "titleHe": "הוא הגיע עם עזרה",
+      "content": "שאלה: הוא הגיע עם עזרה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: הוא הגיע עם עזרה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "נסגר על מזומן בטעות",
+      "titleHe": "נסגר על מזומן בטעות",
+      "content": "שאלה: נסגר על מזומן בטעות\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: נסגר על מזומן בטעות\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי זה אור הלוי,הוא הזמין כרטיסי תדלוק ועדיין לא קיבל,מי דיבר איתו?",
+      "titleHe": "מי זה אור הלוי,הוא הזמין כרטיסי תדלוק ועדיין לא קיבל,מי דיבר איתו?",
+      "content": "שאלה: מי זה אור הלוי,הוא הזמין כרטיסי תדלוק ועדיין לא קיבל,מי דיבר איתו?\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: מי זה אור הלוי,הוא הזמין כרטיסי תדלוק ועדיין לא קיבל,מי דיבר איתו?\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "סיגריות אלור ופיין להוסיף שקל לחפיסה",
+      "titleHe": "סיגריות אלור ופיין להוסיף שקל לחפיסה",
+      "content": "שאלה: סיגריות אלור ופיין להוסיף שקל לחפיסה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: סיגריות אלור ופיין להוסיף שקל לחפיסה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "זמטו דלק יצא/ה",
+      "titleHe": "זמטו דלק יצא/ה",
+      "content": "שאלה: זמטו דלק יצא/ה\n\nתשובה (נבו פרץ - מנהל): אני מבקש שאם ישראל ווקסמן נכנס לתחנה להוציא אותו ולא לתת לו שירות.",
+      "contentHe": "שאלה: זמטו דלק יצא/ה\n\nתשובה (נבו פרץ - מנהל): אני מבקש שאם ישראל ווקסמן נכנס לתחנה להוציא אותו ולא לתת לו שירות.",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב מי שעושה טביעת אצבע ,יש לכולם בלאגן בזמנים ,אתם עושים כניסה על מצב יציאה ,רוב הפעמים שוכחים ",
+      "titleHe": "שימו לב מי שעושה טביעת אצבע ,יש לכולם בלאגן בזמנים ,אתם עושים כניסה על מצב יציאה ,רוב הפעמים שוכחים ",
+      "content": "שאלה: שימו לב מי שעושה טביעת אצבע ,יש לכולם בלאגן בזמנים ,אתם עושים כניסה על מצב יציאה ,רוב הפעמים שוכחים להעביר אצבע ,זה גוזל ממני ים זמן ואין עצבים להתעסק בזה תתחילו להיות אחראים על עצמכם.\n\nתשובה (נבו פרץ - מנהל): אני מבקש שאם ישראל ווקסמן נכנס לתחנה להוציא אותו ולא לתת לו שירות.",
+      "contentHe": "שאלה: שימו לב מי שעושה טביעת אצבע ,יש לכולם בלאגן בזמנים ,אתם עושים כניסה על מצב יציאה ,רוב הפעמים שוכחים להעביר אצבע ,זה גוזל ממני ים זמן ואין עצבים להתעסק בזה תתחילו להיות אחראים על עצמכם.\n\nתשובה (נבו פרץ - מנהל): אני מבקש שאם ישראל ווקסמן נכנס לתחנה להוציא אותו ולא לתת לו שירות.",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "גאולה עטרי תדלקה ב 8/2/23 חושבת ששכחה את הכרטיס אשראי שלה . האם יש אצלנו ?",
+      "titleHe": "גאולה עטרי תדלקה ב 8/2/23 חושבת ששכחה את הכרטיס אשראי שלה . האם יש אצלנו ?",
+      "content": "שאלה: גאולה עטרי תדלקה ב 8/2/23 חושבת ששכחה את הכרטיס אשראי שלה . האם יש אצלנו ?\n\nתשובה (נבו פרץ - מנהל): זה נראה כמו הפרש תדלוק",
+      "contentHe": "שאלה: גאולה עטרי תדלקה ב 8/2/23 חושבת ששכחה את הכרטיס אשראי שלה . האם יש אצלנו ?\n\nתשובה (נבו פרץ - מנהל): זה נראה כמו הפרש תדלוק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לשמור על הסדר והניקיון",
+      "titleHe": "לשמור על הסדר והניקיון",
+      "content": "שאלה: לשמור על הסדר והניקיון\n\nתשובה (נבו פרץ - מנהל): זה נראה כמו הפרש תדלוק",
+      "contentHe": "שאלה: לשמור על הסדר והניקיון\n\nתשובה (נבו פרץ - מנהל): זה נראה כמו הפרש תדלוק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אין על קובי 👏👏👏👏",
+      "titleHe": "אין על קובי 👏👏👏👏",
+      "content": "שאלה: אין על קובי 👏👏👏👏\n\nתשובה (נבו פרץ - מנהל): זה נראה כמו הפרש תדלוק",
+      "contentHe": "שאלה: אין על קובי 👏👏👏👏\n\nתשובה (נבו פרץ - מנהל): זה נראה כמו הפרש תדלוק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "קובי ואוריאל אלופים!!!",
+      "titleHe": "קובי ואוריאל אלופים!!!",
+      "content": "שאלה: קובי ואוריאל אלופים!!!\n\nתשובה (נבו פרץ - מנהל): זה נראה כמו הפרש תדלוק",
+      "contentHe": "שאלה: קובי ואוריאל אלופים!!!\n\nתשובה (נבו פרץ - מנהל): זה נראה כמו הפרש תדלוק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אני מבקש לא למכור יותר מ 2 חלב ללקוח.",
+      "titleHe": "אני מבקש לא למכור יותר מ 2 חלב ללקוח.",
+      "content": "שאלה: אני מבקש לא למכור יותר מ 2 חלב ללקוח.\n\nתשובה (נבו פרץ - מנהל): רוצה שכל תדלוק אני יעדכן אותך?",
+      "contentHe": "שאלה: אני מבקש לא למכור יותר מ 2 חלב ללקוח.\n\nתשובה (נבו פרץ - מנהל): רוצה שכל תדלוק אני יעדכן אותך?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בוקר טוב. למה אין מצלמות ?",
+      "titleHe": "בוקר טוב. למה אין מצלמות ?",
+      "content": "שאלה: בוקר טוב. למה אין מצלמות ?\n\nתשובה (נבו פרץ - מנהל): רוצה שכל תדלוק אני יעדכן אותך?",
+      "contentHe": "שאלה: בוקר טוב. למה אין מצלמות ?\n\nתשובה (נבו פרץ - מנהל): רוצה שכל תדלוק אני יעדכן אותך?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אני לא מצליח להפעיל אותם הם התכבו לי פתאום",
+      "titleHe": "אני לא מצליח להפעיל אותם הם התכבו לי פתאום",
+      "content": "שאלה: אני לא מצליח להפעיל אותם הם התכבו לי פתאום\n\nתשובה (נבו פרץ - מנהל): רוצה שכל תדלוק אני יעדכן אותך?",
+      "contentHe": "שאלה: אני לא מצליח להפעיל אותם הם התכבו לי פתאום\n\nתשובה (נבו פרץ - מנהל): רוצה שכל תדלוק אני יעדכן אותך?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי לקח מהשקע של הקופה למטה מטען של אייפון?",
+      "titleHe": "מי לקח מהשקע של הקופה למטה מטען של אייפון?",
+      "content": "שאלה: מי לקח מהשקע של הקופה למטה מטען של אייפון?\n\nתשובה (נבו פרץ - מנהל): רוצה שכל תדלוק אני יעדכן אותך?",
+      "contentHe": "שאלה: מי לקח מהשקע של הקופה למטה מטען של אייפון?\n\nתשובה (נבו פרץ - מנהל): רוצה שכל תדלוק אני יעדכן אותך?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "למה לא קיבלתי עדכון בזמן אמת ?",
+      "titleHe": "למה לא קיבלתי עדכון בזמן אמת ?",
+      "content": "שאלה: למה לא קיבלתי עדכון בזמן אמת ?\n\nתשובה (נבו פרץ - מנהל): רוצה שכל תדלוק אני יעדכן אותך?",
+      "contentHe": "שאלה: למה לא קיבלתי עדכון בזמן אמת ?\n\nתשובה (נבו פרץ - מנהל): רוצה שכל תדלוק אני יעדכן אותך?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "היה לחץ בקופה",
+      "titleHe": "היה לחץ בקופה",
+      "content": "שאלה: היה לחץ בקופה\n\nתשובה (נבו פרץ - מנהל): בכוונה לא שלחתי לך",
+      "contentHe": "שאלה: היה לחץ בקופה\n\nתשובה (נבו פרץ - מנהל): בכוונה לא שלחתי לך",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "להעביר סיגריות אלור 25 ש\"ח, זה עובר קופה 24 אז להוסיף שקל",
+      "titleHe": "להעביר סיגריות אלור 25 ש\"ח, זה עובר קופה 24 אז להוסיף שקל",
+      "content": "שאלה: להעביר סיגריות אלור 25 ש\"ח, זה עובר קופה 24 אז להוסיף שקל\n\nתשובה (נבו פרץ - מנהל): נתקשר מחר בבוקר לתמיכה.. שימו הפקדות בכספת בנתיים",
+      "contentHe": "שאלה: להעביר סיגריות אלור 25 ש\"ח, זה עובר קופה 24 אז להוסיף שקל\n\nתשובה (נבו פרץ - מנהל): נתקשר מחר בבוקר לתמיכה.. שימו הפקדות בכספת בנתיים",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "@יהודית משרד דלק",
+      "titleHe": "@יהודית משרד דלק",
+      "content": "שאלה: @יהודית משרד דלק\n\nתשובה (נבו פרץ - מנהל): נתקשר מחר בבוקר לתמיכה.. שימו הפקדות בכספת בנתיים",
+      "contentHe": "שאלה: @יהודית משרד דלק\n\nתשובה (נבו פרץ - מנהל): נתקשר מחר בבוקר לתמיכה.. שימו הפקדות בכספת בנתיים",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תודה , ראיתי.  ביום ראשון אוציא קבלה",
+      "titleHe": "תודה , ראיתי.  ביום ראשון אוציא קבלה",
+      "content": "שאלה: תודה , ראיתי.  ביום ראשון אוציא קבלה\n\nתשובה (נבו פרץ - מנהל): נתקשר מחר בבוקר לתמיכה.. שימו הפקדות בכספת בנתיים",
+      "contentHe": "שאלה: תודה , ראיתי.  ביום ראשון אוציא קבלה\n\nתשובה (נבו פרץ - מנהל): נתקשר מחר בבוקר לתמיכה.. שימו הפקדות בכספת בנתיים",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי בקופה ???",
+      "titleHe": "מי בקופה ???",
+      "content": "שאלה: מי בקופה ???\n\nתשובה (נבו פרץ - מנהל): לא ראיתי דובק",
+      "contentHe": "שאלה: מי בקופה ???\n\nתשובה (נבו פרץ - מנהל): לא ראיתי דובק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "להוציא חשבונית ללקוח ולשלוח בפקס ?",
+      "titleHe": "להוציא חשבונית ללקוח ולשלוח בפקס ?",
+      "content": "שאלה: להוציא חשבונית ללקוח ולשלוח בפקס ?\n\nתשובה (נבו פרץ - מנהל): רעות היית צריכה לרשום",
+      "contentHe": "שאלה: להוציא חשבונית ללקוח ולשלוח בפקס ?\n\nתשובה (נבו פרץ - מנהל): רעות היית צריכה לרשום",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "נאבד המפתחות של המחסן שתיה עם הפלסטיק הירוק והיה לו מפתח נוסף של המנעולים בחוץ",
+      "titleHe": "נאבד המפתחות של המחסן שתיה עם הפלסטיק הירוק והיה לו מפתח נוסף של המנעולים בחוץ",
+      "content": "שאלה: נאבד המפתחות של המחסן שתיה עם הפלסטיק הירוק והיה לו מפתח נוסף של המנעולים בחוץ\n\nתשובה (נבו פרץ - מנהל): רוצה להמליץ על תחנת דלק אמיר",
+      "contentHe": "שאלה: נאבד המפתחות של המחסן שתיה עם הפלסטיק הירוק והיה לו מפתח נוסף של המנעולים בחוץ\n\nתשובה (נבו פרץ - מנהל): רוצה להמליץ על תחנת דלק אמיר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי קיבל שיק ממאיר טביב ?!",
+      "titleHe": "מי קיבל שיק ממאיר טביב ?!",
+      "content": "שאלה: מי קיבל שיק ממאיר טביב ?!\n\nתשובה (נבו פרץ - מנהל): רוצה להמליץ על תחנת דלק אמיר",
+      "contentHe": "שאלה: מי קיבל שיק ממאיר טביב ?!\n\nתשובה (נבו פרץ - מנהל): רוצה להמליץ על תחנת דלק אמיר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בוקר טוב .מי בתחנה ?",
+      "titleHe": "בוקר טוב .מי בתחנה ?",
+      "content": "שאלה: בוקר טוב .מי בתחנה ?\n\nתשובה (נבו פרץ - מנהל): רוצה להמליץ על תחנת דלק אמיר",
+      "contentHe": "שאלה: בוקר טוב .מי בתחנה ?\n\nתשובה (נבו פרץ - מנהל): רוצה להמליץ על תחנת דלק אמיר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בוקר מצויין",
+      "titleHe": "בוקר מצויין",
+      "content": "שאלה: בוקר מצויין\n\nתשובה (נבו פרץ - מנהל): רוצה להמליץ על תחנת דלק אמיר",
+      "contentHe": "שאלה: בוקר מצויין\n\nתשובה (נבו פרץ - מנהל): רוצה להמליץ על תחנת דלק אמיר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שלח חשבונית לישראל",
+      "titleHe": "שלח חשבונית לישראל",
+      "content": "שאלה: שלח חשבונית לישראל\n\nתשובה (נבו פרץ - מנהל): רוצה להמליץ על תחנת דלק אמיר",
+      "contentHe": "שאלה: שלח חשבונית לישראל\n\nתשובה (נבו פרץ - מנהל): רוצה להמליץ על תחנת דלק אמיר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "קיבלנו שקי פחם למנגל של 3 קג ,אחד ב30 שתיים ב50 ש\"ח.",
+      "titleHe": "קיבלנו שקי פחם למנגל של 3 קג ,אחד ב30 שתיים ב50 ש\"ח.",
+      "content": "שאלה: קיבלנו שקי פחם למנגל של 3 קג ,אחד ב30 שתיים ב50 ש\"ח.\n\nתשובה (נבו פרץ - מנהל): רוצה להמליץ על תחנת דלק אמיר",
+      "contentHe": "שאלה: קיבלנו שקי פחם למנגל של 3 קג ,אחד ב30 שתיים ב50 ש\"ח.\n\nתשובה (נבו פרץ - מנהל): רוצה להמליץ על תחנת דלק אמיר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בוקר אור לכולם , לפני שעושים הפקדה בברינקס לספור את השטרות שיהיו תואמים לסכום ההפקדה ואז להפקיד ,נוצ",
+      "titleHe": "בוקר אור לכולם , לפני שעושים הפקדה בברינקס לספור את השטרות שיהיו תואמים לסכום ההפקדה ואז להפקיד ,נוצ",
+      "content": "שאלה: בוקר אור לכולם , לפני שעושים הפקדה בברינקס לספור את השטרות שיהיו תואמים לסכום ההפקדה ואז להפקיד ,נוצר לאחרונה בלאגן של חוסרים בכסף ואי התאמות בין פיתקית הפקדה למזומן .\n\nתשובה (נבו פרץ - מנהל): תתקשר למספר שעל הכספת",
+      "contentHe": "שאלה: בוקר אור לכולם , לפני שעושים הפקדה בברינקס לספור את השטרות שיהיו תואמים לסכום ההפקדה ואז להפקיד ,נוצר לאחרונה בלאגן של חוסרים בכסף ואי התאמות בין פיתקית הפקדה למזומן .\n\nתשובה (נבו פרץ - מנהל): תתקשר למספר שעל הכספת",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי שפותח מהקופה מזומן,לוודא שכל לקוח נכנס לשלם ,תרשמו על פתק התקבול את מספר המשאבה וכשהלקוח נכנס לשל",
+      "titleHe": "מי שפותח מהקופה מזומן,לוודא שכל לקוח נכנס לשלם ,תרשמו על פתק התקבול את מספר המשאבה וכשהלקוח נכנס לשל",
+      "content": "שאלה: מי שפותח מהקופה מזומן,לוודא שכל לקוח נכנס לשלם ,תרשמו על פתק התקבול את מספר המשאבה וכשהלקוח נכנס לשלם אפשר לזרוק את הפתק תקבול\n\nתשובה (נבו פרץ - מנהל): תתקשר למספר שעל הכספת",
+      "contentHe": "שאלה: מי שפותח מהקופה מזומן,לוודא שכל לקוח נכנס לשלם ,תרשמו על פתק התקבול את מספר המשאבה וכשהלקוח נכנס לשלם אפשר לזרוק את הפתק תקבול\n\nתשובה (נבו פרץ - מנהל): תתקשר למספר שעל הכספת",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "העיתון לא עובר בקופה ?!",
+      "titleHe": "העיתון לא עובר בקופה ?!",
+      "content": "שאלה: העיתון לא עובר בקופה ?!\n\nתשובה (נבו פרץ - מנהל): הוא עובר ביקר יותר",
+      "contentHe": "שאלה: העיתון לא עובר בקופה ?!\n\nתשובה (נבו פרץ - מנהל): הוא עובר ביקר יותר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הודעה חשובה הגיעו הבוקר מהמשטרה לבדוק את המצלמות אבטחה לחשד הצתה ,לא לאפשר תדלוק בנזין בבקבוקים ,זה ",
+      "titleHe": "הודעה חשובה הגיעו הבוקר מהמשטרה לבדוק את המצלמות אבטחה לחשד הצתה ,לא לאפשר תדלוק בנזין בבקבוקים ,זה ",
+      "content": "שאלה: הודעה חשובה הגיעו הבוקר מהמשטרה לבדוק את המצלמות אבטחה לחשד הצתה ,לא לאפשר תדלוק בנזין בבקבוקים ,זה קנס של 20 אלף ש\"ח.\n\nתשובה (נבו פרץ - מנהל): לשים בשקית מחר להחזיר לשליח",
+      "contentHe": "שאלה: הודעה חשובה הגיעו הבוקר מהמשטרה לבדוק את המצלמות אבטחה לחשד הצתה ,לא לאפשר תדלוק בנזין בבקבוקים ,זה קנס של 20 אלף ש\"ח.\n\nתשובה (נבו פרץ - מנהל): לשים בשקית מחר להחזיר לשליח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "צירפת את נדבר מתדלק",
+      "titleHe": "צירפת את נדבר מתדלק",
+      "content": "שאלה: צירפת את נדבר מתדלק\n\nתשובה (נבו פרץ - מנהל): לשים בשקית מחר להחזיר לשליח",
+      "contentHe": "שאלה: צירפת את נדבר מתדלק\n\nתשובה (נבו פרץ - מנהל): לשים בשקית מחר להחזיר לשליח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בוקר אור ,אתמול בשעה 22 בערב נהג אוטובוס לקח את המגנט מהקופה ולא החזיר ,שימו לב למי שלוקח שידאג להחז",
+      "titleHe": "בוקר אור ,אתמול בשעה 22 בערב נהג אוטובוס לקח את המגנט מהקופה ולא החזיר ,שימו לב למי שלוקח שידאג להחז",
+      "content": "שאלה: בוקר אור ,אתמול בשעה 22 בערב נהג אוטובוס לקח את המגנט מהקופה ולא החזיר ,שימו לב למי שלוקח שידאג להחזיר.\n\nתשובה (נבו פרץ - מנהל): אבא של שוקי מתדלק בלי כרטיס כי הוא מאבד אותו",
+      "contentHe": "שאלה: בוקר אור ,אתמול בשעה 22 בערב נהג אוטובוס לקח את המגנט מהקופה ולא החזיר ,שימו לב למי שלוקח שידאג להחזיר.\n\nתשובה (נבו פרץ - מנהל): אבא של שוקי מתדלק בלי כרטיס כי הוא מאבד אותו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "איזו חברה היה האוטובוס ?",
+      "titleHe": "איזו חברה היה האוטובוס ?",
+      "content": "שאלה: איזו חברה היה האוטובוס ?\n\nתשובה (נבו פרץ - מנהל): אבא של שוקי מתדלק בלי כרטיס כי הוא מאבד אותו",
+      "contentHe": "שאלה: איזו חברה היה האוטובוס ?\n\nתשובה (נבו פרץ - מנהל): אבא של שוקי מתדלק בלי כרטיס כי הוא מאבד אותו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הוא לוקח כל הזמן אספרסו כפול עם קצת מים חמים 🤣",
+      "titleHe": "הוא לוקח כל הזמן אספרסו כפול עם קצת מים חמים 🤣",
+      "content": "שאלה: הוא לוקח כל הזמן אספרסו כפול עם קצת מים חמים 🤣\n\nתשובה (נבו פרץ - מנהל): אבא של שוקי מתדלק בלי כרטיס כי הוא מאבד אותו",
+      "contentHe": "שאלה: הוא לוקח כל הזמן אספרסו כפול עם קצת מים חמים 🤣\n\nתשובה (נבו פרץ - מנהל): אבא של שוקי מתדלק בלי כרטיס כי הוא מאבד אותו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הוא רצה לזרז את הנהג של מסיעי יודה אבל הנהג של יודה לא שם לב שהנהג אוטובוס חיבר את זה לאקדח אוראה וכ",
+      "titleHe": "הוא רצה לזרז את הנהג של מסיעי יודה אבל הנהג של יודה לא שם לב שהנהג אוטובוס חיבר את זה לאקדח אוראה וכ",
+      "content": "שאלה: הוא רצה לזרז את הנהג של מסיעי יודה אבל הנהג של יודה לא שם לב שהנהג אוטובוס חיבר את זה לאקדח אוראה וכנראה שזה נפל.\n\nתשובה (נבו פרץ - מנהל): אבא של שוקי מתדלק בלי כרטיס כי הוא מאבד אותו",
+      "contentHe": "שאלה: הוא רצה לזרז את הנהג של מסיעי יודה אבל הנהג של יודה לא שם לב שהנהג אוטובוס חיבר את זה לאקדח אוראה וכנראה שזה נפל.\n\nתשובה (נבו פרץ - מנהל): אבא של שוקי מתדלק בלי כרטיס כי הוא מאבד אותו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי שעושה משמרת צהריים/ערב לדאוג לנקות שירותים ,אי אפשר לקבל שירותים לא נקיים בבוקר",
+      "titleHe": "מי שעושה משמרת צהריים/ערב לדאוג לנקות שירותים ,אי אפשר לקבל שירותים לא נקיים בבוקר",
+      "content": "שאלה: מי שעושה משמרת צהריים/ערב לדאוג לנקות שירותים ,אי אפשר לקבל שירותים לא נקיים בבוקר\n\nתשובה (נבו פרץ - מנהל): אבא של שוקי מתדלק בלי כרטיס כי הוא מאבד אותו",
+      "contentHe": "שאלה: מי שעושה משמרת צהריים/ערב לדאוג לנקות שירותים ,אי אפשר לקבל שירותים לא נקיים בבוקר\n\nתשובה (נבו פרץ - מנהל): אבא של שוקי מתדלק בלי כרטיס כי הוא מאבד אותו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "חייבים לבצע סריקה כל שעה לפחות בתוך המשמרת ולוודא שהשירותים נקיים ולא חסר נייר ויש סבון במתקן שטיפת ",
+      "titleHe": "חייבים לבצע סריקה כל שעה לפחות בתוך המשמרת ולוודא שהשירותים נקיים ולא חסר נייר ויש סבון במתקן שטיפת ",
+      "content": "שאלה: חייבים לבצע סריקה כל שעה לפחות בתוך המשמרת ולוודא שהשירותים נקיים ולא חסר נייר ויש סבון במתקן שטיפת ידיים\n\nתשובה (נבו פרץ - מנהל): אבא של שוקי מתדלק בלי כרטיס כי הוא מאבד אותו",
+      "contentHe": "שאלה: חייבים לבצע סריקה כל שעה לפחות בתוך המשמרת ולוודא שהשירותים נקיים ולא חסר נייר ויש סבון במתקן שטיפת ידיים\n\nתשובה (נבו פרץ - מנהל): אבא של שוקי מתדלק בלי כרטיס כי הוא מאבד אותו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לא מבינה , לרפי ארביב אין כרטיס ?!",
+      "titleHe": "לא מבינה , לרפי ארביב אין כרטיס ?!",
+      "content": "שאלה: לא מבינה , לרפי ארביב אין כרטיס ?!\n\nתשובה (נבו פרץ - מנהל): אבא של שוקי מתדלק בלי כרטיס כי הוא מאבד אותו",
+      "contentHe": "שאלה: לא מבינה , לרפי ארביב אין כרטיס ?!\n\nתשובה (נבו פרץ - מנהל): אבא של שוקי מתדלק בלי כרטיס כי הוא מאבד אותו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "דובק היה כבר היום ?",
+      "titleHe": "דובק היה כבר היום ?",
+      "content": "שאלה: דובק היה כבר היום ?\n\nתשובה (נבו פרץ - מנהל): איפה הכרטיס שלה ?",
+      "contentHe": "שאלה: דובק היה כבר היום ?\n\nתשובה (נבו פרץ - מנהל): איפה הכרטיס שלה ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שולם בהעברה בנקאית",
+      "titleHe": "שולם בהעברה בנקאית",
+      "content": "שאלה: שולם בהעברה בנקאית\n\nתשובה (נבו פרץ - מנהל): איפה הכרטיס שלה ?",
+      "contentHe": "שאלה: שולם בהעברה בנקאית\n\nתשובה (נבו פרץ - מנהל): איפה הכרטיס שלה ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "גם לי מותר לפעמים לשכוח משהו",
+      "titleHe": "גם לי מותר לפעמים לשכוח משהו",
+      "content": "שאלה: גם לי מותר לפעמים לשכוח משהו\n\nתשובה (נבו פרץ - מנהל): גם עיתון של ה9 לחייב 1 שקל על שקית",
+      "contentHe": "שאלה: גם לי מותר לפעמים לשכוח משהו\n\nתשובה (נבו פרץ - מנהל): גם עיתון של ה9 לחייב 1 שקל על שקית",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "חחחח מאיפה לי נבו אמר לי שונות",
+      "titleHe": "חחחח מאיפה לי נבו אמר לי שונות",
+      "content": "שאלה: חחחח מאיפה לי נבו אמר לי שונות\n\nתשובה (נבו פרץ - מנהל): לא נוריד את המחיר בתחנה למחיר מזומן עד לבוקר ?",
+      "contentHe": "שאלה: חחחח מאיפה לי נבו אמר לי שונות\n\nתשובה (נבו פרץ - מנהל): לא נוריד את המחיר בתחנה למחיר מזומן עד לבוקר ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "למה אני כותבת הודעות בקבוצה ?",
+      "titleHe": "למה אני כותבת הודעות בקבוצה ?",
+      "content": "שאלה: למה אני כותבת הודעות בקבוצה ?\n\nתשובה (נבו פרץ - מנהל): לא נוריד את המחיר בתחנה למחיר מזומן עד לבוקר ?",
+      "contentHe": "שאלה: למה אני כותבת הודעות בקבוצה ?\n\nתשובה (נבו פרץ - מנהל): לא נוריד את המחיר בתחנה למחיר מזומן עד לבוקר ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "חחחח מזל שיש נבו להאשים",
+      "titleHe": "חחחח מזל שיש נבו להאשים",
+      "content": "שאלה: חחחח מזל שיש נבו להאשים\n\nתשובה (נבו פרץ - מנהל): לא נוריד את המחיר בתחנה למחיר מזומן עד לבוקר ?",
+      "contentHe": "שאלה: חחחח מזל שיש נבו להאשים\n\nתשובה (נבו פרץ - מנהל): לא נוריד את המחיר בתחנה למחיר מזומן עד לבוקר ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כי תפסיקי להקשיב לו , הוא לא מבין כלום",
+      "titleHe": "כי תפסיקי להקשיב לו , הוא לא מבין כלום",
+      "content": "שאלה: כי תפסיקי להקשיב לו , הוא לא מבין כלום\n\nתשובה (נבו פרץ - מנהל): לא נוריד את המחיר בתחנה למחיר מזומן עד לבוקר ?",
+      "contentHe": "שאלה: כי תפסיקי להקשיב לו , הוא לא מבין כלום\n\nתשובה (נבו פרץ - מנהל): לא נוריד את המחיר בתחנה למחיר מזומן עד לבוקר ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "להזכירכם בהמשך למייל שנשלח, ביום ראשון 18/6 בשעה 22:00 ועד יום שני 05:00 מחשב דלק יושבת לצורך עידכון",
+      "titleHe": "להזכירכם בהמשך למייל שנשלח, ביום ראשון 18/6 בשעה 22:00 ועד יום שני 05:00 מחשב דלק יושבת לצורך עידכון",
+      "content": "שאלה: להזכירכם בהמשך למייל שנשלח, ביום ראשון 18/6 בשעה 22:00 ועד יום שני 05:00 מחשב דלק יושבת לצורך עידכון.\n\nתשובה (נבו פרץ - מנהל): לא נוריד את המחיר בתחנה למחיר מזומן עד לבוקר ?",
+      "contentHe": "שאלה: להזכירכם בהמשך למייל שנשלח, ביום ראשון 18/6 בשעה 22:00 ועד יום שני 05:00 מחשב דלק יושבת לצורך עידכון.\n\nתשובה (נבו פרץ - מנהל): לא נוריד את המחיר בתחנה למחיר מזומן עד לבוקר ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מבקש לתלות שלט שלקוחות ידעו",
+      "titleHe": "מבקש לתלות שלט שלקוחות ידעו",
+      "content": "שאלה: מבקש לתלות שלט שלקוחות ידעו\n\nתשובה (נבו פרץ - מנהל): לא נוריד את המחיר בתחנה למחיר מזומן עד לבוקר ?",
+      "contentHe": "שאלה: מבקש לתלות שלט שלקוחות ידעו\n\nתשובה (נבו פרץ - מנהל): לא נוריד את המחיר בתחנה למחיר מזומן עד לבוקר ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יש חוסר בקופה של אתמול בערב 205 ש\"ח",
+      "titleHe": "יש חוסר בקופה של אתמול בערב 205 ש\"ח",
+      "content": "שאלה: יש חוסר בקופה של אתמול בערב 205 ש\"ח\n\nתשובה (נבו פרץ - מנהל): תראה לפי השעת הפקדה",
+      "contentHe": "שאלה: יש חוסר בקופה של אתמול בערב 205 ש\"ח\n\nתשובה (נבו פרץ - מנהל): תראה לפי השעת הפקדה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "השטיפה לרגע זה מושבתת המכונה לא תקינה רק השואב עובד",
+      "titleHe": "השטיפה לרגע זה מושבתת המכונה לא תקינה רק השואב עובד",
+      "content": "שאלה: השטיפה לרגע זה מושבתת המכונה לא תקינה רק השואב עובד\n\nתשובה (נבו פרץ - מנהל): ערב טוב להפיץ לכל התחנות *בהול* עוקץ חדש",
+      "contentHe": "שאלה: השטיפה לרגע זה מושבתת המכונה לא תקינה רק השואב עובד\n\nתשובה (נבו פרץ - מנהל): ערב טוב להפיץ לכל התחנות *בהול* עוקץ חדש",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב שאתם מעבירים קולה שישיות לשוטרים רק וופל one  ולא מוצרים אחרים",
+      "titleHe": "שימו לב שאתם מעבירים קולה שישיות לשוטרים רק וופל one  ולא מוצרים אחרים",
+      "content": "שאלה: שימו לב שאתם מעבירים קולה שישיות לשוטרים רק וופל one  ולא מוצרים אחרים\n\nתשובה (נבו פרץ - מנהל): ערב טוב להפיץ לכל התחנות *בהול* עוקץ חדש",
+      "contentHe": "שאלה: שימו לב שאתם מעבירים קולה שישיות לשוטרים רק וופל one  ולא מוצרים אחרים\n\nתשובה (נבו פרץ - מנהל): ערב טוב להפיץ לכל התחנות *בהול* עוקץ חדש",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שלחתי לישראל",
+      "titleHe": "שלחתי לישראל",
+      "content": "שאלה: שלחתי לישראל\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "contentHe": "שאלה: שלחתי לישראל\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ממתי שולחים לישראל ולא שולחים אליי ?",
+      "titleHe": "ממתי שולחים לישראל ולא שולחים אליי ?",
+      "content": "שאלה: ממתי שולחים לישראל ולא שולחים אליי ?\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "contentHe": "שאלה: ממתי שולחים לישראל ולא שולחים אליי ?\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מאיפה לי לדעת",
+      "titleHe": "מאיפה לי לדעת",
+      "content": "שאלה: מאיפה לי לדעת\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "contentHe": "שאלה: מאיפה לי לדעת\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "במקום להתווכח, פשוט תעביר את הצילום שיק מצ'אט של ישראל לכאן",
+      "titleHe": "במקום להתווכח, פשוט תעביר את הצילום שיק מצ'אט של ישראל לכאן",
+      "content": "שאלה: במקום להתווכח, פשוט תעביר את הצילום שיק מצ'אט של ישראל לכאן\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "contentHe": "שאלה: במקום להתווכח, פשוט תעביר את הצילום שיק מצ'אט של ישראל לכאן\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישראל מנהל תחנה דלק צירף/ה את נריה עובד דלק חדש",
+      "titleHe": "ישראל מנהל תחנה דלק צירף/ה את נריה עובד דלק חדש",
+      "content": "שאלה: ישראל מנהל תחנה דלק צירף/ה את נריה עובד דלק חדש\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "contentHe": "שאלה: ישראל מנהל תחנה דלק צירף/ה את נריה עובד דלק חדש\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "למה לא קיבלתי צילום שיק ?!",
+      "titleHe": "למה לא קיבלתי צילום שיק ?!",
+      "content": "שאלה: למה לא קיבלתי צילום שיק ?!\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "contentHe": "שאלה: למה לא קיבלתי צילום שיק ?!\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישראל טיפל בו",
+      "titleHe": "ישראל טיפל בו",
+      "content": "שאלה: ישראל טיפל בו\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "contentHe": "שאלה: ישראל טיפל בו\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "למה אני כל הזמן צריכה לרדוף אחריכם ?????",
+      "titleHe": "למה אני כל הזמן צריכה לרדוף אחריכם ?????",
+      "content": "שאלה: למה אני כל הזמן צריכה לרדוף אחריכם ?????\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "contentHe": "שאלה: למה אני כל הזמן צריכה לרדוף אחריכם ?????\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "@ישראל מנהל תחנה דלק",
+      "titleHe": "@ישראל מנהל תחנה דלק",
+      "content": "שאלה: @ישראל מנהל תחנה דלק\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "contentHe": "שאלה: @ישראל מנהל תחנה דלק\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הצעת מחיר לא אצלי מול נבו היתה הצעת מחיר מעוז בת גלים",
+      "titleHe": "הצעת מחיר לא אצלי מול נבו היתה הצעת מחיר מעוז בת גלים",
+      "content": "שאלה: הצעת מחיר לא אצלי מול נבו היתה הצעת מחיר מעוז בת גלים\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: הצעת מחיר לא אצלי מול נבו היתה הצעת מחיר מעוז בת גלים\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "צריך וי דה רוט בבקשה",
+      "titleHe": "צריך וי דה רוט בבקשה",
+      "content": "שאלה: צריך וי דה רוט בבקשה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: צריך וי דה רוט בבקשה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שלום את ההתראה הזו יש למחוק הבן אדם סגר איתנו את החשבון",
+      "titleHe": "שלום את ההתראה הזו יש למחוק הבן אדם סגר איתנו את החשבון",
+      "content": "שאלה: שלום את ההתראה הזו יש למחוק הבן אדם סגר איתנו את החשבון\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: שלום את ההתראה הזו יש למחוק הבן אדם סגר איתנו את החשבון\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "סגרו בטעות את ישראל סלומונס על מזומן",
+      "titleHe": "סגרו בטעות את ישראל סלומונס על מזומן",
+      "content": "שאלה: סגרו בטעות את ישראל סלומונס על מזומן\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: סגרו בטעות את ישראל סלומונס על מזומן\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מאוד מעניין למה אף אחד לא שלח צילום שיק שנמסר היום לפיליפ מוריס !!!!!",
+      "titleHe": "מאוד מעניין למה אף אחד לא שלח צילום שיק שנמסר היום לפיליפ מוריס !!!!!",
+      "content": "שאלה: מאוד מעניין למה אף אחד לא שלח צילום שיק שנמסר היום לפיליפ מוריס !!!!!\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: מאוד מעניין למה אף אחד לא שלח צילום שיק שנמסר היום לפיליפ מוריס !!!!!\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב שזה קורה המון ,לפרק את הסחורה שמגיע ולא לקבור אותה",
+      "titleHe": "שימו לב שזה קורה המון ,לפרק את הסחורה שמגיע ולא לקבור אותה",
+      "content": "שאלה: שימו לב שזה קורה המון ,לפרק את הסחורה שמגיע ולא לקבור אותה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: שימו לב שזה קורה המון ,לפרק את הסחורה שמגיע ולא לקבור אותה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לא מבין למה לא עושים סדר ליפני שממלים",
+      "titleHe": "לא מבין למה לא עושים סדר ליפני שממלים",
+      "content": "שאלה: לא מבין למה לא עושים סדר ליפני שממלים\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: לא מבין למה לא עושים סדר ליפני שממלים\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שלום בוקר טוב . התקשר כעת שמעון ברזון שחושב ששכח את הכרטיס אשראי ( צבע כתום )שלו אתמול בתחנה. נא לבד",
+      "titleHe": "שלום בוקר טוב . התקשר כעת שמעון ברזון שחושב ששכח את הכרטיס אשראי ( צבע כתום )שלו אתמול בתחנה. נא לבד",
+      "content": "שאלה: שלום בוקר טוב . התקשר כעת שמעון ברזון שחושב ששכח את הכרטיס אשראי ( צבע כתום )שלו אתמול בתחנה. נא לבדוק אם יש כרטיס אשראי מאתמול בצבע כתום עם השם שמעון ברזון ולעדכן אותי .\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: שלום בוקר טוב . התקשר כעת שמעון ברזון שחושב ששכח את הכרטיס אשראי ( צבע כתום )שלו אתמול בתחנה. נא לבדוק אם יש כרטיס אשראי מאתמול בצבע כתום עם השם שמעון ברזון ולעדכן אותי .\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הבחור הזה חייב עוד 54 ש\"ח על בנזין ,הוא שכח לשלם לקובי",
+      "titleHe": "הבחור הזה חייב עוד 54 ש\"ח על בנזין ,הוא שכח לשלם לקובי",
+      "content": "שאלה: הבחור הזה חייב עוד 54 ש\"ח על בנזין ,הוא שכח לשלם לקובי\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: הבחור הזה חייב עוד 54 ש\"ח על בנזין ,הוא שכח לשלם לקובי\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ככה כותבים ומתעסקים עם המד טמפרטורה",
+      "titleHe": "ככה כותבים ומתעסקים עם המד טמפרטורה",
+      "content": "שאלה: ככה כותבים ומתעסקים עם המד טמפרטורה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: ככה כותבים ומתעסקים עם המד טמפרטורה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "איש מגו פארם הסביר את זה",
+      "titleHe": "איש מגו פארם הסביר את זה",
+      "content": "שאלה: איש מגו פארם הסביר את זה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: איש מגו פארם הסביר את זה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מחר ב״ה בשעות הבוקר יגיעו להביא מכונת קפה חדשה",
+      "titleHe": "מחר ב״ה בשעות הבוקר יגיעו להביא מכונת קפה חדשה",
+      "content": "שאלה: מחר ב״ה בשעות הבוקר יגיעו להביא מכונת קפה חדשה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: מחר ב״ה בשעות הבוקר יגיעו להביא מכונת קפה חדשה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מישהו ראה או לקח את כלי עבודה מהמשרד ,היה מפתח עם ידית אדומה",
+      "titleHe": "מישהו ראה או לקח את כלי עבודה מהמשרד ,היה מפתח עם ידית אדומה",
+      "content": "שאלה: מישהו ראה או לקח את כלי עבודה מהמשרד ,היה מפתח עם ידית אדומה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: מישהו ראה או לקח את כלי עבודה מהמשרד ,היה מפתח עם ידית אדומה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי ראה את הקופת צדקה שהייתה ליד הקופה",
+      "titleHe": "מי ראה את הקופת צדקה שהייתה ליד הקופה",
+      "content": "שאלה: מי ראה את הקופת צדקה שהייתה ליד הקופה\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "contentHe": "שאלה: מי ראה את הקופת צדקה שהייתה ליד הקופה\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בוקר אור לכולם ,שימו לב לצינורות סולר מהיר משאבה 11 ו12 הם כל הסמן מונחים על הרצפה, תכניסו אותם בין ",
+      "titleHe": "בוקר אור לכולם ,שימו לב לצינורות סולר מהיר משאבה 11 ו12 הם כל הסמן מונחים על הרצפה, תכניסו אותם בין ",
+      "content": "שאלה: בוקר אור לכולם ,שימו לב לצינורות סולר מהיר משאבה 11 ו12 הם כל הסמן מונחים על הרצפה, תכניסו אותם בין המשאבות בכדי שלא יפצעו ,עכשיו צינור 11 נקרע\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "contentHe": "שאלה: בוקר אור לכולם ,שימו לב לצינורות סולר מהיר משאבה 11 ו12 הם כל הסמן מונחים על הרצפה, תכניסו אותם בין המשאבות בכדי שלא יפצעו ,עכשיו צינור 11 נקרע\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "צריך להזמין קרח",
+      "titleHe": "צריך להזמין קרח",
+      "content": "שאלה: צריך להזמין קרח\n\nתשובה (נבו פרץ - מנהל): כל זה לשטיפה?",
+      "contentHe": "שאלה: צריך להזמין קרח\n\nתשובה (נבו פרץ - מנהל): כל זה לשטיפה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישראל מנהל תחנה דלק צירף/ה את ~ M.h💣 ואת נריה דלק",
+      "titleHe": "ישראל מנהל תחנה דלק צירף/ה את ~ M.h💣 ואת נריה דלק",
+      "content": "שאלה: ישראל מנהל תחנה דלק צירף/ה את ~ M.h💣 ואת נריה דלק\n\nתשובה (נבו פרץ - מנהל): כל זה לשטיפה?",
+      "contentHe": "שאלה: ישראל מנהל תחנה דלק צירף/ה את ~ M.h💣 ואת נריה דלק\n\nתשובה (נבו פרץ - מנהל): כל זה לשטיפה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישראל מנהל תחנה דלק הסיר/ה את נריה דלק",
+      "titleHe": "ישראל מנהל תחנה דלק הסיר/ה את נריה דלק",
+      "content": "שאלה: ישראל מנהל תחנה דלק הסיר/ה את נריה דלק\n\nתשובה (נבו פרץ - מנהל): כל זה לשטיפה?",
+      "contentHe": "שאלה: ישראל מנהל תחנה דלק הסיר/ה את נריה דלק\n\nתשובה (נבו פרץ - מנהל): כל זה לשטיפה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בשעה 01:00 צריכה להגיע מיכלית עם 15 בנזין ו 10 סולר",
+      "titleHe": "בשעה 01:00 צריכה להגיע מיכלית עם 15 בנזין ו 10 סולר",
+      "content": "שאלה: בשעה 01:00 צריכה להגיע מיכלית עם 15 בנזין ו 10 סולר\n\nתשובה (נבו פרץ - מנהל): איזה גלידות?",
+      "contentHe": "שאלה: בשעה 01:00 צריכה להגיע מיכלית עם 15 בנזין ו 10 סולר\n\nתשובה (נבו פרץ - מנהל): איזה גלידות?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מהיום ואילך חובה לסגור את המחסן שתיה אחרי כל מילוי",
+      "titleHe": "מהיום ואילך חובה לסגור את המחסן שתיה אחרי כל מילוי",
+      "content": "שאלה: מהיום ואילך חובה לסגור את המחסן שתיה אחרי כל מילוי\n\nתשובה (נבו פרץ - מנהל): מחקת את ההודעה הזו.",
+      "contentHe": "שאלה: מהיום ואילך חובה לסגור את המחסן שתיה אחרי כל מילוי\n\nתשובה (נבו פרץ - מנהל): מחקת את ההודעה הזו.",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "זה לא תחנה שונות , שולם בכרטיס אשראי",
+      "titleHe": "זה לא תחנה שונות , שולם בכרטיס אשראי",
+      "content": "שאלה: זה לא תחנה שונות , שולם בכרטיס אשראי\n\nתשובה (נבו פרץ - מנהל): מחקת את ההודעה הזו.",
+      "contentHe": "שאלה: זה לא תחנה שונות , שולם בכרטיס אשראי\n\nתשובה (נבו פרץ - מנהל): מחקת את ההודעה הזו.",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לגבי  שטרות יש  מכונה לבדיקת שטרות ,תיהיו ערניים.",
+      "titleHe": "לגבי  שטרות יש  מכונה לבדיקת שטרות ,תיהיו ערניים.",
+      "content": "שאלה: לגבי  שטרות יש  מכונה לבדיקת שטרות ,תיהיו ערניים.\n\nתשובה (נבו פרץ - מנהל): תוריד את הניילון תצלם מאיפה הנזילה?",
+      "contentHe": "שאלה: לגבי  שטרות יש  מכונה לבדיקת שטרות ,תיהיו ערניים.\n\nתשובה (נבו פרץ - מנהל): תוריד את הניילון תצלם מאיפה הנזילה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי שמבקש באפליקציה את ההטבה של הקולה ב6 שקלים להגיד שלא עובר אצלינו",
+      "titleHe": "מי שמבקש באפליקציה את ההטבה של הקולה ב6 שקלים להגיד שלא עובר אצלינו",
+      "content": "שאלה: מי שמבקש באפליקציה את ההטבה של הקולה ב6 שקלים להגיד שלא עובר אצלינו\n\nתשובה (נבו פרץ - מנהל): אחת נסגרה על מזומן בטעות",
+      "contentHe": "שאלה: מי שמבקש באפליקציה את ההטבה של הקולה ב6 שקלים להגיד שלא עובר אצלינו\n\nתשובה (נבו פרץ - מנהל): אחת נסגרה על מזומן בטעות",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יש כרטיס למיי קאר",
+      "titleHe": "יש כרטיס למיי קאר",
+      "content": "שאלה: יש כרטיס למיי קאר\n\nתשובה (נבו פרץ - מנהל): לא אמור להיות שם מטאטא רגיל",
+      "contentHe": "שאלה: יש כרטיס למיי קאר\n\nתשובה (נבו פרץ - מנהל): לא אמור להיות שם מטאטא רגיל",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "למה משתמשים במטאטא הרגיל לשטיפה למה? יש מטאטא מיועד לשטיפה",
+      "titleHe": "למה משתמשים במטאטא הרגיל לשטיפה למה? יש מטאטא מיועד לשטיפה",
+      "content": "שאלה: למה משתמשים במטאטא הרגיל לשטיפה למה? יש מטאטא מיועד לשטיפה\n\nתשובה (נבו פרץ - מנהל): לא אמור להיות שם מטאטא רגיל",
+      "contentHe": "שאלה: למה משתמשים במטאטא הרגיל לשטיפה למה? יש מטאטא מיועד לשטיפה\n\nתשובה (נבו פרץ - מנהל): לא אמור להיות שם מטאטא רגיל",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מזכיר למי שעובד על הקופה ,עושים הפקדה כל 1000 ש\"ח וסופרים קופה כל שעה בכדי לוודא שאין חוסרים",
+      "titleHe": "מזכיר למי שעובד על הקופה ,עושים הפקדה כל 1000 ש\"ח וסופרים קופה כל שעה בכדי לוודא שאין חוסרים",
+      "content": "שאלה: מזכיר למי שעובד על הקופה ,עושים הפקדה כל 1000 ש\"ח וסופרים קופה כל שעה בכדי לוודא שאין חוסרים\n\nתשובה (נבו פרץ - מנהל): הוא הרבה פעמים בתחנה",
+      "contentHe": "שאלה: מזכיר למי שעובד על הקופה ,עושים הפקדה כל 1000 ש\"ח וסופרים קופה כל שעה בכדי לוודא שאין חוסרים\n\nתשובה (נבו פרץ - מנהל): הוא הרבה פעמים בתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תיהיו ערניים ,לקוח שנכנס לחנות ומבקש דלק לקחת תשלום לפני שפותחים דלק",
+      "titleHe": "תיהיו ערניים ,לקוח שנכנס לחנות ומבקש דלק לקחת תשלום לפני שפותחים דלק",
+      "content": "שאלה: תיהיו ערניים ,לקוח שנכנס לחנות ומבקש דלק לקחת תשלום לפני שפותחים דלק\n\nתשובה (נבו פרץ - מנהל): הוא הרבה פעמים בתחנה",
+      "contentHe": "שאלה: תיהיו ערניים ,לקוח שנכנס לחנות ומבקש דלק לקחת תשלום לפני שפותחים דלק\n\nתשובה (נבו פרץ - מנהל): הוא הרבה פעמים בתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "סרטון כשהוא מגיע לקופה ולא שילם וסרטון שהוא מבקש עודף",
+      "titleHe": "סרטון כשהוא מגיע לקופה ולא שילם וסרטון שהוא מבקש עודף",
+      "content": "שאלה: סרטון כשהוא מגיע לקופה ולא שילם וסרטון שהוא מבקש עודף\n\nתשובה (נבו פרץ - מנהל): חסר מונסטר",
+      "contentHe": "שאלה: סרטון כשהוא מגיע לקופה ולא שילם וסרטון שהוא מבקש עודף\n\nתשובה (נבו פרץ - מנהל): חסר מונסטר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב קיבלנו היום סחורה מגלוברנדס והכל פג תוקף , אותו דבר קרה עם שטראוס חלבי במוצ\"ש, אז ברגע שפורק",
+      "titleHe": "שימו לב קיבלנו היום סחורה מגלוברנדס והכל פג תוקף , אותו דבר קרה עם שטראוס חלבי במוצ\"ש, אז ברגע שפורק",
+      "content": "שאלה: שימו לב קיבלנו היום סחורה מגלוברנדס והכל פג תוקף , אותו דבר קרה עם שטראוס חלבי במוצ\"ש, אז ברגע שפורקים סחורה תעיפו מבט על תאריכים ,אם התאריך קצר מידיי לא לקבל את הסחורה\n\nתשובה (נבו פרץ - מנהל): חסר מונסטר",
+      "contentHe": "שאלה: שימו לב קיבלנו היום סחורה מגלוברנדס והכל פג תוקף , אותו דבר קרה עם שטראוס חלבי במוצ\"ש, אז ברגע שפורקים סחורה תעיפו מבט על תאריכים ,אם התאריך קצר מידיי לא לקבל את הסחורה\n\nתשובה (נבו פרץ - מנהל): חסר מונסטר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יום ראשון בשעה 10:30 בבוקר ,התחנה תיהיה מושבתת עקב שדרוג מערכת אשראי ומסופונים שבקופה",
+      "titleHe": "יום ראשון בשעה 10:30 בבוקר ,התחנה תיהיה מושבתת עקב שדרוג מערכת אשראי ומסופונים שבקופה",
+      "content": "שאלה: יום ראשון בשעה 10:30 בבוקר ,התחנה תיהיה מושבתת עקב שדרוג מערכת אשראי ומסופונים שבקופה\n\nתשובה (נבו פרץ - מנהל): חסר מונסטר",
+      "contentHe": "שאלה: יום ראשון בשעה 10:30 בבוקר ,התחנה תיהיה מושבתת עקב שדרוג מערכת אשראי ומסופונים שבקופה\n\nתשובה (נבו פרץ - מנהל): חסר מונסטר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לא עבר לו הכרטיס ויצא עם הפקאט סיגריות",
+      "titleHe": "לא עבר לו הכרטיס ויצא עם הפקאט סיגריות",
+      "content": "שאלה: לא עבר לו הכרטיס ויצא עם הפקאט סיגריות\n\nתשובה (נבו פרץ - מנהל): בא עם רכב?",
+      "contentHe": "שאלה: לא עבר לו הכרטיס ויצא עם הפקאט סיגריות\n\nתשובה (נבו פרץ - מנהל): בא עם רכב?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כמה פעמים אמרתי לא לשחרר לקוח עם המוצר עד שלא עובר תשלום",
+      "titleHe": "כמה פעמים אמרתי לא לשחרר לקוח עם המוצר עד שלא עובר תשלום",
+      "content": "שאלה: כמה פעמים אמרתי לא לשחרר לקוח עם המוצר עד שלא עובר תשלום\n\nתשובה (נבו פרץ - מנהל): תשלח רגיל לא נעלם",
+      "contentHe": "שאלה: כמה פעמים אמרתי לא לשחרר לקוח עם המוצר עד שלא עובר תשלום\n\nתשובה (נבו פרץ - מנהל): תשלח רגיל לא נעלם",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לשלוח לנבו משמרות לשבוע הבא",
+      "titleHe": "לשלוח לנבו משמרות לשבוע הבא",
+      "content": "שאלה: לשלוח לנבו משמרות לשבוע הבא\n\nתשובה (נבו פרץ - מנהל): תשלח רגיל לא נעלם",
+      "contentHe": "שאלה: לשלוח לנבו משמרות לשבוע הבא\n\nתשובה (נבו פרץ - מנהל): תשלח רגיל לא נעלם",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "@גטיש עובד דלק אפשר להתחיל להגיע ב11🤣🥳",
+      "titleHe": "@גטיש עובד דלק אפשר להתחיל להגיע ב11🤣🥳",
+      "content": "שאלה: @גטיש עובד דלק אפשר להתחיל להגיע ב11🤣🥳\n\nתשובה (נבו פרץ - מנהל): של לוגסי או מאיה?",
+      "contentHe": "שאלה: @גטיש עובד דלק אפשר להתחיל להגיע ב11🤣🥳\n\nתשובה (נבו פרץ - מנהל): של לוגסי או מאיה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תורידו כמות לפי הזמנה",
+      "titleHe": "תורידו כמות לפי הזמנה",
+      "content": "שאלה: תורידו כמות לפי הזמנה\n\nתשובה (נבו פרץ - מנהל): של לוגסי או מאיה?",
+      "contentHe": "שאלה: תורידו כמות לפי הזמנה\n\nתשובה (נבו פרץ - מנהל): של לוגסי או מאיה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מאיה ביקש תשלום ,ואין שום תעודה כנגד הסחורה",
+      "titleHe": "מאיה ביקש תשלום ,ואין שום תעודה כנגד הסחורה",
+      "content": "שאלה: מאיה ביקש תשלום ,ואין שום תעודה כנגד הסחורה\n\nתשובה (נבו פרץ - מנהל): כל יום מגיע אותו דבר",
+      "contentHe": "שאלה: מאיה ביקש תשלום ,ואין שום תעודה כנגד הסחורה\n\nתשובה (נבו פרץ - מנהל): כל יום מגיע אותו דבר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בשעה 04:30 מיכלית צריכה להגיע עם 20 בנזין ו 5 סולר",
+      "titleHe": "בשעה 04:30 מיכלית צריכה להגיע עם 20 בנזין ו 5 סולר",
+      "content": "שאלה: בשעה 04:30 מיכלית צריכה להגיע עם 20 בנזין ו 5 סולר\n\nתשובה (נבו פרץ - מנהל): בדרך עדיין",
+      "contentHe": "שאלה: בשעה 04:30 מיכלית צריכה להגיע עם 20 בנזין ו 5 סולר\n\nתשובה (נבו פרץ - מנהל): בדרך עדיין",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מזכיר למי שעובד על הקופה",
+      "titleHe": "מזכיר למי שעובד על הקופה",
+      "content": "שאלה: מזכיר למי שעובד על הקופה\n\nתשובה (נבו פרץ - מנהל): השניה מחר יבואו לסיים",
+      "contentHe": "שאלה: מזכיר למי שעובד על הקופה\n\nתשובה (נבו פרץ - מנהל): השניה מחר יבואו לסיים",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בוקר טוב האם היגיעה מיכלית בבוקר ?",
+      "titleHe": "בוקר טוב האם היגיעה מיכלית בבוקר ?",
+      "content": "שאלה: בוקר טוב האם היגיעה מיכלית בבוקר ?\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: בוקר טוב האם היגיעה מיכלית בבוקר ?\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אפשר לשלוח לי וי דה רוט בבקשה?",
+      "titleHe": "אפשר לשלוח לי וי דה רוט בבקשה?",
+      "content": "שאלה: אפשר לשלוח לי וי דה רוט בבקשה?\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: אפשר לשלוח לי וי דה רוט בבקשה?\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "קשור לזכייה מההגרלה☝🏻",
+      "titleHe": "קשור לזכייה מההגרלה☝🏻",
+      "content": "שאלה: קשור לזכייה מההגרלה☝🏻\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: קשור לזכייה מההגרלה☝🏻\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לא לדחוף מה שלא צריך כרן",
+      "titleHe": "לא לדחוף מה שלא צריך כרן",
+      "content": "שאלה: לא לדחוף מה שלא צריך כרן\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: לא לדחוף מה שלא צריך כרן\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לא זה לא כשר בדקנו זה כיאלו כשר כתוב חוג הרמב״ם צרפת ובדקנו את זה וזה לא כשר זה כיאלו המציאו את זה",
+      "titleHe": "לא זה לא כשר בדקנו זה כיאלו כשר כתוב חוג הרמב״ם צרפת ובדקנו את זה וזה לא כשר זה כיאלו המציאו את זה",
+      "content": "שאלה: לא זה לא כשר בדקנו זה כיאלו כשר כתוב חוג הרמב״ם צרפת ובדקנו את זה וזה לא כשר זה כיאלו המציאו את זה\n\nתשובה (נבו פרץ - מנהל): תפעיל את האקדח תראה מה קורה",
+      "contentHe": "שאלה: לא זה לא כשר בדקנו זה כיאלו כשר כתוב חוג הרמב״ם צרפת ובדקנו את זה וזה לא כשר זה כיאלו המציאו את זה\n\nתשובה (נבו פרץ - מנהל): תפעיל את האקדח תראה מה קורה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בדקנו מול הרבנות זה לא כשר זה תרמית",
+      "titleHe": "בדקנו מול הרבנות זה לא כשר זה תרמית",
+      "content": "שאלה: בדקנו מול הרבנות זה לא כשר זה תרמית\n\nתשובה (נבו פרץ - מנהל): תפעיל את האקדח תראה מה קורה",
+      "contentHe": "שאלה: בדקנו מול הרבנות זה לא כשר זה תרמית\n\nתשובה (נבו פרץ - מנהל): תפעיל את האקדח תראה מה קורה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כיאלו כשרות אבל זה לא",
+      "titleHe": "כיאלו כשרות אבל זה לא",
+      "content": "שאלה: כיאלו כשרות אבל זה לא\n\nתשובה (נבו פרץ - מנהל): תפעיל את האקדח תראה מה קורה",
+      "contentHe": "שאלה: כיאלו כשרות אבל זה לא\n\nתשובה (נבו פרץ - מנהל): תפעיל את האקדח תראה מה קורה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה 1 ו9 לא מזהה דלקן",
+      "titleHe": "משאבה 1 ו9 לא מזהה דלקן",
+      "content": "שאלה: משאבה 1 ו9 לא מזהה דלקן\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: משאבה 1 ו9 לא מזהה דלקן\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "פותח קריאה",
+      "titleHe": "פותח קריאה",
+      "content": "שאלה: פותח קריאה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: פותח קריאה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בוקר אור ,לא משחררים נהג שמוריד סחורה עד שעוברים על כל התעודה",
+      "titleHe": "בוקר אור ,לא משחררים נהג שמוריד סחורה עד שעוברים על כל התעודה",
+      "content": "שאלה: בוקר אור ,לא משחררים נהג שמוריד סחורה עד שעוברים על כל התעודה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "contentHe": "שאלה: בוקר אור ,לא משחררים נהג שמוריד סחורה עד שעוברים על כל התעודה\n\nתשובה (נבו פרץ - מנהל): נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לחץ שנשאר במערכת ,לא להתייחס",
+      "titleHe": "לחץ שנשאר במערכת ,לא להתייחס",
+      "content": "שאלה: לחץ שנשאר במערכת ,לא להתייחס\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "contentHe": "שאלה: לחץ שנשאר במערכת ,לא להתייחס\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אני בטוחה שזה לא שייך לשרי אלא לבן שלה",
+      "titleHe": "אני בטוחה שזה לא שייך לשרי אלא לבן שלה",
+      "content": "שאלה: אני בטוחה שזה לא שייך לשרי אלא לבן שלה\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "contentHe": "שאלה: אני בטוחה שזה לא שייך לשרי אלא לבן שלה\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בסדר אבל היא אמרה לכתוב את שמה",
+      "titleHe": "בסדר אבל היא אמרה לכתוב את שמה",
+      "content": "שאלה: בסדר אבל היא אמרה לכתוב את שמה\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "contentHe": "שאלה: בסדר אבל היא אמרה לכתוב את שמה\n\nתשובה (נבו פרץ - מנהל): רכב חשוד נכנס לתחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "חברים שימו לב אתם מקבלים סחורה שימו במדף כל המוצרים האלה לא היו במדף",
+      "titleHe": "חברים שימו לב אתם מקבלים סחורה שימו במדף כל המוצרים האלה לא היו במדף",
+      "content": "שאלה: חברים שימו לב אתם מקבלים סחורה שימו במדף כל המוצרים האלה לא היו במדף\n\nתשובה (נבו פרץ - מנהל): היא דיברה איתי",
+      "contentHe": "שאלה: חברים שימו לב אתם מקבלים סחורה שימו במדף כל המוצרים האלה לא היו במדף\n\nתשובה (נבו פרץ - מנהל): היא דיברה איתי",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בוקר אור ,מישהו יודע איפה הכרטיס של המכונת שטיפה,הוא תמיד נמצא מתחת למגירת כספים",
+      "titleHe": "בוקר אור ,מישהו יודע איפה הכרטיס של המכונת שטיפה,הוא תמיד נמצא מתחת למגירת כספים",
+      "content": "שאלה: בוקר אור ,מישהו יודע איפה הכרטיס של המכונת שטיפה,הוא תמיד נמצא מתחת למגירת כספים\n\nתשובה (נבו פרץ - מנהל): היא דיברה איתי",
+      "contentHe": "שאלה: בוקר אור ,מישהו יודע איפה הכרטיס של המכונת שטיפה,הוא תמיד נמצא מתחת למגירת כספים\n\nתשובה (נבו פרץ - מנהל): היא דיברה איתי",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישראל מנהל תחנה דלק הסיר/ה את ~ M.h💣",
+      "titleHe": "ישראל מנהל תחנה דלק הסיר/ה את ~ M.h💣",
+      "content": "שאלה: ישראל מנהל תחנה דלק הסיר/ה את ~ M.h💣\n\nתשובה (נבו פרץ - מנהל): היא דיברה איתי",
+      "contentHe": "שאלה: ישראל מנהל תחנה דלק הסיר/ה את ~ M.h💣\n\nתשובה (נבו פרץ - מנהל): היא דיברה איתי",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "חברים שימו לב צריך לבדוק את השואבים מידי פעם הוצאתי עכשיו מהשואב הישן אנטנה מצת עטים וזה תוקע את השו",
+      "titleHe": "חברים שימו לב צריך לבדוק את השואבים מידי פעם הוצאתי עכשיו מהשואב הישן אנטנה מצת עטים וזה תוקע את השו",
+      "content": "שאלה: חברים שימו לב צריך לבדוק את השואבים מידי פעם הוצאתי עכשיו מהשואב הישן אנטנה מצת עטים וזה תוקע את השואב ואנשים מתלוננים\n\nתשובה (נבו פרץ - מנהל): היא דיברה איתי",
+      "contentHe": "שאלה: חברים שימו לב צריך לבדוק את השואבים מידי פעם הוצאתי עכשיו מהשואב הישן אנטנה מצת עטים וזה תוקע את השואב ואנשים מתלוננים\n\nתשובה (נבו פרץ - מנהל): היא דיברה איתי",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב שבשלטים הדיגיטליים מופיע מיים מינרלים  ב 1 שח בתדלוק 200 שח",
+      "titleHe": "שימו לב שבשלטים הדיגיטליים מופיע מיים מינרלים  ב 1 שח בתדלוק 200 שח",
+      "content": "שאלה: שימו לב שבשלטים הדיגיטליים מופיע מיים מינרלים  ב 1 שח בתדלוק 200 שח\n\nתשובה (נבו פרץ - מנהל): זה הזה על האופנוע?",
+      "contentHe": "שאלה: שימו לב שבשלטים הדיגיטליים מופיע מיים מינרלים  ב 1 שח בתדלוק 200 שח\n\nתשובה (נבו פרץ - מנהל): זה הזה על האופנוע?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישי פרץ צירף/ה את ישראל מאיר עובד דלק",
+      "titleHe": "ישי פרץ צירף/ה את ישראל מאיר עובד דלק",
+      "content": "שאלה: ישי פרץ צירף/ה את ישראל מאיר עובד דלק\n\nתשובה (נבו פרץ - מנהל): זה הזה על האופנוע?",
+      "contentHe": "שאלה: ישי פרץ צירף/ה את ישראל מאיר עובד דלק\n\nתשובה (נבו פרץ - מנהל): זה הזה על האופנוע?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "זה לא מספיק להחזיר את מה שתפסו אותם שגנבו הם צריכים לשלם מינימום פי 10 ממה שנתפסו כי הם כל יום בתחנה",
+      "titleHe": "זה לא מספיק להחזיר את מה שתפסו אותם שגנבו הם צריכים לשלם מינימום פי 10 ממה שנתפסו כי הם כל יום בתחנה",
+      "content": "שאלה: זה לא מספיק להחזיר את מה שתפסו אותם שגנבו הם צריכים לשלם מינימום פי 10 ממה שנתפסו כי הם כל יום בתחנה ואם אני זוכר נכון זו לא פעם ראשונה שהם נתפסו\n\nתשובה (נבו פרץ - מנהל): יש נכה במשאבה 7 מי יכול צאת אליו?",
+      "contentHe": "שאלה: זה לא מספיק להחזיר את מה שתפסו אותם שגנבו הם צריכים לשלם מינימום פי 10 ממה שנתפסו כי הם כל יום בתחנה ואם אני זוכר נכון זו לא פעם ראשונה שהם נתפסו\n\nתשובה (נבו פרץ - מנהל): יש נכה במשאבה 7 מי יכול צאת אליו?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "פשוט לא מוכר להם יותר",
+      "titleHe": "פשוט לא מוכר להם יותר",
+      "content": "שאלה: פשוט לא מוכר להם יותר\n\nתשובה (נבו פרץ - מנהל): יש נכה במשאבה 7 מי יכול צאת אליו?",
+      "contentHe": "שאלה: פשוט לא מוכר להם יותר\n\nתשובה (נבו פרץ - מנהל): יש נכה במשאבה 7 מי יכול צאת אליו?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שלא יכנסו לתחנה",
+      "titleHe": "שלא יכנסו לתחנה",
+      "content": "שאלה: שלא יכנסו לתחנה\n\nתשובה (נבו פרץ - מנהל): יש נכה במשאבה 7 מי יכול צאת אליו?",
+      "contentHe": "שאלה: שלא יכנסו לתחנה\n\nתשובה (נבו פרץ - מנהל): יש נכה במשאבה 7 מי יכול צאת אליו?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כבר תפסתי אותם פעם על גניבת שישיית מים",
+      "titleHe": "כבר תפסתי אותם פעם על גניבת שישיית מים",
+      "content": "שאלה: כבר תפסתי אותם פעם על גניבת שישיית מים\n\nתשובה (נבו פרץ - מנהל): יש נכה במשאבה 7 מי יכול צאת אליו?",
+      "contentHe": "שאלה: כבר תפסתי אותם פעם על גניבת שישיית מים\n\nתשובה (נבו פרץ - מנהל): יש נכה במשאבה 7 מי יכול צאת אליו?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "צירפת את אורי מניסטי עובד דלק",
+      "titleHe": "צירפת את אורי מניסטי עובד דלק",
+      "content": "שאלה: צירפת את אורי מניסטי עובד דלק\n\nתשובה (נבו פרץ - מנהל): @יהודית משרד דלק",
+      "contentHe": "שאלה: צירפת את אורי מניסטי עובד דלק\n\nתשובה (נבו פרץ - מנהל): @יהודית משרד דלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בבקשה לשלוח לי וי דה רוט",
+      "titleHe": "בבקשה לשלוח לי וי דה רוט",
+      "content": "שאלה: בבקשה לשלוח לי וי דה רוט\n\nתשובה (נבו פרץ - מנהל): @יהודית משרד דלק",
+      "contentHe": "שאלה: בבקשה לשלוח לי וי דה רוט\n\nתשובה (נבו פרץ - מנהל): @יהודית משרד דלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישראל מנהל תחנה דלק צירף/ה את איתמר רווח עובד דלק",
+      "titleHe": "ישראל מנהל תחנה דלק צירף/ה את איתמר רווח עובד דלק",
+      "content": "שאלה: ישראל מנהל תחנה דלק צירף/ה את איתמר רווח עובד דלק\n\nתשובה (נבו פרץ - מנהל): @יהודית משרד דלק",
+      "contentHe": "שאלה: ישראל מנהל תחנה דלק צירף/ה את איתמר רווח עובד דלק\n\nתשובה (נבו פרץ - מנהל): @יהודית משרד דלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בוקר טוב ישראל מאיר ,עברת על הסחורה  לראות שלא חסר משהו ?",
+      "titleHe": "בוקר טוב ישראל מאיר ,עברת על הסחורה  לראות שלא חסר משהו ?",
+      "content": "שאלה: בוקר טוב ישראל מאיר ,עברת על הסחורה  לראות שלא חסר משהו ?\n\nתשובה (נבו פרץ - מנהל): @יהודית משרד דלק",
+      "contentHe": "שאלה: בוקר טוב ישראל מאיר ,עברת על הסחורה  לראות שלא חסר משהו ?\n\nתשובה (נבו פרץ - מנהל): @יהודית משרד דלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "נבו יבוא יותר מאוחר וגם הסוכן יבוא ויביא לו את הסחורה כי אין לי תביעת אצבע לדלת האחורית",
+      "titleHe": "נבו יבוא יותר מאוחר וגם הסוכן יבוא ויביא לו את הסחורה כי אין לי תביעת אצבע לדלת האחורית",
+      "content": "שאלה: נבו יבוא יותר מאוחר וגם הסוכן יבוא ויביא לו את הסחורה כי אין לי תביעת אצבע לדלת האחורית\n\nתשובה (נבו פרץ - מנהל): @יהודית משרד דלק",
+      "contentHe": "שאלה: נבו יבוא יותר מאוחר וגם הסוכן יבוא ויביא לו את הסחורה כי אין לי תביעת אצבע לדלת האחורית\n\nתשובה (נבו פרץ - מנהל): @יהודית משרד דלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הסרת את דלק אמיר ב\"ב פלאפון ביט",
+      "titleHe": "הסרת את דלק אמיר ב\"ב פלאפון ביט",
+      "content": "שאלה: הסרת את דלק אמיר ב\"ב פלאפון ביט\n\nתשובה (נבו פרץ - מנהל): @יהודית משרד דלק",
+      "contentHe": "שאלה: הסרת את דלק אמיר ב\"ב פלאפון ביט\n\nתשובה (נבו פרץ - מנהל): @יהודית משרד דלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מפתחות של דלק איפה",
+      "titleHe": "מפתחות של דלק איפה",
+      "content": "שאלה: מפתחות של דלק איפה\n\nתשובה (נבו פרץ - מנהל): לא צריך מפתח",
+      "contentHe": "שאלה: מפתחות של דלק איפה\n\nתשובה (נבו פרץ - מנהל): לא צריך מפתח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ההוא של הדלק צריך",
+      "titleHe": "ההוא של הדלק צריך",
+      "content": "שאלה: ההוא של הדלק צריך\n\nתשובה (נבו פרץ - מנהל): לא צריך מפתח",
+      "contentHe": "שאלה: ההוא של הדלק צריך\n\nתשובה (נבו פרץ - מנהל): לא צריך מפתח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הוא אמר של הסוללה של הבנזין",
+      "titleHe": "הוא אמר של הסוללה של הבנזין",
+      "content": "שאלה: הוא אמר של הסוללה של הבנזין\n\nתשובה (נבו פרץ - מנהל): לא צריך מפתח",
+      "contentHe": "שאלה: הוא אמר של הסוללה של הבנזין\n\nתשובה (נבו פרץ - מנהל): לא צריך מפתח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שרי אישתו של ישי צירף/ה את דודי מדר דלק",
+      "titleHe": "שרי אישתו של ישי צירף/ה את דודי מדר דלק",
+      "content": "שאלה: שרי אישתו של ישי צירף/ה את דודי מדר דלק\n\nתשובה (נבו פרץ - מנהל): מישוב אדים",
+      "contentHe": "שאלה: שרי אישתו של ישי צירף/ה את דודי מדר דלק\n\nתשובה (נבו פרץ - מנהל): מישוב אדים",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תלישת משאבה 4",
+      "titleHe": "תלישת משאבה 4",
+      "content": "שאלה: תלישת משאבה 4\n\nתשובה (נבו פרץ - מנהל): מישוב אדים",
+      "contentHe": "שאלה: תלישת משאבה 4\n\nתשובה (נבו פרץ - מנהל): מישוב אדים",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "גם ב95 וגם ב98",
+      "titleHe": "גם ב95 וגם ב98",
+      "content": "שאלה: גם ב95 וגם ב98\n\nתשובה (נבו פרץ - מנהל): צריך לפתוח קריאה. יש גם דלקנים שלא עובדים?",
+      "contentHe": "שאלה: גם ב95 וגם ב98\n\nתשובה (נבו פרץ - מנהל): צריך לפתוח קריאה. יש גם דלקנים שלא עובדים?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מה עושים תכלס",
+      "titleHe": "מה עושים תכלס",
+      "content": "שאלה: מה עושים תכלס\n\nתשובה (נבו פרץ - מנהל): צריך לפתוח קריאה. יש גם דלקנים שלא עובדים?",
+      "contentHe": "שאלה: מה עושים תכלס\n\nתשובה (נבו פרץ - מנהל): צריך לפתוח קריאה. יש גם דלקנים שלא עובדים?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "המנורה אדומה",
+      "titleHe": "המנורה אדומה",
+      "content": "שאלה: המנורה אדומה\n\nתשובה (נבו פרץ - מנהל): צריך לפתוח קריאה. יש גם דלקנים שלא עובדים?",
+      "contentHe": "שאלה: המנורה אדומה\n\nתשובה (נבו פרץ - מנהל): צריך לפתוח קריאה. יש גם דלקנים שלא עובדים?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מה איך אתה עונה עכשיו הבנתי הגזרה בצפון מתחממת",
+      "titleHe": "מה איך אתה עונה עכשיו הבנתי הגזרה בצפון מתחממת",
+      "content": "שאלה: מה איך אתה עונה עכשיו הבנתי הגזרה בצפון מתחממת\n\nתשובה (נבו פרץ - מנהל): צריך לפתוח קריאה. יש גם דלקנים שלא עובדים?",
+      "contentHe": "שאלה: מה איך אתה עונה עכשיו הבנתי הגזרה בצפון מתחממת\n\nתשובה (נבו פרץ - מנהל): צריך לפתוח קריאה. יש גם דלקנים שלא עובדים?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בקופה 2 עובד",
+      "titleHe": "בקופה 2 עובד",
+      "content": "שאלה: בקופה 2 עובד\n\nתשובה (נבו פרץ - מנהל): אמור להיות במדף",
+      "contentHe": "שאלה: בקופה 2 עובד\n\nתשובה (נבו פרץ - מנהל): אמור להיות במדף",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "019 סגור להזמנות דיברתי עם משה",
+      "titleHe": "019 סגור להזמנות דיברתי עם משה",
+      "content": "שאלה: 019 סגור להזמנות דיברתי עם משה\n\nתשובה (נבו פרץ - מנהל): לא יודע זה מה ששלחו מדלק",
+      "contentHe": "שאלה: 019 סגור להזמנות דיברתי עם משה\n\nתשובה (נבו פרץ - מנהל): לא יודע זה מה ששלחו מדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אתמול הגיע שקית לעמדת קופה והיה בתוכה ראש מטאטא למכונת שטיפה ועוד חלק ברזל עגול ,מי נגע בשקית הזאת ח",
+      "titleHe": "אתמול הגיע שקית לעמדת קופה והיה בתוכה ראש מטאטא למכונת שטיפה ועוד חלק ברזל עגול ,מי נגע בשקית הזאת ח",
+      "content": "שאלה: אתמול הגיע שקית לעמדת קופה והיה בתוכה ראש מטאטא למכונת שטיפה ועוד חלק ברזל עגול ,מי נגע בשקית הזאת חוץ מקובי?\n\nתשובה (נבו פרץ - מנהל): לא יודע זה מה ששלחו מדלק",
+      "contentHe": "שאלה: אתמול הגיע שקית לעמדת קופה והיה בתוכה ראש מטאטא למכונת שטיפה ועוד חלק ברזל עגול ,מי נגע בשקית הזאת חוץ מקובי?\n\nתשובה (נבו פרץ - מנהל): לא יודע זה מה ששלחו מדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אני ויוסף יודעים",
+      "titleHe": "אני ויוסף יודעים",
+      "content": "שאלה: אני ויוסף יודעים\n\nתשובה (נבו פרץ - מנהל): לא יודע זה מה ששלחו מדלק",
+      "contentHe": "שאלה: אני ויוסף יודעים\n\nתשובה (נבו פרץ - מנהל): לא יודע זה מה ששלחו מדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "רק חיילים בלי שוטרים ?",
+      "titleHe": "רק חיילים בלי שוטרים ?",
+      "content": "שאלה: רק חיילים בלי שוטרים ?\n\nתשובה (נבו פרץ - מנהל): לא יודע זה מה ששלחו מדלק",
+      "contentHe": "שאלה: רק חיילים בלי שוטרים ?\n\nתשובה (נבו פרץ - מנהל): לא יודע זה מה ששלחו מדלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מישהי שקנתה משהו אצלי והיה פגום נתתי לה דלק במקום",
+      "titleHe": "מישהי שקנתה משהו אצלי והיה פגום נתתי לה דלק במקום",
+      "content": "שאלה: מישהי שקנתה משהו אצלי והיה פגום נתתי לה דלק במקום\n\nתשובה (נבו פרץ - מנהל): פעם הבאה אין זיכוי בדלק רק בחנות",
+      "contentHe": "שאלה: מישהי שקנתה משהו אצלי והיה פגום נתתי לה דלק במקום\n\nתשובה (נבו פרץ - מנהל): פעם הבאה אין זיכוי בדלק רק בחנות",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב הגיעו ג'ילדות לשטיפה",
+      "titleHe": "שימו לב הגיעו ג'ילדות לשטיפה",
+      "content": "שאלה: שימו לב הגיעו ג'ילדות לשטיפה\n\nתשובה (נבו פרץ - מנהל): מה קורה אחי? יש אצלך מישהו עם תדלוק שגוי? פיג'ו 2008?",
+      "contentHe": "שאלה: שימו לב הגיעו ג'ילדות לשטיפה\n\nתשובה (נבו פרץ - מנהל): מה קורה אחי? יש אצלך מישהו עם תדלוק שגוי? פיג'ו 2008?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב שינוי בהטבה של המים מעכשיו 2 ש\"ח במקום 1 ש\"ח",
+      "titleHe": "שימו לב שינוי בהטבה של המים מעכשיו 2 ש\"ח במקום 1 ש\"ח",
+      "content": "שאלה: שימו לב שינוי בהטבה של המים מעכשיו 2 ש\"ח במקום 1 ש\"ח\n\nתשובה (נבו פרץ - מנהל): מה קורה אחי? יש אצלך מישהו עם תדלוק שגוי? פיג'ו 2008?",
+      "contentHe": "שאלה: שימו לב שינוי בהטבה של המים מעכשיו 2 ש\"ח במקום 1 ש\"ח\n\nתשובה (נבו פרץ - מנהל): מה קורה אחי? יש אצלך מישהו עם תדלוק שגוי? פיג'ו 2008?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מארז של מים ריבר 25 ש\"ח",
+      "titleHe": "מארז של מים ריבר 25 ש\"ח",
+      "content": "שאלה: מארז של מים ריבר 25 ש\"ח\n\nתשובה (נבו פרץ - מנהל): מה קורה אחי? יש אצלך מישהו עם תדלוק שגוי? פיג'ו 2008?",
+      "contentHe": "שאלה: מארז של מים ריבר 25 ש\"ח\n\nתשובה (נבו פרץ - מנהל): מה קורה אחי? יש אצלך מישהו עם תדלוק שגוי? פיג'ו 2008?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מחיר קודם 19.9",
+      "titleHe": "מחיר קודם 19.9",
+      "content": "שאלה: מחיר קודם 19.9\n\nתשובה (נבו פרץ - מנהל): מה קורה אחי? יש אצלך מישהו עם תדלוק שגוי? פיג'ו 2008?",
+      "contentHe": "שאלה: מחיר קודם 19.9\n\nתשובה (נבו פרץ - מנהל): מה קורה אחי? יש אצלך מישהו עם תדלוק שגוי? פיג'ו 2008?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישראל מנהל תחנה דלק הסיר/ה את אורי מניסטי עובד דלק",
+      "titleHe": "ישראל מנהל תחנה דלק הסיר/ה את אורי מניסטי עובד דלק",
+      "content": "שאלה: ישראל מנהל תחנה דלק הסיר/ה את אורי מניסטי עובד דלק\n\nתשובה (נבו פרץ - מנהל): מה קורה אחי? יש אצלך מישהו עם תדלוק שגוי? פיג'ו 2008?",
+      "contentHe": "שאלה: ישראל מנהל תחנה דלק הסיר/ה את אורי מניסטי עובד דלק\n\nתשובה (נבו פרץ - מנהל): מה קורה אחי? יש אצלך מישהו עם תדלוק שגוי? פיג'ו 2008?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישראל מנהל תחנה דלק הסיר/ה את נריה עובד דלק חדש",
+      "titleHe": "ישראל מנהל תחנה דלק הסיר/ה את נריה עובד דלק חדש",
+      "content": "שאלה: ישראל מנהל תחנה דלק הסיר/ה את נריה עובד דלק חדש\n\nתשובה (נבו פרץ - מנהל): מה קורה אחי? יש אצלך מישהו עם תדלוק שגוי? פיג'ו 2008?",
+      "contentHe": "שאלה: ישראל מנהל תחנה דלק הסיר/ה את נריה עובד דלק חדש\n\nתשובה (נבו פרץ - מנהל): מה קורה אחי? יש אצלך מישהו עם תדלוק שגוי? פיג'ו 2008?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב כרטיסי כבת וכרטיסי הנחה לא יעבדו בזמן ביצוע עבודות השדרוג שמחלקת המחשוב של דלק מבצעת הערב",
+      "titleHe": "שימו לב כרטיסי כבת וכרטיסי הנחה לא יעבדו בזמן ביצוע עבודות השדרוג שמחלקת המחשוב של דלק מבצעת הערב",
+      "content": "שאלה: שימו לב כרטיסי כבת וכרטיסי הנחה לא יעבדו בזמן ביצוע עבודות השדרוג שמחלקת המחשוב של דלק מבצעת הערב\n\nתשובה (נבו פרץ - מנהל): ברוך דיין האמת",
+      "contentHe": "שאלה: שימו לב כרטיסי כבת וכרטיסי הנחה לא יעבדו בזמן ביצוע עבודות השדרוג שמחלקת המחשוב של דלק מבצעת הערב\n\nתשובה (נבו פרץ - מנהל): ברוך דיין האמת",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ההלוויה בשעה 22:30 בת עלמין ירקון  שער פ״ת",
+      "titleHe": "ההלוויה בשעה 22:30 בת עלמין ירקון  שער פ״ת",
+      "content": "שאלה: ההלוויה בשעה 22:30 בת עלמין ירקון  שער פ״ת\n\nתשובה (נבו פרץ - מנהל): הזמנתי אקדח",
+      "contentHe": "שאלה: ההלוויה בשעה 22:30 בת עלמין ירקון  שער פ״ת\n\nתשובה (נבו פרץ - מנהל): הזמנתי אקדח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ברוך דיין האמת תנוחמו מן השמיים",
+      "titleHe": "ברוך דיין האמת תנוחמו מן השמיים",
+      "content": "שאלה: ברוך דיין האמת תנוחמו מן השמיים\n\nתשובה (נבו פרץ - מנהל): הזמנתי אקדח",
+      "contentHe": "שאלה: ברוך דיין האמת תנוחמו מן השמיים\n\nתשובה (נבו פרץ - מנהל): הזמנתי אקדח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ברוך דיין האמת",
+      "titleHe": "ברוך דיין האמת",
+      "content": "שאלה: ברוך דיין האמת\n\nתשובה (נבו פרץ - מנהל): הזמנתי אקדח",
+      "contentHe": "שאלה: ברוך דיין האמת\n\nתשובה (נבו פרץ - מנהל): הזמנתי אקדח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב סידור לשבוע הבא",
+      "titleHe": "שימו לב סידור לשבוע הבא",
+      "content": "שאלה: שימו לב סידור לשבוע הבא\n\nתשובה (נבו פרץ - מנהל): ניסים יוחננוף",
+      "contentHe": "שאלה: שימו לב סידור לשבוע הבא\n\nתשובה (נבו פרץ - מנהל): ניסים יוחננוף",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הערב חתם שר האוצר על צו  להעלאת מס הקניה על מוצרי העישון.",
+      "titleHe": "הערב חתם שר האוצר על צו  להעלאת מס הקניה על מוצרי העישון.",
+      "content": "שאלה: הערב חתם שר האוצר על צו  להעלאת מס הקניה על מוצרי העישון.\n\nתשובה (נבו פרץ - מנהל): ניסים יוחננוף",
+      "contentHe": "שאלה: הערב חתם שר האוצר על צו  להעלאת מס הקניה על מוצרי העישון.\n\nתשובה (נבו פרץ - מנהל): ניסים יוחננוף",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אלא לעשות הפקדה בקופה ואז להשים במעטפה ולהקים בכספת ישר בלי ללכת לברינקס",
+      "titleHe": "אלא לעשות הפקדה בקופה ואז להשים במעטפה ולהקים בכספת ישר בלי ללכת לברינקס",
+      "content": "שאלה: אלא לעשות הפקדה בקופה ואז להשים במעטפה ולהקים בכספת ישר בלי ללכת לברינקס\n\nתשובה (נבו פרץ - מנהל): לשים את ההפקדות בכספת עד להודעה חדשה",
+      "contentHe": "שאלה: אלא לעשות הפקדה בקופה ואז להשים במעטפה ולהקים בכספת ישר בלי ללכת לברינקס\n\nתשובה (נבו פרץ - מנהל): לשים את ההפקדות בכספת עד להודעה חדשה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יש מקשת קופה מתחת להפוך",
+      "titleHe": "יש מקשת קופה מתחת להפוך",
+      "content": "שאלה: יש מקשת קופה מתחת להפוך\n\nתשובה (נבו פרץ - מנהל): מישהו ראה את הכרטיס דלקן חריג ?",
+      "contentHe": "שאלה: יש מקשת קופה מתחת להפוך\n\nתשובה (נבו פרץ - מנהל): מישהו ראה את הכרטיס דלקן חריג ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "רשום אלור ופיין",
+      "titleHe": "רשום אלור ופיין",
+      "content": "שאלה: רשום אלור ופיין\n\nתשובה (נבו פרץ - מנהל): מישהו ראה את הכרטיס דלקן חריג ?",
+      "contentHe": "שאלה: רשום אלור ופיין\n\nתשובה (נבו פרץ - מנהל): מישהו ראה את הכרטיס דלקן חריג ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אלור + פיין ככה זה רשום בקופה מתחת להפוך הקטן",
+      "titleHe": "אלור + פיין ככה זה רשום בקופה מתחת להפוך הקטן",
+      "content": "שאלה: אלור + פיין ככה זה רשום בקופה מתחת להפוך הקטן\n\nתשובה (נבו פרץ - מנהל): מישהו ראה את הכרטיס דלקן חריג ?",
+      "contentHe": "שאלה: אלור + פיין ככה זה רשום בקופה מתחת להפוך הקטן\n\nתשובה (נבו פרץ - מנהל): מישהו ראה את הכרטיס דלקן חריג ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "למה אני צריך לקבל משמרת ככה?",
+      "titleHe": "למה אני צריך לקבל משמרת ככה?",
+      "content": "שאלה: למה אני צריך לקבל משמרת ככה?\n\nתשובה (נבו פרץ - מנהל): תפעיל אותו שאין ראש",
+      "contentHe": "שאלה: למה אני צריך לקבל משמרת ככה?\n\nתשובה (נבו פרץ - מנהל): תפעיל אותו שאין ראש",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "You can find my form \"משימות משמרת\" at: https://form.jotform.com/221003310105025",
+      "titleHe": "You can find my form \"משימות משמרת\" at: https://form.jotform.com/221003310105025",
+      "content": "שאלה: You can find my form \"משימות משמרת\" at: https://form.jotform.com/221003310105025\n\nתשובה (נבו פרץ - מנהל): תפעיל אותו שאין ראש",
+      "contentHe": "שאלה: You can find my form \"משימות משמרת\" at: https://form.jotform.com/221003310105025\n\nתשובה (נבו פרץ - מנהל): תפעיל אותו שאין ראש",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בוקר טוב לכל הצוות ,כל מי שקונה מוצרים מהחנות ,להעביר על תחנה שונות במחיר מלא ולרשום את השם שלו ,אני",
+      "titleHe": "בוקר טוב לכל הצוות ,כל מי שקונה מוצרים מהחנות ,להעביר על תחנה שונות במחיר מלא ולרשום את השם שלו ,אני",
+      "content": "שאלה: בוקר טוב לכל הצוות ,כל מי שקונה מוצרים מהחנות ,להעביר על תחנה שונות במחיר מלא ולרשום את השם שלו ,אני אתן את ההנחה בסוף חודש.\n\nתשובה (נבו פרץ - מנהל): תפעיל אותו שאין ראש",
+      "contentHe": "שאלה: בוקר טוב לכל הצוות ,כל מי שקונה מוצרים מהחנות ,להעביר על תחנה שונות במחיר מלא ולרשום את השם שלו ,אני אתן את ההנחה בסוף חודש.\n\nתשובה (נבו פרץ - מנהל): תפעיל אותו שאין ראש",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כל הכבוד סיסאי 👏👏",
+      "titleHe": "כל הכבוד סיסאי 👏👏",
+      "content": "שאלה: כל הכבוד סיסאי 👏👏\n\nתשובה (נבו פרץ - מנהל): יש כרטיס בקופה לבעיות כאלה",
+      "contentHe": "שאלה: כל הכבוד סיסאי 👏👏\n\nתשובה (נבו פרץ - מנהל): יש כרטיס בקופה לבעיות כאלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מה נעשה בעניין הזה באמת?",
+      "titleHe": "מה נעשה בעניין הזה באמת?",
+      "content": "שאלה: מה נעשה בעניין הזה באמת?\n\nתשובה (נבו פרץ - מנהל): יש כרטיס בקופה לבעיות כאלה",
+      "contentHe": "שאלה: מה נעשה בעניין הזה באמת?\n\nתשובה (נבו פרץ - מנהל): יש כרטיס בקופה לבעיות כאלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אם זה בכלל בלילה",
+      "titleHe": "אם זה בכלל בלילה",
+      "content": "שאלה: אם זה בכלל בלילה\n\nתשובה (נבו פרץ - מנהל): יש כרטיס בקופה לבעיות כאלה",
+      "contentHe": "שאלה: אם זה בכלל בלילה\n\nתשובה (נבו פרץ - מנהל): יש כרטיס בקופה לבעיות כאלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תשים על המכונה מספר פלאפון שלך או של ישראל משגעים אותנו באמצע עבודה",
+      "titleHe": "תשים על המכונה מספר פלאפון שלך או של ישראל משגעים אותנו באמצע עבודה",
+      "content": "שאלה: תשים על המכונה מספר פלאפון שלך או של ישראל משגעים אותנו באמצע עבודה\n\nתשובה (נבו פרץ - מנהל): יש כרטיס בקופה לבעיות כאלה",
+      "contentHe": "שאלה: תשים על המכונה מספר פלאפון שלך או של ישראל משגעים אותנו באמצע עבודה\n\nתשובה (נבו פרץ - מנהל): יש כרטיס בקופה לבעיות כאלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לנקות את השטיפה סבבה לפתוח אם יש סתימה בשואב סבבה אבל לגבי זה שאני לא יודע אם הוא שילם מה עושים אני ",
+      "titleHe": "לנקות את השטיפה סבבה לפתוח אם יש סתימה בשואב סבבה אבל לגבי זה שאני לא יודע אם הוא שילם מה עושים אני ",
+      "content": "שאלה: לנקות את השטיפה סבבה לפתוח אם יש סתימה בשואב סבבה אבל לגבי זה שאני לא יודע אם הוא שילם מה עושים אני לא יפתח לכול אחד בלילה\n\nתשובה (נבו פרץ - מנהל): הבעיה היחידה שיכול להיות עם תשלום זה בשואב אם הוא לחץ על עצור ואז זה מאפס את הספירה.",
+      "contentHe": "שאלה: לנקות את השטיפה סבבה לפתוח אם יש סתימה בשואב סבבה אבל לגבי זה שאני לא יודע אם הוא שילם מה עושים אני לא יפתח לכול אחד בלילה\n\nתשובה (נבו פרץ - מנהל): הבעיה היחידה שיכול להיות עם תשלום זה בשואב אם הוא לחץ על עצור ואז זה מאפס את הספירה.",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ואם זה בלילה גם ?",
+      "titleHe": "ואם זה בלילה גם ?",
+      "content": "שאלה: ואם זה בלילה גם ?\n\nתשובה (נבו פרץ - מנהל): הבעיה היחידה שיכול להיות עם תשלום זה בשואב אם הוא לחץ על עצור ואז זה מאפס את הספירה.",
+      "contentHe": "שאלה: ואם זה בלילה גם ?\n\nתשובה (נבו פרץ - מנהל): הבעיה היחידה שיכול להיות עם תשלום זה בשואב אם הוא לחץ על עצור ואז זה מאפס את הספירה.",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בלילה זה לא מקובל אבל ואת. יודע את זה אני לא ישאיר את הקופה לבד",
+      "titleHe": "בלילה זה לא מקובל אבל ואת. יודע את זה אני לא ישאיר את הקופה לבד",
+      "content": "שאלה: בלילה זה לא מקובל אבל ואת. יודע את זה אני לא ישאיר את הקופה לבד\n\nתשובה (נבו פרץ - מנהל): לעשן אתה מצליח ?",
+      "contentHe": "שאלה: בלילה זה לא מקובל אבל ואת. יודע את זה אני לא ישאיר את הקופה לבד\n\nתשובה (נבו פרץ - מנהל): לעשן אתה מצליח ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "נבו אני יכול לעזור שזה ליעד הקופה ואני ליד הקופה שאני מעשן",
+      "titleHe": "נבו אני יכול לעזור שזה ליעד הקופה ואני ליד הקופה שאני מעשן",
+      "content": "שאלה: נבו אני יכול לעזור שזה ליעד הקופה ואני ליד הקופה שאני מעשן\n\nתשובה (נבו פרץ - מנהל): קיצר ישראל אין פה ויכוח. לעשות מה שאפשר ולתת שירות ללקוחות זה הכל",
+      "contentHe": "שאלה: נבו אני יכול לעזור שזה ליעד הקופה ואני ליד הקופה שאני מעשן\n\nתשובה (נבו פרץ - מנהל): קיצר ישראל אין פה ויכוח. לעשות מה שאפשר ולתת שירות ללקוחות זה הכל",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לא יפה בן אדם מבוגר",
+      "titleHe": "לא יפה בן אדם מבוגר",
+      "content": "שאלה: לא יפה בן אדם מבוגר\n\nתשובה (נבו פרץ - מנהל): לא צריך לרשום פה מזומן אשראי יש לך מאחוריו שלט",
+      "contentHe": "שאלה: לא יפה בן אדם מבוגר\n\nתשובה (נבו פרץ - מנהל): לא צריך לרשום פה מזומן אשראי יש לך מאחוריו שלט",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "קובי ראית איך הוא  יורד עליך אומר שאתה זקן",
+      "titleHe": "קובי ראית איך הוא  יורד עליך אומר שאתה זקן",
+      "content": "שאלה: קובי ראית איך הוא  יורד עליך אומר שאתה זקן\n\nתשובה (נבו פרץ - מנהל): לא צריך לרשום פה מזומן אשראי יש לך מאחוריו שלט",
+      "contentHe": "שאלה: קובי ראית איך הוא  יורד עליך אומר שאתה זקן\n\nתשובה (נבו פרץ - מנהל): לא צריך לרשום פה מזומן אשראי יש לך מאחוריו שלט",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אי אפשר לברוח מהאמת",
+      "titleHe": "אי אפשר לברוח מהאמת",
+      "content": "שאלה: אי אפשר לברוח מהאמת\n\nתשובה (נבו פרץ - מנהל): לא צריך לרשום פה מזומן אשראי יש לך מאחוריו שלט",
+      "contentHe": "שאלה: אי אפשר לברוח מהאמת\n\nתשובה (נבו פרץ - מנהל): לא צריך לרשום פה מזומן אשראי יש לך מאחוריו שלט",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי לקח את המברגה?",
+      "titleHe": "מי לקח את המברגה?",
+      "content": "שאלה: מי לקח את המברגה?\n\nתשובה (נבו פרץ - מנהל): לא צריך לרשום פה מזומן אשראי יש לך מאחוריו שלט",
+      "contentHe": "שאלה: מי לקח את המברגה?\n\nתשובה (נבו פרץ - מנהל): לא צריך לרשום פה מזומן אשראי יש לך מאחוריו שלט",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כבר שאלת ואף אחד לא ענה ואם אני זוכר טוב מישהו אמר שהוא יבדוק את העניין",
+      "titleHe": "כבר שאלת ואף אחד לא ענה ואם אני זוכר טוב מישהו אמר שהוא יבדוק את העניין",
+      "content": "שאלה: כבר שאלת ואף אחד לא ענה ואם אני זוכר טוב מישהו אמר שהוא יבדוק את העניין\n\nתשובה (נבו פרץ - מנהל): לא צריך לרשום פה מזומן אשראי יש לך מאחוריו שלט",
+      "contentHe": "שאלה: כבר שאלת ואף אחד לא ענה ואם אני זוכר טוב מישהו אמר שהוא יבדוק את העניין\n\nתשובה (נבו פרץ - מנהל): לא צריך לרשום פה מזומן אשראי יש לך מאחוריו שלט",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "חברים יום שישי היום ויבוא איזה חכמולוג ויגיד לא רשום שישי ולמה אני משלם על מזומן יותר?",
+      "titleHe": "חברים יום שישי היום ויבוא איזה חכמולוג ויגיד לא רשום שישי ולמה אני משלם על מזומן יותר?",
+      "content": "שאלה: חברים יום שישי היום ויבוא איזה חכמולוג ויגיד לא רשום שישי ולמה אני משלם על מזומן יותר?\n\nתשובה (נבו פרץ - מנהל): לא צריך לרשום פה מזומן אשראי יש לך מאחוריו שלט",
+      "contentHe": "שאלה: חברים יום שישי היום ויבוא איזה חכמולוג ויגיד לא רשום שישי ולמה אני משלם על מזומן יותר?\n\nתשובה (נבו פרץ - מנהל): לא צריך לרשום פה מזומן אשראי יש לך מאחוריו שלט",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לגבי תביעת אצבע בכניסה למשמרת ,עושים כניסה רק לאחר שעישנתם ,שתיתם קפה ועשיתם שירותים .",
+      "titleHe": "לגבי תביעת אצבע בכניסה למשמרת ,עושים כניסה רק לאחר שעישנתם ,שתיתם קפה ועשיתם שירותים .",
+      "content": "שאלה: לגבי תביעת אצבע בכניסה למשמרת ,עושים כניסה רק לאחר שעישנתם ,שתיתם קפה ועשיתם שירותים .\n\nתשובה (נבו פרץ - מנהל): רק הנביעות פקק שטוח יותר זול",
+      "contentHe": "שאלה: לגבי תביעת אצבע בכניסה למשמרת ,עושים כניסה רק לאחר שעישנתם ,שתיתם קפה ועשיתם שירותים .\n\nתשובה (נבו פרץ - מנהל): רק הנביעות פקק שטוח יותר זול",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שלחו לי משמרות לשבוע הבא",
+      "titleHe": "שלחו לי משמרות לשבוע הבא",
+      "content": "שאלה: שלחו לי משמרות לשבוע הבא\n\nתשובה (נבו פרץ - מנהל): רק הנביעות פקק שטוח יותר זול",
+      "contentHe": "שאלה: שלחו לי משמרות לשבוע הבא\n\nתשובה (נבו פרץ - מנהל): רק הנביעות פקק שטוח יותר זול",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בטוח זה לא הגיוני עם כבר כולם יקחו את ההוא של הליטר",
+      "titleHe": "בטוח זה לא הגיוני עם כבר כולם יקחו את ההוא של הליטר",
+      "content": "שאלה: בטוח זה לא הגיוני עם כבר כולם יקחו את ההוא של הליטר\n\nתשובה (נבו פרץ - מנהל): רק הנביעות פקק שטוח יותר זול",
+      "contentHe": "שאלה: בטוח זה לא הגיוני עם כבר כולם יקחו את ההוא של הליטר\n\nתשובה (נבו פרץ - מנהל): רק הנביעות פקק שטוח יותר זול",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "עבור מה זה?",
+      "titleHe": "עבור מה זה?",
+      "content": "שאלה: עבור מה זה?\n\nתשובה (נבו פרץ - מנהל): משיכת מזומן",
+      "contentHe": "שאלה: עבור מה זה?\n\nתשובה (נבו פרץ - מנהל): משיכת מזומן",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי לקח כלי עבודה מהמשרד",
+      "titleHe": "מי לקח כלי עבודה מהמשרד",
+      "content": "שאלה: מי לקח כלי עבודה מהמשרד\n\nתשובה (נבו פרץ - מנהל): תכבה תדליק מחדש",
+      "contentHe": "שאלה: מי לקח כלי עבודה מהמשרד\n\nתשובה (נבו פרץ - מנהל): תכבה תדליק מחדש",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מתי האחד שעושה משמרת לילה יוכל לסדר את המקרר לשמור אליו כאילו לא למכור אז זה ישאר הכי מלא כמו שאתה ר",
+      "titleHe": "מתי האחד שעושה משמרת לילה יוכל לסדר את המקרר לשמור אליו כאילו לא למכור אז זה ישאר הכי מלא כמו שאתה ר",
+      "content": "שאלה: מתי האחד שעושה משמרת לילה יוכל לסדר את המקרר לשמור אליו כאילו לא למכור אז זה ישאר הכי מלא כמו שאתה רוצה\n\nתשובה (נבו פרץ - מנהל): תכבה תדליק מחדש",
+      "contentHe": "שאלה: מתי האחד שעושה משמרת לילה יוכל לסדר את המקרר לשמור אליו כאילו לא למכור אז זה ישאר הכי מלא כמו שאתה רוצה\n\nתשובה (נבו פרץ - מנהל): תכבה תדליק מחדש",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שלום לכולם לקוח בשם עזרא עם טויוטה לבנה תדלק בנזין 200 שח לפני שעה במשאבה 1 ושכח לשלם, מבוצע כעת תשל",
+      "titleHe": "שלום לכולם לקוח בשם עזרא עם טויוטה לבנה תדלק בנזין 200 שח לפני שעה במשאבה 1 ושכח לשלם, מבוצע כעת תשל",
+      "content": "שאלה: שלום לכולם לקוח בשם עזרא עם טויוטה לבנה תדלק בנזין 200 שח לפני שעה במשאבה 1 ושכח לשלם, מבוצע כעת תשלום דרך חיוב כרטיס האשראי שלו מול יהודית\n\nתשובה (נבו פרץ - מנהל): תראה אם יש צינור ספייר",
+      "contentHe": "שאלה: שלום לכולם לקוח בשם עזרא עם טויוטה לבנה תדלק בנזין 200 שח לפני שעה במשאבה 1 ושכח לשלם, מבוצע כעת תשלום דרך חיוב כרטיס האשראי שלו מול יהודית\n\nתשובה (נבו פרץ - מנהל): תראה אם יש צינור ספייר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הצינור בשטיפה איפה שהפריקת דלקים הצינור  התפוצץ סגרתי שם",
+      "titleHe": "הצינור בשטיפה איפה שהפריקת דלקים הצינור  התפוצץ סגרתי שם",
+      "content": "שאלה: הצינור בשטיפה איפה שהפריקת דלקים הצינור  התפוצץ סגרתי שם\n\nתשובה (נבו פרץ - מנהל): תראה אם יש צינור ספייר",
+      "contentHe": "שאלה: הצינור בשטיפה איפה שהפריקת דלקים הצינור  התפוצץ סגרתי שם\n\nתשובה (נבו פרץ - מנהל): תראה אם יש צינור ספייר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ישראל מנהל תחנה דלק צירף/ה את +972 53‑424‑5162",
+      "titleHe": "ישראל מנהל תחנה דלק צירף/ה את +972 53‑424‑5162",
+      "content": "שאלה: ישראל מנהל תחנה דלק צירף/ה את +972 53‑424‑5162\n\nתשובה (נבו פרץ - מנהל): 5 ש״ח ומתנה אם מישהו קונה באלישג",
+      "contentHe": "שאלה: ישראל מנהל תחנה דלק צירף/ה את +972 53‑424‑5162\n\nתשובה (נבו פרץ - מנהל): 5 ש״ח ומתנה אם מישהו קונה באלישג",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "רשום לך הנחת כרטיס 2.17",
+      "titleHe": "רשום לך הנחת כרטיס 2.17",
+      "content": "שאלה: רשום לך הנחת כרטיס 2.17\n\nתשובה (נבו פרץ - מנהל): תתקשר לתמיכה",
+      "contentHe": "שאלה: רשום לך הנחת כרטיס 2.17\n\nתשובה (נבו פרץ - מנהל): תתקשר לתמיכה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "פשוט כרטיס ההנחה לא עבר או שיש בעיית תקשורת והוא לא מוריד את המחיר למרות שהכרטיס  הנחה הועבר",
+      "titleHe": "פשוט כרטיס ההנחה לא עבר או שיש בעיית תקשורת והוא לא מוריד את המחיר למרות שהכרטיס  הנחה הועבר",
+      "content": "שאלה: פשוט כרטיס ההנחה לא עבר או שיש בעיית תקשורת והוא לא מוריד את המחיר למרות שהכרטיס  הנחה הועבר\n\nתשובה (נבו פרץ - מנהל): תתקשר לתמיכה",
+      "contentHe": "שאלה: פשוט כרטיס ההנחה לא עבר או שיש בעיית תקשורת והוא לא מוריד את המחיר למרות שהכרטיס  הנחה הועבר\n\nתשובה (נבו פרץ - מנהל): תתקשר לתמיכה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תבדוק עם כרטיס אחר שיש בקופה",
+      "titleHe": "תבדוק עם כרטיס אחר שיש בקופה",
+      "content": "שאלה: תבדוק עם כרטיס אחר שיש בקופה\n\nתשובה (נבו פרץ - מנהל): תתקשר לתמיכה",
+      "contentHe": "שאלה: תבדוק עם כרטיס אחר שיש בקופה\n\nתשובה (נבו פרץ - מנהל): תתקשר לתמיכה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אבל במשאבה עצמה רשום 7.09",
+      "titleHe": "אבל במשאבה עצמה רשום 7.09",
+      "content": "שאלה: אבל במשאבה עצמה רשום 7.09\n\nתשובה (נבו פרץ - מנהל): תתקשר לתמיכה",
+      "contentHe": "שאלה: אבל במשאבה עצמה רשום 7.09\n\nתשובה (נבו פרץ - מנהל): תתקשר לתמיכה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "זה מה שהיה אתמול עם הכרטיס של הסולר שהתקשרנו לתמיכה",
+      "titleHe": "זה מה שהיה אתמול עם הכרטיס של הסולר שהתקשרנו לתמיכה",
+      "content": "שאלה: זה מה שהיה אתמול עם הכרטיס של הסולר שהתקשרנו לתמיכה\n\nתשובה (נבו פרץ - מנהל): תתקשר לתמיכה",
+      "contentHe": "שאלה: זה מה שהיה אתמול עם הכרטיס של הסולר שהתקשרנו לתמיכה\n\nתשובה (נבו פרץ - מנהל): תתקשר לתמיכה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תנסה להעביר כרטיס הנחה ואם לא עובד צריך להתקשר לתמיכת מחשוב",
+      "titleHe": "תנסה להעביר כרטיס הנחה ואם לא עובד צריך להתקשר לתמיכת מחשוב",
+      "content": "שאלה: תנסה להעביר כרטיס הנחה ואם לא עובד צריך להתקשר לתמיכת מחשוב\n\nתשובה (נבו פרץ - מנהל): תתקשר לתמיכה",
+      "contentHe": "שאלה: תנסה להעביר כרטיס הנחה ואם לא עובד צריך להתקשר לתמיכת מחשוב\n\nתשובה (נבו פרץ - מנהל): תתקשר לתמיכה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יפה אז הכרטיס עובד",
+      "titleHe": "יפה אז הכרטיס עובד",
+      "content": "שאלה: יפה אז הכרטיס עובד\n\nתשובה (נבו פרץ - מנהל): אבל בחשבונית זה לא משתנה",
+      "contentHe": "שאלה: יפה אז הכרטיס עובד\n\nתשובה (נבו פרץ - מנהל): אבל בחשבונית זה לא משתנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "רק בקבלה מופיע אחרת",
+      "titleHe": "רק בקבלה מופיע אחרת",
+      "content": "שאלה: רק בקבלה מופיע אחרת\n\nתשובה (נבו פרץ - מנהל): אבל בחשבונית זה לא משתנה",
+      "contentHe": "שאלה: רק בקבלה מופיע אחרת\n\nתשובה (נבו פרץ - מנהל): אבל בחשבונית זה לא משתנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ערב טוב לכולם ,צריך שתשמרו ג'ריקנים של 4 ליטר עבור נפט",
+      "titleHe": "ערב טוב לכולם ,צריך שתשמרו ג'ריקנים של 4 ליטר עבור נפט",
+      "content": "שאלה: ערב טוב לכולם ,צריך שתשמרו ג'ריקנים של 4 ליטר עבור נפט\n\nתשובה (נבו פרץ - מנהל): לא להעביר שישיות של הפחיות בסיבוב של השוטרים",
+      "contentHe": "שאלה: ערב טוב לכולם ,צריך שתשמרו ג'ריקנים של 4 ליטר עבור נפט\n\nתשובה (נבו פרץ - מנהל): לא להעביר שישיות של הפחיות בסיבוב של השוטרים",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי מחליף אותי ??",
+      "titleHe": "מי מחליף אותי ??",
+      "content": "שאלה: מי מחליף אותי ??\n\nתשובה (נבו פרץ - מנהל): דוד השמן שילם?",
+      "contentHe": "שאלה: מי מחליף אותי ??\n\nתשובה (נבו פרץ - מנהל): דוד השמן שילם?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תבדוק בפריטים",
+      "titleHe": "תבדוק בפריטים",
+      "content": "שאלה: תבדוק בפריטים\n\nתשובה (נבו פרץ - מנהל): דוד השמן שילם?",
+      "contentHe": "שאלה: תבדוק בפריטים\n\nתשובה (נבו פרץ - מנהל): דוד השמן שילם?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אתה יודע בערך",
+      "titleHe": "אתה יודע בערך",
+      "content": "שאלה: אתה יודע בערך\n\nתשובה (נבו פרץ - מנהל): דוד השמן שילם?",
+      "contentHe": "שאלה: אתה יודע בערך\n\nתשובה (נבו פרץ - מנהל): דוד השמן שילם?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אבל סגרו את העסקה באיחור כי אין רכב במשאבה בזמן שמופיע על החשבונית",
+      "titleHe": "אבל סגרו את העסקה באיחור כי אין רכב במשאבה בזמן שמופיע על החשבונית",
+      "content": "שאלה: אבל סגרו את העסקה באיחור כי אין רכב במשאבה בזמן שמופיע על החשבונית\n\nתשובה (נבו פרץ - מנהל): איזה חלק ?",
+      "contentHe": "שאלה: אבל סגרו את העסקה באיחור כי אין רכב במשאבה בזמן שמופיע על החשבונית\n\nתשובה (נבו פרץ - מנהל): איזה חלק ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "המטאטא בשטיפה שצמודה לבאגט שבור",
+      "titleHe": "המטאטא בשטיפה שצמודה לבאגט שבור",
+      "content": "שאלה: המטאטא בשטיפה שצמודה לבאגט שבור\n\nתשובה (נבו פרץ - מנהל): איזה חלק ?",
+      "contentHe": "שאלה: המטאטא בשטיפה שצמודה לבאגט שבור\n\nתשובה (נבו פרץ - מנהל): איזה חלק ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי קיבל אתמול אקדח מטאטא לשטיפה",
+      "titleHe": "מי קיבל אתמול אקדח מטאטא לשטיפה",
+      "content": "שאלה: מי קיבל אתמול אקדח מטאטא לשטיפה\n\nתשובה (נבו פרץ - מנהל): מישהו מצא פאוץ של איזה לקוח?",
+      "contentHe": "שאלה: מי קיבל אתמול אקדח מטאטא לשטיפה\n\nתשובה (נבו פרץ - מנהל): מישהו מצא פאוץ של איזה לקוח?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מישהו לקח כלי עבודה מהארגז כלים ,חסרים לי 2 מפתחות שוודים",
+      "titleHe": "מישהו לקח כלי עבודה מהארגז כלים ,חסרים לי 2 מפתחות שוודים",
+      "content": "שאלה: מישהו לקח כלי עבודה מהארגז כלים ,חסרים לי 2 מפתחות שוודים\n\nתשובה (נבו פרץ - מנהל): זה מתחת למטבעות בקופה",
+      "contentHe": "שאלה: מישהו לקח כלי עבודה מהארגז כלים ,חסרים לי 2 מפתחות שוודים\n\nתשובה (נבו פרץ - מנהל): זה מתחת למטבעות בקופה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי מזהה את הנהג ?",
+      "titleHe": "מי מזהה את הנהג ?",
+      "content": "שאלה: מי מזהה את הנהג ?\n\nתשובה (נבו פרץ - מנהל): זה מתחת למטבעות בקופה",
+      "contentHe": "שאלה: מי מזהה את הנהג ?\n\nתשובה (נבו פרץ - מנהל): זה מתחת למטבעות בקופה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אי אפשר לזהות עם הלוחית רישוי",
+      "titleHe": "אי אפשר לזהות עם הלוחית רישוי",
+      "content": "שאלה: אי אפשר לזהות עם הלוחית רישוי\n\nתשובה (נבו פרץ - מנהל): זה מתחת למטבעות בקופה",
+      "contentHe": "שאלה: אי אפשר לזהות עם הלוחית רישוי\n\nתשובה (נבו פרץ - מנהל): זה מתחת למטבעות בקופה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "26001303 זה המספר רישוי",
+      "titleHe": "26001303 זה המספר רישוי",
+      "content": "שאלה: 26001303 זה המספר רישוי\n\nתשובה (נבו פרץ - מנהל): זה מתחת למטבעות בקופה",
+      "contentHe": "שאלה: 26001303 זה המספר רישוי\n\nתשובה (נבו פרץ - מנהל): זה מתחת למטבעות בקופה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תרשמו על העסקה *ישראל חריר*",
+      "titleHe": "תרשמו על העסקה *ישראל חריר*",
+      "content": "שאלה: תרשמו על העסקה *ישראל חריר*\n\nתשובה (נבו פרץ - מנהל): זה מתחת למטבעות בקופה",
+      "contentHe": "שאלה: תרשמו על העסקה *ישראל חריר*\n\nתשובה (נבו פרץ - מנהל): זה מתחת למטבעות בקופה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תעדכנו בבקשה את יוסף",
+      "titleHe": "תעדכנו בבקשה את יוסף",
+      "content": "שאלה: תעדכנו בבקשה את יוסף\n\nתשובה (נבו פרץ - מנהל): זה מתחת למטבעות בקופה",
+      "contentHe": "שאלה: תעדכנו בבקשה את יוסף\n\nתשובה (נבו פרץ - מנהל): זה מתחת למטבעות בקופה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה 5 לא מוציאה בנזין",
+      "titleHe": "משאבה 5 לא מוציאה בנזין",
+      "content": "שאלה: משאבה 5 לא מוציאה בנזין\n\nתשובה (נבו פרץ - מנהל): 45 סוף יום",
+      "contentHe": "שאלה: משאבה 5 לא מוציאה בנזין\n\nתשובה (נבו פרץ - מנהל): 45 סוף יום",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אין סבון בשטיפה",
+      "titleHe": "אין סבון בשטיפה",
+      "content": "שאלה: אין סבון בשטיפה\n\nתשובה (נבו פרץ - מנהל): 45 סוף יום",
+      "contentHe": "שאלה: אין סבון בשטיפה\n\nתשובה (נבו פרץ - מנהל): 45 סוף יום",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שרי העברת תשלום לבן נתן ?",
+      "titleHe": "שרי העברת תשלום לבן נתן ?",
+      "content": "שאלה: שרי העברת תשלום לבן נתן ?\n\nתשובה (נבו פרץ - מנהל): 45 סוף יום",
+      "contentHe": "שאלה: שרי העברת תשלום לבן נתן ?\n\nתשובה (נבו פרץ - מנהל): 45 סוף יום",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מחר שלומי בן נתן יגיע ובנוסף מנדיר לשחרר את המשאבות 5.6 ולראות מה הבעיה ב 1.2 ? ואחר כך יגיעו מנדיר ",
+      "titleHe": "מחר שלומי בן נתן יגיע ובנוסף מנדיר לשחרר את המשאבות 5.6 ולראות מה הבעיה ב 1.2 ? ואחר כך יגיעו מנדיר ",
+      "content": "שאלה: מחר שלומי בן נתן יגיע ובנוסף מנדיר לשחרר את המשאבות 5.6 ולראות מה הבעיה ב 1.2 ? ואחר כך יגיעו מנדיר לטפל בבעיות החוזרות של משאבה 5.6\n\nתשובה (נבו פרץ - מנהל): זה מאתמול בערב",
+      "contentHe": "שאלה: מחר שלומי בן נתן יגיע ובנוסף מנדיר לשחרר את המשאבות 5.6 ולראות מה הבעיה ב 1.2 ? ואחר כך יגיעו מנדיר לטפל בבעיות החוזרות של משאבה 5.6\n\nתשובה (נבו פרץ - מנהל): זה מאתמול בערב",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה 3 - 95 לא עובד דלקן",
+      "titleHe": "משאבה 3 - 95 לא עובד דלקן",
+      "content": "שאלה: משאבה 3 - 95 לא עובד דלקן\n\nתשובה (נבו פרץ - מנהל): זה מאתמול בערב",
+      "contentHe": "שאלה: משאבה 3 - 95 לא עובד דלקן\n\nתשובה (נבו פרץ - מנהל): זה מאתמול בערב",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תשלחו לי בבקשה משמרות לשבוע הבא בהקדם",
+      "titleHe": "תשלחו לי בבקשה משמרות לשבוע הבא בהקדם",
+      "content": "שאלה: תשלחו לי בבקשה משמרות לשבוע הבא בהקדם\n\nתשובה (נבו פרץ - מנהל): בארבע בבוקר יגיע",
+      "contentHe": "שאלה: תשלחו לי בבקשה משמרות לשבוע הבא בהקדם\n\nתשובה (נבו פרץ - מנהל): בארבע בבוקר יגיע",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אז סולר מה זה משנה",
+      "titleHe": "אז סולר מה זה משנה",
+      "content": "שאלה: אז סולר מה זה משנה\n\nתשובה (נבו פרץ - מנהל): בארבע בבוקר יגיע",
+      "contentHe": "שאלה: אז סולר מה זה משנה\n\nתשובה (נבו פרץ - מנהל): בארבע בבוקר יגיע",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מה עם הסולר",
+      "titleHe": "מה עם הסולר",
+      "content": "שאלה: מה עם הסולר\n\nתשובה (נבו פרץ - מנהל): בארבע בבוקר יגיע",
+      "contentHe": "שאלה: מה עם הסולר\n\nתשובה (נבו פרץ - מנהל): בארבע בבוקר יגיע",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי שמכיר לא עבר כרטיס אשראי",
+      "titleHe": "מי שמכיר לא עבר כרטיס אשראי",
+      "content": "שאלה: מי שמכיר לא עבר כרטיס אשראי\n\nתשובה (נבו פרץ - מנהל): ופשוט נתת לה ללכת?",
+      "contentHe": "שאלה: מי שמכיר לא עבר כרטיס אשראי\n\nתשובה (נבו פרץ - מנהל): ופשוט נתת לה ללכת?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "נגמר הסולר בכל התחנה",
+      "titleHe": "נגמר הסולר בכל התחנה",
+      "content": "שאלה: נגמר הסולר בכל התחנה\n\nתשובה (נבו פרץ - מנהל): ופשוט נתת לה ללכת?",
+      "contentHe": "שאלה: נגמר הסולר בכל התחנה\n\nתשובה (נבו פרץ - מנהל): ופשוט נתת לה ללכת?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי בא להחליף אותי?",
+      "titleHe": "מי בא להחליף אותי?",
+      "content": "שאלה: מי בא להחליף אותי?\n\nתשובה (נבו פרץ - מנהל): איזה משאבה",
+      "contentHe": "שאלה: מי בא להחליף אותי?\n\nתשובה (נבו פרץ - מנהל): איזה משאבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "סליחה הרגע התעוררתי מגיע הכי מהר שיש לי",
+      "titleHe": "סליחה הרגע התעוררתי מגיע הכי מהר שיש לי",
+      "content": "שאלה: סליחה הרגע התעוררתי מגיע הכי מהר שיש לי\n\nתשובה (נבו פרץ - מנהל): איזה משאבה",
+      "contentHe": "שאלה: סליחה הרגע התעוררתי מגיע הכי מהר שיש לי\n\nתשובה (נבו פרץ - מנהל): איזה משאבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משמרות לשבוע הקרוב בה",
+      "titleHe": "משמרות לשבוע הקרוב בה",
+      "content": "שאלה: משמרות לשבוע הקרוב בה\n\nתשובה (נבו פרץ - מנהל): איזה משאבה",
+      "contentHe": "שאלה: משמרות לשבוע הקרוב בה\n\nתשובה (נבו פרץ - מנהל): איזה משאבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "נדיר צריכים להגיע",
+      "titleHe": "נדיר צריכים להגיע",
+      "content": "שאלה: נדיר צריכים להגיע\n\nתשובה (נבו פרץ - מנהל): איזה משאבה",
+      "contentHe": "שאלה: נדיר צריכים להגיע\n\nתשובה (נבו פרץ - מנהל): איזה משאבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "זה משהו חדש זה לא קשור למשאבה 5 ו6",
+      "titleHe": "זה משהו חדש זה לא קשור למשאבה 5 ו6",
+      "content": "שאלה: זה משהו חדש זה לא קשור למשאבה 5 ו6\n\nתשובה (נבו פרץ - מנהל): איזה משאבה",
+      "contentHe": "שאלה: זה משהו חדש זה לא קשור למשאבה 5 ו6\n\nתשובה (נבו פרץ - מנהל): איזה משאבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כרגע אתם מוכרים את הסיגריות לפי המחיר שעובר בקופה עד מחר ב״ה שיעדכנו מחירים.",
+      "titleHe": "כרגע אתם מוכרים את הסיגריות לפי המחיר שעובר בקופה עד מחר ב״ה שיעדכנו מחירים.",
+      "content": "שאלה: כרגע אתם מוכרים את הסיגריות לפי המחיר שעובר בקופה עד מחר ב״ה שיעדכנו מחירים.\n\nתשובה (נבו פרץ - מנהל): לא.. זה רק העדכון",
+      "contentHe": "שאלה: כרגע אתם מוכרים את הסיגריות לפי המחיר שעובר בקופה עד מחר ב״ה שיעדכנו מחירים.\n\nתשובה (נבו פרץ - מנהל): לא.. זה רק העדכון",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ולהסביר שזה לא בגללנו אלא הרשת שינתה בלי ידיעתינו ורק מחר יכנסו המחירים הנכונים לקופה",
+      "titleHe": "ולהסביר שזה לא בגללנו אלא הרשת שינתה בלי ידיעתינו ורק מחר יכנסו המחירים הנכונים לקופה",
+      "content": "שאלה: ולהסביר שזה לא בגללנו אלא הרשת שינתה בלי ידיעתינו ורק מחר יכנסו המחירים הנכונים לקופה\n\nתשובה (נבו פרץ - מנהל): לא.. זה רק העדכון",
+      "contentHe": "שאלה: ולהסביר שזה לא בגללנו אלא הרשת שינתה בלי ידיעתינו ורק מחר יכנסו המחירים הנכונים לקופה\n\nתשובה (נבו פרץ - מנהל): לא.. זה רק העדכון",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב לכל העובדים לילה",
+      "titleHe": "שימו לב לכל העובדים לילה",
+      "content": "שאלה: שימו לב לכל העובדים לילה\n\nתשובה (נבו פרץ - מנהל): לא.. זה רק העדכון",
+      "contentHe": "שאלה: שימו לב לכל העובדים לילה\n\nתשובה (נבו פרץ - מנהל): לא.. זה רק העדכון",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שעלה לראות במצלמות <ההודעה נערכה>",
+      "titleHe": "שעלה לראות במצלמות <ההודעה נערכה>",
+      "content": "שאלה: שעלה לראות במצלמות <ההודעה נערכה>\n\nתשובה (נבו פרץ - מנהל): והם שמים על המשאבה הנכונה?",
+      "contentHe": "שאלה: שעלה לראות במצלמות <ההודעה נערכה>\n\nתשובה (נבו פרץ - מנהל): והם שמים על המשאבה הנכונה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב למשמרות",
+      "titleHe": "שימו לב למשמרות",
+      "content": "שאלה: שימו לב למשמרות\n\nתשובה (נבו פרץ - מנהל): והם שמים על המשאבה הנכונה?",
+      "contentHe": "שאלה: שימו לב למשמרות\n\nתשובה (נבו פרץ - מנהל): והם שמים על המשאבה הנכונה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה 9 לא מתדלקת",
+      "titleHe": "משאבה 9 לא מתדלקת",
+      "content": "שאלה: משאבה 9 לא מתדלקת\n\nתשובה (נבו פרץ - מנהל): והם שמים על המשאבה הנכונה?",
+      "contentHe": "שאלה: משאבה 9 לא מתדלקת\n\nתשובה (נבו פרץ - מנהל): והם שמים על המשאבה הנכונה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כבר 5 אנשים התלוננו",
+      "titleHe": "כבר 5 אנשים התלוננו",
+      "content": "שאלה: כבר 5 אנשים התלוננו\n\nתשובה (נבו פרץ - מנהל): והם שמים על המשאבה הנכונה?",
+      "contentHe": "שאלה: כבר 5 אנשים התלוננו\n\nתשובה (נבו פרץ - מנהל): והם שמים על המשאבה הנכונה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יוסי עובד דלק יצא/ה",
+      "titleHe": "יוסי עובד דלק יצא/ה",
+      "content": "שאלה: יוסי עובד דלק יצא/ה\n\nתשובה (נבו פרץ - מנהל): והם שמים על המשאבה הנכונה?",
+      "contentHe": "שאלה: יוסי עובד דלק יצא/ה\n\nתשובה (נבו פרץ - מנהל): והם שמים על המשאבה הנכונה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "גם משאבה 10 לא עובדת שזה באשראי או במזומן",
+      "titleHe": "גם משאבה 10 לא עובדת שזה באשראי או במזומן",
+      "content": "שאלה: גם משאבה 10 לא עובדת שזה באשראי או במזומן\n\nתשובה (נבו פרץ - מנהל): פתחתי קריאה",
+      "contentHe": "שאלה: גם משאבה 10 לא עובדת שזה באשראי או במזומן\n\nתשובה (נבו פרץ - מנהל): פתחתי קריאה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "המקרר שתיה לא עובד",
+      "titleHe": "המקרר שתיה לא עובד",
+      "content": "שאלה: המקרר שתיה לא עובד\n\nתשובה (נבו פרץ - מנהל): האשראי בשטיפה מכובה",
+      "contentHe": "שאלה: המקרר שתיה לא עובד\n\nתשובה (נבו פרץ - מנהל): האשראי בשטיפה מכובה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "נפתחה קריאה לדלק",
+      "titleHe": "נפתחה קריאה לדלק",
+      "content": "שאלה: נפתחה קריאה לדלק\n\nתשובה (נבו פרץ - מנהל): האשראי בשטיפה מכובה",
+      "contentHe": "שאלה: נפתחה קריאה לדלק\n\nתשובה (נבו פרץ - מנהל): האשראי בשטיפה מכובה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "קובי סידר איתי",
+      "titleHe": "קובי סידר איתי",
+      "content": "שאלה: קובי סידר איתי\n\nתשובה (נבו פרץ - מנהל): האשראי בשטיפה מכובה",
+      "contentHe": "שאלה: קובי סידר איתי\n\nתשובה (נבו פרץ - מנהל): האשראי בשטיפה מכובה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תתקשרו בבקשה לדלק לתמיכה שיעזרו לכם לסגור",
+      "titleHe": "תתקשרו בבקשה לדלק לתמיכה שיעזרו לכם לסגור",
+      "content": "שאלה: תתקשרו בבקשה לדלק לתמיכה שיעזרו לכם לסגור\n\nתשובה (נבו פרץ - מנהל): אין סיכוי זה 15 שח",
+      "contentHe": "שאלה: תתקשרו בבקשה לדלק לתמיכה שיעזרו לכם לסגור\n\nתשובה (נבו פרץ - מנהל): אין סיכוי זה 15 שח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לקח מוצרים ולא עבר לו הכרטיס של התחנה",
+      "titleHe": "לקח מוצרים ולא עבר לו הכרטיס של התחנה",
+      "content": "שאלה: לקח מוצרים ולא עבר לו הכרטיס של התחנה\n\nתשובה (נבו פרץ - מנהל): אין סיכוי זה 15 שח",
+      "contentHe": "שאלה: לקח מוצרים ולא עבר לו הכרטיס של התחנה\n\nתשובה (נבו פרץ - מנהל): אין סיכוי זה 15 שח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ארון שטיפה שמאלי, לא נעול",
+      "titleHe": "ארון שטיפה שמאלי, לא נעול",
+      "content": "שאלה: ארון שטיפה שמאלי, לא נעול\n\nתשובה (נבו פרץ - מנהל): אין סיכוי זה 15 שח",
+      "contentHe": "שאלה: ארון שטיפה שמאלי, לא נעול\n\nתשובה (נבו פרץ - מנהל): אין סיכוי זה 15 שח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מצאתי מעל הארון בשטיפה",
+      "titleHe": "מצאתי מעל הארון בשטיפה",
+      "content": "שאלה: מצאתי מעל הארון בשטיפה\n\nתשובה (נבו פרץ - מנהל): אין סיכוי זה 15 שח",
+      "contentHe": "שאלה: מצאתי מעל הארון בשטיפה\n\nתשובה (נבו פרץ - מנהל): אין סיכוי זה 15 שח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יש מפתח תלוי עם תווית ירוקה",
+      "titleHe": "יש מפתח תלוי עם תווית ירוקה",
+      "content": "שאלה: יש מפתח תלוי עם תווית ירוקה\n\nתשובה (נבו פרץ - מנהל): הקומפרסור נמצא בשטיפה השמאלית בסוף מאחורי הפאנל הלבן שנפתח מלמעלה",
+      "contentHe": "שאלה: יש מפתח תלוי עם תווית ירוקה\n\nתשובה (נבו פרץ - מנהל): הקומפרסור נמצא בשטיפה השמאלית בסוף מאחורי הפאנל הלבן שנפתח מלמעלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כתוב עליו 700 ומשהו",
+      "titleHe": "כתוב עליו 700 ומשהו",
+      "content": "שאלה: כתוב עליו 700 ומשהו\n\nתשובה (נבו פרץ - מנהל): הקומפרסור נמצא בשטיפה השמאלית בסוף מאחורי הפאנל הלבן שנפתח מלמעלה",
+      "contentHe": "שאלה: כתוב עליו 700 ומשהו\n\nתשובה (נבו פרץ - מנהל): הקומפרסור נמצא בשטיפה השמאלית בסוף מאחורי הפאנל הלבן שנפתח מלמעלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הסתדרתי תודה",
+      "titleHe": "הסתדרתי תודה",
+      "content": "שאלה: הסתדרתי תודה\n\nתשובה (נבו פרץ - מנהל): הקומפרסור נמצא בשטיפה השמאלית בסוף מאחורי הפאנל הלבן שנפתח מלמעלה",
+      "contentHe": "שאלה: הסתדרתי תודה\n\nתשובה (נבו פרץ - מנהל): הקומפרסור נמצא בשטיפה השמאלית בסוף מאחורי הפאנל הלבן שנפתח מלמעלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "נבו אמר 40",
+      "titleHe": "נבו אמר 40",
+      "content": "שאלה: נבו אמר 40\n\nתשובה (נבו פרץ - מנהל): הקומפרסור נמצא בשטיפה השמאלית בסוף מאחורי הפאנל הלבן שנפתח מלמעלה",
+      "contentHe": "שאלה: נבו אמר 40\n\nתשובה (נבו פרץ - מנהל): הקומפרסור נמצא בשטיפה השמאלית בסוף מאחורי הפאנל הלבן שנפתח מלמעלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "העברה לחשבון קשורה לזה",
+      "titleHe": "העברה לחשבון קשורה לזה",
+      "content": "שאלה: העברה לחשבון קשורה לזה\n\nתשובה (נבו פרץ - מנהל): הקומפרסור נמצא בשטיפה השמאלית בסוף מאחורי הפאנל הלבן שנפתח מלמעלה",
+      "contentHe": "שאלה: העברה לחשבון קשורה לזה\n\nתשובה (נבו פרץ - מנהל): הקומפרסור נמצא בשטיפה השמאלית בסוף מאחורי הפאנל הלבן שנפתח מלמעלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שלום לכולם הבנתי שמשאבה מספר ארבע הידית של הבנזין 95 נתלשה ונעלו את המשאבה מי יודע מתי זה קרה מי אחר",
+      "titleHe": "שלום לכולם הבנתי שמשאבה מספר ארבע הידית של הבנזין 95 נתלשה ונעלו את המשאבה מי יודע מתי זה קרה מי אחר",
+      "content": "שאלה: שלום לכולם הבנתי שמשאבה מספר ארבע הידית של הבנזין 95 נתלשה ונעלו את המשאבה מי יודע מתי זה קרה מי אחראי לתלישה?\n\nתשובה (נבו פרץ - מנהל): כן זה היה חייל אתמול בלילה",
+      "contentHe": "שאלה: שלום לכולם הבנתי שמשאבה מספר ארבע הידית של הבנזין 95 נתלשה ונעלו את המשאבה מי יודע מתי זה קרה מי אחראי לתלישה?\n\nתשובה (נבו פרץ - מנהל): כן זה היה חייל אתמול בלילה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב ♥️",
+      "titleHe": "שימו לב ♥️",
+      "content": "שאלה: שימו לב ♥️\n\nתשובה (נבו פרץ - מנהל): תדליקו אותו ותרשמו שכרגע לא קוראת מטבעות",
+      "contentHe": "שאלה: שימו לב ♥️\n\nתשובה (נבו פרץ - מנהל): תדליקו אותו ותרשמו שכרגע לא קוראת מטבעות",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "השטיפה הימנית סגורה",
+      "titleHe": "השטיפה הימנית סגורה",
+      "content": "שאלה: השטיפה הימנית סגורה\n\nתשובה (נבו פרץ - מנהל): תדליקו אותו ותרשמו שכרגע לא קוראת מטבעות",
+      "contentHe": "שאלה: השטיפה הימנית סגורה\n\nתשובה (נבו פרץ - מנהל): תדליקו אותו ותרשמו שכרגע לא קוראת מטבעות",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה 12 דלקן לא תקין",
+      "titleHe": "משאבה 12 דלקן לא תקין",
+      "content": "שאלה: משאבה 12 דלקן לא תקין\n\nתשובה (נבו פרץ - מנהל): מי ראה את המברגה?",
+      "contentHe": "שאלה: משאבה 12 דלקן לא תקין\n\nתשובה (נבו פרץ - מנהל): מי ראה את המברגה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה 9-10 מישוב אדים",
+      "titleHe": "משאבה 9-10 מישוב אדים",
+      "content": "שאלה: משאבה 9-10 מישוב אדים\n\nתשובה (נבו פרץ - מנהל): מי ראה את המברגה?",
+      "contentHe": "שאלה: משאבה 9-10 מישוב אדים\n\nתשובה (נבו פרץ - מנהל): מי ראה את המברגה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לשלוח לי בבקשה משמרות",
+      "titleHe": "לשלוח לי בבקשה משמרות",
+      "content": "שאלה: לשלוח לי בבקשה משמרות\n\nתשובה (נבו פרץ - מנהל): יש מישהו שיכול להעיר את אבי?",
+      "contentHe": "שאלה: לשלוח לי בבקשה משמרות\n\nתשובה (נבו פרץ - מנהל): יש מישהו שיכול להעיר את אבי?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "דלק בבקבוק",
+      "titleHe": "דלק בבקבוק",
+      "content": "שאלה: דלק בבקבוק\n\nתשובה (נבו פרץ - מנהל): חברים מי מעביר ארוחת שוטרים לא כמו שאמרתי ?",
+      "contentHe": "שאלה: דלק בבקבוק\n\nתשובה (נבו פרץ - מנהל): חברים מי מעביר ארוחת שוטרים לא כמו שאמרתי ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "עכשיו זה עבד",
+      "titleHe": "עכשיו זה עבד",
+      "content": "שאלה: עכשיו זה עבד\n\nתשובה (נבו פרץ - מנהל): נראה כמו בעיית תקשורת תנסה לעבור משאבה",
+      "contentHe": "שאלה: עכשיו זה עבד\n\nתשובה (נבו פרץ - מנהל): נראה כמו בעיית תקשורת תנסה לעבור משאבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "היי לילה טוב . אפשר לקבל וי דה רוט ?",
+      "titleHe": "היי לילה טוב . אפשר לקבל וי דה רוט ?",
+      "content": "שאלה: היי לילה טוב . אפשר לקבל וי דה רוט ?\n\nתשובה (נבו פרץ - מנהל): נראה כמו בעיית תקשורת תנסה לעבור משאבה",
+      "contentHe": "שאלה: היי לילה טוב . אפשר לקבל וי דה רוט ?\n\nתשובה (נבו פרץ - מנהל): נראה כמו בעיית תקשורת תנסה לעבור משאבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מאשר קבלת 150 שח בביט ולפני כן 168 שח בביט",
+      "titleHe": "מאשר קבלת 150 שח בביט ולפני כן 168 שח בביט",
+      "content": "שאלה: מאשר קבלת 150 שח בביט ולפני כן 168 שח בביט\n\nתשובה (נבו פרץ - מנהל): נראה כמו בעיית תקשורת תנסה לעבור משאבה",
+      "contentHe": "שאלה: מאשר קבלת 150 שח בביט ולפני כן 168 שח בביט\n\nתשובה (נבו פרץ - מנהל): נראה כמו בעיית תקשורת תנסה לעבור משאבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שרי אישתו של ישי צירף/ה את ~ ירין סרוסי",
+      "titleHe": "שרי אישתו של ישי צירף/ה את ~ ירין סרוסי",
+      "content": "שאלה: שרי אישתו של ישי צירף/ה את ~ ירין סרוסי\n\nתשובה (נבו פרץ - מנהל): נראה כמו בעיית תקשורת תנסה לעבור משאבה",
+      "contentHe": "שאלה: שרי אישתו של ישי צירף/ה את ~ ירין סרוסי\n\nתשובה (נבו פרץ - מנהל): נראה כמו בעיית תקשורת תנסה לעבור משאבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ברוכה הבאה",
+      "titleHe": "ברוכה הבאה",
+      "content": "שאלה: ברוכה הבאה\n\nתשובה (נבו פרץ - מנהל): נראה כמו בעיית תקשורת תנסה לעבור משאבה",
+      "contentHe": "שאלה: ברוכה הבאה\n\nתשובה (נבו פרץ - מנהל): נראה כמו בעיית תקשורת תנסה לעבור משאבה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "קשור לקבלה יהודית יודעת",
+      "titleHe": "קשור לקבלה יהודית יודעת",
+      "content": "שאלה: קשור לקבלה יהודית יודעת\n\nתשובה (נבו פרץ - מנהל): ארוחות שוטרים לא מעבירים עם קופונים",
+      "contentHe": "שאלה: קשור לקבלה יהודית יודעת\n\nתשובה (נבו פרץ - מנהל): ארוחות שוטרים לא מעבירים עם קופונים",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "באישור ישי",
+      "titleHe": "באישור ישי",
+      "content": "שאלה: באישור ישי\n\nתשובה (נבו פרץ - מנהל): זה הקשקש יש הפקדה על הסכום",
+      "contentHe": "שאלה: באישור ישי\n\nתשובה (נבו פרץ - מנהל): זה הקשקש יש הפקדה על הסכום",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "פתחתי קריאה שכרטיסי כבת - לקוחות תחנה לא עוברים הם מטפלים.",
+      "titleHe": "פתחתי קריאה שכרטיסי כבת - לקוחות תחנה לא עוברים הם מטפלים.",
+      "content": "שאלה: פתחתי קריאה שכרטיסי כבת - לקוחות תחנה לא עוברים הם מטפלים.\n\nתשובה (נבו פרץ - מנהל): הכרטיס במגבלה",
+      "contentHe": "שאלה: פתחתי קריאה שכרטיסי כבת - לקוחות תחנה לא עוברים הם מטפלים.\n\nתשובה (נבו פרץ - מנהל): הכרטיס במגבלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "עדין לא טיפלו.",
+      "titleHe": "עדין לא טיפלו.",
+      "content": "שאלה: עדין לא טיפלו.\n\nתשובה (נבו פרץ - מנהל): הכרטיס במגבלה",
+      "contentHe": "שאלה: עדין לא טיפלו.\n\nתשובה (נבו פרץ - מנהל): הכרטיס במגבלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לא טוב במזומן!!!",
+      "titleHe": "לא טוב במזומן!!!",
+      "content": "שאלה: לא טוב במזומן!!!\n\nתשובה (נבו פרץ - מנהל): הכרטיס במגבלה",
+      "contentHe": "שאלה: לא טוב במזומן!!!\n\nתשובה (נבו פרץ - מנהל): הכרטיס במגבלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תפתחו בחוץ",
+      "titleHe": "תפתחו בחוץ",
+      "content": "שאלה: תפתחו בחוץ\n\nתשובה (נבו פרץ - מנהל): הכרטיס במגבלה",
+      "contentHe": "שאלה: תפתחו בחוץ\n\nתשובה (נבו פרץ - מנהל): הכרטיס במגבלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אמרתי לכם לא לפתוח מהקופה רק מבחוץ דלק לא סידרו את התקלה",
+      "titleHe": "אמרתי לכם לא לפתוח מהקופה רק מבחוץ דלק לא סידרו את התקלה",
+      "content": "שאלה: אמרתי לכם לא לפתוח מהקופה רק מבחוץ דלק לא סידרו את התקלה\n\nתשובה (נבו פרץ - מנהל): הכרטיס במגבלה",
+      "contentHe": "שאלה: אמרתי לכם לא לפתוח מהקופה רק מבחוץ דלק לא סידרו את התקלה\n\nתשובה (נבו פרץ - מנהל): הכרטיס במגבלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "זה עושה לי בלגן ממש",
+      "titleHe": "זה עושה לי בלגן ממש",
+      "content": "שאלה: זה עושה לי בלגן ממש\n\nתשובה (נבו פרץ - מנהל): הכרטיס במגבלה",
+      "contentHe": "שאלה: זה עושה לי בלגן ממש\n\nתשובה (נבו פרץ - מנהל): הכרטיס במגבלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תשלחו לי בבקשה משמרות לשבוע הבא",
+      "titleHe": "תשלחו לי בבקשה משמרות לשבוע הבא",
+      "content": "שאלה: תשלחו לי בבקשה משמרות לשבוע הבא\n\nתשובה (נבו פרץ - מנהל): חחח אל תשכח לשלם",
+      "contentHe": "שאלה: תשלחו לי בבקשה משמרות לשבוע הבא\n\nתשובה (נבו פרץ - מנהל): חחח אל תשכח לשלם",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "צריך לעדכן את הפריטים בקופה הורידו אותם",
+      "titleHe": "צריך לעדכן את הפריטים בקופה הורידו אותם",
+      "content": "שאלה: צריך לעדכן את הפריטים בקופה הורידו אותם\n\nתשובה (נבו פרץ - מנהל): קפץ לי החשמל אתמול בלילה",
+      "contentHe": "שאלה: צריך לעדכן את הפריטים בקופה הורידו אותם\n\nתשובה (נבו פרץ - מנהל): קפץ לי החשמל אתמול בלילה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אין לדלק חיבור",
+      "titleHe": "אין לדלק חיבור",
+      "content": "שאלה: אין לדלק חיבור\n\nתשובה (נבו פרץ - מנהל): קפץ לי החשמל אתמול בלילה",
+      "contentHe": "שאלה: אין לדלק חיבור\n\nתשובה (נבו פרץ - מנהל): קפץ לי החשמל אתמול בלילה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אמרו לי לקחת",
+      "titleHe": "אמרו לי לקחת",
+      "content": "שאלה: אמרו לי לקחת\n\nתשובה (נבו פרץ - מנהל): מי בתחנה יכול להרים את החשמל של השטיפה?",
+      "contentHe": "שאלה: אמרו לי לקחת\n\nתשובה (נבו פרץ - מנהל): מי בתחנה יכול להרים את החשמל של השטיפה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "השלט לא מתיחס לסוג הזה",
+      "titleHe": "השלט לא מתיחס לסוג הזה",
+      "content": "שאלה: השלט לא מתיחס לסוג הזה\n\nתשובה (נבו פרץ - מנהל): האשראי בשטיפה הימנית לא עובד <ההודעה נערכה>",
+      "contentHe": "שאלה: השלט לא מתיחס לסוג הזה\n\nתשובה (נבו פרץ - מנהל): האשראי בשטיפה הימנית לא עובד <ההודעה נערכה>",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יש 3 סוגים והשילוט מתיחס ל 2",
+      "titleHe": "יש 3 סוגים והשילוט מתיחס ל 2",
+      "content": "שאלה: יש 3 סוגים והשילוט מתיחס ל 2\n\nתשובה (נבו פרץ - מנהל): האשראי בשטיפה הימנית לא עובד <ההודעה נערכה>",
+      "contentHe": "שאלה: יש 3 סוגים והשילוט מתיחס ל 2\n\nתשובה (נבו פרץ - מנהל): האשראי בשטיפה הימנית לא עובד <ההודעה נערכה>",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "האחרון הורד מחדר  019",
+      "titleHe": "האחרון הורד מחדר  019",
+      "content": "שאלה: האחרון הורד מחדר  019\n\nתשובה (נבו פרץ - מנהל): האשראי בשטיפה הימנית לא עובד <ההודעה נערכה>",
+      "contentHe": "שאלה: האחרון הורד מחדר  019\n\nתשובה (נבו פרץ - מנהל): האשראי בשטיפה הימנית לא עובד <ההודעה נערכה>",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מועדים לשמחה",
+      "titleHe": "מועדים לשמחה",
+      "content": "שאלה: מועדים לשמחה\n\nתשובה (נבו פרץ - מנהל): האשראי בשטיפה הימנית לא עובד <ההודעה נערכה>",
+      "contentHe": "שאלה: מועדים לשמחה\n\nתשובה (נבו פרץ - מנהל): האשראי בשטיפה הימנית לא עובד <ההודעה נערכה>",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "@קובי דלק - זה בשבילך במיוחד 🤣🤣🤣",
+      "titleHe": "@קובי דלק - זה בשבילך במיוחד 🤣🤣🤣",
+      "content": "שאלה: @קובי דלק - זה בשבילך במיוחד 🤣🤣🤣\n\nתשובה (נבו פרץ - מנהל): למה אתה לא מתקשר??",
+      "contentHe": "שאלה: @קובי דלק - זה בשבילך במיוחד 🤣🤣🤣\n\nתשובה (נבו פרץ - מנהל): למה אתה לא מתקשר??",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מזל טוב קובי עד 121 שנים של אושר בריאות משפחה ועבודה 🤣",
+      "titleHe": "מזל טוב קובי עד 121 שנים של אושר בריאות משפחה ועבודה 🤣",
+      "content": "שאלה: מזל טוב קובי עד 121 שנים של אושר בריאות משפחה ועבודה 🤣\n\nתשובה (נבו פרץ - מנהל): תכבו ותדליקו אותה",
+      "contentHe": "שאלה: מזל טוב קובי עד 121 שנים של אושר בריאות משפחה ועבודה 🤣\n\nתשובה (נבו פרץ - מנהל): תכבו ותדליקו אותה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ראיתי את העיתונים במדרגות למעלה בפתח המשרד",
+      "titleHe": "ראיתי את העיתונים במדרגות למעלה בפתח המשרד",
+      "content": "שאלה: ראיתי את העיתונים במדרגות למעלה בפתח המשרד\n\nתשובה (נבו פרץ - מנהל): מישהו כיבה את המכונה הימנית?",
+      "contentHe": "שאלה: ראיתי את העיתונים במדרגות למעלה בפתח המשרד\n\nתשובה (נבו פרץ - מנהל): מישהו כיבה את המכונה הימנית?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ידיעות אחרונות?",
+      "titleHe": "ידיעות אחרונות?",
+      "content": "שאלה: ידיעות אחרונות?\n\nתשובה (נבו פרץ - מנהל): מישהו כיבה את המכונה הימנית?",
+      "contentHe": "שאלה: ידיעות אחרונות?\n\nתשובה (נבו פרץ - מנהל): מישהו כיבה את המכונה הימנית?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יש מחליף זמני והוא דילג עלינו.",
+      "titleHe": "יש מחליף זמני והוא דילג עלינו.",
+      "content": "שאלה: יש מחליף זמני והוא דילג עלינו.\n\nתשובה (נבו פרץ - מנהל): מישהו כיבה את המכונה הימנית?",
+      "contentHe": "שאלה: יש מחליף זמני והוא דילג עלינו.\n\nתשובה (נבו פרץ - מנהל): מישהו כיבה את המכונה הימנית?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "זה היה תקלה שלהם",
+      "titleHe": "זה היה תקלה שלהם",
+      "content": "שאלה: זה היה תקלה שלהם\n\nתשובה (נבו פרץ - מנהל): מישהו כיבה את המכונה הימנית?",
+      "contentHe": "שאלה: זה היה תקלה שלהם\n\nתשובה (נבו פרץ - מנהל): מישהו כיבה את המכונה הימנית?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אז התבלבלתי עם החג 😀",
+      "titleHe": "אז התבלבלתי עם החג 😀",
+      "content": "שאלה: אז התבלבלתי עם החג 😀\n\nתשובה (נבו פרץ - מנהל): מישהו כיבה את המכונה הימנית?",
+      "contentHe": "שאלה: אז התבלבלתי עם החג 😀\n\nתשובה (נבו פרץ - מנהל): מישהו כיבה את המכונה הימנית?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כן מאיר ביום שישי אני חושב צריך פשוט להרים את השלטר האדום הזה מול המכונה",
+      "titleHe": "כן מאיר ביום שישי אני חושב צריך פשוט להרים את השלטר האדום הזה מול המכונה",
+      "content": "שאלה: כן מאיר ביום שישי אני חושב צריך פשוט להרים את השלטר האדום הזה מול המכונה\n\nתשובה (נבו פרץ - מנהל): אני שואל על עכשיו",
+      "contentHe": "שאלה: כן מאיר ביום שישי אני חושב צריך פשוט להרים את השלטר האדום הזה מול המכונה\n\nתשובה (נבו פרץ - מנהל): אני שואל על עכשיו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כמה עולה השמן של הליטר?",
+      "titleHe": "כמה עולה השמן של הליטר?",
+      "content": "שאלה: כמה עולה השמן של הליטר?\n\nתשובה (נבו פרץ - מנהל): שלח את המספר רכב שלו",
+      "contentHe": "שאלה: כמה עולה השמן של הליטר?\n\nתשובה (נבו פרץ - מנהל): שלח את המספר רכב שלו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי בקופה ?",
+      "titleHe": "מי בקופה ?",
+      "content": "שאלה: מי בקופה ?\n\nתשובה (נבו פרץ - מנהל): אל תחתום לו על התעודה אם הוא לא לוקח",
+      "contentHe": "שאלה: מי בקופה ?\n\nתשובה (נבו פרץ - מנהל): אל תחתום לו על התעודה אם הוא לא לוקח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "עוד מעט יגיע נהג של לקוח שלנו , תתדלק לו את הרכב סולר בכרטיס תחנה שונות.",
+      "titleHe": "עוד מעט יגיע נהג של לקוח שלנו , תתדלק לו את הרכב סולר בכרטיס תחנה שונות.",
+      "content": "שאלה: עוד מעט יגיע נהג של לקוח שלנו , תתדלק לו את הרכב סולר בכרטיס תחנה שונות.\n\nתשובה (נבו פרץ - מנהל): אל תחתום לו על התעודה אם הוא לא לוקח",
+      "contentHe": "שאלה: עוד מעט יגיע נהג של לקוח שלנו , תתדלק לו את הרכב סולר בכרטיס תחנה שונות.\n\nתשובה (נבו פרץ - מנהל): אל תחתום לו על התעודה אם הוא לא לוקח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה חמש בנזין 95 תקולה.",
+      "titleHe": "משאבה חמש בנזין 95 תקולה.",
+      "content": "שאלה: משאבה חמש בנזין 95 תקולה.\n\nתשובה (נבו פרץ - מנהל): אל תחתום לו על התעודה אם הוא לא לוקח",
+      "contentHe": "שאלה: משאבה חמש בנזין 95 תקולה.\n\nתשובה (נבו פרץ - מנהל): אל תחתום לו על התעודה אם הוא לא לוקח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שבוע הבא בה תנובה יקחו חזרות",
+      "titleHe": "שבוע הבא בה תנובה יקחו חזרות",
+      "content": "שאלה: שבוע הבא בה תנובה יקחו חזרות\n\nתשובה (נבו פרץ - מנהל): תרימו את החשמל בשטיפה הימנית",
+      "contentHe": "שאלה: שבוע הבא בה תנובה יקחו חזרות\n\nתשובה (נבו פרץ - מנהל): תרימו את החשמל בשטיפה הימנית",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מה מיהר היה לו את כל הזמן שבעולם",
+      "titleHe": "מה מיהר היה לו את כל הזמן שבעולם",
+      "content": "שאלה: מה מיהר היה לו את כל הזמן שבעולם\n\nתשובה (נבו פרץ - מנהל): תרימו את החשמל בשטיפה הימנית",
+      "contentHe": "שאלה: מה מיהר היה לו את כל הזמן שבעולם\n\nתשובה (נבו פרץ - מנהל): תרימו את החשמל בשטיפה הימנית",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "היה צריך לשים את הרכב במוסך 🤷‍♀️",
+      "titleHe": "היה צריך לשים את הרכב במוסך 🤷‍♀️",
+      "content": "שאלה: היה צריך לשים את הרכב במוסך 🤷‍♀️\n\nתשובה (נבו פרץ - מנהל): תרימו את החשמל בשטיפה הימנית",
+      "contentHe": "שאלה: היה צריך לשים את הרכב במוסך 🤷‍♀️\n\nתשובה (נבו פרץ - מנהל): תרימו את החשמל בשטיפה הימנית",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "איזה שטויות זמן לעשן כן היה לו",
+      "titleHe": "איזה שטויות זמן לעשן כן היה לו",
+      "content": "שאלה: איזה שטויות זמן לעשן כן היה לו\n\nתשובה (נבו פרץ - מנהל): תרימו את החשמל בשטיפה הימנית",
+      "contentHe": "שאלה: איזה שטויות זמן לעשן כן היה לו\n\nתשובה (נבו פרץ - מנהל): תרימו את החשמל בשטיפה הימנית",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אתה אוהב אבל את זה",
+      "titleHe": "אתה אוהב אבל את זה",
+      "content": "שאלה: אתה אוהב אבל את זה\n\nתשובה (נבו פרץ - מנהל): תרימו את החשמל בשטיפה הימנית",
+      "contentHe": "שאלה: אתה אוהב אבל את זה\n\nתשובה (נבו פרץ - מנהל): תרימו את החשמל בשטיפה הימנית",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "קובי צודק!",
+      "titleHe": "קובי צודק!",
+      "content": "שאלה: קובי צודק!\n\nתשובה (נבו פרץ - מנהל): תרימו את החשמל בשטיפה הימנית",
+      "contentHe": "שאלה: קובי צודק!\n\nתשובה (נבו פרץ - מנהל): תרימו את החשמל בשטיפה הימנית",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "זה אומר שאין סולר?",
+      "titleHe": "זה אומר שאין סולר?",
+      "content": "שאלה: זה אומר שאין סולר?\n\nתשובה (נבו פרץ - מנהל): ניסה לגנוב סיגריות שלשום אם מישהו מזהה",
+      "contentHe": "שאלה: זה אומר שאין סולר?\n\nתשובה (נבו פרץ - מנהל): ניסה לגנוב סיגריות שלשום אם מישהו מזהה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משהו נוסף, כל ספק שמגיע נא לעדכן אותי",
+      "titleHe": "משהו נוסף, כל ספק שמגיע נא לעדכן אותי",
+      "content": "שאלה: משהו נוסף, כל ספק שמגיע נא לעדכן אותי\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לשטיפה",
+      "contentHe": "שאלה: משהו נוסף, כל ספק שמגיע נא לעדכן אותי\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לשטיפה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הוא לקח הכל",
+      "titleHe": "הוא לקח הכל",
+      "content": "שאלה: הוא לקח הכל\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לשטיפה",
+      "contentHe": "שאלה: הוא לקח הכל\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לשטיפה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ממש לא. יש כ 50 ארגזים בחוץ עי דלת המשרד",
+      "titleHe": "ממש לא. יש כ 50 ארגזים בחוץ עי דלת המשרד",
+      "content": "שאלה: ממש לא. יש כ 50 ארגזים בחוץ עי דלת המשרד\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לשטיפה",
+      "contentHe": "שאלה: ממש לא. יש כ 50 ארגזים בחוץ עי דלת המשרד\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לשטיפה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אה ארגזים רקים",
+      "titleHe": "אה ארגזים רקים",
+      "content": "שאלה: אה ארגזים רקים\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לשטיפה",
+      "contentHe": "שאלה: אה ארגזים רקים\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לשטיפה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בעיה שלו שלא לוקח בזמן",
+      "titleHe": "בעיה שלו שלא לוקח בזמן",
+      "content": "שאלה: בעיה שלו שלא לוקח בזמן\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לשטיפה",
+      "contentHe": "שאלה: בעיה שלו שלא לוקח בזמן\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לשטיפה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הוא היה לוקח אבל זה נתקע לו פעם אחת כי הוא לקח מאיתנו את הכל ומאז נתקע לו הרבה",
+      "titleHe": "הוא היה לוקח אבל זה נתקע לו פעם אחת כי הוא לקח מאיתנו את הכל ומאז נתקע לו הרבה",
+      "content": "שאלה: הוא היה לוקח אבל זה נתקע לו פעם אחת כי הוא לקח מאיתנו את הכל ומאז נתקע לו הרבה\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לשטיפה",
+      "contentHe": "שאלה: הוא היה לוקח אבל זה נתקע לו פעם אחת כי הוא לקח מאיתנו את הכל ומאז נתקע לו הרבה\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לשטיפה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כיאלו רק מכונה עולה על זה או מישהו שמכיר את הזיוף ממש ממש קשה לראות את זה",
+      "titleHe": "כיאלו רק מכונה עולה על זה או מישהו שמכיר את הזיוף ממש ממש קשה לראות את זה",
+      "content": "שאלה: כיאלו רק מכונה עולה על זה או מישהו שמכיר את הזיוף ממש ממש קשה לראות את זה\n\nתשובה (נבו פרץ - מנהל): ושאלת אותי ?",
+      "contentHe": "שאלה: כיאלו רק מכונה עולה על זה או מישהו שמכיר את הזיוף ממש ממש קשה לראות את זה\n\nתשובה (נבו פרץ - מנהל): ושאלת אותי ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אם אתה לא יודע כנראה שצא",
+      "titleHe": "אם אתה לא יודע כנראה שצא",
+      "content": "שאלה: אם אתה לא יודע כנראה שצא\n\nתשובה (נבו פרץ - מנהל): אין זיכוי לאף אחד בלי אישור שלי",
+      "contentHe": "שאלה: אם אתה לא יודע כנראה שצא\n\nתשובה (נבו פרץ - מנהל): אין זיכוי לאף אחד בלי אישור שלי",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מי נעל את הארונות של הסיגריות?😅",
+      "titleHe": "מי נעל את הארונות של הסיגריות?😅",
+      "content": "שאלה: מי נעל את הארונות של הסיגריות?😅\n\nתשובה (נבו פרץ - מנהל): מי כיבה את המכונה ?",
+      "contentHe": "שאלה: מי נעל את הארונות של הסיגריות?😅\n\nתשובה (נבו פרץ - מנהל): מי כיבה את המכונה ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "עדיין לא מצאת?",
+      "titleHe": "עדיין לא מצאת?",
+      "content": "שאלה: עדיין לא מצאת?\n\nתשובה (נבו פרץ - מנהל): מי כיבה את המכונה ?",
+      "contentHe": "שאלה: עדיין לא מצאת?\n\nתשובה (נבו פרץ - מנהל): מי כיבה את המכונה ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שמן הגה- חסר",
+      "titleHe": "שמן הגה- חסר",
+      "content": "שאלה: שמן הגה- חסר\n\nתשובה (נבו פרץ - מנהל): מי כיבה את המכונה ?",
+      "contentHe": "שאלה: שמן הגה- חסר\n\nתשובה (נבו פרץ - מנהל): מי כיבה את המכונה ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אני פתחתי תסגרי רגיל",
+      "titleHe": "אני פתחתי תסגרי רגיל",
+      "content": "שאלה: אני פתחתי תסגרי רגיל\n\nתשובה (נבו פרץ - מנהל): לא לפתוח לאף אחד שאומר פאלח בלי אישור שלו",
+      "contentHe": "שאלה: אני פתחתי תסגרי רגיל\n\nתשובה (נבו פרץ - מנהל): לא לפתוח לאף אחד שאומר פאלח בלי אישור שלו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה 4 לא תקינה נורית אדומה",
+      "titleHe": "משאבה 4 לא תקינה נורית אדומה",
+      "content": "שאלה: משאבה 4 לא תקינה נורית אדומה\n\nתשובה (נבו פרץ - מנהל): לא לפתוח לאף אחד שאומר פאלח בלי אישור שלו",
+      "contentHe": "שאלה: משאבה 4 לא תקינה נורית אדומה\n\nתשובה (נבו פרץ - מנהל): לא לפתוח לאף אחד שאומר פאלח בלי אישור שלו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הידית של ה95 במשאבה 9 לא תקינה",
+      "titleHe": "הידית של ה95 במשאבה 9 לא תקינה",
+      "content": "שאלה: הידית של ה95 במשאבה 9 לא תקינה\n\nתשובה (נבו פרץ - מנהל): לא לפתוח לאף אחד שאומר פאלח בלי אישור שלו",
+      "contentHe": "שאלה: הידית של ה95 במשאבה 9 לא תקינה\n\nתשובה (נבו פרץ - מנהל): לא לפתוח לאף אחד שאומר פאלח בלי אישור שלו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לא להעביר יותר אפליקציה בקופה בשום אופן <ההודעה נערכה>",
+      "titleHe": "לא להעביר יותר אפליקציה בקופה בשום אופן <ההודעה נערכה>",
+      "content": "שאלה: לא להעביר יותר אפליקציה בקופה בשום אופן <ההודעה נערכה>\n\nתשובה (נבו פרץ - מנהל): להתקשר למשטרה לומר להם שהוא חוסם את התחנה",
+      "contentHe": "שאלה: לא להעביר יותר אפליקציה בקופה בשום אופן <ההודעה נערכה>\n\nתשובה (נבו פרץ - מנהל): להתקשר למשטרה לומר להם שהוא חוסם את התחנה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תשלחו לי בבקשה משמרות",
+      "titleHe": "תשלחו לי בבקשה משמרות",
+      "content": "שאלה: תשלחו לי בבקשה משמרות\n\nתשובה (נבו פרץ - מנהל): יש שליח שצריך להביא כבלים לניאקס תראו שמקבלים ממנו",
+      "contentHe": "שאלה: תשלחו לי בבקשה משמרות\n\nתשובה (נבו פרץ - מנהל): יש שליח שצריך להביא כבלים לניאקס תראו שמקבלים ממנו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה 3 של 95 לא תקינה הידית לא קופצת כשמסתיים התדלוק",
+      "titleHe": "משאבה 3 של 95 לא תקינה הידית לא קופצת כשמסתיים התדלוק",
+      "content": "שאלה: משאבה 3 של 95 לא תקינה הידית לא קופצת כשמסתיים התדלוק\n\nתשובה (נבו פרץ - מנהל): יש שליח שצריך להביא כבלים לניאקס תראו שמקבלים ממנו",
+      "contentHe": "שאלה: משאבה 3 של 95 לא תקינה הידית לא קופצת כשמסתיים התדלוק\n\nתשובה (נבו פרץ - מנהל): יש שליח שצריך להביא כבלים לניאקס תראו שמקבלים ממנו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תרשמי דלקור 79.9",
+      "titleHe": "תרשמי דלקור 79.9",
+      "content": "שאלה: תרשמי דלקור 79.9\n\nתשובה (נבו פרץ - מנהל): אני אישרתי",
+      "contentHe": "שאלה: תרשמי דלקור 79.9\n\nתשובה (נבו פרץ - מנהל): אני אישרתי",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "95 משאבה 9 לא עובד וגם 5 ו6",
+      "titleHe": "95 משאבה 9 לא עובד וגם 5 ו6",
+      "content": "שאלה: 95 משאבה 9 לא עובד וגם 5 ו6\n\nתשובה (נבו פרץ - מנהל): אני אישרתי",
+      "contentHe": "שאלה: 95 משאבה 9 לא עובד וגם 5 ו6\n\nתשובה (נבו פרץ - מנהל): אני אישרתי",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "גבריאל ששון עבור צבירת 10000 ליטר",
+      "titleHe": "גבריאל ששון עבור צבירת 10000 ליטר",
+      "content": "שאלה: גבריאל ששון עבור צבירת 10000 ליטר\n\nתשובה (נבו פרץ - מנהל): אני אישרתי",
+      "contentHe": "שאלה: גבריאל ששון עבור צבירת 10000 ליטר\n\nתשובה (נבו פרץ - מנהל): אני אישרתי",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אתם מהממים",
+      "titleHe": "אתם מהממים",
+      "content": "שאלה: אתם מהממים\n\nתשובה (נבו פרץ - מנהל): תבדקו בבקשה מי חונה בשטיפה השמאלית",
+      "contentHe": "שאלה: אתם מהממים\n\nתשובה (נבו פרץ - מנהל): תבדקו בבקשה מי חונה בשטיפה השמאלית",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "https://www.instagram.com/reel/DKMbhrIi664/?igsh=MXNuOGlkbHZ0YmFtdw==",
+      "titleHe": "https://www.instagram.com/reel/DKMbhrIi664/?igsh=MXNuOGlkbHZ0YmFtdw==",
+      "content": "שאלה: https://www.instagram.com/reel/DKMbhrIi664/?igsh=MXNuOGlkbHZ0YmFtdw==\n\nתשובה (נבו פרץ - מנהל): תבדקו בבקשה מי חונה בשטיפה השמאלית",
+      "contentHe": "שאלה: https://www.instagram.com/reel/DKMbhrIi664/?igsh=MXNuOGlkbHZ0YmFtdw==\n\nתשובה (נבו פרץ - מנהל): תבדקו בבקשה מי חונה בשטיפה השמאלית",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "המשאית של הדלק",
+      "titleHe": "המשאית של הדלק",
+      "content": "שאלה: המשאית של הדלק\n\nתשובה (נבו פרץ - מנהל): תשמרו את זה לשימוש לא למכור",
+      "contentHe": "שאלה: המשאית של הדלק\n\nתשובה (נבו פרץ - מנהל): תשמרו את זה לשימוש לא למכור",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "סבבה אני מסיים עם הלקוחות והולך",
+      "titleHe": "סבבה אני מסיים עם הלקוחות והולך",
+      "content": "שאלה: סבבה אני מסיים עם הלקוחות והולך\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש למכונה ברחבת תדלוקים בבקשה",
+      "contentHe": "שאלה: סבבה אני מסיים עם הלקוחות והולך\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש למכונה ברחבת תדלוקים בבקשה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שבוע טוב בשורות טובות",
+      "titleHe": "שבוע טוב בשורות טובות",
+      "content": "שאלה: שבוע טוב בשורות טובות\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש למכונה ברחבת תדלוקים בבקשה",
+      "contentHe": "שאלה: שבוע טוב בשורות טובות\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש למכונה ברחבת תדלוקים בבקשה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תשלחו וידרוט בבקשה",
+      "titleHe": "תשלחו וידרוט בבקשה",
+      "content": "שאלה: תשלחו וידרוט בבקשה\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש למכונה ברחבת תדלוקים בבקשה",
+      "contentHe": "שאלה: תשלחו וידרוט בבקשה\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש למכונה ברחבת תדלוקים בבקשה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שלחתי לישי",
+      "titleHe": "שלחתי לישי",
+      "content": "שאלה: שלחתי לישי\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש למכונה ברחבת תדלוקים בבקשה",
+      "contentHe": "שאלה: שלחתי לישי\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש למכונה ברחבת תדלוקים בבקשה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "חברים מכל המשמרות לא ניתן לקבל תחנה במצב מזעזע לכלוך על הרצפה רחבת תדלוק קופה הכל נראה כמו עזה לא מק",
+      "titleHe": "חברים מכל המשמרות לא ניתן לקבל תחנה במצב מזעזע לכלוך על הרצפה רחבת תדלוק קופה הכל נראה כמו עזה לא מק",
+      "content": "שאלה: חברים מכל המשמרות לא ניתן לקבל תחנה במצב מזעזע לכלוך על הרצפה רחבת תדלוק קופה הכל נראה כמו עזה לא מקובל עליי פשוט לא מכובד איך שהתחנה הייתה נראית\n\nתשובה (נבו פרץ - מנהל): מי עשה לילה?",
+      "contentHe": "שאלה: חברים מכל המשמרות לא ניתן לקבל תחנה במצב מזעזע לכלוך על הרצפה רחבת תדלוק קופה הכל נראה כמו עזה לא מקובל עליי פשוט לא מכובד איך שהתחנה הייתה נראית\n\nתשובה (נבו פרץ - מנהל): מי עשה לילה?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "צריך להביא גלילי נייר לקופא",
+      "titleHe": "צריך להביא גלילי נייר לקופא",
+      "content": "שאלה: צריך להביא גלילי נייר לקופא\n\nתשובה (נבו פרץ - מנהל): תדליקו את האשראי של השטיפה השמאלית",
+      "contentHe": "שאלה: צריך להביא גלילי נייר לקופא\n\nתשובה (נבו פרץ - מנהל): תדליקו את האשראי של השטיפה השמאלית",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יש בתריס מספר 1",
+      "titleHe": "יש בתריס מספר 1",
+      "content": "שאלה: יש בתריס מספר 1\n\nתשובה (נבו פרץ - מנהל): תדליקו את האשראי של השטיפה השמאלית",
+      "contentHe": "שאלה: יש בתריס מספר 1\n\nתשובה (נבו פרץ - מנהל): תדליקו את האשראי של השטיפה השמאלית",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תדלק בקבוק",
+      "titleHe": "תדלק בקבוק",
+      "content": "שאלה: תדלק בקבוק\n\nתשובה (נבו פרץ - מנהל): תדליקו את האשראי של השטיפה השמאלית",
+      "contentHe": "שאלה: תדלק בקבוק\n\nתשובה (נבו פרץ - מנהל): תדליקו את האשראי של השטיפה השמאלית",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לילה טוב בבקשה לשלוח צילום וי דה רוט",
+      "titleHe": "לילה טוב בבקשה לשלוח צילום וי דה רוט",
+      "content": "שאלה: לילה טוב בבקשה לשלוח צילום וי דה רוט\n\nתשובה (נבו פרץ - מנהל): תדליקו את האשראי של השטיפה השמאלית",
+      "contentHe": "שאלה: לילה טוב בבקשה לשלוח צילום וי דה רוט\n\nתשובה (נבו פרץ - מנהל): תדליקו את האשראי של השטיפה השמאלית",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה אחד החיישן לא עובד הדלק ממשיך לפעול",
+      "titleHe": "משאבה אחד החיישן לא עובד הדלק ממשיך לפעול",
+      "content": "שאלה: משאבה אחד החיישן לא עובד הדלק ממשיך לפעול\n\nתשובה (נבו פרץ - מנהל): לסגור אותה",
+      "contentHe": "שאלה: משאבה אחד החיישן לא עובד הדלק ממשיך לפעול\n\nתשובה (נבו פרץ - מנהל): לסגור אותה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מתדלק בקבוק",
+      "titleHe": "מתדלק בקבוק",
+      "content": "שאלה: מתדלק בקבוק\n\nתשובה (נבו פרץ - מנהל): עשו לזה צרור נפרד",
+      "contentHe": "שאלה: מתדלק בקבוק\n\nתשובה (נבו פרץ - מנהל): עשו לזה צרור נפרד",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "חברים שימו לב!",
+      "titleHe": "חברים שימו לב!",
+      "content": "שאלה: חברים שימו לב!\n\nתשובה (נבו פרץ - מנהל): עשו לזה צרור נפרד",
+      "contentHe": "שאלה: חברים שימו לב!\n\nתשובה (נבו פרץ - מנהל): עשו לזה צרור נפרד",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הוא לא נמצא בקופה",
+      "titleHe": "הוא לא נמצא בקופה",
+      "content": "שאלה: הוא לא נמצא בקופה\n\nתשובה (נבו פרץ - מנהל): ראית אותו היום?",
+      "contentHe": "שאלה: הוא לא נמצא בקופה\n\nתשובה (נבו פרץ - מנהל): ראית אותו היום?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "או יוכלו להביא כרטיס חדש לסולר ביום ראשון העובדים יודו על זה ממש",
+      "titleHe": "או יוכלו להביא כרטיס חדש לסולר ביום ראשון העובדים יודו על זה ממש",
+      "content": "שאלה: או יוכלו להביא כרטיס חדש לסולר ביום ראשון העובדים יודו על זה ממש\n\nתשובה (נבו פרץ - מנהל): הגיע ביום רביעי 1600 ליטר",
+      "contentHe": "שאלה: או יוכלו להביא כרטיס חדש לסולר ביום ראשון העובדים יודו על זה ממש\n\nתשובה (נבו פרץ - מנהל): הגיע ביום רביעי 1600 ליטר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שלום בוקר טוב! בבקשה לשלוח צילום וי דה רוט",
+      "titleHe": "שלום בוקר טוב! בבקשה לשלוח צילום וי דה רוט",
+      "content": "שאלה: שלום בוקר טוב! בבקשה לשלוח צילום וי דה רוט\n\nתשובה (נבו פרץ - מנהל): הגיע ביום רביעי 1600 ליטר",
+      "contentHe": "שאלה: שלום בוקר טוב! בבקשה לשלוח צילום וי דה רוט\n\nתשובה (נבו פרץ - מנהל): הגיע ביום רביעי 1600 ליטר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה 13 לא מוציאה אוריאה",
+      "titleHe": "משאבה 13 לא מוציאה אוריאה",
+      "content": "שאלה: משאבה 13 לא מוציאה אוריאה\n\nתשובה (נבו פרץ - מנהל): הגיע ביום רביעי 1600 ליטר",
+      "contentHe": "שאלה: משאבה 13 לא מוציאה אוריאה\n\nתשובה (נבו פרץ - מנהל): הגיע ביום רביעי 1600 ליטר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה 14 מוציאה אוריאה ?",
+      "titleHe": "משאבה 14 מוציאה אוריאה ?",
+      "content": "שאלה: משאבה 14 מוציאה אוריאה ?\n\nתשובה (נבו פרץ - מנהל): הגיע ביום רביעי 1600 ליטר",
+      "contentHe": "שאלה: משאבה 14 מוציאה אוריאה ?\n\nתשובה (נבו פרץ - מנהל): הגיע ביום רביעי 1600 ליטר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "14 מוציאה בדקתי על כמה רכבים את משאבה 13 היא אומרת החל לתדלק ולא יוצא",
+      "titleHe": "14 מוציאה בדקתי על כמה רכבים את משאבה 13 היא אומרת החל לתדלק ולא יוצא",
+      "content": "שאלה: 14 מוציאה בדקתי על כמה רכבים את משאבה 13 היא אומרת החל לתדלק ולא יוצא\n\nתשובה (נבו פרץ - מנהל): תוריד את החשמל ותרים תראה אם מסתדר",
+      "contentHe": "שאלה: 14 מוציאה בדקתי על כמה רכבים את משאבה 13 היא אומרת החל לתדלק ולא יוצא\n\nתשובה (נבו פרץ - מנהל): תוריד את החשמל ותרים תראה אם מסתדר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ביקשתי מדלק לעדכן ל 6.99",
+      "titleHe": "ביקשתי מדלק לעדכן ל 6.99",
+      "content": "שאלה: ביקשתי מדלק לעדכן ל 6.99\n\nתשובה (נבו פרץ - מנהל): כמה דלק יש ?",
+      "contentHe": "שאלה: ביקשתי מדלק לעדכן ל 6.99\n\nתשובה (נבו פרץ - מנהל): כמה דלק יש ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שלחו בבקשה וידרוט",
+      "titleHe": "שלחו בבקשה וידרוט",
+      "content": "שאלה: שלחו בבקשה וידרוט\n\nתשובה (נבו פרץ - מנהל): כמה דלק יש ?",
+      "contentHe": "שאלה: שלחו בבקשה וידרוט\n\nתשובה (נבו פרץ - מנהל): כמה דלק יש ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הוידרוט לא מפיסק לצלצל עצרתי אותו כבר כמה פעמים והוא ממשיך מה אני יכול לעשות?",
+      "titleHe": "הוידרוט לא מפיסק לצלצל עצרתי אותו כבר כמה פעמים והוא ממשיך מה אני יכול לעשות?",
+      "content": "שאלה: הוידרוט לא מפיסק לצלצל עצרתי אותו כבר כמה פעמים והוא ממשיך מה אני יכול לעשות?\n\nתשובה (נבו פרץ - מנהל): כמה דלק יש ?",
+      "contentHe": "שאלה: הוידרוט לא מפיסק לצלצל עצרתי אותו כבר כמה פעמים והוא ממשיך מה אני יכול לעשות?\n\nתשובה (נבו פרץ - מנהל): כמה דלק יש ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יש הרבה מהכל",
+      "titleHe": "יש הרבה מהכל",
+      "content": "שאלה: יש הרבה מהכל\n\nתשובה (נבו פרץ - מנהל): יש בעיה או משהו בשטיפה השמאלית?",
+      "contentHe": "שאלה: יש הרבה מהכל\n\nתשובה (נבו פרץ - מנהל): יש בעיה או משהו בשטיפה השמאלית?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לילה טוב. מבקש לקבל צילום וי דה רוט",
+      "titleHe": "לילה טוב. מבקש לקבל צילום וי דה רוט",
+      "content": "שאלה: לילה טוב. מבקש לקבל צילום וי דה רוט\n\nתשובה (נבו פרץ - מנהל): יש בעיה או משהו בשטיפה השמאלית?",
+      "contentHe": "שאלה: לילה טוב. מבקש לקבל צילום וי דה רוט\n\nתשובה (נבו פרץ - מנהל): יש בעיה או משהו בשטיפה השמאלית?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה 3 ידית 95 תלושה",
+      "titleHe": "משאבה 3 ידית 95 תלושה",
+      "content": "שאלה: משאבה 3 ידית 95 תלושה\n\nתשובה (נבו פרץ - מנהל): למה לא התקשרת ?",
+      "contentHe": "שאלה: משאבה 3 ידית 95 תלושה\n\nתשובה (נבו פרץ - מנהל): למה לא התקשרת ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כי ישנת ולא רציתי להעיר",
+      "titleHe": "כי ישנת ולא רציתי להעיר",
+      "content": "שאלה: כי ישנת ולא רציתי להעיר\n\nתשובה (נבו פרץ - מנהל): נו מה אתה גנוב זה העבודה",
+      "contentHe": "שאלה: כי ישנת ולא רציתי להעיר\n\nתשובה (נבו פרץ - מנהל): נו מה אתה גנוב זה העבודה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "המשאבות עדיין לא דלוקות",
+      "titleHe": "המשאבות עדיין לא דלוקות",
+      "content": "שאלה: המשאבות עדיין לא דלוקות\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לאשראי בשטיפה הימנית ?",
+      "contentHe": "שאלה: המשאבות עדיין לא דלוקות\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לאשראי בשטיפה הימנית ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הווינסטון קומפקט סילבר עולה עכשיו 37 זה בסדר או שזה עוד הפעם דלק עשו את זה?",
+      "titleHe": "הווינסטון קומפקט סילבר עולה עכשיו 37 זה בסדר או שזה עוד הפעם דלק עשו את זה?",
+      "content": "שאלה: הווינסטון קומפקט סילבר עולה עכשיו 37 זה בסדר או שזה עוד הפעם דלק עשו את זה?\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לאשראי בשטיפה הימנית ?",
+      "contentHe": "שאלה: הווינסטון קומפקט סילבר עולה עכשיו 37 זה בסדר או שזה עוד הפעם דלק עשו את זה?\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לאשראי בשטיפה הימנית ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מעבירים את זה על כאמל קומפקט בלו שנמצא ליד הקופה",
+      "titleHe": "מעבירים את זה על כאמל קומפקט בלו שנמצא ליד הקופה",
+      "content": "שאלה: מעבירים את זה על כאמל קומפקט בלו שנמצא ליד הקופה\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לאשראי בשטיפה הימנית ?",
+      "contentHe": "שאלה: מעבירים את זה על כאמל קומפקט בלו שנמצא ליד הקופה\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לאשראי בשטיפה הימנית ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תשלחו לי משמרות בבקשה",
+      "titleHe": "תשלחו לי משמרות בבקשה",
+      "content": "שאלה: תשלחו לי משמרות בבקשה\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לאשראי בשטיפה הימנית ?",
+      "contentHe": "שאלה: תשלחו לי משמרות בבקשה\n\nתשובה (נבו פרץ - מנהל): תבדקו מה יש לאשראי בשטיפה הימנית ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שרי אישתו של ישי הסיר/ה את גטיש עובד דלק",
+      "titleHe": "שרי אישתו של ישי הסיר/ה את גטיש עובד דלק",
+      "content": "שאלה: שרי אישתו של ישי הסיר/ה את גטיש עובד דלק\n\nתשובה (נבו פרץ - מנהל): מה יש לאשראי בעמדה הימנית?",
+      "contentHe": "שאלה: שרי אישתו של ישי הסיר/ה את גטיש עובד דלק\n\nתשובה (נבו פרץ - מנהל): מה יש לאשראי בעמדה הימנית?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "קורא אשראי משאבה 2 לא תקין לפתוח קריאה",
+      "titleHe": "קורא אשראי משאבה 2 לא תקין לפתוח קריאה",
+      "content": "שאלה: קורא אשראי משאבה 2 לא תקין לפתוח קריאה\n\nתשובה (נבו פרץ - מנהל): תכבו ותדליקו קודם",
+      "contentHe": "שאלה: קורא אשראי משאבה 2 לא תקין לפתוח קריאה\n\nתשובה (נבו פרץ - מנהל): תכבו ותדליקו קודם",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כל הכבוד קובי !",
+      "titleHe": "כל הכבוד קובי !",
+      "content": "שאלה: כל הכבוד קובי !\n\nתשובה (נבו פרץ - מנהל): חברה מגיעים ילדים עם כרטיס דלקן של לקוחות",
+      "contentHe": "שאלה: כל הכבוד קובי !\n\nתשובה (נבו פרץ - מנהל): חברה מגיעים ילדים עם כרטיס דלקן של לקוחות",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מבקשת מכולם להסתכל בסירטונים שקובי שלח ולעבוד לפי זה",
+      "titleHe": "מבקשת מכולם להסתכל בסירטונים שקובי שלח ולעבוד לפי זה",
+      "content": "שאלה: מבקשת מכולם להסתכל בסירטונים שקובי שלח ולעבוד לפי זה\n\nתשובה (נבו פרץ - מנהל): חברה מגיעים ילדים עם כרטיס דלקן של לקוחות",
+      "contentHe": "שאלה: מבקשת מכולם להסתכל בסירטונים שקובי שלח ולעבוד לפי זה\n\nתשובה (נבו פרץ - מנהל): חברה מגיעים ילדים עם כרטיס דלקן של לקוחות",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "להלן מחירים לחודש 1/8/25",
+      "titleHe": "להלן מחירים לחודש 1/8/25",
+      "content": "שאלה: להלן מחירים לחודש 1/8/25\n\nתשובה (נבו פרץ - מנהל): חברה מגיעים ילדים עם כרטיס דלקן של לקוחות",
+      "contentHe": "שאלה: להלן מחירים לחודש 1/8/25\n\nתשובה (נבו פרץ - מנהל): חברה מגיעים ילדים עם כרטיס דלקן של לקוחות",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "@הילה אחותי היה בקופה שיק לדובק. השיק נלקח ע\"י ספק ?",
+      "titleHe": "@הילה אחותי היה בקופה שיק לדובק. השיק נלקח ע\"י ספק ?",
+      "content": "שאלה: @הילה אחותי היה בקופה שיק לדובק. השיק נלקח ע\"י ספק ?\n\nתשובה (נבו פרץ - מנהל): חברה מגיעים ילדים עם כרטיס דלקן של לקוחות",
+      "contentHe": "שאלה: @הילה אחותי היה בקופה שיק לדובק. השיק נלקח ע\"י ספק ?\n\nתשובה (נבו פרץ - מנהל): חברה מגיעים ילדים עם כרטיס דלקן של לקוחות",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "זה של השטיפה",
+      "titleHe": "זה של השטיפה",
+      "content": "שאלה: זה של השטיפה\n\nתשובה (נבו פרץ - מנהל): חברה מגיעים ילדים עם כרטיס דלקן של לקוחות",
+      "contentHe": "שאלה: זה של השטיפה\n\nתשובה (נבו פרץ - מנהל): חברה מגיעים ילדים עם כרטיס דלקן של לקוחות",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כרטיסי לצורך תדלוקים של נהגים שיגיעו עם פתק חתום מרב חסד (בלבד) <ההודעה נערכה>",
+      "titleHe": "כרטיסי לצורך תדלוקים של נהגים שיגיעו עם פתק חתום מרב חסד (בלבד) <ההודעה נערכה>",
+      "content": "שאלה: כרטיסי לצורך תדלוקים של נהגים שיגיעו עם פתק חתום מרב חסד (בלבד) <ההודעה נערכה>\n\nתשובה (נבו פרץ - מנהל): שמישהו ישמור בכניסה שלא גונבים",
+      "contentHe": "שאלה: כרטיסי לצורך תדלוקים של נהגים שיגיעו עם פתק חתום מרב חסד (בלבד) <ההודעה נערכה>\n\nתשובה (נבו פרץ - מנהל): שמישהו ישמור בכניסה שלא גונבים",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "למישהו יש את הכרטיס של תחנה שונות?",
+      "titleHe": "למישהו יש את הכרטיס של תחנה שונות?",
+      "content": "שאלה: למישהו יש את הכרטיס של תחנה שונות?\n\nתשובה (נבו פרץ - מנהל): שמישהו ישמור בכניסה שלא גונבים",
+      "contentHe": "שאלה: למישהו יש את הכרטיס של תחנה שונות?\n\nתשובה (נבו פרץ - מנהל): שמישהו ישמור בכניסה שלא גונבים",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "נראה לי תלך לתת יד בתחנה",
+      "titleHe": "נראה לי תלך לתת יד בתחנה",
+      "content": "שאלה: נראה לי תלך לתת יד בתחנה\n\nתשובה (נבו פרץ - מנהל): יש אישור פאלח 1000 ליטר",
+      "contentHe": "שאלה: נראה לי תלך לתת יד בתחנה\n\nתשובה (נבו פרץ - מנהל): יש אישור פאלח 1000 ליטר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אתה מוזמן לבוא גם",
+      "titleHe": "אתה מוזמן לבוא גם",
+      "content": "שאלה: אתה מוזמן לבוא גם\n\nתשובה (נבו פרץ - מנהל): יש אישור פאלח 1000 ליטר",
+      "contentHe": "שאלה: אתה מוזמן לבוא גם\n\nתשובה (נבו פרץ - מנהל): יש אישור פאלח 1000 ליטר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תמונת הקבוצה השתנתה על ידי יהונתן בן ישי אח של ישראל מאיר עובד דלק",
+      "titleHe": "תמונת הקבוצה השתנתה על ידי יהונתן בן ישי אח של ישראל מאיר עובד דלק",
+      "content": "שאלה: תמונת הקבוצה השתנתה על ידי יהונתן בן ישי אח של ישראל מאיר עובד דלק\n\nתשובה (נבו פרץ - מנהל): יש אישור פאלח 1000 ליטר",
+      "contentHe": "שאלה: תמונת הקבוצה השתנתה על ידי יהונתן בן ישי אח של ישראל מאיר עובד דלק\n\nתשובה (נבו פרץ - מנהל): יש אישור פאלח 1000 ליטר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אני יבוא בטח",
+      "titleHe": "אני יבוא בטח",
+      "content": "שאלה: אני יבוא בטח\n\nתשובה (נבו פרץ - מנהל): יש אישור פאלח 1000 ליטר",
+      "contentHe": "שאלה: אני יבוא בטח\n\nתשובה (נבו פרץ - מנהל): יש אישור פאלח 1000 ליטר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "בוקר טוב בבקשה לשלוח וי דה רוט",
+      "titleHe": "בוקר טוב בבקשה לשלוח וי דה רוט",
+      "content": "שאלה: בוקר טוב בבקשה לשלוח וי דה רוט\n\nתשובה (נבו פרץ - מנהל): יש אישור פאלח 1000 ליטר",
+      "contentHe": "שאלה: בוקר טוב בבקשה לשלוח וי דה רוט\n\nתשובה (נבו פרץ - מנהל): יש אישור פאלח 1000 ליטר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "סגור זמנית עם אייקונים",
+      "titleHe": "סגור זמנית עם אייקונים",
+      "content": "שאלה: סגור זמנית עם אייקונים\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה שירים את השטיפה היא מכובת",
+      "contentHe": "שאלה: סגור זמנית עם אייקונים\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה שירים את השטיפה היא מכובת",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תתקשר למדביר",
+      "titleHe": "תתקשר למדביר",
+      "content": "שאלה: תתקשר למדביר\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה שירים את השטיפה היא מכובת",
+      "contentHe": "שאלה: תתקשר למדביר\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה שירים את השטיפה היא מכובת",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "חחחחח נודר חיפשתי אותו שנים הזבל הזה מתחבא טוב",
+      "titleHe": "חחחחח נודר חיפשתי אותו שנים הזבל הזה מתחבא טוב",
+      "content": "שאלה: חחחחח נודר חיפשתי אותו שנים הזבל הזה מתחבא טוב\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה שירים את השטיפה היא מכובת",
+      "contentHe": "שאלה: חחחחח נודר חיפשתי אותו שנים הזבל הזה מתחבא טוב\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה שירים את השטיפה היא מכובת",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הוזמן מדביר",
+      "titleHe": "הוזמן מדביר",
+      "content": "שאלה: הוזמן מדביר\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה שירים את השטיפה היא מכובת",
+      "contentHe": "שאלה: הוזמן מדביר\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה שירים את השטיפה היא מכובת",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לכל הקטרא כרטיס החכם לא עובד",
+      "titleHe": "לכל הקטרא כרטיס החכם לא עובד",
+      "content": "שאלה: לכל הקטרא כרטיס החכם לא עובד\n\nתשובה (נבו פרץ - מנהל): מזה לא עובד",
+      "contentHe": "שאלה: לכל הקטרא כרטיס החכם לא עובד\n\nתשובה (נבו פרץ - מנהל): מזה לא עובד",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אני עם דלק על הקו",
+      "titleHe": "אני עם דלק על הקו",
+      "content": "שאלה: אני עם דלק על הקו\n\nתשובה (נבו פרץ - מנהל): תדליק את השטיפה השמאלית בבקשה",
+      "contentHe": "שאלה: אני עם דלק על הקו\n\nתשובה (נבו פרץ - מנהל): תדליק את השטיפה השמאלית בבקשה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לא יודע זה לא קולט כרטיסים",
+      "titleHe": "לא יודע זה לא קולט כרטיסים",
+      "content": "שאלה: לא יודע זה לא קולט כרטיסים\n\nתשובה (נבו פרץ - מנהל): תדליק את השטיפה השמאלית בבקשה",
+      "contentHe": "שאלה: לא יודע זה לא קולט כרטיסים\n\nתשובה (נבו פרץ - מנהל): תדליק את השטיפה השמאלית בבקשה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מנסים לסדר",
+      "titleHe": "מנסים לסדר",
+      "content": "שאלה: מנסים לסדר\n\nתשובה (נבו פרץ - מנהל): תדליק את השטיפה השמאלית בבקשה",
+      "contentHe": "שאלה: מנסים לסדר\n\nתשובה (נבו פרץ - מנהל): תדליק את השטיפה השמאלית בבקשה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "עכבר עדיין חיי",
+      "titleHe": "עכבר עדיין חיי",
+      "content": "שאלה: עכבר עדיין חיי\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה תבדקו אם החשמל של השטיפה למעלה",
+      "contentHe": "שאלה: עכבר עדיין חיי\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה תבדקו אם החשמל של השטיפה למעלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שבוע שעבר עשו הדברה",
+      "titleHe": "שבוע שעבר עשו הדברה",
+      "content": "שאלה: שבוע שעבר עשו הדברה\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה תבדקו אם החשמל של השטיפה למעלה",
+      "contentHe": "שאלה: שבוע שעבר עשו הדברה\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה תבדקו אם החשמל של השטיפה למעלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שרי אישתו של ישי הסיר/ה את אבי",
+      "titleHe": "שרי אישתו של ישי הסיר/ה את אבי",
+      "content": "שאלה: שרי אישתו של ישי הסיר/ה את אבי\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה תבדקו אם החשמל של השטיפה למעלה",
+      "contentHe": "שאלה: שרי אישתו של ישי הסיר/ה את אבי\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה תבדקו אם החשמל של השטיפה למעלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שרי אישתו של ישי הסיר/ה את +972 53‑478‑6750",
+      "titleHe": "שרי אישתו של ישי הסיר/ה את +972 53‑478‑6750",
+      "content": "שאלה: שרי אישתו של ישי הסיר/ה את +972 53‑478‑6750\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה תבדקו אם החשמל של השטיפה למעלה",
+      "contentHe": "שאלה: שרי אישתו של ישי הסיר/ה את +972 53‑478‑6750\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה תבדקו אם החשמל של השטיפה למעלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "איפה החלק?",
+      "titleHe": "איפה החלק?",
+      "content": "שאלה: איפה החלק?\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה תבדקו אם החשמל של השטיפה למעלה",
+      "contentHe": "שאלה: איפה החלק?\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה תבדקו אם החשמל של השטיפה למעלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אחפש אותו במתחם",
+      "titleHe": "אחפש אותו במתחם",
+      "content": "שאלה: אחפש אותו במתחם\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה תבדקו אם החשמל של השטיפה למעלה",
+      "contentHe": "שאלה: אחפש אותו במתחם\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה תבדקו אם החשמל של השטיפה למעלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הנחתי ליד המשרד",
+      "titleHe": "הנחתי ליד המשרד",
+      "content": "שאלה: הנחתי ליד המשרד\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה תבדקו אם החשמל של השטיפה למעלה",
+      "contentHe": "שאלה: הנחתי ליד המשרד\n\nתשובה (נבו פרץ - מנהל): מי שבתחנה תבדקו אם החשמל של השטיפה למעלה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "פאלח לקח דלק",
+      "titleHe": "פאלח לקח דלק",
+      "content": "שאלה: פאלח לקח דלק\n\nתשובה (נבו פרץ - מנהל): מישהו מצא ארנק בתחנה? לקוח התקשר",
+      "contentHe": "שאלה: פאלח לקח דלק\n\nתשובה (נבו פרץ - מנהל): מישהו מצא ארנק בתחנה? לקוח התקשר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "לפאלח יש כרטיס דלקן הוא מתדלק בין 500 ל-1000 ליטר",
+      "titleHe": "לפאלח יש כרטיס דלקן הוא מתדלק בין 500 ל-1000 ליטר",
+      "content": "שאלה: לפאלח יש כרטיס דלקן הוא מתדלק בין 500 ל-1000 ליטר\n\nתשובה (נבו פרץ - מנהל): מישהו מצא ארנק בתחנה? לקוח התקשר",
+      "contentHe": "שאלה: לפאלח יש כרטיס דלקן הוא מתדלק בין 500 ל-1000 ליטר\n\nתשובה (נבו פרץ - מנהל): מישהו מצא ארנק בתחנה? לקוח התקשר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מה הבעיה בידית משאבה 11?",
+      "titleHe": "מה הבעיה בידית משאבה 11?",
+      "content": "שאלה: מה הבעיה בידית משאבה 11?\n\nתשובה (נבו פרץ - מנהל): מי בתחנה ויכול ללחוץ על הפתור הזה בקומפרסור ?",
+      "contentHe": "שאלה: מה הבעיה בידית משאבה 11?\n\nתשובה (נבו פרץ - מנהל): מי בתחנה ויכול ללחוץ על הפתור הזה בקומפרסור ?",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מה הוא רוצה ?",
+      "titleHe": "מה הוא רוצה ?",
+      "content": "שאלה: מה הוא רוצה ?\n\nתשובה (נבו פרץ - מנהל): מישהו פתח את המטף",
+      "contentHe": "שאלה: מה הוא רוצה ?\n\nתשובה (נבו פרץ - מנהל): מישהו פתח את המטף",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תצלם לא את המחשב של הדלקים",
+      "titleHe": "תצלם לא את המחשב של הדלקים",
+      "content": "שאלה: תצלם לא את המחשב של הדלקים\n\nתשובה (נבו פרץ - מנהל): מישהו פתח את המטף",
+      "contentHe": "שאלה: תצלם לא את המחשב של הדלקים\n\nתשובה (נבו פרץ - מנהל): מישהו פתח את המטף",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יש אישור לפאלח?",
+      "titleHe": "יש אישור לפאלח?",
+      "content": "שאלה: יש אישור לפאלח?\n\nתשובה (נבו פרץ - מנהל): מישהו פתח את המטף",
+      "contentHe": "שאלה: יש אישור לפאלח?\n\nתשובה (נבו פרץ - מנהל): מישהו פתח את המטף",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "@שרי אישתו של ישי",
+      "titleHe": "@שרי אישתו של ישי",
+      "content": "שאלה: @שרי אישתו של ישי\n\nתשובה (נבו פרץ - מנהל): מישהו פתח את המטף",
+      "contentHe": "שאלה: @שרי אישתו של ישי\n\nתשובה (נבו פרץ - מנהל): מישהו פתח את המטף",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הכרטיס של פאלח לא בקופה ולא איםה שכל הכרטיסים",
+      "titleHe": "הכרטיס של פאלח לא בקופה ולא איםה שכל הכרטיסים",
+      "content": "שאלה: הכרטיס של פאלח לא בקופה ולא איםה שכל הכרטיסים\n\nתשובה (נבו פרץ - מנהל): מישהו פתח את המטף",
+      "contentHe": "שאלה: הכרטיס של פאלח לא בקופה ולא איםה שכל הכרטיסים\n\nתשובה (נבו פרץ - מנהל): מישהו פתח את המטף",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מישהו יודע איםה הוא?",
+      "titleHe": "מישהו יודע איםה הוא?",
+      "content": "שאלה: מישהו יודע איםה הוא?\n\nתשובה (נבו פרץ - מנהל): מישהו פתח את המטף",
+      "contentHe": "שאלה: מישהו יודע איםה הוא?\n\nתשובה (נבו פרץ - מנהל): מישהו פתח את המטף",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יהודית אל תחממי אותי היה פנ אחת אמרה לי חייל שלי ולא קיבלה ממני כלום לא לשחק עם האגו",
+      "titleHe": "יהודית אל תחממי אותי היה פנ אחת אמרה לי חייל שלי ולא קיבלה ממני כלום לא לשחק עם האגו",
+      "content": "שאלה: יהודית אל תחממי אותי היה פנ אחת אמרה לי חייל שלי ולא קיבלה ממני כלום לא לשחק עם האגו\n\nתשובה (נבו פרץ - מנהל): תכף יגיע נהג של פאלח יש אישור לפתוח לו",
+      "contentHe": "שאלה: יהודית אל תחממי אותי היה פנ אחת אמרה לי חייל שלי ולא קיבלה ממני כלום לא לשחק עם האגו\n\nתשובה (נבו פרץ - מנהל): תכף יגיע נהג של פאלח יש אישור לפתוח לו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יש הבדל בין ילד טוב לחייל שלי.",
+      "titleHe": "יש הבדל בין ילד טוב לחייל שלי.",
+      "content": "שאלה: יש הבדל בין ילד טוב לחייל שלי.\n\nתשובה (נבו פרץ - מנהל): תכף יגיע נהג של פאלח יש אישור לפתוח לו",
+      "contentHe": "שאלה: יש הבדל בין ילד טוב לחייל שלי.\n\nתשובה (נבו פרץ - מנהל): תכף יגיע נהג של פאלח יש אישור לפתוח לו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אני לא מרביץ לבנות",
+      "titleHe": "אני לא מרביץ לבנות",
+      "content": "שאלה: אני לא מרביץ לבנות\n\nתשובה (נבו פרץ - מנהל): תכף יגיע נהג של פאלח יש אישור לפתוח לו",
+      "contentHe": "שאלה: אני לא מרביץ לבנות\n\nתשובה (נבו פרץ - מנהל): תכף יגיע נהג של פאלח יש אישור לפתוח לו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "חוץ אם היא רוצה שיוון",
+      "titleHe": "חוץ אם היא רוצה שיוון",
+      "content": "שאלה: חוץ אם היא רוצה שיוון\n\nתשובה (נבו פרץ - מנהל): תכף יגיע נהג של פאלח יש אישור לפתוח לו",
+      "contentHe": "שאלה: חוץ אם היא רוצה שיוון\n\nתשובה (נבו פרץ - מנהל): תכף יגיע נהג של פאלח יש אישור לפתוח לו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "יש כאלו שמגיע להן כפה עסיסית",
+      "titleHe": "יש כאלו שמגיע להן כפה עסיסית",
+      "content": "שאלה: יש כאלו שמגיע להן כפה עסיסית\n\nתשובה (נבו פרץ - מנהל): תכף יגיע נהג של פאלח יש אישור לפתוח לו",
+      "contentHe": "שאלה: יש כאלו שמגיע להן כפה עסיסית\n\nתשובה (נבו פרץ - מנהל): תכף יגיע נהג של פאלח יש אישור לפתוח לו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "רשום דלקור",
+      "titleHe": "רשום דלקור",
+      "content": "שאלה: רשום דלקור\n\nתשובה (נבו פרץ - מנהל): תחנה שונות",
+      "contentHe": "שאלה: רשום דלקור\n\nתשובה (נבו פרץ - מנהל): תחנה שונות",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "איזה כרטיס לתת לפאלח?",
+      "titleHe": "איזה כרטיס לתת לפאלח?",
+      "content": "שאלה: איזה כרטיס לתת לפאלח?\n\nתשובה (נבו פרץ - מנהל): תחנה שונות",
+      "contentHe": "שאלה: איזה כרטיס לתת לפאלח?\n\nתשובה (נבו פרץ - מנהל): תחנה שונות",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "סגרנו אותה כי הידית לא קופצת",
+      "titleHe": "סגרנו אותה כי הידית לא קופצת",
+      "content": "שאלה: סגרנו אותה כי הידית לא קופצת\n\nתשובה (נבו פרץ - מנהל): באפליקציה 2 ב6 אם לא עובד לו שיצור קשר עם דלק",
+      "contentHe": "שאלה: סגרנו אותה כי הידית לא קופצת\n\nתשובה (נבו פרץ - מנהל): באפליקציה 2 ב6 אם לא עובד לו שיצור קשר עם דלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "זה כבר משהו אחר",
+      "titleHe": "זה כבר משהו אחר",
+      "content": "שאלה: זה כבר משהו אחר\n\nתשובה (נבו פרץ - מנהל): באפליקציה 2 ב6 אם לא עובד לו שיצור קשר עם דלק",
+      "contentHe": "שאלה: זה כבר משהו אחר\n\nתשובה (נבו פרץ - מנהל): באפליקציה 2 ב6 אם לא עובד לו שיצור קשר עם דלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ךהעביר לו את ה 2 ב 6?",
+      "titleHe": "ךהעביר לו את ה 2 ב 6?",
+      "content": "שאלה: ךהעביר לו את ה 2 ב 6?\n\nתשובה (נבו פרץ - מנהל): באפליקציה 2 ב6 אם לא עובד לו שיצור קשר עם דלק",
+      "contentHe": "שאלה: ךהעביר לו את ה 2 ב 6?\n\nתשובה (נבו פרץ - מנהל): באפליקציה 2 ב6 אם לא עובד לו שיצור קשר עם דלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "והוא עשה דרל האפלקציה או לא",
+      "titleHe": "והוא עשה דרל האפלקציה או לא",
+      "content": "שאלה: והוא עשה דרל האפלקציה או לא\n\nתשובה (נבו פרץ - מנהל): באפליקציה 2 ב6 אם לא עובד לו שיצור קשר עם דלק",
+      "contentHe": "שאלה: והוא עשה דרל האפלקציה או לא\n\nתשובה (נבו פרץ - מנהל): באפליקציה 2 ב6 אם לא עובד לו שיצור קשר עם דלק",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "זה המספר שלו",
+      "titleHe": "זה המספר שלו",
+      "content": "שאלה: זה המספר שלו\n\nתשובה (נבו פרץ - מנהל): שימו לב אין לתת צ׳אקים לספקים בלי אישור וללא בדיקה",
+      "contentHe": "שאלה: זה המספר שלו\n\nתשובה (נבו פרץ - מנהל): שימו לב אין לתת צ׳אקים לספקים בלי אישור וללא בדיקה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "זה מינוס זה",
+      "titleHe": "זה מינוס זה",
+      "content": "שאלה: זה מינוס זה\n\nתשובה (נבו פרץ - מנהל): שימו לב אין לתת צ׳אקים לספקים בלי אישור וללא בדיקה",
+      "contentHe": "שאלה: זה מינוס זה\n\nתשובה (נבו פרץ - מנהל): שימו לב אין לתת צ׳אקים לספקים בלי אישור וללא בדיקה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הוא קבוע בעיתון בעיר שלי",
+      "titleHe": "הוא קבוע בעיתון בעיר שלי",
+      "content": "שאלה: הוא קבוע בעיתון בעיר שלי\n\nתשובה (נבו פרץ - מנהל): שימו לב אין לתת צ׳אקים לספקים בלי אישור וללא בדיקה",
+      "contentHe": "שאלה: הוא קבוע בעיתון בעיר שלי\n\nתשובה (נבו פרץ - מנהל): שימו לב אין לתת צ׳אקים לספקים בלי אישור וללא בדיקה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שלח את הסטיקר",
+      "titleHe": "שלח את הסטיקר",
+      "content": "שאלה: שלח את הסטיקר\n\nתשובה (נבו פרץ - מנהל): שימו לב אין לתת צ׳אקים לספקים בלי אישור וללא בדיקה",
+      "contentHe": "שאלה: שלח את הסטיקר\n\nתשובה (נבו פרץ - מנהל): שימו לב אין לתת צ׳אקים לספקים בלי אישור וללא בדיקה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שימו לב!!!!",
+      "titleHe": "שימו לב!!!!",
+      "content": "שאלה: שימו לב!!!!\n\nתשובה (נבו פרץ - מנהל): שימו לב אין לתת צ׳אקים לספקים בלי אישור וללא בדיקה",
+      "contentHe": "שאלה: שימו לב!!!!\n\nתשובה (נבו פרץ - מנהל): שימו לב אין לתת צ׳אקים לספקים בלי אישור וללא בדיקה",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "מאשר לפתוח לרכב השכור של המשטרה במשאבה 7",
+      "titleHe": "מאשר לפתוח לרכב השכור של המשטרה במשאבה 7",
+      "content": "שאלה: מאשר לפתוח לרכב השכור של המשטרה במשאבה 7\n\nתשובה (נבו פרץ - מנהל): הוא יבוא לשלם היום",
+      "contentHe": "שאלה: מאשר לפתוח לרכב השכור של המשטרה במשאבה 7\n\nתשובה (נבו פרץ - מנהל): הוא יבוא לשלם היום",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כי השארתי בכוונה את הדף וראיתי שאחד לא שילם והלך קיצר ואם הוא שילם על האקסל ולא על הדלק כנראה ברח",
+      "titleHe": "כי השארתי בכוונה את הדף וראיתי שאחד לא שילם והלך קיצר ואם הוא שילם על האקסל ולא על הדלק כנראה ברח",
+      "content": "שאלה: כי השארתי בכוונה את הדף וראיתי שאחד לא שילם והלך קיצר ואם הוא שילם על האקסל ולא על הדלק כנראה ברח\n\nתשובה (נבו פרץ - מנהל): הוא יבוא לשלם היום",
+      "contentHe": "שאלה: כי השארתי בכוונה את הדף וראיתי שאחד לא שילם והלך קיצר ואם הוא שילם על האקסל ולא על הדלק כנראה ברח\n\nתשובה (נבו פרץ - מנהל): הוא יבוא לשלם היום",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "ניחוש פרוע אה…",
+      "titleHe": "ניחוש פרוע אה…",
+      "content": "שאלה: ניחוש פרוע אה…\n\nתשובה (נבו פרץ - מנהל): תכבה ותדליק את הטרמינל",
+      "contentHe": "שאלה: ניחוש פרוע אה…\n\nתשובה (נבו פרץ - מנהל): תכבה ותדליק את הטרמינל",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אתה תתרגל אחשלי",
+      "titleHe": "אתה תתרגל אחשלי",
+      "content": "שאלה: אתה תתרגל אחשלי\n\nתשובה (נבו פרץ - מנהל): תכבה ותדליק את הטרמינל",
+      "contentHe": "שאלה: אתה תתרגל אחשלי\n\nתשובה (נבו פרץ - מנהל): תכבה ותדליק את הטרמינל",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "שמתי לך בכספת",
+      "titleHe": "שמתי לך בכספת",
+      "content": "שאלה: שמתי לך בכספת\n\nתשובה (נבו פרץ - מנהל): תכבה ותדליק את הטרמינל",
+      "contentHe": "שאלה: שמתי לך בכספת\n\nתשובה (נבו פרץ - מנהל): תכבה ותדליק את הטרמינל",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "משאבה 5 לא עובד האשראי",
+      "titleHe": "משאבה 5 לא עובד האשראי",
+      "content": "שאלה: משאבה 5 לא עובד האשראי\n\nתשובה (נבו פרץ - מנהל): תכבה ותדליק את הטרמינל",
+      "contentHe": "שאלה: משאבה 5 לא עובד האשראי\n\nתשובה (נבו פרץ - מנהל): תכבה ותדליק את הטרמינל",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כמה עולה @קובי דלק @אחיה דלק פלאפון 2 @הילה אחותי",
+      "titleHe": "כמה עולה @קובי דלק @אחיה דלק פלאפון 2 @הילה אחותי",
+      "content": "שאלה: כמה עולה @קובי דלק @אחיה דלק פלאפון 2 @הילה אחותי\n\nתשובה (נבו פרץ - מנהל): תעביר טעם אחר",
+      "contentHe": "שאלה: כמה עולה @קובי דלק @אחיה דלק פלאפון 2 @הילה אחותי\n\nתשובה (נבו פרץ - מנהל): תעביר טעם אחר",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "@אחיה דלק פלאפון 2 איפה אתה מסדר את המגב את המטאטא",
+      "titleHe": "@אחיה דלק פלאפון 2 איפה אתה מסדר את המגב את המטאטא",
+      "content": "שאלה: @אחיה דלק פלאפון 2 איפה אתה מסדר את המגב את המטאטא\n\nתשובה (נבו פרץ - מנהל): תכף מגיע נהג של פאלח יש אישור לפתוח לו",
+      "contentHe": "שאלה: @אחיה דלק פלאפון 2 איפה אתה מסדר את המגב את המטאטא\n\nתשובה (נבו פרץ - מנהל): תכף מגיע נהג של פאלח יש אישור לפתוח לו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "זאת עובדה אחי",
+      "titleHe": "זאת עובדה אחי",
+      "content": "שאלה: זאת עובדה אחי\n\nתשובה (נבו פרץ - מנהל): תכף מגיע נהג של פאלח יש אישור לפתוח לו",
+      "contentHe": "שאלה: זאת עובדה אחי\n\nתשובה (נבו פרץ - מנהל): תכף מגיע נהג של פאלח יש אישור לפתוח לו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "חשב שזה פורים היום",
+      "titleHe": "חשב שזה פורים היום",
+      "content": "שאלה: חשב שזה פורים היום\n\nתשובה (נבו פרץ - מנהל): תכף מגיע נהג של פאלח יש אישור לפתוח לו",
+      "contentHe": "שאלה: חשב שזה פורים היום\n\nתשובה (נבו פרץ - מנהל): תכף מגיע נהג של פאלח יש אישור לפתוח לו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "פיטם קטן נחמד, רוקד עם כל אחד",
+      "titleHe": "פיטם קטן נחמד, רוקד עם כל אחד",
+      "content": "שאלה: פיטם קטן נחמד, רוקד עם כל אחד\n\nתשובה (נבו פרץ - מנהל): תכף מגיע נהג של פאלח יש אישור לפתוח לו",
+      "contentHe": "שאלה: פיטם קטן נחמד, רוקד עם כל אחד\n\nתשובה (נבו פרץ - מנהל): תכף מגיע נהג של פאלח יש אישור לפתוח לו",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "@אחיה דלק פלאפון 2",
+      "titleHe": "@אחיה דלק פלאפון 2",
+      "content": "שאלה: @אחיה דלק פלאפון 2\n\nתשובה (נבו פרץ - מנהל): מי שמקבל את גלוברנדס מחר בבוקר שהתקשר אלי",
+      "contentHe": "שאלה: @אחיה דלק פלאפון 2\n\nתשובה (נבו פרץ - מנהל): מי שמקבל את גלוברנדס מחר בבוקר שהתקשר אלי",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "צריך להתקשר לאלו של דלק הם ישחררו לך את זה (אין לי את המספר שלהם)",
+      "titleHe": "צריך להתקשר לאלו של דלק הם ישחררו לך את זה (אין לי את המספר שלהם)",
+      "content": "שאלה: צריך להתקשר לאלו של דלק הם ישחררו לך את זה (אין לי את המספר שלהם)\n\nתשובה (נבו פרץ - מנהל): יש אישור לפאלח",
+      "contentHe": "שאלה: צריך להתקשר לאלו של דלק הם ישחררו לך את זה (אין לי את המספר שלהם)\n\nתשובה (נבו פרץ - מנהל): יש אישור לפאלח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "כל המשאבות לא פעילות",
+      "titleHe": "כל המשאבות לא פעילות",
+      "content": "שאלה: כל המשאבות לא פעילות\n\nתשובה (נבו פרץ - מנהל): יש אישור לפאלח",
+      "contentHe": "שאלה: כל המשאבות לא פעילות\n\nתשובה (נבו פרץ - מנהל): יש אישור לפאלח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אז זה השרת שלהם שנפל אתה לא יכול לעשות לגבי זה כלום או קשה המחשב במשרד",
+      "titleHe": "אז זה השרת שלהם שנפל אתה לא יכול לעשות לגבי זה כלום או קשה המחשב במשרד",
+      "content": "שאלה: אז זה השרת שלהם שנפל אתה לא יכול לעשות לגבי זה כלום או קשה המחשב במשרד\n\nתשובה (נבו פרץ - מנהל): יש אישור לפאלח",
+      "contentHe": "שאלה: אז זה השרת שלהם שנפל אתה לא יכול לעשות לגבי זה כלום או קשה המחשב במשרד\n\nתשובה (נבו פרץ - מנהל): יש אישור לפאלח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "תתקשר לשרי",
+      "titleHe": "תתקשר לשרי",
+      "content": "שאלה: תתקשר לשרי\n\nתשובה (נבו פרץ - מנהל): יש אישור לפאלח",
+      "contentHe": "שאלה: תתקשר לשרי\n\nתשובה (נבו פרץ - מנהל): יש אישור לפאלח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "09-8638403",
+      "titleHe": "09-8638403",
+      "content": "שאלה: 09-8638403\n\nתשובה (נבו פרץ - מנהל): יש אישור לפאלח",
+      "contentHe": "שאלה: 09-8638403\n\nתשובה (נבו פרץ - מנהל): יש אישור לפאלח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "אני מנסה להתקשר",
+      "titleHe": "אני מנסה להתקשר",
+      "content": "שאלה: אני מנסה להתקשר\n\nתשובה (נבו פרץ - מנהל): יש אישור לפאלח",
+      "contentHe": "שאלה: אני מנסה להתקשר\n\nתשובה (נבו פרץ - מנהל): יש אישור לפאלח",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    },
+    {
+      "title": "הביא חשבונית <ההודעה נערכה>",
+      "titleHe": "הביא חשבונית <ההודעה נערכה>",
+      "content": "שאלה: הביא חשבונית <ההודעה נערכה>\n\nתשובה (נבו פרץ - מנהל): תעבור על כל הסיגריות לראות שלא חסר כלום",
+      "contentHe": "שאלה: הביא חשבונית <ההודעה נערכה>\n\nתשובה (נבו פרץ - מנהל): תעבור על כל הסיגריות לראות שלא חסר כלום",
+      "type": "faq",
+      "source": "operational_qa",
+      "frequency": 1
+    }
+  ]
+}

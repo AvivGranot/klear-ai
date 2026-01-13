@@ -1,0 +1,508 @@
+{
+  "top_questions": [
+    {
+      "text": "בוקר טוב ,",
+      "normalized": "בוקר טוב",
+      "count": 44
+    },
+    {
+      "text": "שבוע טוב,",
+      "normalized": "שבוע טוב",
+      "count": 15
+    },
+    {
+      "text": "חחחחח",
+      "normalized": "חחחחח",
+      "count": 13
+    },
+    {
+      "text": "צהריים טובים.",
+      "normalized": "צהריים טובים",
+      "count": 13
+    },
+    {
+      "text": "תודה רבה",
+      "normalized": "תודה רבה",
+      "count": 11
+    },
+    {
+      "text": "@שרי אישתו של ישי",
+      "normalized": "@שרי אישתו של ישי",
+      "count": 9
+    },
+    {
+      "text": "שימו לב!!!",
+      "normalized": "שימו לב",
+      "count": 8
+    },
+    {
+      "text": "מי בקופה ???",
+      "normalized": "מי בקופה",
+      "count": 7
+    },
+    {
+      "text": "חחחחחח",
+      "normalized": "חחחחחח",
+      "count": 7
+    },
+    {
+      "text": "מה זה ?",
+      "normalized": "מה זה",
+      "count": 6
+    },
+    {
+      "text": "בוקר אור",
+      "normalized": "בוקר אור",
+      "count": 6
+    },
+    {
+      "text": "בוקר טוב לכולם ,",
+      "normalized": "בוקר טוב לכולם",
+      "count": 6
+    },
+    {
+      "text": "שלחו לי משמרות לשבוע הבא",
+      "normalized": "שלחו לי משמרות לשבוע הבא",
+      "count": 6
+    },
+    {
+      "text": "דלק בבקבוק",
+      "normalized": "דלק בבקבוק",
+      "count": 6
+    },
+    {
+      "text": "תשלחו לי בבקשה משמרות לשבוע הבא",
+      "normalized": "תשלחו לי בבקשה משמרות לשבוע הבא",
+      "count": 6
+    },
+    {
+      "text": "דובק היה היום ?",
+      "normalized": "דובק היה היום",
+      "count": 5
+    },
+    {
+      "text": "אוריאל",
+      "normalized": "אוריאל",
+      "count": 5
+    },
+    {
+      "text": "מצויין",
+      "normalized": "מצויין",
+      "count": 5
+    },
+    {
+      "text": "בוקר טוב . בבקשה לשלוח לי וי דה רוט",
+      "normalized": "בוקר טוב בבקשה לשלוח לי וי דה רוט",
+      "count": 5
+    },
+    {
+      "text": "תשלחו לי בבקשה משמרות",
+      "normalized": "תשלחו לי בבקשה משמרות",
+      "count": 5
+    }
+  ],
+  "top_answers": [
+    {
+      "text": "נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "normalized": "נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "count": 9
+    },
+    {
+      "text": "רכב חשוד נכנס לתחנה",
+      "normalized": "רכב חשוד נכנס לתחנה",
+      "count": 4
+    },
+    {
+      "text": "מחקת את ההודעה הזו.",
+      "normalized": "מחקת את ההודעה הזו",
+      "count": 3
+    },
+    {
+      "text": "שבת שלום",
+      "normalized": "שבת שלום",
+      "count": 2
+    },
+    {
+      "text": "לגשת אליו בבקשה",
+      "normalized": "לגשת אליו בבקשה",
+      "count": 2
+    },
+    {
+      "text": "לצאת לעזור לו בבקשה",
+      "normalized": "לצאת לעזור לו בבקשה",
+      "count": 2
+    },
+    {
+      "text": "My car",
+      "normalized": "my car",
+      "count": 2
+    },
+    {
+      "text": "זה לא שם",
+      "normalized": "זה לא שם",
+      "count": 2
+    },
+    {
+      "text": "מי בתחנה",
+      "normalized": "מי בתחנה",
+      "count": 2
+    }
+  ],
+  "top_qa_pairs": [
+    {
+      "question": "בוקר טוב ,",
+      "answer": "My car",
+      "q_count": 44,
+      "a_count": 2,
+      "relevance_score": 46
+    },
+    {
+      "question": "בוקר טוב ,",
+      "answer": "שימו לב יש שתי פלפלים חדשים בלו וסילבר",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב.",
+      "answer": "הוא מבאר שבע",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב,",
+      "answer": "ברוך הבא לקובי שחזר אלינו",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב.",
+      "answer": "רוצה שכל תדלוק אני יעדכן אותך?",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב.",
+      "answer": "חחחחחח",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב ,",
+      "answer": "הוא מצא",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב.",
+      "answer": "לא אמור להיות שם מטאטא רגיל",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב",
+      "answer": "אין סיכוי זה 15 שח",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב",
+      "answer": "זה בצרור",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב",
+      "answer": "נראה כמו בעיית תקשורת תנסה לעבור משאבה",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב",
+      "answer": "ארוחות שוטרים לא מעבירים עם קופונים",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב",
+      "answer": "חחח אל תשכח לשלם",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב",
+      "answer": "תכבו ותדליקו אותה",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב",
+      "answer": "תשמרו את זה לשימוש לא למכור",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב",
+      "answer": "כמה דלק יש ?",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב",
+      "answer": "מישהו פתח את המטף",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב",
+      "answer": "תכף מגיע נהג של פאלח יש אישור לפתוח לו",
+      "q_count": 44,
+      "a_count": 1,
+      "relevance_score": 45
+    },
+    {
+      "question": "בוקר טוב,",
+      "answer": "39.90",
+      "q_count": 44,
+      "a_count": 0,
+      "relevance_score": 44
+    },
+    {
+      "question": "בוקר טוב",
+      "answer": "5050",
+      "q_count": 44,
+      "a_count": 0,
+      "relevance_score": 44
+    },
+    {
+      "question": "שבוע טוב",
+      "answer": "מי בתחנה ?",
+      "q_count": 15,
+      "a_count": 2,
+      "relevance_score": 17
+    },
+    {
+      "question": "שבוע טוב",
+      "answer": "ברוך דיין האמת",
+      "q_count": 15,
+      "a_count": 1,
+      "relevance_score": 16
+    },
+    {
+      "question": "שבוע טוב.",
+      "answer": "הזמנתי אקדח",
+      "q_count": 15,
+      "a_count": 1,
+      "relevance_score": 16
+    },
+    {
+      "question": "שבוע טוב",
+      "answer": "והם שמים על המשאבה הנכונה?",
+      "q_count": 15,
+      "a_count": 1,
+      "relevance_score": 16
+    },
+    {
+      "question": "שבוע טוב",
+      "answer": "תדליקו אותו ותרשמו שכרגע לא קוראת מטבעות",
+      "q_count": 15,
+      "a_count": 1,
+      "relevance_score": 16
+    },
+    {
+      "question": "שבוע טוב",
+      "answer": "למה לא השארת בתחנה",
+      "q_count": 15,
+      "a_count": 1,
+      "relevance_score": 16
+    },
+    {
+      "question": "שבוע טוב",
+      "answer": "תבדקו מה יש למכונה ברחבת תדלוקים בבקשה",
+      "q_count": 15,
+      "a_count": 1,
+      "relevance_score": 16
+    },
+    {
+      "question": "תודה רבה",
+      "answer": "רכב חשוד נכנס לתחנה",
+      "q_count": 11,
+      "a_count": 4,
+      "relevance_score": 15
+    },
+    {
+      "question": "שבוע טוב,",
+      "answer": "39.90",
+      "q_count": 15,
+      "a_count": 0,
+      "relevance_score": 15
+    },
+    {
+      "question": "חחחחח",
+      "answer": "מחר באיזור 6 בבוקר יגיע *ינון שובע* שזכה בפרס משנה בהגרלה.",
+      "q_count": 13,
+      "a_count": 1,
+      "relevance_score": 14
+    },
+    {
+      "question": "צהריים טובים.",
+      "answer": "פרקטל",
+      "q_count": 13,
+      "a_count": 1,
+      "relevance_score": 14
+    },
+    {
+      "question": "צהריים טובים",
+      "answer": "תפעיל אותו שאין ראש",
+      "q_count": 13,
+      "a_count": 1,
+      "relevance_score": 14
+    },
+    {
+      "question": "צהריים טובים,",
+      "answer": "מי ראה את המברגה?",
+      "q_count": 13,
+      "a_count": 1,
+      "relevance_score": 14
+    },
+    {
+      "question": "צהריים טובים ,",
+      "answer": "חברים מי מעביר ארוחת שוטרים לא כמו שאמרתי ?",
+      "q_count": 13,
+      "a_count": 1,
+      "relevance_score": 14
+    },
+    {
+      "question": "חחחחח",
+      "answer": "חברים מי מעביר ארוחת שוטרים לא כמו שאמרתי ?",
+      "q_count": 13,
+      "a_count": 1,
+      "relevance_score": 14
+    },
+    {
+      "question": "צהריים טובים",
+      "answer": "למה אתה לא מתקשר??",
+      "q_count": 13,
+      "a_count": 1,
+      "relevance_score": 14
+    },
+    {
+      "question": "צהריים טובים",
+      "answer": "תרימו את החשמל בשטיפה הימנית",
+      "q_count": 13,
+      "a_count": 1,
+      "relevance_score": 14
+    },
+    {
+      "question": "חחחחח",
+      "answer": "אני אישרתי",
+      "q_count": 13,
+      "a_count": 1,
+      "relevance_score": 14
+    },
+    {
+      "question": "צהריים טובים",
+      "answer": "תכבו ותדליקו קודם",
+      "q_count": 13,
+      "a_count": 1,
+      "relevance_score": 14
+    },
+    {
+      "question": "חחחחח",
+      "answer": "יש אישור פאלח 1000 ליטר",
+      "q_count": 13,
+      "a_count": 1,
+      "relevance_score": 14
+    },
+    {
+      "question": "צהריים טובים",
+      "answer": "מזה לא עובד",
+      "q_count": 13,
+      "a_count": 1,
+      "relevance_score": 14
+    },
+    {
+      "question": "חחחחח",
+      "answer": "תכבה ותדליק את הטרמינל",
+      "q_count": 13,
+      "a_count": 1,
+      "relevance_score": 14
+    },
+    {
+      "question": "תודה רבה",
+      "answer": "איפה הכרטיס שלה ?",
+      "q_count": 11,
+      "a_count": 1,
+      "relevance_score": 12
+    },
+    {
+      "question": "פותח קריאה",
+      "answer": "נכה נכנס לתחנה נא לצאת לעזור לו לתדלק",
+      "q_count": 3,
+      "a_count": 9,
+      "relevance_score": 12
+    },
+    {
+      "question": "תודה רבה",
+      "answer": "זה הזה על האופנוע?",
+      "q_count": 11,
+      "a_count": 1,
+      "relevance_score": 12
+    },
+    {
+      "question": "תודה רבה",
+      "answer": "ברוך דיין האמת",
+      "q_count": 11,
+      "a_count": 1,
+      "relevance_score": 12
+    },
+    {
+      "question": "תודה רבה",
+      "answer": "תחנה שונות",
+      "q_count": 11,
+      "a_count": 1,
+      "relevance_score": 12
+    },
+    {
+      "question": "תודה רבה",
+      "answer": "שמן dex",
+      "q_count": 11,
+      "a_count": 1,
+      "relevance_score": 12
+    },
+    {
+      "question": "@שרי אישתו של ישי",
+      "answer": "יש אישור",
+      "q_count": 9,
+      "a_count": 1,
+      "relevance_score": 10
+    },
+    {
+      "question": "@שרי אישתו של ישי",
+      "answer": "מישהו פתח את המטף",
+      "q_count": 9,
+      "a_count": 1,
+      "relevance_score": 10
+    }
+  ],
+  "stats": {
+    "unique_questions_repeated": 131,
+    "unique_answers_repeated": 9,
+    "total_qa_pairs": 50
+  }
+}

@@ -21,10 +21,13 @@ import {
   Clock,
   ChevronLeft,
   Plus,
+  Zap,
+  MessageSquare,
 } from "lucide-react"
 import { cn, formatRelativeTime } from "@/lib/utils"
 import { safeFetch } from "@/lib/safeFetch"
 import { useDropzone, Accept } from "react-dropzone"
+import { getAutomationPatterns } from "@/data/gas-station-data"
 
 // Content type configuration
 interface ContentType {
@@ -767,6 +770,62 @@ export default function KnowledgePage() {
           </Card>
         </div>
       </div>
+
+      {/* Automation Patterns Section */}
+      <Card className="border border-gray-200">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg font-medium flex items-center gap-2">
+            <Zap className="w-5 h-5 text-green-500" />
+            תבניות אוטומציה
+            <Badge variant="outline" className="text-xs bg-green-50 text-green-600 border-green-200">
+              {getAutomationPatterns().length} תבניות
+            </Badge>
+          </CardTitle>
+          <p className="text-sm text-gray-500 mt-1">
+            תשובות חוזרות מהמנהל שיכולות להיות אוטומטיות
+          </p>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            {getAutomationPatterns().map((pattern, index) => (
+              <motion.div
+                key={index}
+                className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-100"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <div className="flex items-start justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <MessageSquare className="w-4 h-4 text-green-600" />
+                    <Badge className="bg-green-500 text-white text-xs">
+                      {pattern.frequency}x
+                    </Badge>
+                  </div>
+                  <Badge variant="outline" className="text-xs">
+                    {pattern.topic}
+                  </Badge>
+                </div>
+                <p className="text-sm font-medium text-gray-900 mb-2">
+                  {pattern.answer.split('\n')[0].replace('שאלות שהפעילו תשובה זו:', '').trim().slice(0, 100)}
+                </p>
+                {pattern.exampleQuestions.length > 0 && (
+                  <div className="mt-2 pt-2 border-t border-green-100">
+                    <p className="text-xs text-gray-500 mb-1">שאלות שמפעילות תשובה זו:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {pattern.exampleQuestions.slice(0, 2).map((q, i) => (
+                        <span key={i} className="text-xs bg-white px-2 py-1 rounded border border-gray-200 text-gray-600 truncate max-w-[200px]">
+                          {q.slice(0, 40)}...
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Type Legend - Mobile */}
       <div className="lg:hidden flex flex-wrap items-center justify-center gap-3">
