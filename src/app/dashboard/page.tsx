@@ -51,21 +51,21 @@ export default function DashboardPage() {
       color: "blue",
     },
     {
-      label: "שאלות נפוצות",
-      value: kbSummary.faqs,
-      icon: HelpCircle,
+      label: "תבניות אוטומציה",
+      value: kbSummary.automationPatterns,
+      icon: Zap,
       color: "green",
     },
     {
-      label: "קטגוריות",
-      value: kbSummary.categories,
+      label: "מסמכים",
+      value: kbSummary.documents,
       icon: FolderOpen,
       color: "purple",
     },
     {
-      label: "מענה אוטומטי",
-      value: "100%",
-      icon: Zap,
+      label: "קטגוריות",
+      value: kbSummary.categories,
+      icon: HelpCircle,
       color: "teal",
     },
   ]
@@ -200,7 +200,7 @@ export default function DashboardPage() {
                       {faq.rank}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-700 line-clamp-2">{faq.question}</p>
+                      <p className="text-sm text-gray-700 line-clamp-2">{faq.title}</p>
                       <div className="flex items-center gap-2 mt-1.5">
                         {faq.topicIcon && (
                           <Badge variant="outline" className={`text-xs ${colors?.bg} ${colors?.text}`}>
@@ -231,8 +231,8 @@ export default function DashboardPage() {
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="text-center p-3 bg-gray-50 rounded-lg">
-                <p className="text-xl font-semibold text-gray-900">{kbSummary.faqs}</p>
-                <p className="text-xs text-gray-500">שאלות נפוצות</p>
+                <p className="text-xl font-semibold text-gray-900">{kbSummary.automationPatterns}</p>
+                <p className="text-xs text-gray-500">תבניות אוטומציה</p>
               </div>
               <div className="text-center p-3 bg-gray-50 rounded-lg">
                 <p className="text-xl font-semibold text-gray-900">{kbSummary.documents}</p>

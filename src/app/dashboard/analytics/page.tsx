@@ -3,22 +3,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import {
-  TrendingUp,
   MessageSquare,
   CheckCircle,
   BarChart3,
-  BookOpen,
-  HelpCircle,
-  Database,
   FolderOpen,
+  Database,
+  Zap,
+  FileText,
 } from "lucide-react"
 import {
   company,
-  getProcessedFaqs,
+  getProcessedConversations,
   getTopicStats,
   getKBSummary,
+  getAnalyticsSummary,
   GAS_STATION_TOPICS,
-  faqs,
+  conversations,
 } from "@/data/gas-station-data"
 
 const colorClasses: Record<string, { bg: string; text: string; border: string; fill: string }> = {
@@ -36,9 +36,10 @@ const colorClasses: Record<string, { bg: string; text: string; border: string; f
 
 export default function AnalyticsPage() {
   // Load static data - no API calls needed
-  const topFaqs = getProcessedFaqs()
+  const processedConversations = getProcessedConversations()
   const topicStats = getTopicStats()
   const kbSummary = getKBSummary()
+  const analyticsSummary = getAnalyticsSummary()
 
   // Calculate max for bar chart scaling
   const maxTopicCount = Math.max(...topicStats.map(t => t.count), 1)
@@ -49,7 +50,7 @@ export default function AnalyticsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">אנליטיקה</h1>
-          <p className="text-sm text-gray-500 mt-1">{company.name} - ניתוח מאגר הידע</p>
+          <p className="text-sm text-gray-500 mt-1">{company.name} - ניתוח שיחות והתנהגות</p>
         </div>
       </div>
 
@@ -59,11 +60,11 @@ export default function AnalyticsPage() {
           <CardContent className="p-5">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
-                <Database className="w-5 h-5 text-blue-600" />
+                <MessageSquare className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-gray-900">{kbSummary.totalItems}</p>
-                <p className="text-sm text-gray-500">סה"כ פריטי ידע</p>
+                <p className="text-2xl font-semibold text-gray-900">{analyticsSummary.totalConversations}</p>
+                <p className="text-sm text-gray-500">סה"כ שיחות</p>
               </div>
             </div>
           </CardContent>
@@ -73,11 +74,11 @@ export default function AnalyticsPage() {
           <CardContent className="p-5">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
-                <HelpCircle className="w-5 h-5 text-green-600" />
+                <Zap className="w-5 h-5 text-green-600" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-gray-900">{kbSummary.faqs}</p>
-                <p className="text-sm text-gray-500">שאלות נפוצות</p>
+                <p className="text-2xl font-semibold text-gray-900">{kbSummary.automationPatterns}</p>
+                <p className="text-sm text-gray-500">תבניות אוטומציה</p>
               </div>
             </div>
           </CardContent>
@@ -87,11 +88,11 @@ export default function AnalyticsPage() {
           <CardContent className="p-5">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center">
-                <FolderOpen className="w-5 h-5 text-purple-600" />
+                <FileText className="w-5 h-5 text-purple-600" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-gray-900">{kbSummary.categories}</p>
-                <p className="text-sm text-gray-500">קטגוריות</p>
+                <p className="text-2xl font-semibold text-gray-900">{kbSummary.documents}</p>
+                <p className="text-sm text-gray-500">מסמכים</p>
               </div>
             </div>
           </CardContent>
@@ -101,11 +102,11 @@ export default function AnalyticsPage() {
           <CardContent className="p-5">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-teal-50 rounded-lg flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 text-teal-600" />
+                <FolderOpen className="w-5 h-5 text-teal-600" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-gray-900">100%</p>
-                <p className="text-sm text-gray-500">כיסוי מאגר</p>
+                <p className="text-2xl font-semibold text-gray-900">{kbSummary.categories}</p>
+                <p className="text-sm text-gray-500">קטגוריות</p>
               </div>
             </div>
           </CardContent>
@@ -118,7 +119,7 @@ export default function AnalyticsPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-lg font-medium flex items-center gap-2">
               <BarChart3 className="w-5 h-5 text-gray-400" />
-              התפלגות שאלות לפי נושא
+              התפלגות שיחות לפי נושא
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -170,7 +171,7 @@ export default function AnalyticsPage() {
                     <p className={`text-xl font-bold mt-1 ${colors.text}`}>
                       {topicData?.count || 0}
                     </p>
-                    <p className="text-xs text-gray-500">שאלות</p>
+                    <p className="text-xs text-gray-500">שיחות</p>
                   </div>
                 )
               })}
@@ -179,36 +180,39 @@ export default function AnalyticsPage() {
         </Card>
       </div>
 
-      {/* Top FAQs List */}
+      {/* Recent Conversations List */}
       <Card className="border border-gray-200">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg font-medium flex items-center gap-2">
-            <HelpCircle className="w-5 h-5 text-gray-400" />
-            טופ שאלות מהוואטסאפ
-            <Badge variant="outline" className="text-xs">{topFaqs.length} שאלות</Badge>
+            <MessageSquare className="w-5 h-5 text-gray-400" />
+            שיחות אחרונות
+            <Badge variant="outline" className="text-xs">{processedConversations.length} שיחות</Badge>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {topFaqs.slice(0, 15).map((faq) => {
-              const colors = faq.topicColor ? colorClasses[faq.topicColor] : colorClasses.gray
+            {processedConversations.slice(0, 15).map((conv, index) => {
+              const colors = conv.topicColor ? colorClasses[conv.topicColor] : colorClasses.gray
               return (
                 <div
-                  key={faq.id}
+                  key={conv.id}
                   className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                 >
                   <span className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-sm font-bold text-gray-600 shrink-0">
-                    {faq.rank}
+                    {index + 1}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900">{faq.question}</p>
-                    <p className="text-xs text-gray-500 mt-1 line-clamp-2">{faq.answer}</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      {conv.question || '(ללא שאלה)'}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1 line-clamp-2">
+                      <span className="font-medium">תשובה:</span> {conv.answer}
+                    </p>
                     <div className="flex items-center gap-2 mt-2">
-                      {faq.topicIcon && (
-                        <Badge variant="outline" className={`text-xs ${colors?.bg} ${colors?.text}`}>
-                          {faq.topicIcon} {faq.topic}
-                        </Badge>
-                      )}
+                      <Badge variant="outline" className={`text-xs ${colors?.bg} ${colors?.text}`}>
+                        {conv.topicIcon} {conv.topic}
+                      </Badge>
+                      <span className="text-xs text-gray-400">{conv.date}</span>
                     </div>
                   </div>
                 </div>
@@ -226,7 +230,7 @@ export default function AnalyticsPage() {
             <div>
               <p className="text-sm font-medium text-gray-900">מקור הנתונים: WhatsApp - צוות אמיר בני ברק</p>
               <p className="text-xs text-gray-500">
-                {kbSummary.totalItems} פריטי ידע מיובאים מקבוצת הוואטסאפ של הצוות
+                {analyticsSummary.totalConversations} שיחות מנותחות | {kbSummary.automationPatterns} תבניות אוטומציה | {kbSummary.documents} מסמכים
               </p>
             </div>
           </div>
