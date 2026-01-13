@@ -15,6 +15,7 @@ import {
   Users,
   BookOpen,
   Zap,
+  HelpCircle,
 } from "lucide-react"
 
 interface GasStationStats {
@@ -58,6 +59,25 @@ interface GasStationStats {
     waitingMinutes: number
     isUrgent: boolean
   }>
+  topFaqs: Array<{
+    id: string
+    rank: number
+    question: string
+    answer: string
+    viewCount: number
+    category: string
+    categoryIcon: string
+    topic?: string
+    topicIcon?: string
+    topicColor?: string
+  }>
+  kbSummary: {
+    totalItems: number
+    faqs: number
+    documents: number
+    procedures: number
+    categories: number
+  }
 }
 
 const colorClasses: Record<string, { bg: string; text: string; border: string; bar: string }> = {
@@ -413,6 +433,56 @@ export default function AnalyticsPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Top FAQs from WhatsApp */}
+      <Card className="border border-gray-200">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-medium flex items-center gap-2">
+            <HelpCircle className="w-5 h-5 text-gray-400" />
+            שאלות נפוצות מהוואטסאפ
+            <Badge variant="outline" className="text-gray-500">
+              {data.kbSummary?.faqs || 0} שאלות יובאו
+            </Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {data.topFaqs && data.topFaqs.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {data.topFaqs.slice(0, 10).map((faq) => {
+                const colors = faq.topicColor ? colorClasses[faq.topicColor] : colorClasses.gray
+                return (
+                  <div
+                    key={faq.id}
+                    className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                  >
+                    <div className="flex items-start gap-3">
+                      <span className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-xs font-medium text-gray-600 shrink-0">
+                        {faq.rank}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-gray-700 font-medium line-clamp-2">{faq.question}</p>
+                        <div className="flex items-center gap-2 mt-2 flex-wrap">
+                          {faq.topicIcon && (
+                            <Badge variant="outline" className={`text-xs ${colors?.bg} ${colors?.text}`}>
+                              {faq.topicIcon} {faq.topic}
+                            </Badge>
+                          )}
+                          <span className="text-xs text-gray-400">{faq.categoryIcon} {faq.category}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-8 text-gray-400">
+              <HelpCircle className="w-10 h-10 mx-auto mb-2 opacity-50" />
+              <p>אין שאלות נפוצות</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Topic Performance Table */}
       <Card className="border border-gray-200">

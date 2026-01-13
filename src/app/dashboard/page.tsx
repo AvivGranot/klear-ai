@@ -19,6 +19,8 @@ import {
   Users,
   BookOpen,
   Plus,
+  HelpCircle,
+  FolderOpen,
 } from "lucide-react"
 
 interface GasStationStats {
@@ -65,6 +67,25 @@ interface GasStationStats {
     handled: number
     pending: number
   }>
+  topFaqs: Array<{
+    id: string
+    rank: number
+    question: string
+    answer: string
+    viewCount: number
+    category: string
+    categoryIcon: string
+    topic?: string
+    topicIcon?: string
+    topicColor?: string
+  }>
+  kbSummary: {
+    totalItems: number
+    faqs: number
+    documents: number
+    procedures: number
+    categories: number
+  }
 }
 
 const colorClasses: Record<string, { bg: string; text: string; border: string }> = {
@@ -305,16 +326,19 @@ export default function DashboardPage() {
         </Card>
       </div>
 
-      {/* Recent Questions & Manager Workload */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Questions Feed */}
-        <Card className="border border-gray-200">
+      {/* Top FAQs from WhatsApp & KB Summary */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Top FAQs from WhatsApp Import */}
+        <Card className="lg:col-span-2 border border-gray-200">
           <CardHeader className="flex flex-row items-center justify-between pb-3">
             <CardTitle className="text-lg font-medium flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 text-gray-400" />
-              שאלות אחרונות
+              <HelpCircle className="w-5 h-5 text-gray-400" />
+              שאלות נפוצות מהוואטסאפ
+              <Badge variant="outline" className="text-xs text-gray-500">
+                {stats.topFaqs?.length || 0} שאלות
+              </Badge>
             </CardTitle>
-            <Link href="/dashboard/conversations">
+            <Link href="/dashboard/knowledge">
               <Button variant="ghost" size="sm" className="gap-1 text-gray-500 hover:text-gray-900">
                 צפה בהכל
                 <ChevronRight className="w-4 h-4" />
@@ -322,77 +346,28 @@ export default function DashboardPage() {
             </Link>
           </CardHeader>
           <CardContent>
-            {stats.recentQuestions.length > 0 ? (
+            {stats.topFaqs && stats.topFaqs.length > 0 ? (
               <div className="space-y-2">
-                {stats.recentQuestions.slice(0, 6).map((q, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                  >
-                    <span className="text-lg shrink-0">{q.topicIcon}</span>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-700 truncate">{q.query}</p>
-                      <p className="text-xs text-gray-400 mt-0.5">{q.topic}</p>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      {q.hasAnswer ? (
-                        <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
-                          <CheckCircle className="w-3 h-3 ml-1" />
-                          נענה
-                        </Badge>
-                      ) : (
-                        <Badge className="bg-yellow-100 text-yellow-700 hover:bg-yellow-100">
-                          ממתין
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-8 text-gray-400">
-                <MessageSquare className="w-10 h-10 mx-auto mb-2 opacity-50" />
-                <p>אין שאלות היום</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Manager Workload */}
-        <Card className="border border-gray-200">
-          <CardHeader className="flex flex-row items-center justify-between pb-3">
-            <CardTitle className="text-lg font-medium flex items-center gap-2">
-              <Users className="w-5 h-5 text-gray-400" />
-              עומס מנהלים
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {stats.managerWorkload.length > 0 ? (
-              <div className="space-y-4">
-                {stats.managerWorkload.map((manager) => {
-                  const total = manager.handled + manager.pending
-                  const handledPercent = total > 0 ? (manager.handled / total) * 100 : 100
+                {stats.topFaqs.slice(0, 8).map((faq) => {
+                  const colors = faq.topicColor ? colorClasses[faq.topicColor] : colorClasses.gray
                   return (
-                    <div key={manager.id} className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-gray-600">
-                            {manager.name.charAt(0)}
-                          </div>
-                          <span className="text-sm font-medium text-gray-700">{manager.name}</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm">
-                          <span className="text-green-600">{manager.handled} טופלו</span>
-                          {manager.pending > 0 && (
-                            <span className="text-yellow-600">{manager.pending} ממתינים</span>
+                    <div
+                      key={faq.id}
+                      className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                    >
+                      <span className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-xs font-medium text-gray-600 shrink-0 mt-0.5">
+                        {faq.rank}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-gray-700 line-clamp-2">{faq.question}</p>
+                        <div className="flex items-center gap-2 mt-1.5">
+                          {faq.topicIcon && (
+                            <Badge variant="outline" className={`text-xs ${colors?.bg} ${colors?.text}`}>
+                              {faq.topicIcon} {faq.topic}
+                            </Badge>
                           )}
+                          <span className="text-xs text-gray-400">{faq.categoryIcon} {faq.category}</span>
                         </div>
-                      </div>
-                      <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-green-500 rounded-full transition-all"
-                          style={{ width: `${handledPercent}%` }}
-                        />
                       </div>
                     </div>
                   )
@@ -400,8 +375,57 @@ export default function DashboardPage() {
               </div>
             ) : (
               <div className="text-center py-8 text-gray-400">
-                <Users className="w-10 h-10 mx-auto mb-2 opacity-50" />
-                <p>אין מנהלים רשומים</p>
+                <HelpCircle className="w-10 h-10 mx-auto mb-2 opacity-50" />
+                <p>אין שאלות נפוצות</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Knowledge Base Summary */}
+        <Card className="border border-gray-200">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg font-medium flex items-center gap-2">
+              <FolderOpen className="w-5 h-5 text-gray-400" />
+              מאגר הידע
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {stats.kbSummary ? (
+              <>
+                <div className="text-center p-4 bg-blue-50 rounded-lg">
+                  <p className="text-3xl font-bold text-blue-600">{stats.kbSummary.totalItems}</p>
+                  <p className="text-sm text-gray-600">פריטי ידע</p>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <p className="text-xl font-semibold text-gray-900">{stats.kbSummary.faqs}</p>
+                    <p className="text-xs text-gray-500">שאלות נפוצות</p>
+                  </div>
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <p className="text-xl font-semibold text-gray-900">{stats.kbSummary.documents}</p>
+                    <p className="text-xs text-gray-500">מסמכים</p>
+                  </div>
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <p className="text-xl font-semibold text-gray-900">{stats.kbSummary.procedures}</p>
+                    <p className="text-xs text-gray-500">נהלים</p>
+                  </div>
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <p className="text-xl font-semibold text-gray-900">{stats.kbSummary.categories}</p>
+                    <p className="text-xs text-gray-500">קטגוריות</p>
+                  </div>
+                </div>
+                <Link href="/dashboard/knowledge">
+                  <Button variant="outline" className="w-full">
+                    נהל מאגר ידע
+                    <ChevronRight className="w-4 h-4 mr-2" />
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <div className="text-center py-8 text-gray-400">
+                <FolderOpen className="w-10 h-10 mx-auto mb-2 opacity-50" />
+                <p>אין נתונים</p>
               </div>
             )}
           </CardContent>

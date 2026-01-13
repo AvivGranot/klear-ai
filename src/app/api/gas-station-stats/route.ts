@@ -55,6 +55,8 @@ export async function GET() {
       managers,
       knowledgeItems,
       categories,
+      topFaqs,
+      kbStats,
     ] = await Promise.all([
       // Today's queries
       prisma.queryLog.findMany({
@@ -106,6 +108,29 @@ export async function GET() {
       prisma.category.findMany({
         where: { companyId },
         select: { id: true, name: true, nameHe: true, icon: true },
+      }),
+      // Top FAQs from knowledge base (imported from WhatsApp)
+      prisma.knowledgeItem.findMany({
+        where: { companyId, isActive: true, type: 'faq' },
+        orderBy: { viewCount: 'desc' },
+        take: 15,
+        select: {
+          id: true,
+          title: true,
+          titleHe: true,
+          content: true,
+          contentHe: true,
+          viewCount: true,
+          category: {
+            select: { nameHe: true, name: true, icon: true },
+          },
+        },
+      }),
+      // Knowledge base stats
+      prisma.knowledgeItem.groupBy({
+        by: ['type'],
+        where: { companyId, isActive: true },
+        _count: { type: true },
       }),
     ]);
 
@@ -215,6 +240,32 @@ export async function GET() {
       };
     }).sort((a, b) => b.todayCount - a.todayCount);
 
+    // Format top FAQs from WhatsApp import
+    const formattedFaqs = topFaqs.map((faq, index) => {
+      const topic = detectTopic((faq.contentHe || faq.content || ''));
+      return {
+        id: faq.id,
+        rank: index + 1,
+        question: faq.titleHe || faq.title,
+        answer: (faq.contentHe || faq.content || '').replace(/^שאלה:[\s\S]*?\n\nתשובה:\s*/, ''),
+        viewCount: faq.viewCount || 0,
+        category: faq.category?.nameHe || faq.category?.name || 'כללי',
+        categoryIcon: faq.category?.icon || '📁',
+        topic: topic?.name,
+        topicIcon: topic?.icon,
+        topicColor: topic?.color,
+      };
+    });
+
+    // Knowledge base summary stats
+    const kbSummary = {
+      totalItems: knowledgeItems.length,
+      faqs: kbStats.find(s => s.type === 'faq')?._count.type || 0,
+      documents: kbStats.find(s => s.type === 'document')?._count.type || 0,
+      procedures: kbStats.find(s => s.type === 'procedure')?._count.type || 0,
+      categories: categories.length,
+    };
+
     return NextResponse.json({
       company: {
         id: company.id,
@@ -238,6 +289,9 @@ export async function GET() {
         name: c.nameHe || c.name,
         icon: c.icon || '📁',
       })),
+      // Real data from WhatsApp import
+      topFaqs: formattedFaqs,
+      kbSummary,
     });
   } catch (error) {
     console.error('Gas Station Stats API error:', error);
