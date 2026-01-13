@@ -1,10 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { safeFetch } from "@/lib/safeFetch"
 import {
   LayoutDashboard,
   MessageSquare,
@@ -43,40 +42,12 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [company, setCompany] = useState<{ name: string; id: string } | null>(null)
-  const [pendingEscalations, setPendingEscalations] = useState(0)
 
-  useEffect(() => {
-    async function loadCompany() {
-      try {
-        const data = await safeFetch<{ seeded: boolean; companyName: string; companyId: string }>("/api/seed")
-        if (data?.seeded) {
-          setCompany({ name: data.companyName || "Demo Company", id: data.companyId || "demo" })
-        }
-      } catch (e) {
-        console.error("Failed to load company:", e)
-      }
-    }
-    loadCompany()
-  }, [])
-
-  // Fetch pending escalations for badge
-  useEffect(() => {
-    async function loadStats() {
-      try {
-        const data = await safeFetch<{ todayStats: { pendingEscalations: number } }>("/api/gas-station-stats")
-        if (data?.todayStats) {
-          setPendingEscalations(data.todayStats.pendingEscalations)
-        }
-      } catch (e) {
-        // Silently fail
-      }
-    }
-    loadStats()
-    // Refresh every 30 seconds
-    const interval = setInterval(loadStats, 30000)
-    return () => clearInterval(interval)
-  }, [])
+  // Static company data - no API needed
+  const company = {
+    name: "תחנת דלק אמיר בני ברק",
+    id: "amir-gas-station"
+  }
 
   // Build sidebar config with badges
   const sidebarConfig: SidebarSection[] = [
@@ -91,7 +62,7 @@ export default function DashboardLayout({
       items: [
         { icon: BarChart3, label: "אנליטיקה", href: "/dashboard/analytics" },
         { icon: BookOpen, label: "מאגר ידע", href: "/dashboard/knowledge" },
-        { icon: MessageSquare, label: "שיחות", href: "/dashboard/conversations", badge: pendingEscalations > 0 ? pendingEscalations : undefined },
+        { icon: MessageSquare, label: "שיחות", href: "/dashboard/conversations" },
       ],
     },
     {
@@ -157,14 +128,12 @@ export default function DashboardLayout({
 
         {/* Footer */}
         <div className="p-3 border-t border-gray-200 space-y-2">
-          {company && (
-            <Link href={`/chat/${company.id}`} target="_blank">
-              <div className="flex items-center justify-center gap-2 bg-gray-900 text-white py-2.5 rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium">
-                פתח צ'אט עובדים
-                <ExternalLink className="w-4 h-4" />
-              </div>
-            </Link>
-          )}
+          <Link href={`/chat/${company.id}`} target="_blank">
+          <div className="flex items-center justify-center gap-2 bg-gray-900 text-white py-2.5 rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium">
+            פתח צ'אט עובדים
+            <ExternalLink className="w-4 h-4" />
+          </div>
+        </Link>
           <button className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
             <HelpCircle className="w-4 h-4" />
             <span>עזרה</span>
@@ -243,14 +212,12 @@ export default function DashboardLayout({
               </nav>
 
               <div className="p-3 border-t border-gray-200">
-                {company && (
-                  <Link href={`/chat/${company.id}`} target="_blank">
-                    <div className="flex items-center justify-center gap-2 w-full bg-gray-900 text-white py-2.5 rounded-lg text-sm">
-                      פתח צ'אט
-                      <ExternalLink className="w-4 h-4" />
-                    </div>
-                  </Link>
-                )}
+                <Link href={`/chat/${company.id}`} target="_blank">
+                  <div className="flex items-center justify-center gap-2 w-full bg-gray-900 text-white py-2.5 rounded-lg text-sm">
+                    פתח צ'אט
+                    <ExternalLink className="w-4 h-4" />
+                  </div>
+                </Link>
               </div>
             </div>
           </aside>
