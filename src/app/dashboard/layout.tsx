@@ -89,8 +89,8 @@ export default function DashboardLayout({
     {
       title: "ניהול",
       items: [
-        { icon: BookOpen, label: "מאגר ידע", href: "/dashboard/knowledge" },
         { icon: BarChart3, label: "אנליטיקה", href: "/dashboard/analytics" },
+        { icon: BookOpen, label: "מאגר ידע", href: "/dashboard/knowledge" },
         { icon: MessageSquare, label: "שיחות", href: "/dashboard/conversations", badge: pendingEscalations > 0 ? pendingEscalations : undefined },
       ],
     },

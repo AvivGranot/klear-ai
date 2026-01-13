@@ -1,39 +1,53 @@
 "use client"
 
 import { useEffect, useState, useCallback } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import {
-  BookOpen,
-  Plus,
-  Search,
-  Edit,
-  Trash2,
   FileText,
-  FileVideo,
+  FileSpreadsheet,
   Image,
+  Video,
+  Type,
   X,
   Upload,
-  Filter,
-  Globe,
-  FileUp,
-  Type,
   HardDrive,
-  Link,
   Check,
   AlertCircle,
-  Cloud,
-  Copy,
-  Download,
-  FileSpreadsheet,
-  Presentation,
+  Clock,
+  ChevronLeft,
+  Plus,
 } from "lucide-react"
 import { cn, formatRelativeTime } from "@/lib/utils"
 import { safeFetch } from "@/lib/safeFetch"
-import { useDropzone } from "react-dropzone"
+import { useDropzone, Accept } from "react-dropzone"
+
+// Content type configuration
+interface ContentType {
+  id: string
+  label: string
+  icon: typeof FileText
+  color: string
+  bgColor: string
+  hoverBg: string
+  lightBg: string
+  borderColor: string
+  textColor: string
+  accept: Accept
+}
+
+const CONTENT_TYPES: ContentType[] = [
+  { id: "pdf", label: "PDF", icon: FileText, color: "red", bgColor: "bg-red-500", hoverBg: "hover:bg-red-600", lightBg: "bg-red-50", borderColor: "border-red-200", textColor: "text-red-600", accept: { "application/pdf": [".pdf"] } },
+  { id: "excel", label: "Excel", icon: FileSpreadsheet, color: "green", bgColor: "bg-green-500", hoverBg: "hover:bg-green-600", lightBg: "bg-green-50", borderColor: "border-green-200", textColor: "text-green-600", accept: { "application/vnd.ms-excel": [".xls"], "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"], "text/csv": [".csv"] } },
+  { id: "word", label: "Word", icon: FileText, color: "blue", bgColor: "bg-blue-500", hoverBg: "hover:bg-blue-600", lightBg: "bg-blue-50", borderColor: "border-blue-200", textColor: "text-blue-600", accept: { "application/msword": [".doc"], "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"] } },
+  { id: "images", label: "תמונות", icon: Image, color: "purple", bgColor: "bg-purple-500", hoverBg: "hover:bg-purple-600", lightBg: "bg-purple-50", borderColor: "border-purple-200", textColor: "text-purple-600", accept: { "image/*": [".png", ".jpg", ".jpeg", ".gif", ".webp"] } },
+  { id: "video", label: "סרטונים", icon: Video, color: "orange", bgColor: "bg-orange-500", hoverBg: "hover:bg-orange-600", lightBg: "bg-orange-50", borderColor: "border-orange-200", textColor: "text-orange-600", accept: { "video/*": [".mp4", ".mov", ".avi", ".webm"] } },
+  { id: "text", label: "טקסט", icon: Type, color: "teal", bgColor: "bg-teal-500", hoverBg: "hover:bg-teal-600", lightBg: "bg-teal-50", borderColor: "border-teal-200", textColor: "text-teal-600", accept: {} },
+]
 
 interface KnowledgeItem {
   id: string
@@ -45,11 +59,6 @@ interface KnowledgeItem {
   createdAt: string
   updatedAt: string
   viewCount?: number
-  category?: {
-    id: string
-    name: string
-    nameHe: string
-  }
   media: Array<{
     id: string
     url: string
@@ -57,53 +66,528 @@ interface KnowledgeItem {
   }>
 }
 
-type FilterType = "all" | "document" | "procedure" | "policy" | "faq"
-type ModalType = "none" | "text" | "url"
+interface RecentItem {
+  id: string
+  title: string
+  type: string
+  createdAt: string
+  mimeType?: string
+}
+
 type UploadState = "idle" | "dragover" | "uploading" | "success" | "error"
 
-export default function KnowledgePage() {
-  const [items, setItems] = useState<KnowledgeItem[]>([])
-  const [loading, setLoading] = useState(true)
-  const [companyId, setCompanyId] = useState<string | null>(null)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [filterType, setFilterType] = useState<FilterType>("all")
-  const [modalType, setModalType] = useState<ModalType>("none")
-  const [editingItem, setEditingItem] = useState<KnowledgeItem | null>(null)
-  const [formData, setFormData] = useState({
-    title: "",
-    titleHe: "",
-    content: "",
-    contentHe: "",
-    type: "document",
-  })
-  const [urlInput, setUrlInput] = useState("")
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
-  const [saving, setSaving] = useState(false)
+// Circle position calculation for hexagonal layout
+function getCirclePosition(index: number, total: number, radius: number) {
+  const angle = (index / total) * 2 * Math.PI - Math.PI / 2
+  return {
+    x: Math.cos(angle) * radius,
+    y: Math.sin(angle) * radius,
+  }
+}
+
+// ContentCircle Component
+function ContentCircle({
+  type,
+  count,
+  onClick,
+  index,
+  total,
+  radius,
+}: {
+  type: ContentType
+  count: number
+  onClick: () => void
+  index: number
+  total: number
+  radius: number
+}) {
+  const position = getCirclePosition(index, total, radius)
+  const Icon = type.icon
+
+  return (
+    <motion.button
+      className={cn(
+        "absolute w-28 h-28 rounded-full flex flex-col items-center justify-center",
+        "border-4 border-white shadow-lg cursor-pointer transition-shadow",
+        type.bgColor, type.hoverBg
+      )}
+      style={{
+        left: `calc(50% + ${position.x}px - 56px)`,
+        top: `calc(50% + ${position.y}px - 56px)`,
+      }}
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{
+        type: "spring",
+        stiffness: 400,
+        damping: 20,
+        delay: index * 0.1,
+      }}
+      whileHover={{ scale: 1.1, boxShadow: "0 10px 30px rgba(0,0,0,0.2)" }}
+      whileTap={{ scale: 0.95 }}
+      onClick={onClick}
+    >
+      <Icon className="w-10 h-10 text-white mb-1" />
+      <span className="text-white text-sm font-medium">{type.label}</span>
+      {count > 0 && (
+        <span className="absolute -top-1 -right-1 w-7 h-7 bg-white rounded-full flex items-center justify-center text-xs font-bold text-gray-800 shadow">
+          {count > 99 ? "99+" : count}
+        </span>
+      )}
+    </motion.button>
+  )
+}
+
+// CentralHub Component
+function CentralHub({ totalItems, onClick }: { totalItems: number; onClick: () => void }) {
+  return (
+    <motion.button
+      className="absolute w-36 h-36 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 flex flex-col items-center justify-center border-4 border-white shadow-2xl cursor-pointer"
+      style={{
+        left: "calc(50% - 72px)",
+        top: "calc(50% - 72px)",
+      }}
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ type: "spring", stiffness: 400, damping: 20 }}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={onClick}
+    >
+      <span className="text-3xl font-bold text-white">{totalItems}</span>
+      <span className="text-xs text-gray-300">פריטי ידע</span>
+    </motion.button>
+  )
+}
+
+// ExpandedUploader Component
+function ExpandedUploader({
+  type,
+  onClose,
+  companyId,
+  onSuccess,
+}: {
+  type: ContentType
+  onClose: () => void
+  companyId: string
+  onSuccess: () => void
+}) {
   const [uploadState, setUploadState] = useState<UploadState>("idle")
   const [uploadProgress, setUploadProgress] = useState(0)
   const [uploadError, setUploadError] = useState<string | null>(null)
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
 
-  // Storage stats (mock data)
-  const storageUsed = 2.4 // GB
-  const storageTotal = 10 // GB
-  const storagePercent = (storageUsed / storageTotal) * 100
+  const Icon = type.icon
 
-  // File size limits
-  const fileSizeLimits: Record<string, number> = {
-    "application/pdf": 25,
-    "application/msword": 25,
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": 25,
-    "text/plain": 25,
-    "application/vnd.ms-excel": 15,
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": 15,
-    "text/csv": 15,
-    "application/vnd.ms-powerpoint": 30,
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation": 30,
-    "image/png": 10,
-    "image/jpeg": 10,
-    "image/jpg": 10,
+  const simulateUpload = async (files: File[]) => {
+    setUploadState("uploading")
+    setUploadProgress(0)
+    setUploadError(null)
+
+    for (let i = 0; i <= 100; i += 5) {
+      await new Promise(resolve => setTimeout(resolve, 40))
+      setUploadProgress(i)
+    }
+
+    try {
+      for (const file of files) {
+        const formDataUpload = new FormData()
+        formDataUpload.append("file", file)
+        formDataUpload.append("companyId", companyId)
+
+        await fetch("/api/upload", {
+          method: "POST",
+          body: formDataUpload,
+        })
+      }
+
+      setUploadState("success")
+      setTimeout(() => {
+        onSuccess()
+        onClose()
+      }, 1500)
+    } catch {
+      setUploadState("error")
+      setUploadError("שגיאה בהעלאה. נסו שנית.")
+      setTimeout(() => setUploadState("idle"), 3000)
+    }
   }
 
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    setUploadedFiles(acceptedFiles)
+    simulateUpload(acceptedFiles)
+  }, [companyId])
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    onDragEnter: () => setUploadState("dragover"),
+    onDragLeave: () => setUploadState("idle"),
+    accept: Object.keys(type.accept).length > 0 ? type.accept : undefined,
+    multiple: true,
+  })
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={onClose}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      />
+
+      <motion.div
+        className={cn(
+          "relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden",
+          type.borderColor, "border-4"
+        )}
+        initial={{ scale: 0.5, opacity: 0, y: 50 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.5, opacity: 0, y: 50 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      >
+        {/* Header */}
+        <div className={cn("px-6 py-4 flex items-center justify-between", type.bgColor)}>
+          <div className="flex items-center gap-3">
+            <Icon className="w-6 h-6 text-white" />
+            <span className="text-lg font-semibold text-white">העלאת {type.label}</span>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-white/20 rounded-full transition-colors"
+          >
+            <X className="w-5 h-5 text-white" />
+          </button>
+        </div>
+
+        {/* Upload Area */}
+        <div className="p-6">
+          <div
+            {...getRootProps()}
+            className={cn(
+              "relative h-64 rounded-2xl border-3 border-dashed transition-all duration-300 cursor-pointer",
+              "flex flex-col items-center justify-center",
+              uploadState === "dragover" && cn(type.lightBg, type.borderColor.replace("border-", "border-")),
+              uploadState === "idle" && "border-gray-200 hover:border-gray-300 bg-gray-50 hover:bg-gray-100",
+              uploadState === "uploading" && "border-gray-200 bg-white",
+              uploadState === "success" && "border-green-300 bg-green-50",
+              uploadState === "error" && "border-red-300 bg-red-50"
+            )}
+          >
+            <input {...getInputProps()} />
+
+            {/* Progress Ring */}
+            {uploadState === "uploading" && (
+              <div className="relative">
+                <svg className="w-24 h-24 transform -rotate-90">
+                  <circle
+                    cx="48"
+                    cy="48"
+                    r="40"
+                    stroke="#e5e7eb"
+                    strokeWidth="8"
+                    fill="none"
+                  />
+                  <motion.circle
+                    cx="48"
+                    cy="48"
+                    r="40"
+                    stroke={type.color === "red" ? "#ef4444" : type.color === "green" ? "#22c55e" : type.color === "blue" ? "#3b82f6" : type.color === "purple" ? "#a855f7" : type.color === "orange" ? "#f97316" : "#14b8a6"}
+                    strokeWidth="8"
+                    fill="none"
+                    strokeLinecap="round"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: uploadProgress / 100 }}
+                    style={{ strokeDasharray: "251.2", strokeDashoffset: 0 }}
+                  />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className={cn("text-2xl font-bold", type.textColor)}>{uploadProgress}%</span>
+                </div>
+              </div>
+            )}
+
+            {/* Idle/Dragover State */}
+            {(uploadState === "idle" || uploadState === "dragover") && (
+              <>
+                <div className={cn(
+                  "w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-all",
+                  uploadState === "dragover" ? type.bgColor : "bg-gray-200"
+                )}>
+                  <Upload className={cn("w-8 h-8", uploadState === "dragover" ? "text-white animate-bounce" : "text-gray-500")} />
+                </div>
+                <p className={cn("font-medium text-center", uploadState === "dragover" ? type.textColor : "text-gray-600")}>
+                  {uploadState === "dragover" ? "שחררו להעלאה" : "גררו קבצים לכאן"}
+                </p>
+                <p className="text-sm text-gray-400 mt-1">או לחצו לבחירת קבצים</p>
+              </>
+            )}
+
+            {/* Success State */}
+            {uploadState === "success" && (
+              <div className="flex flex-col items-center">
+                <motion.div
+                  className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center mb-4"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                >
+                  <Check className="w-8 h-8 text-white" />
+                </motion.div>
+                <p className="font-medium text-green-600">הועלה בהצלחה!</p>
+              </div>
+            )}
+
+            {/* Error State */}
+            {uploadState === "error" && (
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center mb-4">
+                  <AlertCircle className="w-8 h-8 text-white" />
+                </div>
+                <p className="font-medium text-red-600">שגיאה</p>
+                <p className="text-sm text-red-500 mt-1">{uploadError}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
+// TextInputForm Component
+function TextInputForm({
+  onClose,
+  companyId,
+  onSuccess,
+}: {
+  onClose: () => void
+  companyId: string
+  onSuccess: () => void
+}) {
+  const [formData, setFormData] = useState({
+    titleHe: "",
+    contentHe: "",
+    type: "document",
+  })
+  const [saving, setSaving] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSaving(true)
+
+    try {
+      await fetch("/api/knowledge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: formData.titleHe,
+          titleHe: formData.titleHe,
+          content: formData.contentHe,
+          contentHe: formData.contentHe,
+          type: formData.type,
+          companyId,
+        }),
+      })
+
+      onSuccess()
+      onClose()
+    } catch (error) {
+      console.error("Error saving:", error)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      <motion.div
+        className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-teal-200"
+        initial={{ scale: 0.5, opacity: 0, y: 50 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.5, opacity: 0, y: 50 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      >
+        {/* Header */}
+        <div className="px-6 py-4 flex items-center justify-between bg-teal-500">
+          <div className="flex items-center gap-3">
+            <Type className="w-6 h-6 text-white" />
+            <span className="text-lg font-semibold text-white">הוספת טקסט</span>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-white/20 rounded-full transition-colors"
+          >
+            <X className="w-5 h-5 text-white" />
+          </button>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-1.5 block">כותרת</label>
+            <Input
+              value={formData.titleHe}
+              onChange={(e) => setFormData({ ...formData, titleHe: e.target.value })}
+              placeholder="כותרת הפריט"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-1.5 block">סוג</label>
+            <select
+              value={formData.type}
+              onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+              className="w-full border border-gray-200 rounded-lg p-2.5 text-sm bg-white"
+            >
+              <option value="document">מסמך</option>
+              <option value="procedure">נוהל</option>
+              <option value="policy">מדיניות</option>
+              <option value="faq">שאלות נפוצות</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-1.5 block">תוכן</label>
+            <Textarea
+              value={formData.contentHe}
+              onChange={(e) => setFormData({ ...formData, contentHe: e.target.value })}
+              placeholder="תוכן הפריט..."
+              rows={6}
+              required
+            />
+          </div>
+
+          <div className="flex gap-3 pt-2">
+            <Button type="submit" disabled={saving} className="bg-teal-600 hover:bg-teal-700">
+              {saving ? "שומר..." : "שמור"}
+            </Button>
+            <Button type="button" variant="outline" onClick={onClose}>
+              ביטול
+            </Button>
+          </div>
+        </form>
+      </motion.div>
+    </motion.div>
+  )
+}
+
+// RecentItems Component
+function RecentItems({ items, typeFilter }: { items: RecentItem[]; typeFilter: string | null }) {
+  const filteredItems = typeFilter
+    ? items.filter(item => {
+        if (typeFilter === "pdf") return item.mimeType?.includes("pdf")
+        if (typeFilter === "excel") return item.mimeType?.includes("sheet") || item.mimeType?.includes("excel") || item.mimeType?.includes("csv")
+        if (typeFilter === "word") return item.mimeType?.includes("word") || item.mimeType?.includes("document")
+        if (typeFilter === "images") return item.mimeType?.startsWith("image")
+        if (typeFilter === "video") return item.mimeType?.startsWith("video")
+        if (typeFilter === "text") return !item.mimeType || item.type === "document"
+        return true
+      })
+    : items
+
+  if (filteredItems.length === 0) {
+    return (
+      <div className="text-center py-8 text-gray-400">
+        <Clock className="w-8 h-8 mx-auto mb-2 opacity-50" />
+        <p className="text-sm">אין פריטים אחרונים</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-2">
+      {filteredItems.slice(0, 5).map((item, index) => {
+        const typeConfig = CONTENT_TYPES.find(t => {
+          if (t.id === "pdf") return item.mimeType?.includes("pdf")
+          if (t.id === "excel") return item.mimeType?.includes("sheet") || item.mimeType?.includes("excel")
+          if (t.id === "word") return item.mimeType?.includes("word") || item.mimeType?.includes("document")
+          if (t.id === "images") return item.mimeType?.startsWith("image")
+          if (t.id === "video") return item.mimeType?.startsWith("video")
+          return false
+        }) || CONTENT_TYPES[5] // Default to text
+
+        const Icon = typeConfig.icon
+
+        return (
+          <motion.div
+            key={item.id}
+            className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: index * 0.05 }}
+          >
+            <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center", typeConfig.lightBg)}>
+              <Icon className={cn("w-5 h-5", typeConfig.textColor)} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-gray-900 truncate">{item.title}</p>
+              <p className="text-xs text-gray-400">{formatRelativeTime(item.createdAt)}</p>
+            </div>
+          </motion.div>
+        )
+      })}
+    </div>
+  )
+}
+
+// StorageIndicator Component
+function StorageIndicator({ used, total }: { used: number; total: number }) {
+  const percentage = (used / total) * 100
+
+  return (
+    <div className="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-lg border border-gray-200">
+      <HardDrive className="w-4 h-4 text-gray-400" />
+      <div className="w-32">
+        <div className="flex justify-between text-xs mb-1">
+          <span className="text-gray-500">אחסון</span>
+          <span className="text-gray-700">{used}/{total}GB</span>
+        </div>
+        <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+          <motion.div
+            className="h-full bg-emerald-500 rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: `${percentage}%` }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Main Page Component
+export default function KnowledgePage() {
+  const [companyId, setCompanyId] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [expandedType, setExpandedType] = useState<ContentType | null>(null)
+  const [showTextForm, setShowTextForm] = useState(false)
+  const [typeCounts, setTypeCounts] = useState<Record<string, number>>({})
+  const [totalItems, setTotalItems] = useState(0)
+  const [recentItems, setRecentItems] = useState<RecentItem[]>([])
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null)
+
+  // Storage stats
+  const storageUsed = 2.4
+  const storageTotal = 10
+
+  // Initialize
   useEffect(() => {
     async function init() {
       try {
@@ -119,783 +603,222 @@ export default function KnowledgePage() {
         } else {
           setCompanyId("demo-company-001")
         }
-      } catch (e) {
-        console.error(e)
+      } catch {
         setCompanyId("demo-company-001")
       }
     }
     init()
   }, [])
 
+  // Load data
   useEffect(() => {
     if (!companyId) return
-    loadItems()
+    loadData()
   }, [companyId])
 
-  const loadItems = async () => {
+  const loadData = async () => {
     if (!companyId) return
     setLoading(true)
-    try {
-      const params = new URLSearchParams({ companyId })
-      if (filterType !== "all") params.append("type", filterType)
-      if (searchQuery) params.append("search", searchQuery)
 
-      const data = await safeFetch<{ knowledgeItems: KnowledgeItem[] }>(`/api/knowledge?${params}`)
-      setItems(data?.knowledgeItems || [])
-    } catch (e) {
-      console.error("Error loading knowledge items:", e)
+    try {
+      const data = await safeFetch<{ knowledgeItems: KnowledgeItem[] }>(`/api/knowledge?companyId=${companyId}`)
+      const items = data?.knowledgeItems || []
+
+      // Calculate counts by type (based on media mime type or item type)
+      const counts: Record<string, number> = {
+        pdf: 0,
+        excel: 0,
+        word: 0,
+        images: 0,
+        video: 0,
+        text: 0,
+      }
+
+      items.forEach(item => {
+        if (item.media.length > 0) {
+          const mimeType = item.media[0].mimeType
+          if (mimeType.includes("pdf")) counts.pdf++
+          else if (mimeType.includes("sheet") || mimeType.includes("excel") || mimeType.includes("csv")) counts.excel++
+          else if (mimeType.includes("word") || mimeType.includes("document")) counts.word++
+          else if (mimeType.startsWith("image")) counts.images++
+          else if (mimeType.startsWith("video")) counts.video++
+          else counts.text++
+        } else {
+          counts.text++
+        }
+      })
+
+      setTypeCounts(counts)
+      setTotalItems(items.length)
+
+      // Recent items
+      const recent = items.slice(-10).reverse().map(item => ({
+        id: item.id,
+        title: item.titleHe || item.title,
+        type: item.type,
+        createdAt: item.createdAt,
+        mimeType: item.media[0]?.mimeType,
+      }))
+      setRecentItems(recent)
+    } catch (error) {
+      console.error("Error loading data:", error)
     } finally {
       setLoading(false)
     }
   }
 
-  useEffect(() => {
-    if (companyId) {
-      const timeoutId = setTimeout(loadItems, 300)
-      return () => clearTimeout(timeoutId)
+  const handleCircleClick = (type: ContentType) => {
+    if (type.id === "text") {
+      setShowTextForm(true)
+    } else {
+      setExpandedType(type)
     }
-  }, [searchQuery, filterType, companyId])
-
-  const validateFile = (file: File): string | null => {
-    const maxSize = fileSizeLimits[file.type] || 10
-    const fileSizeMB = file.size / 1024 / 1024
-    if (fileSizeMB > maxSize) {
-      return `הקובץ "${file.name}" גדול מדי. מקסימום ${maxSize}MB`
-    }
-    return null
+    setSelectedFilter(type.id)
   }
 
-  const simulateUpload = async (files: File[]) => {
-    setUploadState("uploading")
-    setUploadProgress(0)
-    setUploadError(null)
-
-    // Simulate upload progress
-    for (let i = 0; i <= 100; i += 5) {
-      await new Promise(resolve => setTimeout(resolve, 50))
-      setUploadProgress(i)
-    }
-
-    // Simulate API call
-    try {
-      if (!companyId) throw new Error("No company ID")
-
-      for (const file of files) {
-        const formDataUpload = new FormData()
-        formDataUpload.append("file", file)
-        formDataUpload.append("companyId", companyId)
-
-        await fetch("/api/upload", {
-          method: "POST",
-          body: formDataUpload,
-        })
-      }
-
-      setUploadState("success")
-      setTimeout(() => {
-        setUploadState("idle")
-        setUploadedFiles([])
-        loadItems()
-      }, 2000)
-    } catch (e) {
-      setUploadState("error")
-      setUploadError("שגיאה בהעלאה. נסו שנית.")
-      setTimeout(() => {
-        setUploadState("idle")
-        setUploadError(null)
-      }, 3000)
-    }
+  const handleCentralClick = () => {
+    setSelectedFilter(null)
   }
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    // Validate files
-    for (const file of acceptedFiles) {
-      const error = validateFile(file)
-      if (error) {
-        setUploadState("error")
-        setUploadError(error)
-        setTimeout(() => {
-          setUploadState("idle")
-          setUploadError(null)
-        }, 3000)
-        return
-      }
-    }
-
-    setUploadedFiles(acceptedFiles)
-    simulateUpload(acceptedFiles)
-  }, [companyId])
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    onDragEnter: () => setUploadState("dragover"),
-    onDragLeave: () => setUploadState("idle"),
-    accept: {
-      "image/*": [".png", ".jpg", ".jpeg"],
-      "application/pdf": [".pdf"],
-      "application/msword": [".doc"],
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
-      "text/plain": [".txt"],
-      "application/vnd.ms-excel": [".xls"],
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
-      "text/csv": [".csv"],
-      "application/vnd.ms-powerpoint": [".ppt"],
-      "application/vnd.openxmlformats-officedocument.presentationml.presentation": [".pptx"],
-    },
-    multiple: true,
-  })
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!companyId) return
-
-    setSaving(true)
-
-    try {
-      const method = editingItem ? "PUT" : "POST"
-      const body = {
-        ...(editingItem && { id: editingItem.id }),
-        ...formData,
-        companyId,
-      }
-
-      const res = await fetch("/api/knowledge", {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      })
-
-      if (res.ok) {
-        resetForm()
-        loadItems()
-      }
-    } catch (e) {
-      console.error("Error saving knowledge item:", e)
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  const handleUrlSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!companyId || !urlInput.trim()) return
-
-    setSaving(true)
-    try {
-      const res = await fetch("/api/knowledge", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: urlInput,
-          titleHe: urlInput,
-          content: `URL: ${urlInput}`,
-          contentHe: `קישור: ${urlInput}`,
-          type: "document",
-          companyId,
-        }),
-      })
-
-      if (res.ok) {
-        setUrlInput("")
-        setModalType("none")
-        loadItems()
-      }
-    } catch (e) {
-      console.error(e)
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  const resetForm = () => {
-    setFormData({
-      title: "",
-      titleHe: "",
-      content: "",
-      contentHe: "",
-      type: "document",
-    })
-    setUploadedFiles([])
-    setModalType("none")
-    setEditingItem(null)
-  }
-
-  const handleEdit = (item: KnowledgeItem) => {
-    setEditingItem(item)
-    setFormData({
-      title: item.title,
-      titleHe: item.titleHe || "",
-      content: item.content,
-      contentHe: item.contentHe || "",
-      type: item.type,
-    })
-    setModalType("text")
-  }
-
-  const handleDelete = async (id: string) => {
-    if (!confirm("האם אתה בטוח שברצונך למחוק פריט זה?")) return
-
-    await fetch(`/api/knowledge?id=${id}`, { method: "DELETE" })
-    loadItems()
-  }
-
-  const typeLabels: Record<string, string> = {
-    document: "מסמך",
-    procedure: "נוהל",
-    policy: "מדיניות",
-    faq: "שאלות נפוצות",
-  }
-
-  const typeIcons: Record<string, React.ReactNode> = {
-    document: <FileText className="w-4 h-4" />,
-    procedure: <BookOpen className="w-4 h-4" />,
-    policy: <FileText className="w-4 h-4" />,
-    faq: <BookOpen className="w-4 h-4" />,
-  }
-
-  const typeCounts = {
-    all: items.length,
-    document: items.filter(i => i.type === "document").length,
-    procedure: items.filter(i => i.type === "procedure").length,
-    policy: items.filter(i => i.type === "policy").length,
-    faq: items.filter(i => i.type === "faq").length,
-  }
-
-  // Get upload circle styles based on state
-  const getCircleStyles = () => {
-    switch (uploadState) {
-      case "dragover":
-        return "border-emerald-500 bg-emerald-50 scale-105 shadow-xl shadow-emerald-200"
-      case "uploading":
-        return "border-emerald-500 bg-white"
-      case "success":
-        return "border-emerald-500 bg-emerald-50"
-      case "error":
-        return "border-red-500 bg-red-50 animate-shake"
-      default:
-        return "border-gray-200 bg-gray-50 hover:border-emerald-400 hover:bg-emerald-50/30 hover:scale-[1.02]"
-    }
-  }
-
-  if (loading && items.length === 0) {
+  if (loading) {
     return (
       <div className="space-y-6">
         <div className="flex justify-between">
           <div className="h-8 w-32 bg-gray-200 rounded animate-pulse" />
-          <div className="flex items-center gap-3">
-            <div className="h-8 w-32 bg-gray-200 rounded animate-pulse" />
-          </div>
         </div>
         <div className="flex justify-center py-12">
-          <div className="w-72 h-72 rounded-full bg-gray-200 animate-pulse" />
+          <div className="w-80 h-80 rounded-full bg-gray-200 animate-pulse" />
         </div>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">נכסי ידע</h1>
-          <p className="text-sm text-gray-500">נהלו את התיעוד והמשאבים של החברה</p>
+          <h1 className="text-2xl font-semibold text-gray-900">מרכז הידע</h1>
+          <p className="text-sm text-gray-500">העלו וארגנו את תוכן הידע של החברה</p>
         </div>
-        <div className="flex items-center gap-4">
-          {/* Search */}
-          <div className="relative w-64">
-            <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <Input
-              placeholder="חיפוש..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pr-9"
-            />
-          </div>
-          {/* Storage Indicator */}
-          <div className="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-lg border border-gray-200">
-            <HardDrive className="w-4 h-4 text-gray-400" />
-            <div className="w-24">
-              <div className="flex justify-between text-xs mb-1">
-                <span className="text-gray-500">אחסון</span>
-                <span className="text-gray-700">{storageUsed}/{storageTotal}GB</span>
-              </div>
-              <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-emerald-500 rounded-full transition-all"
-                  style={{ width: `${storagePercent}%` }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <StorageIndicator used={storageUsed} total={storageTotal} />
       </div>
 
-      {/* Main Upload Circle - Pango Style */}
-      <div className="flex flex-col items-center py-8">
-        <div
-          {...getRootProps()}
-          className={cn(
-            "relative w-72 h-72 rounded-full cursor-pointer transition-all duration-300 ease-out",
-            "flex flex-col items-center justify-center",
-            "border-4 border-dashed",
-            getCircleStyles()
-          )}
-          style={{
-            // Progress ring using conic gradient
-            background: uploadState === "uploading"
-              ? `conic-gradient(#10B981 ${uploadProgress * 3.6}deg, #f3f4f6 0deg)`
-              : undefined,
-          }}
-        >
-          {/* Inner circle for uploading state */}
-          {uploadState === "uploading" && (
-            <div className="absolute inset-3 rounded-full bg-white flex flex-col items-center justify-center">
-              <span className="text-4xl font-bold text-emerald-600">{uploadProgress}%</span>
-              <span className="text-sm text-gray-500 mt-1">מעלה...</span>
-              {uploadedFiles[0] && (
-                <span className="text-xs text-gray-400 mt-2 max-w-[150px] truncate">
-                  {uploadedFiles[0].name}
-                </span>
-              )}
-            </div>
-          )}
+      {/* Pango-Style Circle Hub */}
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Circle Container */}
+        <div className="flex-1 flex items-center justify-center">
+          <div className="relative w-80 h-80 md:w-96 md:h-96">
+            {/* Central Hub */}
+            <CentralHub totalItems={totalItems} onClick={handleCentralClick} />
 
-          {/* Default/Hover/Dragover state */}
-          {(uploadState === "idle" || uploadState === "dragover") && (
-            <>
-              <input {...getInputProps()} />
-              <div className={cn(
-                "w-24 h-24 rounded-full flex items-center justify-center mb-4 transition-all duration-300",
-                uploadState === "dragover"
-                  ? "bg-emerald-500 scale-110"
-                  : "bg-gradient-to-br from-emerald-400 to-emerald-600"
-              )}>
-                <Cloud className={cn(
-                  "w-12 h-12 text-white transition-transform",
-                  uploadState === "dragover" && "animate-bounce"
-                )} />
-              </div>
-              <p className={cn(
-                "font-semibold text-lg transition-colors text-center",
-                uploadState === "dragover" ? "text-emerald-600" : "text-gray-700"
-              )}>
-                {uploadState === "dragover" ? "שחררו להעלאה" : "גררו קבצים לכאן"}
-              </p>
-              <p className="text-sm text-gray-400 mt-1">או לחצו להעלאה</p>
-              <p className="text-xs text-gray-400 mt-3">PDF, Word, Excel עד 25MB</p>
-            </>
-          )}
-
-          {/* Success state */}
-          {uploadState === "success" && (
-            <div className="flex flex-col items-center justify-center animate-in zoom-in duration-300">
-              <div className="w-24 h-24 rounded-full bg-emerald-500 flex items-center justify-center mb-4">
-                <Check className="w-14 h-14 text-white" />
-              </div>
-              <p className="font-semibold text-lg text-emerald-600">הועלה בהצלחה!</p>
-            </div>
-          )}
-
-          {/* Error state */}
-          {uploadState === "error" && (
-            <div className="flex flex-col items-center justify-center">
-              <div className="w-24 h-24 rounded-full bg-red-500 flex items-center justify-center mb-4">
-                <AlertCircle className="w-14 h-14 text-white" />
-              </div>
-              <p className="font-semibold text-lg text-red-600">שגיאה</p>
-              <p className="text-sm text-red-500 mt-1 text-center px-8">{uploadError}</p>
-            </div>
-          )}
-        </div>
-
-        {/* Supported formats badges */}
-        <div className="flex items-center justify-center gap-2 mt-6 flex-wrap">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full">
-            <FileText className="w-3.5 h-3.5 text-red-500" />
-            <span className="text-xs text-gray-600">PDF</span>
-          </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full">
-            <FileText className="w-3.5 h-3.5 text-blue-500" />
-            <span className="text-xs text-gray-600">Word</span>
-          </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full">
-            <FileSpreadsheet className="w-3.5 h-3.5 text-green-600" />
-            <span className="text-xs text-gray-600">Excel</span>
-          </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full">
-            <Presentation className="w-3.5 h-3.5 text-orange-500" />
-            <span className="text-xs text-gray-600">PowerPoint</span>
-          </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full">
-            <Image className="w-3.5 h-3.5 text-purple-500" />
-            <span className="text-xs text-gray-600">תמונות</span>
+            {/* Content Type Circles */}
+            {CONTENT_TYPES.map((type, index) => (
+              <ContentCircle
+                key={type.id}
+                type={type}
+                count={typeCounts[type.id] || 0}
+                onClick={() => handleCircleClick(type)}
+                index={index}
+                total={CONTENT_TYPES.length}
+                radius={155}
+              />
+            ))}
           </div>
         </div>
 
-        {/* Secondary Action Buttons */}
-        <div className="flex items-center justify-center gap-4 mt-8">
-          <button
-            onClick={() => setModalType("url")}
-            className="flex flex-col items-center gap-2 p-4 bg-white border border-gray-200 rounded-2xl hover:border-emerald-300 hover:shadow-md transition-all w-28"
-          >
-            <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
-              <Link className="w-6 h-6 text-blue-600" />
-            </div>
-            <span className="text-sm font-medium text-gray-700">קישור</span>
-          </button>
-
-          <button
-            onClick={() => setModalType("text")}
-            className="flex flex-col items-center gap-2 p-4 bg-white border border-gray-200 rounded-2xl hover:border-emerald-300 hover:shadow-md transition-all w-28"
-          >
-            <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center">
-              <Type className="w-6 h-6 text-purple-600" />
-            </div>
-            <span className="text-sm font-medium text-gray-700">טקסט</span>
-          </button>
-
-          <button
-            onClick={() => {
-              setFormData({
-                title: "",
-                titleHe: "תבנית חדשה",
-                content: "",
-                contentHe: "תוכן התבנית...",
-                type: "procedure",
-              })
-              setModalType("text")
-            }}
-            className="flex flex-col items-center gap-2 p-4 bg-white border border-gray-200 rounded-2xl hover:border-emerald-300 hover:shadow-md transition-all w-28"
-          >
-            <div className="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center">
-              <Copy className="w-6 h-6 text-amber-600" />
-            </div>
-            <span className="text-sm font-medium text-gray-700">תבנית</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Filter Tabs */}
-      <div className="flex items-center gap-2 border-b border-gray-200 pb-4">
-        <Filter className="w-4 h-4 text-gray-400" />
-        {(["all", "document", "procedure", "policy", "faq"] as FilterType[]).map((type) => (
-          <button
-            key={type}
-            onClick={() => setFilterType(type)}
-            className={cn(
-              "px-4 py-2 text-sm rounded-full transition-colors",
-              filterType === type
-                ? "bg-gray-900 text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-            )}
-          >
-            {type === "all" ? "הכל" : typeLabels[type]} ({typeCounts[type]})
-          </button>
-        ))}
-      </div>
-
-      {/* URL Modal */}
-      {modalType === "url" && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-          <Card className="w-full max-w-md border border-gray-200 rounded-2xl">
-            <CardHeader className="flex flex-row items-center justify-between border-b border-gray-200">
-              <CardTitle className="text-lg font-medium">הוסף קישור</CardTitle>
-              <button onClick={resetForm} className="p-2 hover:bg-gray-100 rounded-lg">
-                <X className="w-5 h-5 text-gray-500" />
-              </button>
-            </CardHeader>
-            <CardContent className="pt-6">
-              <form onSubmit={handleUrlSubmit} className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    כתובת URL
-                  </label>
-                  <div className="relative">
-                    <Globe className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                    <Input
-                      value={urlInput}
-                      onChange={(e) => setUrlInput(e.target.value)}
-                      placeholder="https://example.com/document"
-                      className="pr-9"
-                      required
-                    />
-                  </div>
-                  <p className="text-xs text-gray-400 mt-1.5">
-                    הקישור יאונדקס ויתווסף למאגר הידע
-                  </p>
-                </div>
-                <div className="flex gap-3 pt-2">
-                  <Button type="submit" disabled={saving} className="bg-emerald-600 hover:bg-emerald-700">
-                    {saving ? "מוסיף..." : "הוסף קישור"}
-                  </Button>
-                  <Button type="button" variant="outline" onClick={resetForm}>
-                    ביטול
-                  </Button>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-
-      {/* Text/Edit Modal */}
-      {modalType === "text" && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-          <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-gray-200 rounded-2xl">
-            <CardHeader className="flex flex-row items-center justify-between border-b border-gray-200">
-              <CardTitle className="text-lg font-medium">
-                {editingItem ? "ערוך פריט ידע" : "צור פריט ידע חדש"}
-              </CardTitle>
-              <button onClick={resetForm} className="p-2 hover:bg-gray-100 rounded-lg">
-                <X className="w-5 h-5 text-gray-500" />
-              </button>
-            </CardHeader>
-            <CardContent className="pt-6">
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700 mb-1.5 block">
-                      כותרת (עברית)
-                    </label>
-                    <Input
-                      value={formData.titleHe}
-                      onChange={(e) =>
-                        setFormData({ ...formData, titleHe: e.target.value })
-                      }
-                      placeholder="כותרת בעברית"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-700 mb-1.5 block">
-                      Title (English)
-                    </label>
-                    <Input
-                      value={formData.title}
-                      onChange={(e) =>
-                        setFormData({ ...formData, title: e.target.value })
-                      }
-                      placeholder="Title in English"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    סוג
-                  </label>
-                  <select
-                    value={formData.type}
-                    onChange={(e) =>
-                      setFormData({ ...formData, type: e.target.value })
-                    }
-                    className="w-full border border-gray-200 rounded-lg p-2.5 text-sm bg-white"
+        {/* Recent Items Panel */}
+        <div className="lg:w-80">
+          <Card className="border border-gray-200">
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-base font-medium">פריטים אחרונים</CardTitle>
+                {selectedFilter && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSelectedFilter(null)}
+                    className="text-xs"
                   >
-                    <option value="document">מסמך</option>
-                    <option value="procedure">נוהל</option>
-                    <option value="policy">מדיניות</option>
-                    <option value="faq">שאלות נפוצות</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    תוכן (עברית)
-                  </label>
-                  <Textarea
-                    value={formData.contentHe}
-                    onChange={(e) =>
-                      setFormData({ ...formData, contentHe: e.target.value })
-                    }
-                    placeholder="תוכן בעברית..."
-                    rows={6}
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    Content (English)
-                  </label>
-                  <Textarea
-                    value={formData.content}
-                    onChange={(e) =>
-                      setFormData({ ...formData, content: e.target.value })
-                    }
-                    placeholder="Content in English..."
-                    rows={4}
-                  />
-                </div>
-
-                <div className="flex gap-3 pt-2">
-                  <Button type="submit" disabled={saving} className="bg-emerald-600 hover:bg-emerald-700">
-                    {saving ? "שומר..." : editingItem ? "עדכן" : "שמור"}
+                    <ChevronLeft className="w-3 h-3 ml-1" />
+                    הכל
                   </Button>
-                  <Button type="button" variant="outline" onClick={resetForm}>
-                    ביטול
-                  </Button>
+                )}
+              </div>
+              {selectedFilter && (
+                <div className="flex items-center gap-2 mt-2">
+                  {(() => {
+                    const type = CONTENT_TYPES.find(t => t.id === selectedFilter)
+                    if (!type) return null
+                    const Icon = type.icon
+                    return (
+                      <Badge variant="outline" className={cn("text-xs", type.textColor, type.borderColor)}>
+                        <Icon className="w-3 h-3 mr-1" />
+                        {type.label}
+                      </Badge>
+                    )
+                  })()}
                 </div>
-              </form>
+              )}
+            </CardHeader>
+            <CardContent>
+              <RecentItems items={recentItems} typeFilter={selectedFilter} />
             </CardContent>
           </Card>
         </div>
-      )}
+      </div>
 
-      {/* Knowledge Items Table */}
-      <Card className="border border-gray-200 overflow-hidden rounded-xl">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-gray-50 border-b border-gray-200">
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  כותרת
-                </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  סוג
-                </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  מדיה
-                </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  עודכן
-                </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  פעולות
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item) => (
-                <tr
-                  key={item.id}
-                  className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
-                >
-                  <td className="px-4 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500">
-                        {item.media.length > 0 ? (
-                          item.media[0].mimeType.startsWith("video") ? (
-                            <FileVideo className="w-5 h-5" />
-                          ) : (
-                            <Image className="w-5 h-5" />
-                          )
-                        ) : (
-                          typeIcons[item.type]
-                        )}
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-900 line-clamp-1">
-                          {item.titleHe || item.title}
-                        </p>
-                        <p className="text-xs text-gray-500 line-clamp-1 max-w-xs">
-                          {item.contentHe || item.content}
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-4 py-4">
-                    <Badge variant="outline" className="text-xs">
-                      {typeLabels[item.type]}
-                    </Badge>
-                  </td>
-                  <td className="px-4 py-4">
-                    {item.media.length > 0 ? (
-                      <div className="flex -space-x-2">
-                        {item.media.slice(0, 3).map((m) => (
-                          <div
-                            key={m.id}
-                            className="w-8 h-8 bg-gray-100 rounded border-2 border-white overflow-hidden"
-                          >
-                            {m.mimeType.startsWith("image") ? (
-                              <img
-                                src={m.url}
-                                alt=""
-                                className="w-full h-full object-cover"
-                              />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center">
-                                <FileVideo className="w-4 h-4 text-gray-400" />
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                        {item.media.length > 3 && (
-                          <div className="w-8 h-8 bg-gray-100 rounded border-2 border-white flex items-center justify-center text-xs text-gray-500">
-                            +{item.media.length - 3}
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      <span className="text-xs text-gray-400">—</span>
-                    )}
-                  </td>
-                  <td className="px-4 py-4 text-sm text-gray-500">
-                    {formatRelativeTime(item.updatedAt)}
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="flex items-center gap-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleEdit(item)}
-                        title="עריכה"
-                      >
-                        <Edit className="w-4 h-4 text-gray-500" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        title="שכפול"
-                        onClick={() => {
-                          setFormData({
-                            title: item.title,
-                            titleHe: (item.titleHe || "") + " (עותק)",
-                            content: item.content,
-                            contentHe: item.contentHe || "",
-                            type: item.type,
-                          })
-                          setModalType("text")
-                        }}
-                      >
-                        <Copy className="w-4 h-4 text-gray-500" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDelete(item.id)}
-                        title="מחיקה"
-                      >
-                        <Trash2 className="w-4 h-4 text-red-500" />
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {/* Type Legend - Mobile */}
+      <div className="lg:hidden flex flex-wrap items-center justify-center gap-3">
+        {CONTENT_TYPES.map((type) => {
+          const Icon = type.icon
+          return (
+            <button
+              key={type.id}
+              onClick={() => handleCircleClick(type)}
+              className={cn(
+                "flex items-center gap-2 px-4 py-2 rounded-full transition-all",
+                selectedFilter === type.id ? type.bgColor : "bg-gray-100 hover:bg-gray-200",
+                selectedFilter === type.id && "text-white"
+              )}
+            >
+              <Icon className={cn("w-4 h-4", selectedFilter === type.id ? "text-white" : type.textColor)} />
+              <span className={cn("text-sm font-medium", selectedFilter === type.id ? "text-white" : "text-gray-700")}>
+                {type.label}
+              </span>
+              <span className={cn(
+                "text-xs px-1.5 py-0.5 rounded-full",
+                selectedFilter === type.id ? "bg-white/20 text-white" : "bg-gray-200 text-gray-600"
+              )}>
+                {typeCounts[type.id] || 0}
+              </span>
+            </button>
+          )
+        })}
+      </div>
 
-        {items.length === 0 && !loading && (
-          <div className="p-12 text-center">
-            <BookOpen className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-            <p className="text-gray-500 font-medium">אין פריטי ידע</p>
-            <p className="text-sm text-gray-400 mt-1">גררו קבצים לעיגול למעלה להתחלה</p>
-          </div>
+      {/* Expanded Uploader Modal */}
+      <AnimatePresence>
+        {expandedType && companyId && (
+          <ExpandedUploader
+            type={expandedType}
+            onClose={() => setExpandedType(null)}
+            companyId={companyId}
+            onSuccess={loadData}
+          />
         )}
-      </Card>
+      </AnimatePresence>
 
-      {/* Add shake animation to global styles */}
-      <style jsx global>{`
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-          20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-        .animate-shake {
-          animation: shake 0.5s ease-in-out;
-        }
-      `}</style>
+      {/* Text Input Form Modal */}
+      <AnimatePresence>
+        {showTextForm && companyId && (
+          <TextInputForm
+            onClose={() => setShowTextForm(false)}
+            companyId={companyId}
+            onSuccess={loadData}
+          />
+        )}
+      </AnimatePresence>
     </div>
   )
 }
