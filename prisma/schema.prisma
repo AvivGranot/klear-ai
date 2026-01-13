@@ -24,6 +24,8 @@ model Company {
   knowledgeItems KnowledgeItem[]
   conversations  Conversation[]
   categories     Category[]
+  whatsappSessions WhatsAppSession[]
+  escalations    Escalation[]
 }
 
 // Users (both managers and employees)
@@ -42,6 +44,7 @@ model User {
   conversations Conversation[]
   messages      Message[]
   corrections   AnswerCorrection[]
+  whatsappSessions WhatsAppSession[]
 }
 
 // Knowledge Base Categories
@@ -91,6 +94,7 @@ model KnowledgeItem {
   category    Category?    @relation(fields: [categoryId], references: [id])
   media       MediaItem[]
   usedInMessages Message[]
+  escalations Escalation[]
 }
 
 // Media Items (videos, images, PDFs)
@@ -184,4 +188,96 @@ model QueryLog {
   wasHelpful  Boolean?
   responseTime Int?    // in milliseconds
   createdAt   DateTime @default(now())
+}
+
+// WhatsApp Session - tracks onboarding state and role for 1:1 chats
+model WhatsAppSession {
+  id              String    @id @default(uuid())
+  phoneNumber     String
+  companyId       String
+
+  // Onboarding state
+  onboardingStep  String    @default("intro") // intro, role_select, complete
+  userRole        String?   // employee | manager (null until selected)
+
+  // Link to User record (after verification)
+  userId          String?
+  userName        String?   // Name they provided
+
+  // State
+  isActive        Boolean   @default(true)
+  lastMessageAt   DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  company         Company   @relation(fields: [companyId], references: [id])
+  user            User?     @relation(fields: [userId], references: [id])
+  messages        BotMessage[]
+
+  // For employees - pending escalations
+  pendingEscalations Escalation[] @relation("EmployeeEscalations")
+
+  // For managers - escalations they handle
+  handledEscalations Escalation[] @relation("ManagerEscalations")
+
+  @@unique([phoneNumber, companyId])
+  @@index([companyId, userRole])
+}
+
+// Bot Messages - all messages in WhatsApp sessions
+model BotMessage {
+  id              String    @id @default(uuid())
+  sessionId       String
+  direction       String    // inbound | outbound
+  content         String
+  mediaUrls       String?   // JSON array of media URLs
+  messageType     String    @default("text") // text, image, video, audio, document
+
+  // WhatsApp message ID for tracking
+  waMessageId     String?
+
+  createdAt       DateTime  @default(now())
+
+  // Relations
+  session         WhatsAppSession @relation(fields: [sessionId], references: [id])
+
+  @@index([sessionId, createdAt])
+}
+
+// Escalation - links employee question to manager response
+model Escalation {
+  id              String    @id @default(uuid())
+  companyId       String
+
+  // Employee side
+  employeeSessionId String
+  employeeQuery     String    // The original question
+  employeeMessageId String?   // Reference to the BotMessage
+
+  // Manager side
+  managerSessionId  String?   // Which manager is handling
+  managerResponse   String?   // Manager's answer
+  managerMediaUrls  String?   // JSON array of media URLs
+
+  // Status
+  status          String    @default("pending") // pending, in_progress, resolved
+
+  // Timing
+  createdAt       DateTime  @default(now())
+  assignedAt      DateTime? // When manager received it
+  resolvedAt      DateTime?
+
+  // Knowledge enrichment
+  shouldAddToKB   Boolean   @default(true)
+  knowledgeItemId String?   // If added to KB
+
+  // Relations
+  company         Company   @relation(fields: [companyId], references: [id])
+  employeeSession WhatsAppSession @relation("EmployeeEscalations", fields: [employeeSessionId], references: [id])
+  managerSession  WhatsAppSession? @relation("ManagerEscalations", fields: [managerSessionId], references: [id])
+  knowledgeItem   KnowledgeItem? @relation(fields: [knowledgeItemId], references: [id])
+
+  @@index([companyId, status])
+  @@index([managerSessionId, status])
 }

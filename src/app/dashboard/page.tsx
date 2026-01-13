@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { safeFetch } from "@/lib/safeFetch"
 import {
@@ -11,64 +10,70 @@ import {
   Users,
   BookOpen,
   TrendingUp,
-  TrendingDown,
   Clock,
   ChevronRight,
   ExternalLink,
   BarChart3,
+  AlertCircle,
+  CheckCircle,
+  FolderOpen,
+  Image,
 } from "lucide-react"
-import { formatRelativeTime } from "@/lib/utils"
 
-interface Stats {
-  totalConversations: number
-  totalMessages: number
-  totalKnowledgeItems: number
-  totalUsers: number
-  recentConversations: Array<{
+interface DashboardStats {
+  company: {
     id: string
-    user: { name: string }
-    messages: Array<{ content: string; createdAt: string }>
-    updatedAt: string
+    name: string
+    industry: string
+  }
+  knowledgeBase: {
+    totalItems: number
+    categories: number
+    mediaFiles: number
+    byType: Array<{ type: string; count: number }>
+    byCategory: Array<{ id: string; name: string; nameHe: string; icon: string; itemCount: number }>
+  }
+  users: {
+    total: number
+    employees: number
+    managers: number
+  }
+  conversations: {
+    total: number
+    weeklyQueries: number
+    monthlyQueries: number
+    autoAnswerRate: number
+  }
+  escalations: {
+    total: number
+    pending: number
+    resolved: number
+    resolutionRate: number
+  }
+  recentQueries: Array<{
+    id: string
+    query: string
+    hasResponse: boolean
+    wasHelpful: boolean | null
+    createdAt: string
   }>
 }
 
-const DEFAULT_STATS: Stats = {
-  totalConversations: 0,
-  totalMessages: 0,
-  totalKnowledgeItems: 0,
-  totalUsers: 0,
-  recentConversations: [],
-}
-
 export default function DashboardPage() {
-  const [stats, setStats] = useState<Stats>(DEFAULT_STATS)
+  const [stats, setStats] = useState<DashboardStats | null>(null)
   const [loading, setLoading] = useState(true)
-  const [companyId, setCompanyId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     async function loadStats() {
       try {
-        // First try to get existing seed data
-        let seedData = await safeFetch<{ seeded: boolean; companyId: string }>("/api/seed")
-
-        // If not seeded, create seed data
-        if (!seedData?.seeded) {
-          await safeFetch("/api/seed", { method: "POST" })
-          seedData = await safeFetch<{ seeded: boolean; companyId: string }>("/api/seed")
-        }
-
-        if (seedData?.companyId) {
-          setCompanyId(seedData.companyId)
-        } else {
-          // Use demo company ID as fallback
-          setCompanyId("demo-company-001")
+        const data = await safeFetch<DashboardStats>("/api/stats")
+        if (data) {
+          setStats(data)
         }
       } catch (e) {
         console.error("Error loading stats:", e)
-        setError("Failed to initialize")
-        // Still use demo ID
-        setCompanyId("demo-company-001")
+        setError("Failed to load dashboard data")
       } finally {
         setLoading(false)
       }
@@ -76,65 +81,6 @@ export default function DashboardPage() {
 
     loadStats()
   }, [])
-
-  useEffect(() => {
-    if (!companyId) return
-
-    async function loadDashboardData() {
-      try {
-        const [conversationsData, knowledgeData, usersData] = await Promise.all([
-          safeFetch<{ total: number; conversations: any[] }>(`/api/conversations?companyId=${companyId}&limit=5`),
-          safeFetch<{ knowledgeItems: any[] }>(`/api/knowledge?companyId=${companyId}`),
-          safeFetch<{ users: any[] }>(`/api/users?companyId=${companyId}`),
-        ])
-
-        setStats({
-          totalConversations: conversationsData?.total || 0,
-          totalMessages: 0,
-          totalKnowledgeItems: knowledgeData?.knowledgeItems?.length || 0,
-          totalUsers: usersData?.users?.length || 0,
-          recentConversations: conversationsData?.conversations || [],
-        })
-      } catch (e) {
-        console.error("Error loading dashboard data:", e)
-        // Keep default stats on error
-      }
-    }
-
-    loadDashboardData()
-  }, [companyId])
-
-  const statsCards = [
-    {
-      title: "שיחות",
-      value: stats?.totalConversations || 0,
-      icon: MessageSquare,
-      change: 12,
-      href: "/dashboard/conversations",
-    },
-    {
-      title: "פריטי ידע",
-      value: stats?.totalKnowledgeItems || 0,
-      icon: BookOpen,
-      change: 5,
-      href: "/dashboard/knowledge",
-    },
-    {
-      title: "משתמשים",
-      value: stats?.totalUsers || 0,
-      icon: Users,
-      change: 3,
-      href: "/dashboard/users",
-    },
-    {
-      title: "שיעור הצלחה",
-      value: 94,
-      icon: BarChart3,
-      change: 2,
-      isPercentage: true,
-      href: "/dashboard/analytics",
-    },
-  ]
 
   if (loading) {
     return (
@@ -153,50 +99,84 @@ export default function DashboardPage() {
     )
   }
 
+  if (error || !stats) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64">
+        <AlertCircle className="w-12 h-12 text-red-500 mb-4" />
+        <p className="text-gray-600">{error || "Failed to load data"}</p>
+      </div>
+    )
+  }
+
+  const statsCards = [
+    {
+      title: "פריטי ידע",
+      value: stats.knowledgeBase.totalItems,
+      icon: BookOpen,
+      subtitle: `${stats.knowledgeBase.categories} קטגוריות`,
+      href: "/dashboard/knowledge",
+      color: "text-blue-500",
+    },
+    {
+      title: "שאלות החודש",
+      value: stats.conversations.monthlyQueries,
+      icon: MessageSquare,
+      subtitle: `${stats.conversations.weeklyQueries} השבוע`,
+      href: "/dashboard/conversations",
+      color: "text-green-500",
+    },
+    {
+      title: "שיעור מענה אוטומטי",
+      value: stats.conversations.autoAnswerRate,
+      icon: BarChart3,
+      isPercentage: true,
+      subtitle: `${stats.escalations.pending} ממתינות למנהל`,
+      href: "/dashboard/analytics",
+      color: "text-purple-500",
+    },
+    {
+      title: "משתמשים",
+      value: stats.users.employees + stats.users.managers,
+      icon: Users,
+      subtitle: `${stats.users.employees} עובדים, ${stats.users.managers} מנהלים`,
+      href: "/dashboard/users",
+      color: "text-orange-500",
+    },
+  ]
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-gray-900">סקירה כללית</h1>
-        {companyId && (
-          <Link href={`/chat/${companyId}`} target="_blank">
-            <Button className="gap-2 bg-gray-900 hover:bg-gray-800">
-              פתח צ'אט עובדים
-              <ExternalLink className="w-4 h-4" />
-            </Button>
-          </Link>
-        )}
+        <div>
+          <h1 className="text-2xl font-semibold text-gray-900">סקירה כללית</h1>
+          <p className="text-sm text-gray-500 mt-1">{stats.company.name}</p>
+        </div>
+        <Link href={`/chat/${stats.company.id}`} target="_blank">
+          <Button className="gap-2 bg-gray-900 hover:bg-gray-800">
+            פתח צ'אט עובדים
+            <ExternalLink className="w-4 h-4" />
+          </Button>
+        </Link>
       </div>
 
-      {/* Stats Cards - Clean ElevenLabs style */}
+      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {statsCards.map((stat, i) => (
           <Link key={i} href={stat.href}>
-            <Card className="border border-gray-200 hover:border-gray-300 transition-colors cursor-pointer">
+            <Card className="border border-gray-200 hover:border-gray-300 transition-colors cursor-pointer h-full">
               <CardContent className="p-5">
                 <div className="flex items-start justify-between mb-3">
                   <span className="text-sm text-gray-500">{stat.title}</span>
-                  <stat.icon className="w-5 h-5 text-gray-400" />
+                  <stat.icon className={`w-5 h-5 ${stat.color}`} />
                 </div>
                 <div className="flex items-baseline gap-2">
                   <span className="text-3xl font-semibold text-gray-900">
                     {stat.value.toLocaleString()}
                     {stat.isPercentage && "%"}
                   </span>
-                  <span
-                    className={`text-sm flex items-center gap-0.5 ${
-                      stat.change >= 0 ? "text-green-600" : "text-red-600"
-                    }`}
-                  >
-                    {stat.change >= 0 ? (
-                      <TrendingUp className="w-3 h-3" />
-                    ) : (
-                      <TrendingDown className="w-3 h-3" />
-                    )}
-                    {Math.abs(stat.change)}%
-                  </span>
                 </div>
-                <span className="text-xs text-gray-400">מהשבוע שעבר</span>
+                <span className="text-xs text-gray-400">{stat.subtitle}</span>
               </CardContent>
             </Card>
           </Link>
@@ -205,14 +185,14 @@ export default function DashboardPage() {
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent Conversations */}
+        {/* Categories Overview */}
         <Card className="lg:col-span-2 border border-gray-200">
           <CardHeader className="flex flex-row items-center justify-between pb-3">
             <CardTitle className="text-lg font-medium flex items-center gap-2">
-              <Clock className="w-5 h-5 text-gray-400" />
-              שיחות אחרונות
+              <FolderOpen className="w-5 h-5 text-gray-400" />
+              קטגוריות במאגר הידע
             </CardTitle>
-            <Link href="/dashboard/conversations">
+            <Link href="/dashboard/knowledge">
               <Button variant="ghost" size="sm" className="gap-1 text-gray-500 hover:text-gray-900">
                 צפה בהכל
                 <ChevronRight className="w-4 h-4" />
@@ -220,129 +200,187 @@ export default function DashboardPage() {
             </Link>
           </CardHeader>
           <CardContent>
-            {stats?.recentConversations && stats.recentConversations.length > 0 ? (
-              <div className="space-y-2">
-                {stats.recentConversations.map((conv) => (
-                  <div
-                    key={conv.id}
-                    className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
-                  >
-                    <div className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-medium text-sm shrink-0">
-                      {conv.user?.name?.charAt(0) || "?"}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <span className="font-medium text-gray-900 text-sm">{conv.user?.name || "Unknown"}</span>
-                        <span className="text-xs text-gray-400">
-                          {formatRelativeTime(conv.updatedAt)}
-                        </span>
+            {stats.knowledgeBase.byCategory.length > 0 ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {stats.knowledgeBase.byCategory.slice(0, 9).map((category) => (
+                  <Link key={category.id} href={`/dashboard/knowledge?category=${category.id}`}>
+                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+                      <span className="text-2xl">{category.icon || "📁"}</span>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-gray-900 text-sm truncate">
+                          {category.nameHe || category.name}
+                        </p>
+                        <p className="text-xs text-gray-500">{category.itemCount} פריטים</p>
                       </div>
-                      <p className="text-sm text-gray-500 truncate">
-                        {conv.messages?.[0]?.content || "אין הודעות"}
-                      </p>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-gray-400" />
-                  </div>
+                  </Link>
                 ))}
               </div>
             ) : (
               <div className="text-center py-12">
-                <MessageSquare className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                <p className="text-gray-500 font-medium">אין שיחות עדיין</p>
-                <p className="text-sm text-gray-400 mt-1">שיחות חדשות יופיעו כאן</p>
+                <FolderOpen className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                <p className="text-gray-500 font-medium">אין קטגוריות עדיין</p>
+                <p className="text-sm text-gray-400 mt-1">הוסף קטגוריות לארגון הידע</p>
               </div>
             )}
           </CardContent>
         </Card>
 
-        {/* Quick Actions */}
+        {/* Escalations Status */}
         <Card className="border border-gray-200">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg font-medium">פעולות מהירות</CardTitle>
+            <CardTitle className="text-lg font-medium flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-gray-400" />
+              הסלמות למנהל
+            </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-2">
-            <Link href="/dashboard/knowledge">
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
-                <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
-                  <BookOpen className="w-5 h-5 text-gray-500" />
+          <CardContent className="space-y-4">
+            <div className="flex items-center justify-between p-4 bg-yellow-50 rounded-lg border border-yellow-100">
+              <div className="flex items-center gap-3">
+                <Clock className="w-5 h-5 text-yellow-600" />
+                <div>
+                  <p className="font-medium text-gray-900">ממתינות</p>
+                  <p className="text-xs text-gray-500">דורשות תשובה</p>
                 </div>
-                <div className="flex-1">
-                  <p className="font-medium text-gray-900 text-sm">הוסף ידע חדש</p>
-                  <p className="text-xs text-gray-500">נהלים, מדיניות או הנחיות</p>
-                </div>
-                <ChevronRight className="w-4 h-4 text-gray-400" />
               </div>
-            </Link>
+              <span className="text-2xl font-semibold text-yellow-600">{stats.escalations.pending}</span>
+            </div>
 
-            <Link href="/dashboard/conversations">
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
-                <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
-                  <MessageSquare className="w-5 h-5 text-gray-500" />
+            <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-100">
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                <div>
+                  <p className="font-medium text-gray-900">נפתרו</p>
+                  <p className="text-xs text-gray-500">סה"כ</p>
                 </div>
-                <div className="flex-1">
-                  <p className="font-medium text-gray-900 text-sm">צפה בשיחות</p>
-                  <p className="text-xs text-gray-500">סקור ותקן תשובות</p>
-                </div>
-                <ChevronRight className="w-4 h-4 text-gray-400" />
               </div>
-            </Link>
+              <span className="text-2xl font-semibold text-green-600">{stats.escalations.resolved}</span>
+            </div>
 
-            <Link href="/dashboard/analytics">
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
-                <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
-                  <BarChart3 className="w-5 h-5 text-gray-500" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium text-gray-900 text-sm">אנליטיקה</p>
-                  <p className="text-xs text-gray-500">נתוני שימוש ומגמות</p>
-                </div>
-                <ChevronRight className="w-4 h-4 text-gray-400" />
+            <div className="pt-2">
+              <div className="flex justify-between text-sm mb-2">
+                <span className="text-gray-500">שיעור פתרון</span>
+                <span className="font-medium text-gray-900">{stats.escalations.resolutionRate}%</span>
               </div>
-            </Link>
+              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-green-500 rounded-full transition-all"
+                  style={{ width: `${stats.escalations.resolutionRate}%` }}
+                />
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Performance Overview */}
+      {/* Knowledge Base Summary */}
       <Card className="border border-gray-200">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg font-medium flex items-center gap-2">
-            <BarChart3 className="w-5 h-5 text-gray-400" />
-            ביצועי מערכת
+            <BookOpen className="w-5 h-5 text-gray-400" />
+            סיכום מאגר הידע
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">דיוק תשובות</span>
-                <span className="font-medium text-gray-900">94%</span>
-              </div>
-              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full bg-green-500 rounded-full" style={{ width: "94%" }} />
-              </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="text-center p-4 bg-blue-50 rounded-lg">
+              <BookOpen className="w-8 h-8 mx-auto mb-2 text-blue-500" />
+              <p className="text-2xl font-semibold text-gray-900">{stats.knowledgeBase.totalItems}</p>
+              <p className="text-sm text-gray-500">פריטי ידע</p>
             </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">זמן תגובה ממוצע</span>
-                <span className="font-medium text-gray-900">1.2 שניות</span>
-              </div>
-              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full bg-blue-500 rounded-full" style={{ width: "88%" }} />
-              </div>
+            <div className="text-center p-4 bg-purple-50 rounded-lg">
+              <FolderOpen className="w-8 h-8 mx-auto mb-2 text-purple-500" />
+              <p className="text-2xl font-semibold text-gray-900">{stats.knowledgeBase.categories}</p>
+              <p className="text-sm text-gray-500">קטגוריות</p>
             </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">שביעות רצון עובדים</span>
-                <span className="font-medium text-gray-900">92%</span>
-              </div>
-              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full bg-purple-500 rounded-full" style={{ width: "92%" }} />
-              </div>
+            <div className="text-center p-4 bg-green-50 rounded-lg">
+              <Image className="w-8 h-8 mx-auto mb-2 text-green-500" />
+              <p className="text-2xl font-semibold text-gray-900">{stats.knowledgeBase.mediaFiles}</p>
+              <p className="text-sm text-gray-500">קבצי מדיה</p>
+            </div>
+            <div className="text-center p-4 bg-orange-50 rounded-lg">
+              <MessageSquare className="w-8 h-8 mx-auto mb-2 text-orange-500" />
+              <p className="text-2xl font-semibold text-gray-900">
+                {stats.knowledgeBase.byType.find(t => t.type === 'faq')?.count || 0}
+              </p>
+              <p className="text-sm text-gray-500">שאלות נפוצות</p>
+            </div>
+          </div>
+
+          {/* Knowledge by type breakdown */}
+          <div className="mt-6 pt-6 border-t border-gray-100">
+            <p className="text-sm font-medium text-gray-700 mb-3">לפי סוג תוכן:</p>
+            <div className="flex flex-wrap gap-2">
+              {stats.knowledgeBase.byType.map((item) => (
+                <span
+                  key={item.type}
+                  className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700"
+                >
+                  {getTypeLabel(item.type)}: {item.count}
+                </span>
+              ))}
             </div>
           </div>
         </CardContent>
       </Card>
+
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Link href="/dashboard/knowledge">
+          <Card className="border border-gray-200 hover:border-blue-300 hover:bg-blue-50/50 transition-colors cursor-pointer">
+            <CardContent className="p-5 flex items-center gap-4">
+              <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
+                <BookOpen className="w-6 h-6 text-blue-600" />
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">הוסף ידע חדש</p>
+                <p className="text-sm text-gray-500">נהלים, מדיניות או הנחיות</p>
+              </div>
+              <ChevronRight className="w-5 h-5 text-gray-400 mr-auto" />
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link href="/dashboard/conversations">
+          <Card className="border border-gray-200 hover:border-green-300 hover:bg-green-50/50 transition-colors cursor-pointer">
+            <CardContent className="p-5 flex items-center gap-4">
+              <div className="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
+                <MessageSquare className="w-6 h-6 text-green-600" />
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">צפה בשיחות</p>
+                <p className="text-sm text-gray-500">סקור ותקן תשובות</p>
+              </div>
+              <ChevronRight className="w-5 h-5 text-gray-400 mr-auto" />
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link href="/dashboard/analytics">
+          <Card className="border border-gray-200 hover:border-purple-300 hover:bg-purple-50/50 transition-colors cursor-pointer">
+            <CardContent className="p-5 flex items-center gap-4">
+              <div className="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center">
+                <BarChart3 className="w-6 h-6 text-purple-600" />
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">אנליטיקה</p>
+                <p className="text-sm text-gray-500">נתוני שימוש ומגמות</p>
+              </div>
+              <ChevronRight className="w-5 h-5 text-gray-400 mr-auto" />
+            </CardContent>
+          </Card>
+        </Link>
+      </div>
     </div>
   )
+}
+
+function getTypeLabel(type: string): string {
+  const labels: Record<string, string> = {
+    faq: "שאלות נפוצות",
+    document: "מסמכים",
+    procedure: "נהלים",
+    policy: "מדיניות",
+  }
+  return labels[type] || type
 }

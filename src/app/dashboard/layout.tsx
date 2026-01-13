@@ -34,9 +34,9 @@ const sidebarConfig = [
   {
     title: "ניהול",
     items: [
-      { icon: MessageSquare, label: "שיחות", href: "/dashboard/conversations" },
       { icon: BookOpen, label: "מאגר ידע", href: "/dashboard/knowledge" },
       { icon: BarChart3, label: "אנליטיקה", href: "/dashboard/analytics" },
+      { icon: MessageSquare, label: "שיחות", href: "/dashboard/conversations" },
     ],
   },
   {
