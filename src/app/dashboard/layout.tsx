@@ -20,33 +20,21 @@ import {
   Search,
   ExternalLink,
   HelpCircle,
+  AlertCircle,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-// ElevenLabs-style sidebar with sections
-const sidebarConfig = [
-  {
-    title: null,
-    items: [
-      { icon: LayoutDashboard, label: "סקירה כללית", href: "/dashboard" },
-    ],
-  },
-  {
-    title: "ניהול",
-    items: [
-      { icon: BookOpen, label: "מאגר ידע", href: "/dashboard/knowledge" },
-      { icon: BarChart3, label: "אנליטיקה", href: "/dashboard/analytics" },
-      { icon: MessageSquare, label: "שיחות", href: "/dashboard/conversations" },
-    ],
-  },
-  {
-    title: "מערכת",
-    items: [
-      { icon: Users, label: "משתמשים", href: "/dashboard/users" },
-      { icon: Settings, label: "הגדרות", href: "/dashboard/settings" },
-    ],
-  },
-]
+interface SidebarItem {
+  icon: React.ElementType
+  label: string
+  href: string
+  badge?: number
+}
+
+interface SidebarSection {
+  title: string | null
+  items: SidebarItem[]
+}
 
 export default function DashboardLayout({
   children,
@@ -56,6 +44,7 @@ export default function DashboardLayout({
   const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [company, setCompany] = useState<{ name: string; id: string } | null>(null)
+  const [pendingEscalations, setPendingEscalations] = useState(0)
 
   useEffect(() => {
     async function loadCompany() {
@@ -70,6 +59,49 @@ export default function DashboardLayout({
     }
     loadCompany()
   }, [])
+
+  // Fetch pending escalations for badge
+  useEffect(() => {
+    async function loadStats() {
+      try {
+        const data = await safeFetch<{ todayStats: { pendingEscalations: number } }>("/api/gas-station-stats")
+        if (data?.todayStats) {
+          setPendingEscalations(data.todayStats.pendingEscalations)
+        }
+      } catch (e) {
+        // Silently fail
+      }
+    }
+    loadStats()
+    // Refresh every 30 seconds
+    const interval = setInterval(loadStats, 30000)
+    return () => clearInterval(interval)
+  }, [])
+
+  // Build sidebar config with badges
+  const sidebarConfig: SidebarSection[] = [
+    {
+      title: null,
+      items: [
+        { icon: LayoutDashboard, label: "סקירה כללית", href: "/dashboard" },
+      ],
+    },
+    {
+      title: "ניהול",
+      items: [
+        { icon: BookOpen, label: "מאגר ידע", href: "/dashboard/knowledge" },
+        { icon: BarChart3, label: "אנליטיקה", href: "/dashboard/analytics" },
+        { icon: MessageSquare, label: "שיחות", href: "/dashboard/conversations", badge: pendingEscalations > 0 ? pendingEscalations : undefined },
+      ],
+    },
+    {
+      title: "מערכת",
+      items: [
+        { icon: Users, label: "משתמשים", href: "/dashboard/users" },
+        { icon: Settings, label: "הגדרות", href: "/dashboard/settings" },
+      ],
+    },
+  ]
 
   return (
     <div className="flex h-screen bg-gray-50" dir="rtl">
@@ -108,7 +140,12 @@ export default function DashboardLayout({
                         )}
                       >
                         <item.icon className={cn("w-5 h-5", isActive ? "text-gray-900" : "text-gray-400")} />
-                        <span>{item.label}</span>
+                        <span className="flex-1">{item.label}</span>
+                        {item.badge && (
+                          <span className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center font-medium">
+                            {item.badge}
+                          </span>
+                        )}
                       </div>
                     </Link>
                   )
@@ -190,7 +227,12 @@ export default function DashboardLayout({
                               )}
                             >
                               <item.icon className="w-5 h-5" />
-                              {item.label}
+                              <span className="flex-1">{item.label}</span>
+                              {item.badge && (
+                                <span className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center font-medium">
+                                  {item.badge}
+                                </span>
+                              )}
                             </div>
                           </Link>
                         )

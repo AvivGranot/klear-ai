@@ -24,9 +24,48 @@ import {
   Star,
   StickyNote,
   ChevronDown,
+  BookOpen,
+  Plus,
 } from "lucide-react"
 import { formatRelativeTime, cn } from "@/lib/utils"
 import { safeFetch } from "@/lib/safeFetch"
+
+// Gas station topic configuration
+const GAS_STATION_TOPICS = [
+  { id: 'fuel', name: 'תדלוק ומשאבות', icon: '⛽', color: 'blue', keywords: ['משאב', 'תדלוק', 'דלק', 'בנזין', 'סולר'] },
+  { id: 'payments', name: 'תשלומים וקופה', icon: '💳', color: 'green', keywords: ['קופה', 'עסקה', 'תשלום', 'מזומן', 'אשראי', 'ביט', 'פייבוקס'] },
+  { id: 'inventory', name: 'מלאי והזמנות', icon: '📦', color: 'orange', keywords: ['מלאי', 'חסר', 'הזמנ', 'ספק', 'משלוח'] },
+  { id: 'shifts', name: 'כוח אדם ומשמרות', icon: '👥', color: 'purple', keywords: ['עובד', 'משמרת', 'שעות', 'חופש'] },
+  { id: 'safety', name: 'בטיחות וחירום', icon: '🚨', color: 'red', keywords: ['בטיח', 'חירום', 'כיבוי', 'אש'] },
+  { id: 'customers', name: 'שירות לקוחות', icon: '🤝', color: 'teal', keywords: ['לקוח', 'שירות', 'תלונ'] },
+  { id: 'pricing', name: 'מחירים ומבצעים', icon: '💰', color: 'yellow', keywords: ['מכיר', 'הנחה', 'מבצע', 'קופון'] },
+  { id: 'products', name: 'מוצרים וצרכניה', icon: '🛒', color: 'pink', keywords: ['מקרר', 'קפה', 'חלב', 'מזון', 'מוצר'] },
+  { id: 'maintenance', name: 'תקלות ותחזוקה', icon: '🔧', color: 'gray', keywords: ['תקלה', 'בעיה', 'תיקון', 'שירות טכני'] },
+  { id: 'documentation', name: 'תיעוד וחשבונות', icon: '📄', color: 'indigo', keywords: ['צילום', 'תמונה', 'חשבונית', 'קבלה'] },
+]
+
+function detectTopic(text: string): typeof GAS_STATION_TOPICS[0] | null {
+  const lower = text.toLowerCase()
+  for (const topic of GAS_STATION_TOPICS) {
+    if (topic.keywords.some(kw => lower.includes(kw))) {
+      return topic
+    }
+  }
+  return null
+}
+
+const topicColorClasses: Record<string, { bg: string; text: string; border: string }> = {
+  blue: { bg: 'bg-blue-50', text: 'text-blue-600', border: 'border-blue-200' },
+  green: { bg: 'bg-green-50', text: 'text-green-600', border: 'border-green-200' },
+  orange: { bg: 'bg-orange-50', text: 'text-orange-600', border: 'border-orange-200' },
+  purple: { bg: 'bg-purple-50', text: 'text-purple-600', border: 'border-purple-200' },
+  red: { bg: 'bg-red-50', text: 'text-red-600', border: 'border-red-200' },
+  teal: { bg: 'bg-teal-50', text: 'text-teal-600', border: 'border-teal-200' },
+  yellow: { bg: 'bg-yellow-50', text: 'text-yellow-600', border: 'border-yellow-200' },
+  pink: { bg: 'bg-pink-50', text: 'text-pink-600', border: 'border-pink-200' },
+  gray: { bg: 'bg-gray-100', text: 'text-gray-600', border: 'border-gray-200' },
+  indigo: { bg: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-200' },
+}
 
 interface Message {
   id: string
@@ -64,6 +103,7 @@ type StatusFilter = "all" | "active" | "closed"
 
 interface FilterState {
   status: StatusFilter
+  topic: string | null
   dateAfter: string
   dateBefore: string
   minDuration: string
@@ -82,6 +122,7 @@ export default function ConversationsPage() {
   const [showFilters, setShowFilters] = useState(false)
   const [filters, setFilters] = useState<FilterState>({
     status: "all",
+    topic: null,
     dateAfter: "",
     dateBefore: "",
     minDuration: "",
@@ -182,10 +223,25 @@ export default function ConversationsPage() {
     setCorrectionReason("")
   }
 
+  // Get conversation topic from first user message
+  const getConversationTopic = (conv: Conversation) => {
+    const userMessage = conv.messages.find(m => m.role === 'user')
+    if (userMessage) {
+      return detectTopic(userMessage.content)
+    }
+    return null
+  }
+
   const filteredConversations = conversations.filter((conv) => {
     // Status filter
     if (filters.status === "active" && conv.status !== "active") return false
     if (filters.status === "closed" && conv.status === "active") return false
+
+    // Topic filter
+    if (filters.topic) {
+      const convTopic = getConversationTopic(conv)
+      if (!convTopic || convTopic.id !== filters.topic) return false
+    }
 
     // Date filters
     if (filters.dateAfter) {
@@ -226,6 +282,7 @@ export default function ConversationsPage() {
   }
 
   const activeFiltersCount = [
+    filters.topic,
     filters.dateAfter,
     filters.dateBefore,
     filters.minDuration,
@@ -237,6 +294,7 @@ export default function ConversationsPage() {
   const clearFilters = () => {
     setFilters({
       status: "all",
+      topic: null,
       dateAfter: "",
       dateBefore: "",
       minDuration: "",
@@ -245,6 +303,15 @@ export default function ConversationsPage() {
       hasNotes: null,
     })
   }
+
+  // Calculate topic counts
+  const topicCounts = GAS_STATION_TOPICS.map(topic => ({
+    ...topic,
+    count: conversations.filter(conv => {
+      const convTopic = getConversationTopic(conv)
+      return convTopic?.id === topic.id
+    }).length
+  })).filter(t => t.count > 0).sort((a, b) => b.count - a.count)
 
   const formatDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
@@ -329,6 +396,30 @@ export default function ConversationsPage() {
           <XCircle className="w-3.5 h-3.5" />
           סגור ({statusCounts.closed})
         </button>
+
+        <div className="w-px h-6 bg-gray-200 mx-1" />
+
+        {/* Topic Filter Chips */}
+        {topicCounts.slice(0, 5).map(topic => {
+          const colors = topicColorClasses[topic.color] || topicColorClasses.gray
+          const isActive = filters.topic === topic.id
+          return (
+            <button
+              key={topic.id}
+              onClick={() => setFilters({ ...filters, topic: isActive ? null : topic.id })}
+              className={cn(
+                "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5",
+                isActive
+                  ? `${colors.bg} ${colors.text} border ${colors.border}`
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              )}
+            >
+              <span>{topic.icon}</span>
+              {topic.name}
+              <span className="text-xs opacity-70">({topic.count})</span>
+            </button>
+          )
+        })}
 
         <div className="w-px h-6 bg-gray-200 mx-1" />
 
@@ -505,6 +596,18 @@ export default function ConversationsPage() {
                           >
                             {conv.status === "active" ? "פעיל" : "סגור"}
                           </Badge>
+                          {(() => {
+                            const topic = getConversationTopic(conv)
+                            if (topic) {
+                              const colors = topicColorClasses[topic.color] || topicColorClasses.gray
+                              return (
+                                <Badge className={`text-[10px] px-1.5 ${colors.bg} ${colors.text}`}>
+                                  {topic.icon} {topic.name}
+                                </Badge>
+                              )
+                            }
+                            return null
+                          })()}
                           {conv.duration && (
                             <span className="text-[10px] text-gray-400 flex items-center gap-0.5">
                               <Timer className="w-3 h-3" />
