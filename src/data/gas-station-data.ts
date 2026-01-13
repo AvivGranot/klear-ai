@@ -152,17 +152,65 @@ export function getKBSummary() {
   }
 }
 
-// Get automation patterns (repeated answers from manager)
-export function getAutomationPatterns() {
+// Extended type for automation patterns with manager info
+interface AutomationPattern {
+  answer: string
+  rawAnswer: string
+  frequency: number
+  exampleQuestions: string[]
+  topic: string
+  managerId: string
+  managerName: string
+  status: string
+  mediaInfo: { filename: string; type: string } | null
+  associatedMedia: Array<{ filename: string; type: string }>
+}
+
+// Get automation patterns (repeated answers from managers)
+export function getAutomationPatterns(): AutomationPattern[] {
   return knowledgeItems
     .filter(item => item.type === 'repeated_answer')
-    .map(item => ({
-      answer: item.content,
-      frequency: item.frequency || 1,
-      exampleQuestions: item.example_questions || [],
-      topic: detectTopic(item.content)?.name || 'אחר',
-    }))
+    .map(item => {
+      // Type assertion for the extended properties
+      const extItem = item as typeof item & {
+        manager_id?: string
+        manager_name?: string
+        status?: string
+        media_info?: { filename: string; type: string } | null
+        associated_media?: Array<{ filename: string; type: string }>
+        raw_answer?: string
+      }
+
+      return {
+        answer: item.content,
+        rawAnswer: extItem.raw_answer || item.content,
+        frequency: item.frequency || 1,
+        exampleQuestions: item.example_questions || [],
+        topic: detectTopic(item.content)?.name || 'אחר',
+        managerId: extItem.manager_id || 'unknown',
+        managerName: extItem.manager_name || 'מנהל',
+        status: extItem.status || 'pending_approval',
+        mediaInfo: extItem.media_info || null,
+        associatedMedia: extItem.associated_media || [],
+      }
+    })
     .sort((a, b) => b.frequency - a.frequency)
+}
+
+// Get automation patterns grouped by manager
+export function getAutomationPatternsByManager() {
+  const patterns = getAutomationPatterns()
+  const byManager: Record<string, AutomationPattern[]> = {}
+
+  patterns.forEach(pattern => {
+    const manager = pattern.managerName
+    if (!byManager[manager]) {
+      byManager[manager] = []
+    }
+    byManager[manager].push(pattern)
+  })
+
+  return byManager
 }
 
 // Get analytics summary

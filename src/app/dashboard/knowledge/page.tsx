@@ -27,7 +27,7 @@ import {
 import { cn, formatRelativeTime } from "@/lib/utils"
 import { safeFetch } from "@/lib/safeFetch"
 import { useDropzone, Accept } from "react-dropzone"
-import { getAutomationPatterns } from "@/data/gas-station-data"
+import { getAutomationPatterns, getAutomationPatternsByManager } from "@/data/gas-station-data"
 
 // Content type configuration
 interface ContentType {
@@ -771,57 +771,106 @@ export default function KnowledgePage() {
         </div>
       </div>
 
-      {/* Automation Patterns Section */}
+      {/* Automation Patterns Section - By Manager */}
       <Card className="border border-gray-200">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg font-medium flex items-center gap-2">
             <Zap className="w-5 h-5 text-green-500" />
-            תבניות אוטומציה
-            <Badge variant="outline" className="text-xs bg-green-50 text-green-600 border-green-200">
-              {getAutomationPatterns().length} תבניות
+            תבניות אוטומציה לאישור
+            <Badge variant="outline" className="text-xs bg-amber-50 text-amber-600 border-amber-200">
+              {getAutomationPatterns().length} ממתינות לאישור
             </Badge>
           </CardTitle>
           <p className="text-sm text-gray-500 mt-1">
-            תשובות חוזרות מהמנהל שיכולות להיות אוטומטיות
+            תשובות חוזרות מהמנהלים שיכולות להיות אוטומטיות - ממתינות לאישור
           </p>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
-            {getAutomationPatterns().map((pattern, index) => (
-              <motion.div
-                key={index}
-                className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-100"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <MessageSquare className="w-4 h-4 text-green-600" />
-                    <Badge className="bg-green-500 text-white text-xs">
-                      {pattern.frequency}x
-                    </Badge>
+          <div className="space-y-6">
+            {Object.entries(getAutomationPatternsByManager()).map(([managerName, patterns]) => (
+              <div key={managerName} className="space-y-3">
+                {/* Manager Header */}
+                <div className="flex items-center gap-2 pb-2 border-b border-gray-100">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold">
+                    {managerName.charAt(0)}
                   </div>
-                  <Badge variant="outline" className="text-xs">
-                    {pattern.topic}
-                  </Badge>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">{managerName}</p>
+                    <p className="text-xs text-gray-500">{patterns.length} תבניות</p>
+                  </div>
                 </div>
-                <p className="text-sm font-medium text-gray-900 mb-2">
-                  {pattern.answer.split('\n')[0].replace('שאלות שהפעילו תשובה זו:', '').trim().slice(0, 100)}
-                </p>
-                {pattern.exampleQuestions.length > 0 && (
-                  <div className="mt-2 pt-2 border-t border-green-100">
-                    <p className="text-xs text-gray-500 mb-1">שאלות שמפעילות תשובה זו:</p>
-                    <div className="flex flex-wrap gap-1">
-                      {pattern.exampleQuestions.slice(0, 2).map((q, i) => (
-                        <span key={i} className="text-xs bg-white px-2 py-1 rounded border border-gray-200 text-gray-600 truncate max-w-[200px]">
-                          {q.slice(0, 40)}...
-                        </span>
-                      ))}
+
+                {/* Manager's Patterns */}
+                {patterns.slice(0, 5).map((pattern, index) => (
+                  <motion.div
+                    key={index}
+                    className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-100"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <MessageSquare className="w-4 h-4 text-amber-600" />
+                        <Badge className="bg-amber-500 text-white text-xs">
+                          {pattern.frequency}x
+                        </Badge>
+                        <Badge variant="outline" className="text-xs bg-amber-50 text-amber-600 border-amber-200">
+                          ממתין לאישור
+                        </Badge>
+                      </div>
+                      <Badge variant="outline" className="text-xs">
+                        {pattern.topic}
+                      </Badge>
                     </div>
-                  </div>
-                )}
-              </motion.div>
+
+                    {/* Answer */}
+                    <p className="text-sm font-medium text-gray-900 mb-2">
+                      {pattern.rawAnswer.slice(0, 100)}{pattern.rawAnswer.length > 100 ? '...' : ''}
+                    </p>
+
+                    {/* Associated Media */}
+                    {pattern.associatedMedia && pattern.associatedMedia.length > 0 && (
+                      <div className="mb-2 flex items-center gap-2">
+                        <Image className="w-4 h-4 text-purple-500" />
+                        <div className="flex flex-wrap gap-1">
+                          {pattern.associatedMedia.map((media, i) => (
+                            <Badge key={i} variant="outline" className="text-xs bg-purple-50 text-purple-600 border-purple-200">
+                              {media.type === 'image' ? '🖼️' : media.type === 'video' ? '🎬' : '📄'} {media.filename?.slice(0, 20) || 'מדיה'}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Example Questions */}
+                    {pattern.exampleQuestions.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-amber-100">
+                        <p className="text-xs text-gray-500 mb-1">שאלות שמפעילות תשובה זו:</p>
+                        <div className="flex flex-wrap gap-1">
+                          {pattern.exampleQuestions.slice(0, 2).map((q, i) => (
+                            <span key={i} className="text-xs bg-white px-2 py-1 rounded border border-gray-200 text-gray-600 truncate max-w-[200px]">
+                              {q.slice(0, 40)}...
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Approval Actions */}
+                    <div className="mt-3 pt-2 border-t border-amber-100 flex items-center gap-2">
+                      <Button size="sm" className="bg-green-600 hover:bg-green-700 text-xs h-7">
+                        <Check className="w-3 h-3 mr-1" />
+                        אשר אוטומציה
+                      </Button>
+                      <Button size="sm" variant="outline" className="text-xs h-7">
+                        <X className="w-3 h-3 mr-1" />
+                        דחה
+                      </Button>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             ))}
           </div>
         </CardContent>
