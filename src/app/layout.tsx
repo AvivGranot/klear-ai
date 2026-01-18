@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "Klear AI - Internal Knowledge Assistant",
   description: "AI-powered internal knowledge hub for SMB retail chains. Transform repetitive employee questions into instant, visual answers.",
   keywords: ["AI", "knowledge base", "WhatsApp", "retail", "SMB", "employee training", "Hebrew"],
-  authors: [{ name: "Aviv Granot" }, { name: "Nevo Peretz" }],
+  authors: [{ name: "Aviv Granot" }, { name: "Nevo Peretz" }, { name: "Dana Mordoh" }],
   openGraph: {
     title: "Klear AI - Internal Knowledge Assistant",
     description: "AI-powered internal knowledge hub for SMB retail chains",

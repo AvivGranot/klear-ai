@@ -671,7 +671,7 @@ export default function HomePage() {
             </motion.div>
 
             <p className="text-sm">
-              © 2026 Klear AI - Aviv Granot & Nevo Peretz
+              © 2026 Klear AI - Aviv Granot, Nevo Peretz & Dana Mordoh
             </p>
 
             <div className="flex gap-6">
