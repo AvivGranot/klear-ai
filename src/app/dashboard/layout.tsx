@@ -73,7 +73,7 @@ export default function DashboardLayout({
   ]
 
   return (
-    <div className="flex h-screen bg-[var(--aman-bg-cream)]" dir="rtl">
+    <div className="flex h-screen bg-white" dir="rtl">
       {/* Desktop Sidebar (PRD) */}
       <aside className="hidden lg:flex flex-col w-60 bg-[var(--aman-card-white)] border-l border-[var(--aman-border)]">
         {/* Logo */}
@@ -224,8 +224,8 @@ export default function DashboardLayout({
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Top Navigation (PRD) */}
-        <header className="h-14 bg-[var(--aman-bg-cream)] flex items-center justify-between px-6 relative z-10">
+        {/* Top Navigation */}
+        <header className="h-14 bg-white border-b border-gray-100 flex items-center justify-between px-6 relative z-10">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(true)}
