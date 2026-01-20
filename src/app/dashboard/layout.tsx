@@ -73,48 +73,45 @@ export default function DashboardLayout({
   ]
 
   return (
-    <div className="flex h-screen aman-bg" dir="rtl">
-      {/* Subtle grain overlay for premium feel */}
-      <div className="aman-grain" aria-hidden="true" />
-
-      {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex flex-col w-60 aman-sidebar border-l border-[var(--aman-sand)]">
+    <div className="flex h-screen bg-[var(--aman-bg-cream)]" dir="rtl">
+      {/* Desktop Sidebar (PRD) */}
+      <aside className="hidden lg:flex flex-col w-60 bg-[var(--aman-card-white)] border-l border-[var(--aman-border)]">
         {/* Logo */}
-        <div className="h-14 flex items-center px-4 border-b border-[var(--aman-sand)]">
-          <Link href="/dashboard" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-[var(--aman-charcoal)] rounded-lg flex items-center justify-center shadow-sm">
-              <span className="text-[var(--aman-cream)] font-semibold text-sm tracking-wide">K</span>
+        <div className="h-14 flex items-center px-6 border-b border-[var(--aman-border)]">
+          <Link href="/dashboard" className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-[var(--aman-button-bg)] flex items-center justify-center">
+              <span className="text-[var(--aman-button-text)] font-medium text-sm tracking-[2px]">K</span>
             </div>
-            <span className="font-semibold text-[var(--aman-charcoal)] tracking-tight">Klear AI</span>
+            <span className="font-serif text-lg tracking-[3px] uppercase text-[var(--aman-text-primary)]">Klear</span>
           </Link>
         </div>
 
-        {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto py-4">
+        {/* Navigation (PRD) */}
+        <nav className="flex-1 overflow-y-auto py-6">
           {sidebarConfig.map((section, sectionIndex) => (
-            <div key={sectionIndex} className="mb-5">
+            <div key={sectionIndex} className="mb-6">
               {section.title && (
-                <p className="px-4 mb-2 text-[11px] font-medium text-[var(--aman-warm-gray)] uppercase tracking-widest">
+                <p className="px-6 mb-3 text-[11px] font-normal text-[var(--aman-text-secondary)] uppercase tracking-[2px]">
                   {section.title}
                 </p>
               )}
-              <div className="space-y-0.5 px-2">
+              <div className="space-y-1">
                 {section.items.map((item) => {
                   const isActive = pathname === item.href
                   return (
                     <Link key={item.href} href={item.href}>
                       <div
                         className={cn(
-                          "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-300",
+                          "flex items-center gap-3 px-6 py-3 text-sm tracking-[0.5px] transition-all duration-200",
                           isActive
-                            ? "bg-[var(--aman-sand)]/60 text-[var(--aman-charcoal)] font-medium"
-                            : "text-[var(--aman-stone)] hover:bg-[var(--aman-sand)]/40 hover:text-[var(--aman-charcoal)]"
+                            ? "bg-[var(--aman-bg-cream)] text-[var(--aman-text-primary)]"
+                            : "text-[var(--aman-text-secondary)] hover:text-[var(--aman-text-primary)] hover:bg-[var(--aman-bg-cream)]"
                         )}
                       >
-                        <item.icon className={cn("w-5 h-5 transition-colors", isActive ? "text-[var(--aman-charcoal)]" : "text-[var(--aman-warm-gray)]")} />
+                        <item.icon className={cn("w-5 h-5", isActive ? "text-[var(--aman-text-primary)]" : "text-[var(--aman-text-secondary)]")} strokeWidth={1.5} />
                         <span className="flex-1">{item.label}</span>
                         {item.badge && (
-                          <span className="w-5 h-5 rounded-full bg-[var(--aman-charcoal)] text-[var(--aman-cream)] text-xs flex items-center justify-center font-medium">
+                          <span className="w-5 h-5 bg-[var(--aman-text-primary)] text-[var(--aman-bg-cream)] text-xs flex items-center justify-center">
                             {item.badge}
                           </span>
                         )}
@@ -127,59 +124,59 @@ export default function DashboardLayout({
           ))}
         </nav>
 
-        {/* Footer */}
-        <div className="p-3 border-t border-[var(--aman-sand)] space-y-2">
+        {/* Footer (PRD) */}
+        <div className="p-4 border-t border-[var(--aman-border)] space-y-3">
           <Link href={`/chat/${company.id}`} target="_blank">
-            <div className="flex items-center justify-center gap-2 bg-[var(--aman-charcoal)] text-[var(--aman-cream)] py-2.5 rounded-lg hover:bg-[var(--aman-black)] transition-all duration-300 text-sm font-medium shadow-sm hover:shadow-md">
+            <div className="flex items-center justify-center gap-2 bg-[var(--aman-button-bg)] text-[var(--aman-button-text)] py-3.5 hover:bg-[var(--aman-hover)] transition-colors duration-300 text-sm tracking-[0.8px]">
               פתח צ׳אט עובדים
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="w-4 h-4" strokeWidth={1.5} />
             </div>
           </Link>
-          <button className="flex items-center gap-2 w-full px-3 py-2 text-sm text-[var(--aman-stone)] hover:bg-[var(--aman-sand)]/40 hover:text-[var(--aman-charcoal)] rounded-lg transition-all duration-300">
-            <HelpCircle className="w-4 h-4" />
+          <button className="flex items-center gap-2 w-full px-3 py-2.5 text-sm text-[var(--aman-text-secondary)] hover:text-[var(--aman-text-primary)] hover:bg-[var(--aman-bg-cream)] transition-all duration-200">
+            <HelpCircle className="w-4 h-4" strokeWidth={1.5} />
             <span>עזרה</span>
           </button>
-          <button className="flex items-center gap-2 w-full px-3 py-2 text-sm text-[var(--aman-stone)] hover:bg-[var(--aman-sand)]/40 hover:text-[var(--aman-charcoal)] rounded-lg transition-all duration-300">
-            <LogOut className="w-4 h-4" />
+          <button className="flex items-center gap-2 w-full px-3 py-2.5 text-sm text-[var(--aman-text-secondary)] hover:text-[var(--aman-text-primary)] hover:bg-[var(--aman-bg-cream)] transition-all duration-200">
+            <LogOut className="w-4 h-4" strokeWidth={1.5} />
             <span>התנתק</span>
           </button>
-          <p className="text-[11px] text-center text-[var(--aman-warm-gray)] pt-2 tracking-wide">v1.0.0</p>
+          <p className="text-[11px] text-center text-[var(--aman-text-muted)] pt-2 tracking-[2px] uppercase">v1.0.0</p>
         </div>
       </aside>
 
-      {/* Mobile Sidebar */}
+      {/* Mobile Sidebar (PRD) */}
       {sidebarOpen && (
         <>
           <div
-            className="fixed inset-0 z-40 bg-[var(--aman-black)]/40 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 bg-[var(--aman-text-primary)]/30 lg:hidden"
             onClick={() => setSidebarOpen(false)}
           />
-          <aside className="fixed inset-y-0 right-0 z-50 w-64 aman-sidebar shadow-2xl lg:hidden">
+          <aside className="fixed inset-y-0 right-0 z-50 w-64 bg-[var(--aman-card-white)] shadow-2xl lg:hidden">
             <div className="flex flex-col h-full">
-              <div className="flex items-center justify-between h-14 px-4 border-b border-[var(--aman-sand)]">
-                <Link href="/dashboard" className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 bg-[var(--aman-charcoal)] rounded-lg flex items-center justify-center shadow-sm">
-                    <span className="text-[var(--aman-cream)] font-semibold text-sm tracking-wide">K</span>
+              <div className="flex items-center justify-between h-14 px-4 border-b border-[var(--aman-border)]">
+                <Link href="/dashboard" className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-[var(--aman-button-bg)] flex items-center justify-center">
+                    <span className="text-[var(--aman-button-text)] font-medium text-sm tracking-[2px]">K</span>
                   </div>
-                  <span className="font-semibold text-[var(--aman-charcoal)]">Klear AI</span>
+                  <span className="font-serif text-lg tracking-[3px] uppercase text-[var(--aman-text-primary)]">Klear</span>
                 </Link>
                 <button
                   onClick={() => setSidebarOpen(false)}
-                  className="p-2 hover:bg-[var(--aman-sand)]/40 rounded-lg transition-colors"
+                  className="p-2 hover:bg-[var(--aman-bg-cream)] transition-colors"
                 >
-                  <X className="w-5 h-5 text-[var(--aman-stone)]" />
+                  <X className="w-5 h-5 text-[var(--aman-text-secondary)]" strokeWidth={1.5} />
                 </button>
               </div>
 
-              <nav className="flex-1 overflow-y-auto py-4">
+              <nav className="flex-1 overflow-y-auto py-6">
                 {sidebarConfig.map((section, sectionIndex) => (
-                  <div key={sectionIndex} className="mb-5">
+                  <div key={sectionIndex} className="mb-6">
                     {section.title && (
-                      <p className="px-4 mb-2 text-[11px] font-medium text-[var(--aman-warm-gray)] uppercase tracking-widest">
+                      <p className="px-6 mb-3 text-[11px] font-normal text-[var(--aman-text-secondary)] uppercase tracking-[2px]">
                         {section.title}
                       </p>
                     )}
-                    <div className="space-y-0.5 px-2">
+                    <div className="space-y-1">
                       {section.items.map((item) => {
                         const isActive = pathname === item.href
                         return (
@@ -190,16 +187,16 @@ export default function DashboardLayout({
                           >
                             <div
                               className={cn(
-                                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-300",
+                                "flex items-center gap-3 px-6 py-3 text-sm tracking-[0.5px] transition-all duration-200",
                                 isActive
-                                  ? "bg-[var(--aman-sand)]/60 text-[var(--aman-charcoal)] font-medium"
-                                  : "text-[var(--aman-stone)] hover:bg-[var(--aman-sand)]/40 hover:text-[var(--aman-charcoal)]"
+                                  ? "bg-[var(--aman-bg-cream)] text-[var(--aman-text-primary)]"
+                                  : "text-[var(--aman-text-secondary)] hover:text-[var(--aman-text-primary)] hover:bg-[var(--aman-bg-cream)]"
                               )}
                             >
-                              <item.icon className={cn("w-5 h-5", isActive ? "text-[var(--aman-charcoal)]" : "text-[var(--aman-warm-gray)]")} />
+                              <item.icon className={cn("w-5 h-5", isActive ? "text-[var(--aman-text-primary)]" : "text-[var(--aman-text-secondary)]")} strokeWidth={1.5} />
                               <span className="flex-1">{item.label}</span>
                               {item.badge && (
-                                <span className="w-5 h-5 rounded-full bg-[var(--aman-charcoal)] text-[var(--aman-cream)] text-xs flex items-center justify-center font-medium">
+                                <span className="w-5 h-5 bg-[var(--aman-text-primary)] text-[var(--aman-bg-cream)] text-xs flex items-center justify-center">
                                   {item.badge}
                                 </span>
                               )}
@@ -212,11 +209,11 @@ export default function DashboardLayout({
                 ))}
               </nav>
 
-              <div className="p-3 border-t border-[var(--aman-sand)]">
+              <div className="p-4 border-t border-[var(--aman-border)]">
                 <Link href={`/chat/${company.id}`} target="_blank">
-                  <div className="flex items-center justify-center gap-2 w-full bg-[var(--aman-charcoal)] text-[var(--aman-cream)] py-2.5 rounded-lg text-sm font-medium shadow-sm">
+                  <div className="flex items-center justify-center gap-2 w-full bg-[var(--aman-button-bg)] text-[var(--aman-button-text)] py-3.5 text-sm tracking-[0.8px]">
                     פתח צ׳אט
-                    <ExternalLink className="w-4 h-4" />
+                    <ExternalLink className="w-4 h-4" strokeWidth={1.5} />
                   </div>
                 </Link>
               </div>
@@ -227,20 +224,20 @@ export default function DashboardLayout({
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Top Navigation */}
-        <header className="h-14 aman-header border-b border-[var(--aman-sand)] flex items-center justify-between px-4 relative z-10">
+        {/* Top Navigation (PRD) */}
+        <header className="h-14 bg-[var(--aman-bg-cream)] flex items-center justify-between px-6 relative z-10">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 hover:bg-[var(--aman-sand)]/40 rounded-lg transition-colors"
+              className="lg:hidden p-2 hover:bg-[var(--aman-card-white)] transition-colors"
             >
-              <Menu className="w-5 h-5 text-[var(--aman-stone)]" />
+              <Menu className="w-5 h-5 text-[var(--aman-text-secondary)]" strokeWidth={1.5} />
             </button>
 
             {/* Breadcrumb */}
-            <div className="hidden sm:flex items-center gap-2 text-sm">
-              <span className="text-[var(--aman-taupe)]">◻</span>
-              <span className="font-medium text-[var(--aman-charcoal)]">
+            <div className="hidden sm:flex items-center gap-3 text-sm">
+              <span className="text-[var(--aman-text-muted)]">/</span>
+              <span className="text-[var(--aman-text-primary)] tracking-[0.5px]">
                 {pathname === "/dashboard" && "סקירה כללית"}
                 {pathname === "/dashboard/conversations" && "שיחות"}
                 {pathname === "/dashboard/knowledge" && "מאגר ידע"}
@@ -251,13 +248,13 @@ export default function DashboardLayout({
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {/* Global Search */}
             <GlobalSearch />
 
             {/* Actions */}
-            <Button variant="outline" size="sm" className="hidden sm:flex gap-1.5 text-[var(--aman-stone)] border-[var(--aman-sand)] hover:bg-[var(--aman-sand)]/40 hover:text-[var(--aman-charcoal)] hover:border-[var(--aman-taupe)]">
-              <HelpCircle className="w-4 h-4" />
+            <Button variant="outline" size="sm" className="hidden sm:flex gap-1.5 text-[var(--aman-text-secondary)] border-[var(--aman-text-primary)] hover:bg-[var(--aman-text-primary)] hover:text-[var(--aman-bg-cream)] rounded-none transition-colors duration-300">
+              <HelpCircle className="w-4 h-4" strokeWidth={1.5} />
               עזרה
             </Button>
 
@@ -265,17 +262,17 @@ export default function DashboardLayout({
             <NotificationDropdown />
 
             {/* User */}
-            <div className="flex items-center gap-2 bg-[var(--aman-sand)]/50 rounded-lg px-2.5 py-1.5 cursor-pointer hover:bg-[var(--aman-sand)] transition-all duration-300">
-              <div className="w-7 h-7 rounded-full bg-[var(--aman-taupe)] flex items-center justify-center text-[var(--aman-charcoal)] font-medium text-sm">
+            <div className="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-[var(--aman-card-white)] transition-colors duration-200">
+              <div className="w-8 h-8 bg-[var(--aman-border)] flex items-center justify-center text-[var(--aman-text-primary)] font-medium text-sm">
                 מ
               </div>
-              <span className="hidden sm:block text-sm font-medium text-[var(--aman-charcoal)]">מנהל</span>
+              <span className="hidden sm:block text-sm text-[var(--aman-text-primary)] tracking-[0.5px]">מנהל</span>
             </div>
           </div>
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-6 relative z-0">
+        <main className="flex-1 overflow-y-auto p-8 relative z-0">
           {children}
         </main>
       </div>
