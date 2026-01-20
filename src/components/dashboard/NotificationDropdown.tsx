@@ -107,21 +107,21 @@ const typeConfig = {
   },
   automation: {
     icon: Zap,
-    color: "text-amber-500",
-    bgColor: "bg-amber-50",
-    borderColor: "border-amber-200",
+    color: "text-[var(--klear-green)]",
+    bgColor: "bg-[rgba(37,211,102,0.1)]",
+    borderColor: "border-[var(--klear-green)]",
   },
   system: {
     icon: CheckCircle,
-    color: "text-green-500",
-    bgColor: "bg-green-50",
-    borderColor: "border-green-200",
+    color: "text-[var(--klear-green)]",
+    bgColor: "bg-[rgba(37,211,102,0.1)]",
+    borderColor: "border-[var(--klear-green)]",
   },
   info: {
     icon: Info,
-    color: "text-blue-500",
-    bgColor: "bg-blue-50",
-    borderColor: "border-blue-200",
+    color: "text-[var(--klear-green)]",
+    bgColor: "bg-[rgba(37,211,102,0.1)]",
+    borderColor: "border-[var(--klear-green)]",
   },
 }
 

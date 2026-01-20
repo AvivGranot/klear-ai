@@ -59,8 +59,8 @@ export default function AnalyticsPage() {
         <Card className="border border-gray-200">
           <CardContent className="p-5">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
-                <MessageSquare className="w-5 h-5 text-blue-600" />
+              <div className="w-10 h-10 bg-[rgba(37,211,102,0.1)] rounded-lg flex items-center justify-center">
+                <MessageSquare className="w-5 h-5 text-[var(--klear-green)]" />
               </div>
               <div>
                 <p className="text-2xl font-semibold text-gray-900">{analyticsSummary.totalConversations}</p>
@@ -87,8 +87,8 @@ export default function AnalyticsPage() {
         <Card className="border border-gray-200">
           <CardContent className="p-5">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center">
-                <FileText className="w-5 h-5 text-purple-600" />
+              <div className="w-10 h-10 bg-[rgba(37,211,102,0.1)] rounded-lg flex items-center justify-center">
+                <FileText className="w-5 h-5 text-[var(--klear-green)]" />
               </div>
               <div>
                 <p className="text-2xl font-semibold text-gray-900">{kbSummary.documents}</p>
@@ -101,8 +101,8 @@ export default function AnalyticsPage() {
         <Card className="border border-gray-200">
           <CardContent className="p-5">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-teal-50 rounded-lg flex items-center justify-center">
-                <FolderOpen className="w-5 h-5 text-teal-600" />
+              <div className="w-10 h-10 bg-[rgba(37,211,102,0.1)] rounded-lg flex items-center justify-center">
+                <FolderOpen className="w-5 h-5 text-[var(--klear-green)]" />
               </div>
               <div>
                 <p className="text-2xl font-semibold text-gray-900">{kbSummary.categories}</p>
@@ -223,10 +223,10 @@ export default function AnalyticsPage() {
       </Card>
 
       {/* Data Source Info */}
-      <Card className="border border-gray-200 bg-blue-50/50">
+      <Card className="border border-gray-200 bg-[rgba(37,211,102,0.05)]">
         <CardContent className="p-4">
           <div className="flex items-center gap-3">
-            <MessageSquare className="w-6 h-6 text-blue-600" />
+            <MessageSquare className="w-6 h-6 text-[var(--klear-green)]" />
             <div>
               <p className="text-sm font-medium text-gray-900">מקור הנתונים: WhatsApp - צוות אמיר בני ברק</p>
               <p className="text-xs text-gray-500">

@@ -79,8 +79,8 @@ export default function DashboardPage() {
           <p className="text-sm text-gray-500 mt-1">{company.name}</p>
         </div>
         <Link href={`/chat/${company.id}`} target="_blank">
-          <Button className="gap-2 bg-gray-900 hover:bg-gray-800">
-            פתח צ'אט עובדים
+          <Button className="gap-2 bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)]">
+            פתח צ׳אט עובדים
             <ExternalLink className="w-4 h-4" />
           </Button>
         </Link>
@@ -225,8 +225,8 @@ export default function DashboardPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
-              <p className="text-3xl font-bold text-blue-600">{kbSummary.totalItems}</p>
+            <div className="text-center p-4 bg-[rgba(37,211,102,0.1)] rounded-lg">
+              <p className="text-3xl font-bold text-[var(--klear-green)]">{kbSummary.totalItems}</p>
               <p className="text-sm text-gray-600">פריטי ידע</p>
             </div>
             <div className="grid grid-cols-2 gap-3">
@@ -256,10 +256,10 @@ export default function DashboardPage() {
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Link href="/dashboard/knowledge">
-          <Card className="border border-gray-200 hover:border-blue-300 hover:bg-blue-50/50 transition-colors cursor-pointer">
+          <Card className="border border-gray-200 hover:border-[var(--klear-green)] hover:bg-[rgba(37,211,102,0.05)] transition-colors cursor-pointer">
             <CardContent className="p-5 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
-                <BookOpen className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 rounded-lg bg-[rgba(37,211,102,0.1)] flex items-center justify-center">
+                <BookOpen className="w-6 h-6 text-[var(--klear-green)]" />
               </div>
               <div className="flex-1">
                 <p className="font-medium text-gray-900">מאגר הידע</p>
@@ -271,10 +271,10 @@ export default function DashboardPage() {
         </Link>
 
         <Link href="/dashboard/conversations">
-          <Card className="border border-gray-200 hover:border-green-300 hover:bg-green-50/50 transition-colors cursor-pointer">
+          <Card className="border border-gray-200 hover:border-[var(--klear-green)] hover:bg-[rgba(37,211,102,0.05)] transition-colors cursor-pointer">
             <CardContent className="p-5 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
-                <MessageSquare className="w-6 h-6 text-green-600" />
+              <div className="w-12 h-12 rounded-lg bg-[rgba(37,211,102,0.1)] flex items-center justify-center">
+                <MessageSquare className="w-6 h-6 text-[var(--klear-green)]" />
               </div>
               <div className="flex-1">
                 <p className="font-medium text-gray-900">שיחות</p>
@@ -286,10 +286,10 @@ export default function DashboardPage() {
         </Link>
 
         <Link href="/dashboard/analytics">
-          <Card className="border border-gray-200 hover:border-purple-300 hover:bg-purple-50/50 transition-colors cursor-pointer">
+          <Card className="border border-gray-200 hover:border-[var(--klear-green)] hover:bg-[rgba(37,211,102,0.05)] transition-colors cursor-pointer">
             <CardContent className="p-5 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center">
-                <TrendingUp className="w-6 h-6 text-purple-600" />
+              <div className="w-12 h-12 rounded-lg bg-[rgba(37,211,102,0.1)] flex items-center justify-center">
+                <TrendingUp className="w-6 h-6 text-[var(--klear-green)]" />
               </div>
               <div className="flex-1">
                 <p className="font-medium text-gray-900">אנליטיקה</p>

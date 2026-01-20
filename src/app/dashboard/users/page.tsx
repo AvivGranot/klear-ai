@@ -224,7 +224,7 @@ export default function UsersPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-gray-900">משתמשים</h1>
         <Button
-          className="gap-2 bg-gray-900 hover:bg-gray-800"
+          className="gap-2 bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)]"
           onClick={() => setShowAddModal(true)}
         >
           <Plus className="w-4 h-4" />
@@ -237,8 +237,8 @@ export default function UsersPage() {
         <Card className="border border-gray-200">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <User className="w-5 h-5 text-blue-600" />
+              <div className="w-10 h-10 bg-[rgba(37,211,102,0.1)] rounded-lg flex items-center justify-center">
+                <User className="w-5 h-5 text-[var(--klear-green)]" />
               </div>
               <div>
                 <p className="text-2xl font-semibold text-gray-900">{users.length}</p>
@@ -265,8 +265,8 @@ export default function UsersPage() {
         <Card className="border border-gray-200">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                <UserPlus className="w-5 h-5 text-purple-600" />
+              <div className="w-10 h-10 bg-[rgba(37,211,102,0.1)] rounded-lg flex items-center justify-center">
+                <UserPlus className="w-5 h-5 text-[var(--klear-green)]" />
               </div>
               <div>
                 <p className="text-2xl font-semibold text-gray-900">
@@ -413,7 +413,7 @@ export default function UsersPage() {
                           onClick={() => setInviteMethod("email")}
                           className={`p-3 rounded-lg border-2 transition-all text-center ${
                             inviteMethod === "email"
-                              ? "border-gray-900 bg-gray-50"
+                              ? "border-[var(--klear-green)] bg-[rgba(37,211,102,0.05)]"
                               : "border-gray-200 hover:border-gray-300"
                           }`}
                         >
@@ -424,7 +424,7 @@ export default function UsersPage() {
                           onClick={() => setInviteMethod("phone")}
                           className={`p-3 rounded-lg border-2 transition-all text-center ${
                             inviteMethod === "phone"
-                              ? "border-gray-900 bg-gray-50"
+                              ? "border-[var(--klear-green)] bg-[rgba(37,211,102,0.05)]"
                               : "border-gray-200 hover:border-gray-300"
                           }`}
                         >
@@ -435,7 +435,7 @@ export default function UsersPage() {
                           onClick={() => setInviteMethod("link")}
                           className={`p-3 rounded-lg border-2 transition-all text-center ${
                             inviteMethod === "link"
-                              ? "border-gray-900 bg-gray-50"
+                              ? "border-[var(--klear-green)] bg-[rgba(37,211,102,0.05)]"
                               : "border-gray-200 hover:border-gray-300"
                           }`}
                         >
@@ -499,7 +499,7 @@ export default function UsersPage() {
                               onClick={() => setInviteRole("employee")}
                               className={`p-3 rounded-lg border-2 transition-all text-right ${
                                 inviteRole === "employee"
-                                  ? "border-gray-900 bg-gray-50"
+                                  ? "border-[var(--klear-green)] bg-[rgba(37,211,102,0.05)]"
                                   : "border-gray-200 hover:border-gray-300"
                               }`}
                             >
@@ -510,7 +510,7 @@ export default function UsersPage() {
                               onClick={() => setInviteRole("manager")}
                               className={`p-3 rounded-lg border-2 transition-all text-right ${
                                 inviteRole === "manager"
-                                  ? "border-gray-900 bg-gray-50"
+                                  ? "border-[var(--klear-green)] bg-[rgba(37,211,102,0.05)]"
                                   : "border-gray-200 hover:border-gray-300"
                               }`}
                             >
@@ -559,7 +559,7 @@ export default function UsersPage() {
                               onClick={() => setInviteRole("employee")}
                               className={`p-3 rounded-lg border-2 transition-all text-right ${
                                 inviteRole === "employee"
-                                  ? "border-gray-900 bg-gray-50"
+                                  ? "border-[var(--klear-green)] bg-[rgba(37,211,102,0.05)]"
                                   : "border-gray-200 hover:border-gray-300"
                               }`}
                             >
@@ -570,7 +570,7 @@ export default function UsersPage() {
                               onClick={() => setInviteRole("manager")}
                               className={`p-3 rounded-lg border-2 transition-all text-right ${
                                 inviteRole === "manager"
-                                  ? "border-gray-900 bg-gray-50"
+                                  ? "border-[var(--klear-green)] bg-[rgba(37,211,102,0.05)]"
                                   : "border-gray-200 hover:border-gray-300"
                               }`}
                             >
@@ -593,7 +593,7 @@ export default function UsersPage() {
                   </Button>
                   {inviteMethod !== "link" && (
                     <Button
-                      className="gap-2 bg-gray-900 hover:bg-gray-800"
+                      className="gap-2 bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)]"
                       onClick={handleSendInvite}
                       disabled={
                         inviteSending ||

@@ -171,7 +171,7 @@ function WebhooksSection() {
             </div>
             <Button
               size="sm"
-              className="bg-gray-900 hover:bg-gray-800 gap-1.5"
+              className="bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)] gap-1.5"
               onClick={() => setShowNewWebhookModal(true)}
             >
               <Plus className="w-4 h-4" />
@@ -357,7 +357,7 @@ function WebhooksSection() {
 
                 <div className="flex gap-3 pt-2">
                   <Button
-                    className="flex-1 bg-gray-900 hover:bg-gray-800"
+                    className="flex-1 bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)]"
                     onClick={handleCreate}
                     disabled={!newWebhook.name || !newWebhook.url || newWebhook.events.length === 0}
                   >
@@ -589,7 +589,7 @@ export default function SettingsPage() {
                   onClick={() => setAiConfig((prev) => ({ ...prev, tone: option.value as typeof prev.tone }))}
                   className={`p-4 rounded-lg border-2 transition-all text-right ${
                     aiConfig.tone === option.value
-                      ? "border-gray-900 bg-gray-50"
+                      ? "border-[var(--klear-green)] bg-[rgba(37,211,102,0.05)]"
                       : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
@@ -610,7 +610,7 @@ export default function SettingsPage() {
                   onClick={() => setAiConfig((prev) => ({ ...prev, responseLength: option.value as typeof prev.responseLength }))}
                   className={`p-4 rounded-lg border-2 transition-all text-right ${
                     aiConfig.responseLength === option.value
-                      ? "border-gray-900 bg-gray-50"
+                      ? "border-[var(--klear-green)] bg-[rgba(37,211,102,0.05)]"
                       : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
@@ -680,7 +680,7 @@ export default function SettingsPage() {
             </div>
             <Button
               size="sm"
-              className="bg-gray-900 hover:bg-gray-800 gap-1.5"
+              className="bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)] gap-1.5"
               onClick={() => setShowNewKeyModal(true)}
             >
               <Plus className="w-4 h-4" />
@@ -871,7 +871,7 @@ export default function SettingsPage() {
                     </div>
 
                     <Button
-                      className="w-full bg-gray-900 hover:bg-gray-800"
+                      className="w-full bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)]"
                       onClick={() => {
                         setShowNewKeyModal(false)
                         setNewlyCreatedKey(null)
@@ -926,7 +926,7 @@ export default function SettingsPage() {
 
                     <div className="flex gap-3 pt-2">
                       <Button
-                        className="flex-1 bg-gray-900 hover:bg-gray-800"
+                        className="flex-1 bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)]"
                         onClick={handleCreateKey}
                         disabled={!newKeyName.trim() || newKeyScopes.length === 0}
                       >
@@ -1000,7 +1000,7 @@ export default function SettingsPage() {
                 <Button
                   variant={integration.status === "connected" ? "outline" : "default"}
                   size="sm"
-                  className={integration.status === "connected" ? "" : "bg-gray-900 hover:bg-gray-800"}
+                  className={integration.status === "connected" ? "" : "bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)]"}
                 >
                   {integration.status === "connected" ? "הגדרות" : "חבר"}
                 </Button>

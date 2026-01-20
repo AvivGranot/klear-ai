@@ -164,10 +164,10 @@ export function GlobalSearch() {
   }
 
   const typeColors: Record<string, string> = {
-    knowledge: "bg-blue-100 text-blue-700",
-    conversation: "bg-purple-100 text-purple-700",
-    automation: "bg-green-100 text-green-700",
-    topic: "bg-orange-100 text-orange-700",
+    knowledge: "bg-[rgba(37,211,102,0.15)] text-[var(--klear-green-dark)]",
+    conversation: "bg-[rgba(37,211,102,0.15)] text-[var(--klear-green-dark)]",
+    automation: "bg-[rgba(37,211,102,0.15)] text-[var(--klear-green-dark)]",
+    topic: "bg-[rgba(37,211,102,0.15)] text-[var(--klear-green-dark)]",
   }
 
   if (!isOpen) {

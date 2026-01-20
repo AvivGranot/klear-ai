@@ -145,7 +145,7 @@ function ContentCircle({
 function CentralHub({ totalItems, onClick }: { totalItems: number; onClick: () => void }) {
   return (
     <motion.button
-      className="absolute w-36 h-36 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 flex flex-col items-center justify-center border-4 border-white shadow-2xl cursor-pointer"
+      className="absolute w-36 h-36 rounded-full bg-gradient-to-br from-[var(--klear-green)] to-[var(--klear-green-dark)] flex flex-col items-center justify-center border-4 border-white shadow-2xl cursor-pointer"
       style={{
         left: "calc(50% - 72px)",
         top: "calc(50% - 72px)",
@@ -478,7 +478,7 @@ function TextInputForm({
           </div>
 
           <div className="flex gap-3 pt-2">
-            <Button type="submit" disabled={saving} className="bg-teal-600 hover:bg-teal-700">
+            <Button type="submit" disabled={saving} className="bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)]">
               {saving ? "שומר..." : "שמור"}
             </Button>
             <Button type="button" variant="outline" onClick={onClose}>
@@ -895,7 +895,7 @@ export default function KnowledgePage() {
                 className={cn(
                   "px-3 py-1 rounded-full text-xs font-medium transition-colors",
                   statusFilter === status
-                    ? status === "all" ? "bg-gray-900 text-white"
+                    ? status === "all" ? "bg-[var(--klear-green)] text-white"
                       : status === "pending" ? "bg-amber-500 text-white"
                       : status === "approved" ? "bg-green-500 text-white"
                       : "bg-gray-500 text-white"
@@ -1020,7 +1020,7 @@ export default function KnowledgePage() {
                           <div className="mt-3 pt-2 border-t border-amber-100 flex items-center gap-2">
                             <Button
                               size="sm"
-                              className="bg-green-600 hover:bg-green-700 text-xs h-7"
+                              className="bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)] text-xs h-7"
                               onClick={() => handleApprove(managerName, pattern.originalIndex, pattern.rawAnswer)}
                             >
                               <Check className="w-3 h-3 mr-1" />

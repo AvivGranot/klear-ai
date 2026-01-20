@@ -422,7 +422,7 @@ export default function ConversationsPage() {
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <h1 className="text-2xl font-semibold text-gray-900">היסטוריית שיחות</h1>
-          <Badge className="bg-gray-900 text-white" aria-label="תכונה חדשה">חדש</Badge>
+          <Badge className="bg-[var(--klear-green)] text-white" aria-label="תכונה חדשה">חדש</Badge>
         </div>
         <div className="relative w-64">
           <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" aria-hidden="true" />
@@ -453,7 +453,7 @@ export default function ConversationsPage() {
             className={cn(
               "px-3 py-1.5 text-sm rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2",
               filters.status === "all"
-                ? "bg-gray-900 text-white"
+                ? "bg-[var(--klear-green)] text-white"
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             )}
             role="radio"
@@ -470,7 +470,7 @@ export default function ConversationsPage() {
             className={cn(
               "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2",
               filters.status === "active"
-                ? "bg-green-600 text-white"
+                ? "bg-[var(--klear-green)] text-white"
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             )}
             role="radio"
@@ -756,7 +756,7 @@ export default function ConversationsPage() {
                       className={cn(
                         "w-full p-4 text-right border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer",
                         "focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-900",
-                        isSelected && "bg-gray-100 border-r-4 border-r-gray-900"
+                        isSelected && "bg-[rgba(37,211,102,0.1)] border-r-4 border-r-[var(--klear-green)]"
                       )}
                       aria-label={`שיחה עם ${conv.user.name}, ${conv.status === "active" ? "פעיל" : "סגור"}, ${topic?.name || "ללא נושא"}, ${formatRelativeTime(conv.updatedAt)}`}
                     >
@@ -957,7 +957,7 @@ export default function ConversationsPage() {
                                   handleCorrection(message.id)
                                   announce("ההודעה תוקנה בהצלחה")
                                 }}
-                                className="bg-gray-900 hover:bg-gray-800 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+                                className="bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)] focus:ring-2 focus:ring-offset-2 focus:ring-[var(--klear-green)]"
                               >
                                 <Check className="w-4 h-4 ml-1" aria-hidden="true" />
                                 שמור
