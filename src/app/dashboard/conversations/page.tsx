@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef, useCallback } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -15,7 +15,6 @@ import {
   ChevronLeft,
   User,
   Bot,
-  Filter,
   Clock,
   CheckCircle,
   XCircle,
@@ -23,12 +22,19 @@ import {
   Timer,
   Star,
   StickyNote,
-  ChevronDown,
-  BookOpen,
-  Plus,
 } from "lucide-react"
 import { formatRelativeTime, cn } from "@/lib/utils"
 import { safeFetch } from "@/lib/safeFetch"
+
+// Accessibility: Live region announcer for screen readers
+function useAnnounce() {
+  const [announcement, setAnnouncement] = useState("")
+  const announce = useCallback((message: string) => {
+    setAnnouncement("")
+    setTimeout(() => setAnnouncement(message), 100)
+  }, [])
+  return { announcement, announce }
+}
 
 // Gas station topic configuration
 const GAS_STATION_TOPICS = [
@@ -134,6 +140,13 @@ export default function ConversationsPage() {
   const [editedContent, setEditedContent] = useState("")
   const [correctionReason, setCorrectionReason] = useState("")
 
+  // Accessibility refs and state
+  const { announcement, announce } = useAnnounce()
+  const conversationListRef = useRef<HTMLDivElement>(null)
+  const messageAreaRef = useRef<HTMLDivElement>(null)
+  const searchInputRef = useRef<HTMLInputElement>(null)
+  const [focusedConversationIndex, setFocusedConversationIndex] = useState(-1)
+
   useEffect(() => {
     async function init() {
       try {
@@ -191,11 +204,56 @@ export default function ConversationsPage() {
       })
       if (data?.conversation) {
         setSelectedConversation(data.conversation)
+        announce(`נטען שיחה עם ${data.conversation.user.name}, ${data.conversation.messages.length} הודעות`)
+        // Focus message area for keyboard users
+        setTimeout(() => messageAreaRef.current?.focus(), 100)
       }
     } catch (e) {
       console.error(e)
+      announce("שגיאה בטעינת השיחה")
     }
   }
+
+  // Keyboard navigation for conversation list
+  const handleConversationKeyDown = (e: React.KeyboardEvent, index: number, convId: string) => {
+    const conversations = filteredConversations
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault()
+        if (index < conversations.length - 1) {
+          setFocusedConversationIndex(index + 1)
+        }
+        break
+      case "ArrowUp":
+        e.preventDefault()
+        if (index > 0) {
+          setFocusedConversationIndex(index - 1)
+        }
+        break
+      case "Enter":
+      case " ":
+        e.preventDefault()
+        loadConversationDetails(convId)
+        break
+      case "Home":
+        e.preventDefault()
+        setFocusedConversationIndex(0)
+        break
+      case "End":
+        e.preventDefault()
+        setFocusedConversationIndex(conversations.length - 1)
+        break
+    }
+  }
+
+  // Focus management for conversation list
+  useEffect(() => {
+    if (focusedConversationIndex >= 0 && conversationListRef.current) {
+      const items = conversationListRef.current.querySelectorAll('[role="option"]')
+      const item = items[focusedConversationIndex] as HTMLElement
+      item?.focus()
+    }
+  }, [focusedConversationIndex])
 
   const handleCorrection = async (messageId: string) => {
     if (!managerId || !editedContent.trim()) return
@@ -321,17 +379,18 @@ export default function ConversationsPage() {
 
   if (loading) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-6" role="status" aria-live="polite" aria-busy="true">
+        <span className="sr-only">טוען שיחות...</span>
         <div className="flex justify-between">
-          <div className="h-8 w-32 bg-gray-200 rounded animate-pulse" />
-          <div className="h-10 w-64 bg-gray-200 rounded animate-pulse" />
+          <div className="h-8 w-32 bg-gray-200 rounded animate-pulse" aria-hidden="true" />
+          <div className="h-10 w-64 bg-gray-200 rounded animate-pulse" aria-hidden="true" />
         </div>
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex gap-2 flex-wrap" aria-hidden="true">
           {[...Array(8)].map((_, i) => (
             <div key={i} className="h-8 w-24 bg-gray-200 rounded-full animate-pulse" />
           ))}
         </div>
-        <div className="grid grid-cols-3 gap-4 h-[600px]">
+        <div className="grid grid-cols-3 gap-4 h-[600px]" aria-hidden="true">
           <div className="bg-gray-200 rounded-xl animate-pulse" />
           <div className="col-span-2 bg-gray-200 rounded-xl animate-pulse" />
         </div>
@@ -341,321 +400,467 @@ export default function ConversationsPage() {
 
   return (
     <div className="space-y-6">
+      {/* Screen reader announcements */}
+      <div
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+      >
+        {announcement}
+      </div>
+
+      {/* Skip link for keyboard users */}
+      <a
+        href="#conversation-list"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-gray-900 focus:text-white focus:p-3 focus:rounded-lg"
+      >
+        דלג לרשימת השיחות
+      </a>
+
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <header className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <h1 className="text-2xl font-semibold text-gray-900">היסטוריית שיחות</h1>
-          <Badge className="bg-gray-900 text-white">חדש</Badge>
+          <Badge className="bg-gray-900 text-white" aria-label="תכונה חדשה">חדש</Badge>
         </div>
         <div className="relative w-64">
-          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" aria-hidden="true" />
           <Input
+            ref={searchInputRef}
             placeholder="חיפוש שיחות..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value)
+              announce(`מחפש: ${e.target.value || "הכל"}`)
+            }}
             className="pr-9"
+            aria-label="חיפוש שיחות"
+            role="searchbox"
           />
         </div>
-      </div>
+      </header>
 
-      {/* Filter Chips - ElevenLabs Style */}
-      <div className="flex flex-wrap items-center gap-2">
+      {/* Filter Chips */}
+      <nav aria-label="סינון שיחות" className="flex flex-wrap items-center gap-2" role="group">
         {/* Status Filters */}
-        <button
-          onClick={() => setFilters({ ...filters, status: "all" })}
-          className={cn(
-            "px-3 py-1.5 text-sm rounded-full transition-colors",
-            filters.status === "all"
-              ? "bg-gray-900 text-white"
-              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-          )}
-        >
-          הכל ({statusCounts.all})
-        </button>
-        <button
-          onClick={() => setFilters({ ...filters, status: "active" })}
-          className={cn(
-            "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5",
-            filters.status === "active"
-              ? "bg-green-600 text-white"
-              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-          )}
-        >
-          <CheckCircle className="w-3.5 h-3.5" />
-          פעיל ({statusCounts.active})
-        </button>
-        <button
-          onClick={() => setFilters({ ...filters, status: "closed" })}
-          className={cn(
-            "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5",
-            filters.status === "closed"
-              ? "bg-gray-600 text-white"
-              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-          )}
-        >
-          <XCircle className="w-3.5 h-3.5" />
-          סגור ({statusCounts.closed})
-        </button>
+        <div role="radiogroup" aria-label="סנן לפי סטטוס" className="flex items-center gap-2">
+          <button
+            onClick={() => {
+              setFilters({ ...filters, status: "all" })
+              announce(`מציג את כל השיחות: ${statusCounts.all}`)
+            }}
+            className={cn(
+              "px-3 py-1.5 text-sm rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2",
+              filters.status === "all"
+                ? "bg-gray-900 text-white"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            )}
+            role="radio"
+            aria-checked={filters.status === "all"}
+            aria-label={`הכל: ${statusCounts.all} שיחות`}
+          >
+            הכל ({statusCounts.all})
+          </button>
+          <button
+            onClick={() => {
+              setFilters({ ...filters, status: "active" })
+              announce(`מציג שיחות פעילות: ${statusCounts.active}`)
+            }}
+            className={cn(
+              "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2",
+              filters.status === "active"
+                ? "bg-green-600 text-white"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            )}
+            role="radio"
+            aria-checked={filters.status === "active"}
+            aria-label={`שיחות פעילות: ${statusCounts.active}`}
+          >
+            <CheckCircle className="w-3.5 h-3.5" aria-hidden="true" />
+            פעיל ({statusCounts.active})
+          </button>
+          <button
+            onClick={() => {
+              setFilters({ ...filters, status: "closed" })
+              announce(`מציג שיחות סגורות: ${statusCounts.closed}`)
+            }}
+            className={cn(
+              "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2",
+              filters.status === "closed"
+                ? "bg-gray-600 text-white"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            )}
+            role="radio"
+            aria-checked={filters.status === "closed"}
+            aria-label={`שיחות סגורות: ${statusCounts.closed}`}
+          >
+            <XCircle className="w-3.5 h-3.5" aria-hidden="true" />
+            סגור ({statusCounts.closed})
+          </button>
+        </div>
 
-        <div className="w-px h-6 bg-gray-200 mx-1" />
+        <div className="w-px h-6 bg-gray-200 mx-1" role="separator" aria-hidden="true" />
 
         {/* Topic Filter Chips */}
-        {topicCounts.slice(0, 5).map(topic => {
-          const colors = topicColorClasses[topic.color] || topicColorClasses.gray
-          const isActive = filters.topic === topic.id
-          return (
-            <button
-              key={topic.id}
-              onClick={() => setFilters({ ...filters, topic: isActive ? null : topic.id })}
-              className={cn(
-                "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5",
-                isActive
-                  ? `${colors.bg} ${colors.text} border ${colors.border}`
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-              )}
-            >
-              <span>{topic.icon}</span>
-              {topic.name}
-              <span className="text-xs opacity-70">({topic.count})</span>
-            </button>
-          )
-        })}
+        <div role="group" aria-label="סנן לפי נושא" className="flex items-center gap-2 flex-wrap">
+          {topicCounts.slice(0, 5).map(topic => {
+            const colors = topicColorClasses[topic.color] || topicColorClasses.gray
+            const isActive = filters.topic === topic.id
+            return (
+              <button
+                key={topic.id}
+                onClick={() => {
+                  const newTopic = isActive ? null : topic.id
+                  setFilters({ ...filters, topic: newTopic })
+                  announce(newTopic ? `מסנן לפי ${topic.name}: ${topic.count} שיחות` : "הוסר סינון נושא")
+                }}
+                className={cn(
+                  "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2",
+                  isActive
+                    ? `${colors.bg} ${colors.text} border ${colors.border} focus:ring-current`
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200 focus:ring-gray-400"
+                )}
+                aria-pressed={isActive}
+                aria-label={`${topic.name}: ${topic.count} שיחות${isActive ? " - נבחר" : ""}`}
+              >
+                <span aria-hidden="true">{topic.icon}</span>
+                {topic.name}
+                <span className="text-xs opacity-70" aria-hidden="true">({topic.count})</span>
+              </button>
+            )
+          })}
+        </div>
 
-        <div className="w-px h-6 bg-gray-200 mx-1" />
+        <div className="w-px h-6 bg-gray-200 mx-1" role="separator" aria-hidden="true" />
 
         {/* Additional Filter Chips */}
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className={cn(
-            "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5",
-            filters.dateAfter || filters.dateBefore
-              ? "bg-blue-100 text-blue-700"
-              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-          )}
-        >
-          <Calendar className="w-3.5 h-3.5" />
-          + תאריך
-        </button>
-
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className={cn(
-            "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5",
-            filters.minDuration || filters.maxDuration
-              ? "bg-blue-100 text-blue-700"
-              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-          )}
-        >
-          <Timer className="w-3.5 h-3.5" />
-          + משך
-        </button>
-
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className={cn(
-            "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5",
-            filters.minRating
-              ? "bg-blue-100 text-blue-700"
-              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-          )}
-        >
-          <Star className="w-3.5 h-3.5" />
-          + דירוג
-        </button>
-
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className={cn(
-            "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5",
-            filters.hasNotes !== null
-              ? "bg-blue-100 text-blue-700"
-              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-          )}
-        >
-          <StickyNote className="w-3.5 h-3.5" />
-          + הערות
-        </button>
-
-        {activeFiltersCount > 0 && (
+        <div role="group" aria-label="סינונים נוספים" className="flex items-center gap-2 flex-wrap">
           <button
-            onClick={clearFilters}
-            className="px-3 py-1.5 text-sm rounded-full bg-red-50 text-red-600 hover:bg-red-100 transition-colors"
+            onClick={() => setShowFilters(!showFilters)}
+            className={cn(
+              "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+              filters.dateAfter || filters.dateBefore
+                ? "bg-blue-100 text-blue-700"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            )}
+            aria-expanded={showFilters}
+            aria-controls="advanced-filters"
+            aria-pressed={!!(filters.dateAfter || filters.dateBefore)}
           >
-            נקה פילטרים ({activeFiltersCount})
+            <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>+ תאריך</span>
           </button>
-        )}
-      </div>
+
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className={cn(
+              "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+              filters.minDuration || filters.maxDuration
+                ? "bg-blue-100 text-blue-700"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            )}
+            aria-expanded={showFilters}
+            aria-controls="advanced-filters"
+            aria-pressed={!!(filters.minDuration || filters.maxDuration)}
+          >
+            <Timer className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>+ משך</span>
+          </button>
+
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className={cn(
+              "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+              filters.minRating
+                ? "bg-blue-100 text-blue-700"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            )}
+            aria-expanded={showFilters}
+            aria-controls="advanced-filters"
+            aria-pressed={!!filters.minRating}
+          >
+            <Star className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>+ דירוג</span>
+          </button>
+
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className={cn(
+              "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+              filters.hasNotes !== null
+                ? "bg-blue-100 text-blue-700"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            )}
+            aria-expanded={showFilters}
+            aria-controls="advanced-filters"
+            aria-pressed={filters.hasNotes !== null}
+          >
+            <StickyNote className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>+ הערות</span>
+          </button>
+
+          {activeFiltersCount > 0 && (
+            <button
+              onClick={() => {
+                clearFilters()
+                announce("כל הסינונים נמחקו")
+              }}
+              className="px-3 py-1.5 text-sm rounded-full bg-red-50 text-red-600 hover:bg-red-100 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              aria-label={`נקה ${activeFiltersCount} פילטרים פעילים`}
+            >
+              נקה פילטרים ({activeFiltersCount})
+            </button>
+          )}
+        </div>
+      </nav>
 
       {/* Expanded Filters Panel */}
       {showFilters && (
-        <Card className="border border-gray-200 p-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div>
-              <label className="text-xs font-medium text-gray-500 mb-1.5 block">תאריך אחרי</label>
-              <Input
-                type="date"
-                value={filters.dateAfter}
-                onChange={(e) => setFilters({ ...filters, dateAfter: e.target.value })}
-                className="text-sm"
-              />
+        <Card id="advanced-filters" className="border border-gray-200 p-4" role="region" aria-label="סינונים מתקדמים">
+          <fieldset>
+            <legend className="sr-only">סינונים מתקדמים</legend>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div>
+                <label htmlFor="filter-date-after" className="text-xs font-medium text-gray-500 mb-1.5 block">
+                  תאריך אחרי
+                </label>
+                <Input
+                  id="filter-date-after"
+                  type="date"
+                  value={filters.dateAfter}
+                  onChange={(e) => setFilters({ ...filters, dateAfter: e.target.value })}
+                  className="text-sm"
+                  aria-describedby="filter-date-after-desc"
+                />
+                <span id="filter-date-after-desc" className="sr-only">הזן תאריך התחלה לסינון</span>
+              </div>
+              <div>
+                <label htmlFor="filter-date-before" className="text-xs font-medium text-gray-500 mb-1.5 block">
+                  תאריך לפני
+                </label>
+                <Input
+                  id="filter-date-before"
+                  type="date"
+                  value={filters.dateBefore}
+                  onChange={(e) => setFilters({ ...filters, dateBefore: e.target.value })}
+                  className="text-sm"
+                  aria-describedby="filter-date-before-desc"
+                />
+                <span id="filter-date-before-desc" className="sr-only">הזן תאריך סיום לסינון</span>
+              </div>
+              <div>
+                <label htmlFor="filter-min-duration" className="text-xs font-medium text-gray-500 mb-1.5 block">
+                  משך מינימלי (שניות)
+                </label>
+                <Input
+                  id="filter-min-duration"
+                  type="number"
+                  placeholder="0"
+                  min="0"
+                  value={filters.minDuration}
+                  onChange={(e) => setFilters({ ...filters, minDuration: e.target.value })}
+                  className="text-sm"
+                  aria-describedby="filter-min-duration-desc"
+                />
+                <span id="filter-min-duration-desc" className="sr-only">הזן משך שיחה מינימלי בשניות</span>
+              </div>
+              <div>
+                <label htmlFor="filter-max-duration" className="text-xs font-medium text-gray-500 mb-1.5 block">
+                  משך מקסימלי (שניות)
+                </label>
+                <Input
+                  id="filter-max-duration"
+                  type="number"
+                  placeholder="999"
+                  min="0"
+                  value={filters.maxDuration}
+                  onChange={(e) => setFilters({ ...filters, maxDuration: e.target.value })}
+                  className="text-sm"
+                  aria-describedby="filter-max-duration-desc"
+                />
+                <span id="filter-max-duration-desc" className="sr-only">הזן משך שיחה מקסימלי בשניות</span>
+              </div>
+              <div>
+                <label htmlFor="filter-min-rating" className="text-xs font-medium text-gray-500 mb-1.5 block">
+                  דירוג מינימלי
+                </label>
+                <select
+                  id="filter-min-rating"
+                  value={filters.minRating}
+                  onChange={(e) => setFilters({ ...filters, minRating: e.target.value })}
+                  className="w-full border border-gray-200 rounded-lg p-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                  aria-describedby="filter-min-rating-desc"
+                >
+                  <option value="">הכל</option>
+                  <option value="1">1 כוכב ומעלה</option>
+                  <option value="2">2 כוכבים ומעלה</option>
+                  <option value="3">3 כוכבים ומעלה</option>
+                  <option value="4">4 כוכבים ומעלה</option>
+                  <option value="5">5 כוכבים בלבד</option>
+                </select>
+                <span id="filter-min-rating-desc" className="sr-only">בחר דירוג מינימלי לסינון</span>
+              </div>
             </div>
-            <div>
-              <label className="text-xs font-medium text-gray-500 mb-1.5 block">תאריך לפני</label>
-              <Input
-                type="date"
-                value={filters.dateBefore}
-                onChange={(e) => setFilters({ ...filters, dateBefore: e.target.value })}
-                className="text-sm"
-              />
-            </div>
-            <div>
-              <label className="text-xs font-medium text-gray-500 mb-1.5 block">משך מינימלי (שניות)</label>
-              <Input
-                type="number"
-                placeholder="0"
-                value={filters.minDuration}
-                onChange={(e) => setFilters({ ...filters, minDuration: e.target.value })}
-                className="text-sm"
-              />
-            </div>
-            <div>
-              <label className="text-xs font-medium text-gray-500 mb-1.5 block">משך מקסימלי (שניות)</label>
-              <Input
-                type="number"
-                placeholder="999"
-                value={filters.maxDuration}
-                onChange={(e) => setFilters({ ...filters, maxDuration: e.target.value })}
-                className="text-sm"
-              />
-            </div>
-            <div>
-              <label className="text-xs font-medium text-gray-500 mb-1.5 block">דירוג מינימלי</label>
-              <select
-                value={filters.minRating}
-                onChange={(e) => setFilters({ ...filters, minRating: e.target.value })}
-                className="w-full border border-gray-200 rounded-lg p-2 text-sm bg-white"
-              >
-                <option value="">הכל</option>
-                <option value="1">1+</option>
-                <option value="2">2+</option>
-                <option value="3">3+</option>
-                <option value="4">4+</option>
-                <option value="5">5</option>
-              </select>
-            </div>
-          </div>
+          </fieldset>
         </Card>
       )}
 
       {/* Main Content */}
-      <div className="flex gap-4 h-[calc(100vh-18rem)]">
+      <main className="flex gap-4 h-[calc(100vh-18rem)]" role="main">
         {/* Conversations List */}
-        <Card className={cn(
-          "w-80 shrink-0 border border-gray-200 overflow-hidden",
-          selectedConversation && "hidden md:block"
-        )}>
+        <Card
+          id="conversation-list"
+          className={cn(
+            "w-80 shrink-0 border border-gray-200 overflow-hidden",
+            selectedConversation && "hidden md:block"
+          )}
+        >
           <CardContent className="p-0 h-full overflow-y-auto">
             {filteredConversations.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full text-gray-500 p-6">
-                <MessageSquare className="w-12 h-12 mb-3 text-gray-300" />
+              <div
+                className="flex flex-col items-center justify-center h-full text-gray-500 p-6"
+                role="status"
+                aria-label="אין שיחות להצגה"
+              >
+                <MessageSquare className="w-12 h-12 mb-3 text-gray-300" aria-hidden="true" />
                 <p className="font-medium">אין שיחות</p>
                 <p className="text-sm text-gray-400">שיחות חדשות יופיעו כאן</p>
               </div>
             ) : (
-              <div>
-                {filteredConversations.map((conv) => (
-                  <button
-                    key={conv.id}
-                    onClick={() => loadConversationDetails(conv.id)}
-                    className={cn(
-                      "w-full p-4 text-right border-b border-gray-100 hover:bg-gray-50 transition-colors",
-                      selectedConversation?.id === conv.id && "bg-gray-50"
-                    )}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-medium text-sm shrink-0">
-                        {conv.user.name.charAt(0)}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-0.5">
-                          <span className="font-medium text-gray-900 text-sm truncate">
-                            {conv.user.name}
-                          </span>
-                          <span className="text-xs text-gray-400 shrink-0">
-                            {formatRelativeTime(conv.updatedAt)}
-                          </span>
+              <div
+                ref={conversationListRef}
+                role="listbox"
+                aria-label={`רשימת שיחות, ${filteredConversations.length} תוצאות`}
+                aria-activedescendant={selectedConversation ? `conv-${selectedConversation.id}` : undefined}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowDown" && focusedConversationIndex === -1) {
+                    e.preventDefault()
+                    setFocusedConversationIndex(0)
+                  }
+                }}
+              >
+                {filteredConversations.map((conv, index) => {
+                  const topic = getConversationTopic(conv)
+                  const isSelected = selectedConversation?.id === conv.id
+                  return (
+                    <div
+                      key={conv.id}
+                      id={`conv-${conv.id}`}
+                      role="option"
+                      aria-selected={isSelected}
+                      tabIndex={focusedConversationIndex === index ? 0 : -1}
+                      onClick={() => loadConversationDetails(conv.id)}
+                      onKeyDown={(e) => handleConversationKeyDown(e, index, conv.id)}
+                      className={cn(
+                        "w-full p-4 text-right border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer",
+                        "focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-900",
+                        isSelected && "bg-gray-100 border-r-4 border-r-gray-900"
+                      )}
+                      aria-label={`שיחה עם ${conv.user.name}, ${conv.status === "active" ? "פעיל" : "סגור"}, ${topic?.name || "ללא נושא"}, ${formatRelativeTime(conv.updatedAt)}`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-medium text-sm shrink-0"
+                          aria-hidden="true"
+                        >
+                          {conv.user.name.charAt(0)}
                         </div>
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <Badge
-                            className={cn(
-                              "text-[10px] px-1.5",
-                              conv.status === "active"
-                                ? "bg-green-100 text-green-700"
-                                : "bg-gray-100 text-gray-600"
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between mb-0.5">
+                            <span className="font-medium text-gray-900 text-sm truncate">
+                              {conv.user.name}
+                            </span>
+                            <time
+                              className="text-xs text-gray-400 shrink-0"
+                              dateTime={conv.updatedAt}
+                            >
+                              {formatRelativeTime(conv.updatedAt)}
+                            </time>
+                          </div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <Badge
+                              className={cn(
+                                "text-[10px] px-1.5",
+                                conv.status === "active"
+                                  ? "bg-green-100 text-green-800"
+                                  : "bg-gray-100 text-gray-700"
+                              )}
+                            >
+                              {conv.status === "active" ? "פעיל" : "סגור"}
+                            </Badge>
+                            {topic && (
+                              <Badge
+                                className={`text-[10px] px-1.5 ${topicColorClasses[topic.color]?.bg || 'bg-gray-100'} ${topicColorClasses[topic.color]?.text || 'text-gray-600'}`}
+                              >
+                                <span aria-hidden="true">{topic.icon}</span> {topic.name}
+                              </Badge>
                             )}
-                          >
-                            {conv.status === "active" ? "פעיל" : "סגור"}
-                          </Badge>
-                          {(() => {
-                            const topic = getConversationTopic(conv)
-                            if (topic) {
-                              const colors = topicColorClasses[topic.color] || topicColorClasses.gray
-                              return (
-                                <Badge className={`text-[10px] px-1.5 ${colors.bg} ${colors.text}`}>
-                                  {topic.icon} {topic.name}
-                                </Badge>
-                              )
-                            }
-                            return null
-                          })()}
-                          {conv.duration && (
-                            <span className="text-[10px] text-gray-400 flex items-center gap-0.5">
-                              <Timer className="w-3 h-3" />
-                              {formatDuration(conv.duration)}
-                            </span>
-                          )}
-                          {conv.rating && (
-                            <span className="text-[10px] text-yellow-600 flex items-center gap-0.5">
-                              <Star className="w-3 h-3 fill-yellow-400" />
-                              {conv.rating}
-                            </span>
+                            {conv.duration && (
+                              <span className="text-[10px] text-gray-500 flex items-center gap-0.5">
+                                <Timer className="w-3 h-3" aria-hidden="true" />
+                                <span aria-label={`משך: ${Math.floor(conv.duration / 60)} דקות ו-${conv.duration % 60} שניות`}>
+                                  {formatDuration(conv.duration)}
+                                </span>
+                              </span>
+                            )}
+                            {conv.rating && (
+                              <span className="text-[10px] text-yellow-700 flex items-center gap-0.5">
+                                <Star className="w-3 h-3 fill-yellow-400" aria-hidden="true" />
+                                <span aria-label={`דירוג: ${conv.rating} כוכבים`}>{conv.rating}</span>
+                              </span>
+                            )}
+                          </div>
+                          {conv.messages[0] && (
+                            <p className="text-xs text-gray-500 truncate mt-1" aria-hidden="true">
+                              {conv.messages[0].content}
+                            </p>
                           )}
                         </div>
-                        {conv.messages[0] && (
-                          <p className="text-xs text-gray-500 truncate mt-1">
-                            {conv.messages[0].content}
-                          </p>
-                        )}
                       </div>
                     </div>
-                  </button>
-                ))}
+                  )
+                })}
               </div>
             )}
           </CardContent>
         </Card>
 
         {/* Conversation Detail */}
-        <Card className="flex-1 border border-gray-200 flex flex-col overflow-hidden">
+        <Card
+          className="flex-1 border border-gray-200 flex flex-col overflow-hidden"
+          role="region"
+          aria-label={selectedConversation ? `שיחה עם ${selectedConversation.user.name}` : "בחר שיחה"}
+        >
           {selectedConversation ? (
             <>
               {/* Header */}
-              <div className="flex items-center justify-between p-4 border-b border-gray-200">
+              <header className="flex items-center justify-between p-4 border-b border-gray-200">
                 <div className="flex items-center gap-3">
                   <button
-                    onClick={() => setSelectedConversation(null)}
-                    className="md:hidden p-2 hover:bg-gray-100 rounded-lg"
+                    onClick={() => {
+                      setSelectedConversation(null)
+                      announce("חזרה לרשימת השיחות")
+                      setTimeout(() => conversationListRef.current?.focus(), 100)
+                    }}
+                    className="md:hidden p-2 hover:bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                    aria-label="חזור לרשימת השיחות"
                   >
-                    <ChevronLeft className="w-5 h-5" />
+                    <ChevronLeft className="w-5 h-5" aria-hidden="true" />
                   </button>
-                  <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-medium">
+                  <div
+                    className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-medium"
+                    aria-hidden="true"
+                  >
                     {selectedConversation.user.name.charAt(0)}
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-900">
+                    <h2 className="font-medium text-gray-900">
                       {selectedConversation.user.name}
-                    </h3>
+                    </h2>
                     <p className="text-sm text-gray-500">
+                      <span className="sr-only">מספר טלפון: </span>
                       {selectedConversation.user.phone}
                     </p>
                   </div>
@@ -663,31 +868,41 @@ export default function ConversationsPage() {
                 <Badge
                   className={cn(
                     selectedConversation.status === "active"
-                      ? "bg-green-100 text-green-700"
-                      : "bg-gray-100 text-gray-600"
+                      ? "bg-green-100 text-green-800"
+                      : "bg-gray-100 text-gray-700"
                   )}
+                  aria-label={`סטטוס: ${selectedConversation.status === "active" ? "פעיל" : "סגור"}`}
                 >
                   {selectedConversation.status === "active" ? "פעיל" : "סגור"}
                 </Badge>
-              </div>
+              </header>
 
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+              <div
+                ref={messageAreaRef}
+                className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50"
+                role="log"
+                aria-label={`הודעות בשיחה, ${selectedConversation.messages.length} הודעות`}
+                aria-live="polite"
+                tabIndex={-1}
+              >
                 {selectedConversation.messages.map((message) => (
-                  <div
+                  <article
                     key={message.id}
                     className={cn(
                       "flex gap-3",
                       message.role === "user" ? "flex-row" : "flex-row-reverse"
                     )}
+                    aria-label={`${message.role === "user" ? "הודעת משתמש" : "תשובת בוט"}, ${formatRelativeTime(message.createdAt)}`}
                   >
                     <div
                       className={cn(
                         "w-8 h-8 rounded-full flex items-center justify-center shrink-0",
                         message.role === "user"
-                          ? "bg-gray-200 text-gray-600"
+                          ? "bg-gray-200 text-gray-700"
                           : "bg-gray-900 text-white"
                       )}
+                      aria-hidden="true"
                     >
                       {message.role === "user" ? (
                         <User className="w-4 h-4" />
@@ -711,25 +926,40 @@ export default function ConversationsPage() {
                         )}
                       >
                         {editingMessageId === message.id ? (
-                          <div className="space-y-3">
+                          <div className="space-y-3" role="form" aria-label="עריכת הודעה">
+                            <label htmlFor={`edit-content-${message.id}`} className="sr-only">
+                              תוכן ההודעה המתוקן
+                            </label>
                             <Textarea
+                              id={`edit-content-${message.id}`}
                               value={editedContent}
                               onChange={(e) => setEditedContent(e.target.value)}
                               className="min-h-[100px] text-sm"
+                              aria-describedby={`edit-help-${message.id}`}
                             />
+                            <label htmlFor={`edit-reason-${message.id}`} className="sr-only">
+                              סיבת התיקון
+                            </label>
                             <Input
+                              id={`edit-reason-${message.id}`}
                               placeholder="סיבת התיקון (אופציונלי)"
                               value={correctionReason}
                               onChange={(e) => setCorrectionReason(e.target.value)}
                               className="text-sm"
                             />
+                            <span id={`edit-help-${message.id}`} className="sr-only">
+                              ערוך את תוכן ההודעה והוסף סיבה אם תרצה
+                            </span>
                             <div className="flex gap-2">
                               <Button
                                 size="sm"
-                                onClick={() => handleCorrection(message.id)}
-                                className="bg-gray-900 hover:bg-gray-800"
+                                onClick={() => {
+                                  handleCorrection(message.id)
+                                  announce("ההודעה תוקנה בהצלחה")
+                                }}
+                                className="bg-gray-900 hover:bg-gray-800 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
                               >
-                                <Check className="w-4 h-4 ml-1" />
+                                <Check className="w-4 h-4 ml-1" aria-hidden="true" />
                                 שמור
                               </Button>
                               <Button
@@ -738,28 +968,34 @@ export default function ConversationsPage() {
                                 onClick={() => {
                                   setEditingMessageId(null)
                                   setEditedContent("")
+                                  announce("העריכה בוטלה")
                                 }}
+                                className="focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
                               >
-                                <X className="w-4 h-4 ml-1" />
+                                <X className="w-4 h-4 ml-1" aria-hidden="true" />
                                 ביטול
                               </Button>
                             </div>
                           </div>
                         ) : (
                           <>
-                            <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                            <p className="text-sm text-gray-800 whitespace-pre-wrap">
                               {message.content}
                             </p>
                             {message.isEdited && (
-                              <span className="text-xs text-gray-400 mt-1 block">(תוקן)</span>
+                              <span className="text-xs text-gray-500 mt-1 block" aria-label="הודעה זו תוקנה">
+                                (תוקן)
+                              </span>
                             )}
                           </>
                         )}
                       </div>
 
-                      <div className="flex items-center gap-2 mt-1.5 px-1 text-xs text-gray-400">
-                        <Clock className="w-3 h-3" />
-                        <span>{formatRelativeTime(message.createdAt)}</span>
+                      <div className="flex items-center gap-2 mt-1.5 px-1 text-xs text-gray-500">
+                        <Clock className="w-3 h-3" aria-hidden="true" />
+                        <time dateTime={message.createdAt}>
+                          {formatRelativeTime(message.createdAt)}
+                        </time>
                         {message.role === "assistant" && (
                           <>
                             {message.confidence !== undefined && (
@@ -768,17 +1004,22 @@ export default function ConversationsPage() {
                                 className={cn(
                                   "text-[10px] px-1.5",
                                   message.confidence > 0.7
-                                    ? "border-green-200 text-green-600"
+                                    ? "border-green-300 text-green-700 bg-green-50"
                                     : message.confidence > 0.4
-                                    ? "border-yellow-200 text-yellow-600"
-                                    : "border-red-200 text-red-600"
+                                    ? "border-yellow-300 text-yellow-700 bg-yellow-50"
+                                    : "border-red-300 text-red-700 bg-red-50"
                                 )}
+                                aria-label={`רמת בטחון: ${Math.round(message.confidence * 100)} אחוז`}
                               >
                                 {Math.round(message.confidence * 100)}% בטחון
                               </Badge>
                             )}
                             {message.knowledgeItem && (
-                              <Badge variant="outline" className="text-[10px] px-1.5">
+                              <Badge
+                                variant="outline"
+                                className="text-[10px] px-1.5"
+                                aria-label={`מקור: ${message.knowledgeItem.titleHe || message.knowledgeItem.title}`}
+                              >
                                 {message.knowledgeItem.titleHe || message.knowledgeItem.title}
                               </Badge>
                             )}
@@ -787,10 +1028,12 @@ export default function ConversationsPage() {
                                 onClick={() => {
                                   setEditingMessageId(message.id)
                                   setEditedContent(message.content)
+                                  announce("מצב עריכה פעיל")
                                 }}
-                                className="flex items-center gap-1 text-gray-500 hover:text-gray-700"
+                                className="flex items-center gap-1 text-gray-600 hover:text-gray-900 focus:outline-none focus:underline"
+                                aria-label="תקן הודעה זו"
                               >
-                                <Edit className="w-3 h-3" />
+                                <Edit className="w-3 h-3" aria-hidden="true" />
                                 תקן
                               </button>
                             )}
@@ -798,21 +1041,33 @@ export default function ConversationsPage() {
                         )}
                       </div>
                     </div>
-                  </div>
+                  </article>
                 ))}
               </div>
             </>
           ) : (
-            <div className="flex-1 flex items-center justify-center">
+            <div
+              className="flex-1 flex items-center justify-center"
+              role="status"
+              aria-label="לא נבחרה שיחה"
+            >
               <div className="text-center text-gray-500">
-                <MessageSquare className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                <p className="font-medium text-gray-600">בחר שיחה לצפייה</p>
-                <p className="text-sm text-gray-400 mt-1">לחץ על שיחה מהרשימה לראות פרטים</p>
+                <MessageSquare className="w-16 h-16 mx-auto mb-4 text-gray-300" aria-hidden="true" />
+                <p className="font-medium text-gray-700">בחר שיחה לצפייה</p>
+                <p className="text-sm text-gray-500 mt-1">לחץ על שיחה מהרשימה לראות פרטים</p>
+                <p className="text-xs text-gray-400 mt-3">
+                  <kbd className="px-2 py-1 bg-gray-100 rounded text-gray-600">↑</kbd>
+                  {" "}
+                  <kbd className="px-2 py-1 bg-gray-100 rounded text-gray-600">↓</kbd>
+                  {" "}לניווט,{" "}
+                  <kbd className="px-2 py-1 bg-gray-100 rounded text-gray-600">Enter</kbd>
+                  {" "}לבחירה
+                </p>
               </div>
             </div>
           )}
         </Card>
-      </div>
+      </main>
     </div>
   )
 }

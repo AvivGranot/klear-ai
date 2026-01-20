@@ -95,6 +95,16 @@
   --gradient-primary: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
   --gradient-hero: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
   --gradient-card: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+
+  /* Aman-inspired Palette - Warm, muted neutrals */
+  --aman-cream: #FAF8F5;
+  --aman-beige: #F5F1EB;
+  --aman-sand: #EDE8E0;
+  --aman-taupe: #D4CCC2;
+  --aman-warm-gray: #B8AFA5;
+  --aman-stone: #8C8279;
+  --aman-charcoal: #3D3835;
+  --aman-black: #1A1816;
 }
 
 @theme inline {
@@ -631,6 +641,166 @@ select:focus {
   background-image:
     radial-gradient(circle at 20% 50%, rgba(37, 211, 102, 0.08) 0%, transparent 50%),
     radial-gradient(circle at 80% 50%, rgba(18, 140, 126, 0.08) 0%, transparent 50%);
+}
+
+/* ==================== Aman-Inspired Background ==================== */
+
+/* Main Aman background - warm, serene, luxurious */
+.aman-bg {
+  background: linear-gradient(
+    180deg,
+    var(--aman-cream) 0%,
+    var(--aman-beige) 50%,
+    var(--aman-sand) 100%
+  );
+  position: relative;
+}
+
+/* Subtle noise texture overlay */
+.aman-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Subtle radial gradient for depth */
+.aman-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 50% at 50% 0%,
+    rgba(255, 255, 255, 0.6) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Content sits above texture */
+.aman-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Aman sidebar - warm white with subtle warmth */
+.aman-sidebar {
+  background: linear-gradient(
+    180deg,
+    #FFFFFF 0%,
+    #FDFCFA 50%,
+    #FAF8F5 100%
+  );
+  border-color: var(--aman-sand);
+}
+
+/* Aman card style - clean, elevated, warm */
+.aman-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--aman-sand);
+  box-shadow:
+    0 1px 2px rgba(26, 24, 22, 0.04),
+    0 4px 12px rgba(26, 24, 22, 0.03);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.aman-card:hover {
+  box-shadow:
+    0 2px 4px rgba(26, 24, 22, 0.06),
+    0 8px 24px rgba(26, 24, 22, 0.06);
+  border-color: var(--aman-taupe);
+}
+
+/* Aman header - clean, minimal */
+.aman-header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-color: var(--aman-sand);
+}
+
+/* Aman text colors */
+.aman-text-primary {
+  color: var(--aman-charcoal);
+}
+
+.aman-text-secondary {
+  color: var(--aman-stone);
+}
+
+.aman-text-muted {
+  color: var(--aman-warm-gray);
+}
+
+/* Aman button - elegant, understated */
+.aman-btn {
+  background: var(--aman-charcoal);
+  color: var(--aman-cream);
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.aman-btn:hover {
+  background: var(--aman-black);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(26, 24, 22, 0.15);
+}
+
+/* Aman divider */
+.aman-divider {
+  border-color: var(--aman-sand);
+}
+
+/* Aman input */
+.aman-input {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--aman-sand);
+  transition: all 0.3s ease;
+}
+
+.aman-input:focus {
+  background: #FFFFFF;
+  border-color: var(--aman-taupe);
+  box-shadow: 0 0 0 3px rgba(212, 204, 194, 0.3);
+}
+
+/* Subtle animated grain for premium feel */
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-1%, -1%); }
+  20% { transform: translate(1%, 1%); }
+  30% { transform: translate(-1%, 1%); }
+  40% { transform: translate(1%, -1%); }
+  50% { transform: translate(-1%, 0%); }
+  60% { transform: translate(1%, 0%); }
+  70% { transform: translate(0%, 1%); }
+  80% { transform: translate(0%, -1%); }
+  90% { transform: translate(1%, 1%); }
+}
+
+.aman-grain::before {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.015;
+  pointer-events: none;
+  z-index: 9999;
+  animation: grain 8s steps(10) infinite;
+}
+
+/* Alternative: Linen texture background */
+.aman-linen {
+  background-color: var(--aman-cream);
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,0.8) 0%, transparent 100%),
+    url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.015' fill-rule='evenodd'%3E%3Cpath d='M0 0h20v20H0V0zm20 20h20v20H20V20z'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* ==================== Responsive Adjustments ==================== */

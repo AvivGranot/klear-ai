@@ -14,12 +14,8 @@ import {
   Menu,
   X,
   LogOut,
-  ChevronLeft,
-  Bell,
-  Search,
   ExternalLink,
   HelpCircle,
-  AlertCircle,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { GlobalSearch } from "@/components/dashboard/GlobalSearch"
@@ -77,25 +73,28 @@ export default function DashboardLayout({
   ]
 
   return (
-    <div className="flex h-screen bg-gray-50" dir="rtl">
+    <div className="flex h-screen aman-bg" dir="rtl">
+      {/* Subtle grain overlay for premium feel */}
+      <div className="aman-grain" aria-hidden="true" />
+
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex flex-col w-60 bg-white border-l border-gray-200">
+      <aside className="hidden lg:flex flex-col w-60 aman-sidebar border-l border-[var(--aman-sand)]">
         {/* Logo */}
-        <div className="h-14 flex items-center px-4 border-b border-gray-200">
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">K</span>
+        <div className="h-14 flex items-center px-4 border-b border-[var(--aman-sand)]">
+          <Link href="/dashboard" className="flex items-center gap-2.5">
+            <div className="w-8 h-8 bg-[var(--aman-charcoal)] rounded-lg flex items-center justify-center shadow-sm">
+              <span className="text-[var(--aman-cream)] font-semibold text-sm tracking-wide">K</span>
             </div>
-            <span className="font-semibold text-gray-900">Klear AI</span>
+            <span className="font-semibold text-[var(--aman-charcoal)] tracking-tight">Klear AI</span>
           </Link>
         </div>
 
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto py-4">
           {sidebarConfig.map((section, sectionIndex) => (
-            <div key={sectionIndex} className="mb-4">
+            <div key={sectionIndex} className="mb-5">
               {section.title && (
-                <p className="px-4 mb-2 text-xs font-medium text-gray-400 uppercase tracking-wider">
+                <p className="px-4 mb-2 text-[11px] font-medium text-[var(--aman-warm-gray)] uppercase tracking-widest">
                   {section.title}
                 </p>
               )}
@@ -106,16 +105,16 @@ export default function DashboardLayout({
                     <Link key={item.href} href={item.href}>
                       <div
                         className={cn(
-                          "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors",
+                          "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-300",
                           isActive
-                            ? "bg-gray-100 text-gray-900 font-medium"
-                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                            ? "bg-[var(--aman-sand)]/60 text-[var(--aman-charcoal)] font-medium"
+                            : "text-[var(--aman-stone)] hover:bg-[var(--aman-sand)]/40 hover:text-[var(--aman-charcoal)]"
                         )}
                       >
-                        <item.icon className={cn("w-5 h-5", isActive ? "text-gray-900" : "text-gray-400")} />
+                        <item.icon className={cn("w-5 h-5 transition-colors", isActive ? "text-[var(--aman-charcoal)]" : "text-[var(--aman-warm-gray)]")} />
                         <span className="flex-1">{item.label}</span>
                         {item.badge && (
-                          <span className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center font-medium">
+                          <span className="w-5 h-5 rounded-full bg-[var(--aman-charcoal)] text-[var(--aman-cream)] text-xs flex items-center justify-center font-medium">
                             {item.badge}
                           </span>
                         )}
@@ -129,22 +128,22 @@ export default function DashboardLayout({
         </nav>
 
         {/* Footer */}
-        <div className="p-3 border-t border-gray-200 space-y-2">
+        <div className="p-3 border-t border-[var(--aman-sand)] space-y-2">
           <Link href={`/chat/${company.id}`} target="_blank">
-          <div className="flex items-center justify-center gap-2 bg-gray-900 text-white py-2.5 rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium">
-            פתח צ'אט עובדים
-            <ExternalLink className="w-4 h-4" />
-          </div>
-        </Link>
-          <button className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+            <div className="flex items-center justify-center gap-2 bg-[var(--aman-charcoal)] text-[var(--aman-cream)] py-2.5 rounded-lg hover:bg-[var(--aman-black)] transition-all duration-300 text-sm font-medium shadow-sm hover:shadow-md">
+              פתח צ׳אט עובדים
+              <ExternalLink className="w-4 h-4" />
+            </div>
+          </Link>
+          <button className="flex items-center gap-2 w-full px-3 py-2 text-sm text-[var(--aman-stone)] hover:bg-[var(--aman-sand)]/40 hover:text-[var(--aman-charcoal)] rounded-lg transition-all duration-300">
             <HelpCircle className="w-4 h-4" />
             <span>עזרה</span>
           </button>
-          <button className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+          <button className="flex items-center gap-2 w-full px-3 py-2 text-sm text-[var(--aman-stone)] hover:bg-[var(--aman-sand)]/40 hover:text-[var(--aman-charcoal)] rounded-lg transition-all duration-300">
             <LogOut className="w-4 h-4" />
             <span>התנתק</span>
           </button>
-          <p className="text-xs text-center text-gray-400 pt-2">v1.0.0</p>
+          <p className="text-[11px] text-center text-[var(--aman-warm-gray)] pt-2 tracking-wide">v1.0.0</p>
         </div>
       </aside>
 
@@ -152,31 +151,31 @@ export default function DashboardLayout({
       {sidebarOpen && (
         <>
           <div
-            className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+            className="fixed inset-0 z-40 bg-[var(--aman-black)]/40 backdrop-blur-sm lg:hidden"
             onClick={() => setSidebarOpen(false)}
           />
-          <aside className="fixed inset-y-0 right-0 z-50 w-64 bg-white shadow-xl lg:hidden">
+          <aside className="fixed inset-y-0 right-0 z-50 w-64 aman-sidebar shadow-2xl lg:hidden">
             <div className="flex flex-col h-full">
-              <div className="flex items-center justify-between h-14 px-4 border-b border-gray-200">
-                <Link href="/dashboard" className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">K</span>
+              <div className="flex items-center justify-between h-14 px-4 border-b border-[var(--aman-sand)]">
+                <Link href="/dashboard" className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 bg-[var(--aman-charcoal)] rounded-lg flex items-center justify-center shadow-sm">
+                    <span className="text-[var(--aman-cream)] font-semibold text-sm tracking-wide">K</span>
                   </div>
-                  <span className="font-semibold">Klear AI</span>
+                  <span className="font-semibold text-[var(--aman-charcoal)]">Klear AI</span>
                 </Link>
                 <button
                   onClick={() => setSidebarOpen(false)}
-                  className="p-2 hover:bg-gray-100 rounded-lg"
+                  className="p-2 hover:bg-[var(--aman-sand)]/40 rounded-lg transition-colors"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5 text-[var(--aman-stone)]" />
                 </button>
               </div>
 
               <nav className="flex-1 overflow-y-auto py-4">
                 {sidebarConfig.map((section, sectionIndex) => (
-                  <div key={sectionIndex} className="mb-4">
+                  <div key={sectionIndex} className="mb-5">
                     {section.title && (
-                      <p className="px-4 mb-2 text-xs font-medium text-gray-400 uppercase tracking-wider">
+                      <p className="px-4 mb-2 text-[11px] font-medium text-[var(--aman-warm-gray)] uppercase tracking-widest">
                         {section.title}
                       </p>
                     )}
@@ -191,16 +190,16 @@ export default function DashboardLayout({
                           >
                             <div
                               className={cn(
-                                "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors",
+                                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-300",
                                 isActive
-                                  ? "bg-gray-100 text-gray-900 font-medium"
-                                  : "text-gray-600 hover:bg-gray-50"
+                                  ? "bg-[var(--aman-sand)]/60 text-[var(--aman-charcoal)] font-medium"
+                                  : "text-[var(--aman-stone)] hover:bg-[var(--aman-sand)]/40 hover:text-[var(--aman-charcoal)]"
                               )}
                             >
-                              <item.icon className="w-5 h-5" />
+                              <item.icon className={cn("w-5 h-5", isActive ? "text-[var(--aman-charcoal)]" : "text-[var(--aman-warm-gray)]")} />
                               <span className="flex-1">{item.label}</span>
                               {item.badge && (
-                                <span className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center font-medium">
+                                <span className="w-5 h-5 rounded-full bg-[var(--aman-charcoal)] text-[var(--aman-cream)] text-xs flex items-center justify-center font-medium">
                                   {item.badge}
                                 </span>
                               )}
@@ -213,10 +212,10 @@ export default function DashboardLayout({
                 ))}
               </nav>
 
-              <div className="p-3 border-t border-gray-200">
+              <div className="p-3 border-t border-[var(--aman-sand)]">
                 <Link href={`/chat/${company.id}`} target="_blank">
-                  <div className="flex items-center justify-center gap-2 w-full bg-gray-900 text-white py-2.5 rounded-lg text-sm">
-                    פתח צ'אט
+                  <div className="flex items-center justify-center gap-2 w-full bg-[var(--aman-charcoal)] text-[var(--aman-cream)] py-2.5 rounded-lg text-sm font-medium shadow-sm">
+                    פתח צ׳אט
                     <ExternalLink className="w-4 h-4" />
                   </div>
                 </Link>
@@ -229,19 +228,19 @@ export default function DashboardLayout({
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Navigation */}
-        <header className="h-14 bg-white border-b border-gray-200 flex items-center justify-between px-4">
+        <header className="h-14 aman-header border-b border-[var(--aman-sand)] flex items-center justify-between px-4 relative z-10">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 hover:bg-gray-100 rounded-lg"
+              className="lg:hidden p-2 hover:bg-[var(--aman-sand)]/40 rounded-lg transition-colors"
             >
-              <Menu className="w-5 h-5 text-gray-600" />
+              <Menu className="w-5 h-5 text-[var(--aman-stone)]" />
             </button>
 
             {/* Breadcrumb */}
             <div className="hidden sm:flex items-center gap-2 text-sm">
-              <span className="text-gray-400">◻</span>
-              <span className="font-medium text-gray-900">
+              <span className="text-[var(--aman-taupe)]">◻</span>
+              <span className="font-medium text-[var(--aman-charcoal)]">
                 {pathname === "/dashboard" && "סקירה כללית"}
                 {pathname === "/dashboard/conversations" && "שיחות"}
                 {pathname === "/dashboard/knowledge" && "מאגר ידע"}
@@ -257,7 +256,7 @@ export default function DashboardLayout({
             <GlobalSearch />
 
             {/* Actions */}
-            <Button variant="outline" size="sm" className="hidden sm:flex gap-1.5 text-gray-600">
+            <Button variant="outline" size="sm" className="hidden sm:flex gap-1.5 text-[var(--aman-stone)] border-[var(--aman-sand)] hover:bg-[var(--aman-sand)]/40 hover:text-[var(--aman-charcoal)] hover:border-[var(--aman-taupe)]">
               <HelpCircle className="w-4 h-4" />
               עזרה
             </Button>
@@ -266,17 +265,17 @@ export default function DashboardLayout({
             <NotificationDropdown />
 
             {/* User */}
-            <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-2 py-1 cursor-pointer hover:bg-gray-200 transition-colors">
-              <div className="w-7 h-7 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-medium text-sm">
+            <div className="flex items-center gap-2 bg-[var(--aman-sand)]/50 rounded-lg px-2.5 py-1.5 cursor-pointer hover:bg-[var(--aman-sand)] transition-all duration-300">
+              <div className="w-7 h-7 rounded-full bg-[var(--aman-taupe)] flex items-center justify-center text-[var(--aman-charcoal)] font-medium text-sm">
                 מ
               </div>
-              <span className="hidden sm:block text-sm font-medium text-gray-700">מנהל</span>
+              <span className="hidden sm:block text-sm font-medium text-[var(--aman-charcoal)]">מנהל</span>
             </div>
           </div>
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-6 bg-gray-50">
+        <main className="flex-1 overflow-y-auto p-6 relative z-0">
           {children}
         </main>
       </div>
