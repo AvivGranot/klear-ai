@@ -96,7 +96,7 @@
   --gradient-hero: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
   --gradient-card: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
 
-  /* ==================== Aman Design System (PRD) ==================== */
+  /* ==================== Aman Design System (PRD) with Klear Green ==================== */
 
   /* Primary Colors */
   --aman-bg-cream: #F3EEE7;
@@ -104,12 +104,18 @@
   --aman-text-secondary: rgba(49, 49, 49, 0.7);
   --aman-text-muted: rgba(49, 49, 49, 0.5);
 
+  /* Klear Green Accent */
+  --klear-green: #25D366;
+  --klear-green-dark: #128C7E;
+  --klear-green-darker: #075E54;
+  --klear-green-light: rgba(37, 211, 102, 0.1);
+
   /* Accent Colors */
   --aman-card-white: #FFFFFF;
   --aman-border: #E8E3DC;
-  --aman-button-bg: #313131;
-  --aman-button-text: #F3EEE7;
-  --aman-hover: #1A1A1A;
+  --aman-button-bg: #25D366;
+  --aman-button-text: #FFFFFF;
+  --aman-hover: #128C7E;
 
   /* Typography */
   --font-serif: "Cormorant Garamond", "Times New Roman", serif;
@@ -141,6 +147,10 @@
   --aman-stone: rgba(49, 49, 49, 0.7);
   --aman-charcoal: #313131;
   --aman-black: #1A1A1A;
+
+  /* Active/Accent state uses Klear green */
+  --aman-accent: #25D366;
+  --aman-accent-hover: #128C7E;
 }
 
 @theme inline {
@@ -280,13 +290,13 @@ p, span, label {
 
 /* Selection color */
 ::selection {
-  background: rgba(49, 49, 49, 0.15);
+  background: rgba(37, 211, 102, 0.2);
   color: inherit;
 }
 
 /* Focus visible styles */
 :focus-visible {
-  outline: 1px solid var(--aman-text-primary);
+  outline: 2px solid var(--klear-green);
   outline-offset: 2px;
 }
 
@@ -540,29 +550,30 @@ p, span, label {
   box-shadow: 0 4px 24px rgba(49, 49, 49, 0.08);
 }
 
-/* ==================== Button Styles (PRD) ==================== */
+/* ==================== Button Styles (PRD + Klear Green) ==================== */
 
-/* Primary Button (CTA) */
+/* Primary Button (CTA) - Klear Green */
 .btn-primary {
-  background-color: var(--aman-button-bg);
-  color: var(--aman-button-text);
+  background-color: var(--klear-green);
+  color: #FFFFFF;
   font-family: var(--font-sans);
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.8px;
   padding: 14px 32px;
   border: none;
   border-radius: 0;
   cursor: pointer;
-  transition: background-color var(--transition-normal);
+  transition: all var(--transition-normal);
 }
 
 .btn-primary:hover {
-  background-color: var(--aman-hover);
+  background-color: var(--klear-green-dark);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
 }
 
 .btn-primary:active {
-  background-color: #000000;
+  background-color: var(--klear-green-darker);
 }
 
 /* Secondary Button (Outline) */
@@ -880,23 +891,24 @@ textarea::placeholder {
   color: var(--aman-text-muted);
 }
 
-/* Aman button (PRD) */
+/* Aman button (PRD + Klear Green) */
 .aman-btn {
-  background-color: var(--aman-button-bg);
-  color: var(--aman-button-text);
+  background-color: var(--klear-green);
+  color: #FFFFFF;
   font-family: var(--font-sans);
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.8px;
   padding: 14px 32px;
   border: none;
   border-radius: 0;
   cursor: pointer;
-  transition: background-color var(--transition-normal);
+  transition: all var(--transition-normal);
 }
 
 .aman-btn:hover {
-  background-color: var(--aman-hover);
+  background-color: var(--klear-green-dark);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
 }
 
 /* Aman button outline */

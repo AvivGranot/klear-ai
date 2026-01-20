@@ -79,8 +79,8 @@ export default function DashboardLayout({
         {/* Logo */}
         <div className="h-14 flex items-center px-6 border-b border-[var(--aman-border)]">
           <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[var(--aman-button-bg)] flex items-center justify-center">
-              <span className="text-[var(--aman-button-text)] font-medium text-sm tracking-[2px]">K</span>
+            <div className="w-8 h-8 bg-[var(--klear-green)] flex items-center justify-center">
+              <span className="text-white font-medium text-sm tracking-[2px]">K</span>
             </div>
             <span className="font-serif text-lg tracking-[3px] uppercase text-[var(--aman-text-primary)]">Klear</span>
           </Link>
@@ -124,10 +124,10 @@ export default function DashboardLayout({
           ))}
         </nav>
 
-        {/* Footer (PRD) */}
+        {/* Footer (PRD + Klear Green) */}
         <div className="p-4 border-t border-[var(--aman-border)] space-y-3">
           <Link href={`/chat/${company.id}`} target="_blank">
-            <div className="flex items-center justify-center gap-2 bg-[var(--aman-button-bg)] text-[var(--aman-button-text)] py-3.5 hover:bg-[var(--aman-hover)] transition-colors duration-300 text-sm tracking-[0.8px]">
+            <div className="flex items-center justify-center gap-2 bg-[var(--klear-green)] text-white py-3.5 hover:bg-[var(--klear-green-dark)] transition-all duration-300 text-sm font-medium tracking-[0.8px] hover:shadow-lg hover:shadow-[rgba(37,211,102,0.3)]">
               פתח צ׳אט עובדים
               <ExternalLink className="w-4 h-4" strokeWidth={1.5} />
             </div>
@@ -155,8 +155,8 @@ export default function DashboardLayout({
             <div className="flex flex-col h-full">
               <div className="flex items-center justify-between h-14 px-4 border-b border-[var(--aman-border)]">
                 <Link href="/dashboard" className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-[var(--aman-button-bg)] flex items-center justify-center">
-                    <span className="text-[var(--aman-button-text)] font-medium text-sm tracking-[2px]">K</span>
+                  <div className="w-8 h-8 bg-[var(--klear-green)] flex items-center justify-center">
+                    <span className="text-white font-medium text-sm tracking-[2px]">K</span>
                   </div>
                   <span className="font-serif text-lg tracking-[3px] uppercase text-[var(--aman-text-primary)]">Klear</span>
                 </Link>
@@ -211,7 +211,7 @@ export default function DashboardLayout({
 
               <div className="p-4 border-t border-[var(--aman-border)]">
                 <Link href={`/chat/${company.id}`} target="_blank">
-                  <div className="flex items-center justify-center gap-2 w-full bg-[var(--aman-button-bg)] text-[var(--aman-button-text)] py-3.5 text-sm tracking-[0.8px]">
+                  <div className="flex items-center justify-center gap-2 w-full bg-[var(--klear-green)] text-white py-3.5 text-sm font-medium tracking-[0.8px] hover:bg-[var(--klear-green-dark)] transition-colors">
                     פתח צ׳אט
                     <ExternalLink className="w-4 h-4" strokeWidth={1.5} />
                   </div>
