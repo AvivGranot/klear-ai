@@ -99,7 +99,7 @@
   /* ==================== Aman Design System (PRD) with Klear Green ==================== */
 
   /* Primary Colors */
-  --aman-bg-cream: #F3EEE7;
+  --aman-bg-cream: #E6F7ED;
   --aman-text-primary: #313131;
   --aman-text-secondary: rgba(49, 49, 49, 0.7);
   --aman-text-muted: rgba(49, 49, 49, 0.5);
@@ -139,8 +139,8 @@
   --transition-normal: 0.3s ease;
 
   /* Legacy Aman variables (for backward compatibility) */
-  --aman-cream: #F3EEE7;
-  --aman-beige: #F3EEE7;
+  --aman-cream: #E6F7ED;
+  --aman-beige: #E6F7ED;
   --aman-sand: #E8E3DC;
   --aman-taupe: #E8E3DC;
   --aman-warm-gray: rgba(49, 49, 49, 0.5);
