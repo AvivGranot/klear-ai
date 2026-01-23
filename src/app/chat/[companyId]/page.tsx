@@ -18,9 +18,9 @@ interface User {
 
 // Static company data for when database is unavailable
 const STATIC_COMPANIES: Record<string, Company> = {
-  "amir-gas-station": {
-    id: "amir-gas-station",
-    name: "תחנת דלק אמיר בני ברק",
+  "jolika-chocolate": {
+    id: "jolika-chocolate",
+    name: "ג'וליקה שוקולד",
     logo: null,
   },
   "demo-company-001": {

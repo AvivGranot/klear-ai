@@ -1,35 +1,14 @@
 import { NextResponse } from "next/server"
-import { readFileSync } from "fs"
-import { join } from "path"
+import { knowledgeItems, categories, company } from "@/data/jolika-data"
 
-// Load WhatsApp data from exported JSON files
-let whatsappFaqs: any[] = []
-let whatsappCategories: any[] = []
-
-try {
-  const faqsPath = join(process.cwd(), "prisma", "whatsapp-faqs.json")
-  const categoriesPath = join(process.cwd(), "prisma", "categories.json")
-  whatsappFaqs = JSON.parse(readFileSync(faqsPath, "utf-8"))
-  whatsappCategories = JSON.parse(readFileSync(categoriesPath, "utf-8"))
-} catch (e) {
-  console.log("WhatsApp data files not found, using demo data")
-}
-
-// Demo data - used when WhatsApp data not available
+// Company data for Jolika Chocolate
 const DEMO_COMPANY = {
-  id: "demo-company-001",
-  name: "תחנת דלק אמיר בני ברק",
-  industry: "gas_station",
+  id: "jolika-chocolate",
+  name: company.name,
+  industry: "chocolate_shop",
 }
 
-const DEMO_CATEGORIES = [
-  { name: "Fuel & Pumps", nameHe: "תדלוק ומשאבות", icon: "⛽" },
-  { name: "Payments", nameHe: "תשלומים וקופה", icon: "💳" },
-  { name: "HR & Shifts", nameHe: "כוח אדם ומשמרות", icon: "👥" },
-  { name: "Safety", nameHe: "בטיחות וחירום", icon: "🚨" },
-  { name: "Inventory", nameHe: "מלאי והזמנות", icon: "📦" },
-  { name: "Maintenance", nameHe: "תקלות ותחזוקה", icon: "🔧" },
-]
+const DEMO_CATEGORIES = categories
 
 // Try to import Prisma
 let prisma: any = null
@@ -56,7 +35,7 @@ export async function POST() {
       message: "Demo mode - no database",
       companyId: DEMO_COMPANY.id,
       companyName: DEMO_COMPANY.name,
-      knowledgeItems: whatsappFaqs.length || 0,
+      knowledgeItems: knowledgeItems.length || 0,
       mode: "demo"
     }, { status: 201 })
   }
@@ -74,44 +53,42 @@ export async function POST() {
       })
     }
 
-    // Create company - תחנת דלק אמיר בני ברק
-    const company = await prisma.company.create({
+    // Create company - ג'וליקה שוקולד
+    const newCompany = await prisma.company.create({
       data: {
-        name: "תחנת דלק אמיר בני ברק",
-        industry: "gas_station",
+        name: DEMO_COMPANY.name,
+        industry: DEMO_COMPANY.industry,
       },
     })
 
-    // Use WhatsApp categories if available, otherwise demo
-    const categoriesToCreate = whatsappCategories.length > 0 ? whatsappCategories : DEMO_CATEGORIES
+    // Create categories from Jolika data
     const categoryMap = new Map<string, string>()
 
-    for (const cat of categoriesToCreate) {
+    for (const cat of DEMO_CATEGORIES) {
       const created = await prisma.category.create({
         data: {
           name: cat.name,
           nameHe: cat.nameHe,
           icon: cat.icon || "📁",
-          companyId: company.id,
+          companyId: newCompany.id,
         },
       })
       categoryMap.set(cat.nameHe, created.id)
     }
 
-    // Create knowledge items from WhatsApp FAQs
-    const faqsToCreate = whatsappFaqs.length > 0 ? whatsappFaqs : []
+    // Create knowledge items from Jolika data
     let createdCount = 0
 
-    for (const faq of faqsToCreate) {
+    for (const item of knowledgeItems) {
       try {
         await prisma.knowledgeItem.create({
           data: {
-            title: faq.title || faq.titleHe || "שאלה",
-            titleHe: faq.titleHe || faq.title,
-            content: faq.content || faq.contentHe || "",
-            contentHe: faq.contentHe || faq.content,
-            type: faq.type || "faq",
-            companyId: company.id,
+            title: item.title || item.titleHe || "שאלה",
+            titleHe: item.titleHe || item.title,
+            content: item.content || item.contentHe || "",
+            contentHe: item.contentHe || item.content,
+            type: item.type || "faq",
+            companyId: newCompany.id,
             isActive: true,
           },
         })
@@ -122,10 +99,10 @@ export async function POST() {
     }
 
     return NextResponse.json({
-      message: "Data seeded successfully from WhatsApp import",
-      companyId: company.id,
-      companyName: company.name,
-      categories: categoriesToCreate.length,
+      message: "Data seeded successfully for Jolika Chocolate",
+      companyId: newCompany.id,
+      companyName: newCompany.name,
+      categories: DEMO_CATEGORIES.length,
       knowledgeItems: createdCount,
     }, { status: 201 })
 
@@ -147,7 +124,7 @@ export async function GET() {
       seeded: true,
       companyId: DEMO_COMPANY.id,
       companyName: DEMO_COMPANY.name,
-      knowledgeItemsCount: whatsappFaqs.length || 0,
+      knowledgeItemsCount: knowledgeItems.length || 0,
       mode: "demo"
     })
   }

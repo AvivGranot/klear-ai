@@ -13,7 +13,7 @@ import {
   ArrowRight,
   Loader2
 } from "lucide-react"
-import { knowledgeItems, conversations, GAS_STATION_TOPICS } from "@/data/gas-station-data"
+import { knowledgeItems, conversations, CHOCOLATE_SHOP_TOPICS } from "@/data/jolika-data"
 import { cn } from "@/lib/utils"
 
 interface SearchResult {
@@ -74,7 +74,7 @@ export function GlobalSearch() {
     const searchResults: SearchResult[] = []
 
     // Search topics first
-    GAS_STATION_TOPICS.forEach((topic) => {
+    CHOCOLATE_SHOP_TOPICS.forEach((topic) => {
       if (
         topic.name.includes(searchQuery) ||
         topic.keywords.some((kw) => kw.includes(normalizedQuery))
@@ -304,7 +304,7 @@ export function GlobalSearch() {
                   נושאים פופולריים
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {GAS_STATION_TOPICS.slice(0, 6).map((topic) => (
+                  {CHOCOLATE_SHOP_TOPICS.slice(0, 6).map((topic) => (
                     <button
                       key={topic.id}
                       onClick={() => setQuery(topic.name)}

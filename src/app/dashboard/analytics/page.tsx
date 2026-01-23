@@ -17,9 +17,9 @@ import {
   getTopicStats,
   getKBSummary,
   getAnalyticsSummary,
-  GAS_STATION_TOPICS,
+  CHOCOLATE_SHOP_TOPICS,
   conversations,
-} from "@/data/gas-station-data"
+} from "@/data/jolika-data"
 
 const colorClasses: Record<string, { bg: string; text: string; border: string; fill: string }> = {
   blue: { bg: 'bg-blue-50', text: 'text-blue-600', border: 'border-blue-200', fill: 'bg-blue-500' },
@@ -156,7 +156,7 @@ export default function AnalyticsPage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-3">
-              {GAS_STATION_TOPICS.map((topic) => {
+              {CHOCOLATE_SHOP_TOPICS.map((topic) => {
                 const colors = colorClasses[topic.color] || colorClasses.gray
                 const topicData = topicStats.find(t => t.id === topic.id)
                 return (
@@ -228,7 +228,7 @@ export default function AnalyticsPage() {
           <div className="flex items-center gap-3">
             <MessageSquare className="w-6 h-6 text-[var(--klear-green)]" />
             <div>
-              <p className="text-sm font-medium text-gray-900">מקור הנתונים: WhatsApp - צוות אמיר בני ברק</p>
+              <p className="text-sm font-medium text-gray-900">מקור הנתונים: WhatsApp - צוות ג'וליקה אוסישקין</p>
               <p className="text-xs text-gray-500">
                 {analyticsSummary.totalConversations} שיחות מנותחות | {kbSummary.automationPatterns} תבניות אוטומציה | {kbSummary.documents} מסמכים
               </p>

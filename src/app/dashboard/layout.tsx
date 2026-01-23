@@ -43,8 +43,8 @@ export default function DashboardLayout({
 
   // Static company data - no API needed
   const company = {
-    name: "תחנת דלק אמיר בני ברק",
-    id: "amir-gas-station"
+    name: "ג'וליקה שוקולד",
+    id: "jolika-chocolate"
   }
 
   // Build sidebar config with badges

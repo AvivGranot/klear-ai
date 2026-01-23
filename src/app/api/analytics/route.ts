@@ -5,6 +5,7 @@
 
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+import { CHOCOLATE_SHOP_TOPICS } from '@/data/jolika-data';
 
 const prisma = new PrismaClient();
 
@@ -192,17 +193,25 @@ function generateDailyUsage(monthlyTotal: number): Array<{ day: string; count: n
 async function getTopicDistribution(companyId: string): Promise<Array<{ topic: string; count: number; percentage: number }>> {
   const items = await prisma.knowledgeItem.findMany({
     where: { companyId, isActive: true },
-    select: { tags: true },
+    select: { tags: true, contentHe: true, content: true },
   });
 
   const topicCounts = new Map<string, number>();
-  const topics = ['תדלוק', 'תשלומים', 'מלאי', 'בטיחות', 'שירות', 'מוצרים', 'תחזוקה'];
+
+  // Use chocolate shop topic names from configuration
+  const topicNames = CHOCOLATE_SHOP_TOPICS.map(t => t.name);
 
   for (const item of items) {
     const tags = item.tags ? JSON.parse(item.tags) : [];
-    for (const topic of topics) {
-      if (tags.some((t: string) => t.includes(topic))) {
-        topicCounts.set(topic, (topicCounts.get(topic) || 0) + 1);
+    const content = (item.contentHe || item.content || '').toLowerCase();
+
+    for (const topic of CHOCOLATE_SHOP_TOPICS) {
+      // Check if any keyword matches the content
+      const matchesKeyword = topic.keywords.some(kw => content.includes(kw));
+      const matchesTag = tags.some((t: string) => t.includes(topic.name));
+
+      if (matchesKeyword || matchesTag) {
+        topicCounts.set(topic.name, (topicCounts.get(topic.name) || 0) + 1);
       }
     }
   }

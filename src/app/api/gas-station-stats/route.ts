@@ -1,36 +1,13 @@
 /**
- * Gas Station Stats API
- * Returns customized metrics for gas station operations
+ * Company Stats API
+ * Returns customized metrics for Jolika Chocolate operations
  */
 
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+import { CHOCOLATE_SHOP_TOPICS, detectTopic } from '@/data/jolika-data';
 
 const prisma = new PrismaClient();
-
-// Gas station topic configuration
-const GAS_STATION_TOPICS = [
-  { id: 'fuel', name: 'תדלוק ומשאבות', icon: '⛽', color: 'blue', keywords: ['משאב', 'תדלוק', 'דלק', 'בנזין', 'סולר'] },
-  { id: 'payments', name: 'תשלומים וקופה', icon: '💳', color: 'green', keywords: ['קופה', 'עסקה', 'תשלום', 'מזומן', 'אשראי', 'ביט', 'פייבוקס'] },
-  { id: 'inventory', name: 'מלאי והזמנות', icon: '📦', color: 'orange', keywords: ['מלאי', 'חסר', 'הזמנ', 'ספק', 'משלוח'] },
-  { id: 'shifts', name: 'כוח אדם ומשמרות', icon: '👥', color: 'purple', keywords: ['עובד', 'משמרת', 'שעות', 'חופש'] },
-  { id: 'safety', name: 'בטיחות וחירום', icon: '🚨', color: 'red', keywords: ['בטיח', 'חירום', 'כיבוי', 'אש'] },
-  { id: 'customers', name: 'שירות לקוחות', icon: '🤝', color: 'teal', keywords: ['לקוח', 'שירות', 'תלונ'] },
-  { id: 'pricing', name: 'מחירים ומבצעים', icon: '💰', color: 'yellow', keywords: ['מכיר', 'הנחה', 'מבצע', 'קופון'] },
-  { id: 'products', name: 'מוצרים וצרכניה', icon: '🛒', color: 'pink', keywords: ['מקרר', 'קפה', 'חלב', 'מזון', 'מוצר'] },
-  { id: 'maintenance', name: 'תקלות ותחזוקה', icon: '🔧', color: 'gray', keywords: ['תקלה', 'בעיה', 'תיקון', 'שירות טכני'] },
-  { id: 'documentation', name: 'תיעוד וחשבונות', icon: '📄', color: 'indigo', keywords: ['צילום', 'תמונה', 'חשבונית', 'קבלה'] },
-];
-
-function detectTopic(text: string): typeof GAS_STATION_TOPICS[0] | null {
-  const lower = text.toLowerCase();
-  for (const topic of GAS_STATION_TOPICS) {
-    if (topic.keywords.some(kw => lower.includes(kw))) {
-      return topic;
-    }
-  }
-  return null;
-}
 
 export async function GET() {
   try {
@@ -136,7 +113,7 @@ export async function GET() {
 
     // Calculate topic stats for today
     const topicCounts = new Map<string, { today: number; yesterday: number }>();
-    GAS_STATION_TOPICS.forEach(t => topicCounts.set(t.id, { today: 0, yesterday: 0 }));
+    CHOCOLATE_SHOP_TOPICS.forEach(t => topicCounts.set(t.id, { today: 0, yesterday: 0 }));
 
     todayQueries.forEach(q => {
       const topic = detectTopic(q.query);
@@ -170,7 +147,7 @@ export async function GET() {
     });
 
     // Calculate topic performance
-    const topicPerformance = GAS_STATION_TOPICS.map(topic => {
+    const topicPerformance = CHOCOLATE_SHOP_TOPICS.map(topic => {
       const topicQueries = weekQueries.filter(q => detectTopic(q.query)?.id === topic.id);
       const totalQueries = topicQueries.length;
       const answeredQueries = topicQueries.filter(q => q.response).length;
@@ -231,7 +208,7 @@ export async function GET() {
     });
 
     // Topic stats for today with trends
-    const topicStats = GAS_STATION_TOPICS.map(topic => {
+    const topicStats = CHOCOLATE_SHOP_TOPICS.map(topic => {
       const counts = topicCounts.get(topic.id)!;
       return {
         ...topic,
@@ -294,9 +271,9 @@ export async function GET() {
       kbSummary,
     });
   } catch (error) {
-    console.error('Gas Station Stats API error:', error);
+    console.error('Company Stats API error:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch gas station stats' },
+      { error: 'Failed to fetch company stats' },
       { status: 500 }
     );
   }

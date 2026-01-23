@@ -1,0 +1,242 @@
+/**
+ * Static data from WhatsApp Chat - צוות ג'וליקה אוסישקין
+ * No database needed - data is bundled with the app
+ */
+
+import whatsappFaqs from './whatsapp-faqs.json'
+import allConversationsData from './all-conversations.json'
+import categoriesData from './categories.json'
+
+// Type definitions
+interface Conversation {
+  id: string
+  question: string
+  questionSender: string
+  answer: string
+  answerSender: string
+  date: string
+  time: string
+  isMedia: boolean
+}
+
+interface ConversationsData {
+  total: number
+  conversations: Conversation[]
+}
+
+// Chocolate shop topic configuration
+export const CHOCOLATE_SHOP_TOPICS = [
+  { id: 'deliveries', name: 'משלוחים', icon: '🚚', color: 'blue', keywords: ['משלוח', 'רועי', 'מסירה', 'שליח', 'כתובת', 'תיאום', 'הגעה', 'חלוקה'] },
+  { id: 'orders', name: 'הזמנות', icon: '📋', color: 'green', keywords: ['הזמנ', 'לקוח', 'קופסא', 'גרנד', 'ג׳וליקה', 'פרימיום', 'חמישי', 'תשיעי', 'מגדל'] },
+  { id: 'inventory', name: 'מלאי ופרלינים', icon: '🍫', color: 'amber', keywords: ['טעם', 'פרלינ', 'שוקולד', 'מלאי', 'חסר', 'יש', 'מריר', 'חלב', 'לבן', 'טראפלס'] },
+  { id: 'payments', name: 'תשלומים', icon: '💳', color: 'emerald', keywords: ['תשלום', 'העברה', 'אשראי', 'קופה', 'חיוב', 'שילם', 'בנק', 'חשבונית'] },
+  { id: 'loyalty', name: 'מועדון לקוחות', icon: '⭐', color: 'yellow', keywords: ['מועדון', 'נקודות', 'וליוקארד', 'עסקי', 'הנחה', 'צבירה'] },
+  { id: 'procedures', name: 'נהלים ותפעול', icon: '📝', color: 'purple', keywords: ['נוהל', 'תפעול', 'פתיחה', 'סגירה', 'משימ', 'בבקשה'] },
+  { id: 'allergens', name: 'אלרגנים', icon: '⚠️', color: 'red', keywords: ['אלרג', 'אגוז', 'גלוטן', 'לוז', 'מרציפן', 'אלכוהול', 'ויסקי'] },
+  { id: 'customers', name: 'שירות לקוחות', icon: '🤝', color: 'teal', keywords: ['לקוח', 'שירות', 'תלונ', 'בעיה', 'פיצוי'] },
+  { id: 'shifts', name: 'משמרות', icon: '👥', color: 'indigo', keywords: ['משמרת', 'עבודה', 'יום', 'שעות', 'טבלה', 'שבוע'] },
+  { id: 'packaging', name: 'אריזות', icon: '🎁', color: 'pink', keywords: ['אריז', 'שקית', 'סרט', 'קשירה', 'קופס', 'מדבק'] },
+]
+
+export const categories = categoriesData as Array<{
+  name: string
+  nameHe: string
+  icon: string
+}>
+
+// Knowledge base items (documents + automation patterns)
+export const knowledgeItems = whatsappFaqs as Array<{
+  title: string
+  titleHe: string
+  content: string
+  contentHe: string
+  type: string
+  frequency?: number
+  example_questions?: string[]
+}>
+
+// All conversations for analytics
+export const conversationsData = allConversationsData as ConversationsData
+export const conversations = conversationsData.conversations
+
+// Detect topic from text
+export function detectTopic(text: string) {
+  const lower = text.toLowerCase()
+  for (const topic of CHOCOLATE_SHOP_TOPICS) {
+    if (topic.keywords.some(kw => lower.includes(kw))) {
+      return topic
+    }
+  }
+  return null
+}
+
+// Process knowledge items with topic detection
+export function getProcessedKnowledge() {
+  return knowledgeItems.map((item, index) => {
+    const topic = detectTopic(item.contentHe || item.content || '')
+
+    return {
+      id: `kb-${index}`,
+      rank: index + 1,
+      title: item.titleHe || item.title,
+      content: item.contentHe || item.content,
+      type: item.type,
+      frequency: item.frequency || 1,
+      topic: topic?.name,
+      topicIcon: topic?.icon,
+      topicColor: topic?.color,
+    }
+  })
+}
+
+// Get all conversations with topic detection (for analytics)
+export function getProcessedConversations() {
+  return conversations.map((conv, index) => {
+    const text = `${conv.question} ${conv.answer}`
+    const topic = detectTopic(text)
+
+    return {
+      ...conv,
+      id: conv.id || `conv-${index}`,
+      topic: topic?.name || 'אחר',
+      topicIcon: topic?.icon || '💬',
+      topicColor: topic?.color || 'gray',
+    }
+  })
+}
+
+// Get topic stats from ALL conversations (for analytics)
+export function getTopicStats() {
+  const topicCounts = new Map<string, number>()
+  CHOCOLATE_SHOP_TOPICS.forEach(t => topicCounts.set(t.id, 0))
+  topicCounts.set('other', 0)
+
+  conversations.forEach(conv => {
+    const text = `${conv.question} ${conv.answer}`
+    const topic = detectTopic(text)
+    if (topic) {
+      topicCounts.set(topic.id, (topicCounts.get(topic.id) || 0) + 1)
+    } else {
+      topicCounts.set('other', (topicCounts.get('other') || 0) + 1)
+    }
+  })
+
+  const stats = CHOCOLATE_SHOP_TOPICS.map(topic => ({
+    ...topic,
+    count: topicCounts.get(topic.id) || 0,
+  }))
+
+  // Add "other" category
+  stats.push({
+    id: 'other',
+    name: 'אחר',
+    icon: '💬',
+    color: 'gray',
+    keywords: [],
+    count: topicCounts.get('other') || 0,
+  })
+
+  return stats.sort((a, b) => b.count - a.count)
+}
+
+// Get KB summary
+export function getKBSummary() {
+  const documents = knowledgeItems.filter(f => f.type === 'document').length
+  const automationPatterns = knowledgeItems.filter(f => f.type === 'repeated_answer').length
+
+  return {
+    totalItems: knowledgeItems.length,
+    documents,
+    automationPatterns,
+    categories: categories.length,
+  }
+}
+
+// Extended type for automation patterns with manager info
+interface AutomationPattern {
+  answer: string
+  rawAnswer: string
+  frequency: number
+  exampleQuestions: string[]
+  topic: string
+  managerId: string
+  managerName: string
+  status: string
+  mediaInfo: { filename: string; type: string } | null
+  associatedMedia: Array<{ filename: string; type: string }>
+}
+
+// Get automation patterns (repeated answers from managers)
+export function getAutomationPatterns(): AutomationPattern[] {
+  return knowledgeItems
+    .filter(item => item.type === 'repeated_answer')
+    .map(item => {
+      // Type assertion for the extended properties
+      const extItem = item as typeof item & {
+        manager_id?: string
+        manager_name?: string
+        status?: string
+        media_info?: { filename: string; type: string } | null
+        associated_media?: Array<{ filename: string; type: string }>
+        raw_answer?: string
+      }
+
+      return {
+        answer: item.content,
+        rawAnswer: extItem.raw_answer || item.content,
+        frequency: item.frequency || 1,
+        exampleQuestions: item.example_questions || [],
+        topic: detectTopic(item.content)?.name || 'אחר',
+        managerId: extItem.manager_id || 'unknown',
+        managerName: extItem.manager_name || 'שלי גולדנברג',
+        status: extItem.status || 'pending_approval',
+        mediaInfo: extItem.media_info || null,
+        associatedMedia: extItem.associated_media || [],
+      }
+    })
+    .sort((a, b) => b.frequency - a.frequency)
+}
+
+// Get automation patterns grouped by manager
+export function getAutomationPatternsByManager() {
+  const patterns = getAutomationPatterns()
+  const byManager: Record<string, AutomationPattern[]> = {}
+
+  patterns.forEach(pattern => {
+    const manager = pattern.managerName
+    if (!byManager[manager]) {
+      byManager[manager] = []
+    }
+    byManager[manager].push(pattern)
+  })
+
+  return byManager
+}
+
+// Get analytics summary
+export function getAnalyticsSummary() {
+  const totalConversations = conversations.length
+  const topicStats = getTopicStats()
+
+  return {
+    totalConversations,
+    topicBreakdown: topicStats,
+    automationPatternsCount: knowledgeItems.filter(f => f.type === 'repeated_answer').length,
+    documentsCount: knowledgeItems.filter(f => f.type === 'document').length,
+  }
+}
+
+// Company info
+export const company = {
+  id: 'jolika-chocolate',
+  name: "ג'וליקה שוקולד",
+}
+
+// Legacy export for backward compatibility
+export const faqs = knowledgeItems
+export function getProcessedFaqs() {
+  return getProcessedKnowledge()
+}
+
+// Re-export with gas station names for backward compatibility
+export const GAS_STATION_TOPICS = CHOCOLATE_SHOP_TOPICS

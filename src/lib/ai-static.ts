@@ -4,7 +4,7 @@
  */
 
 import OpenAI from 'openai'
-import { knowledgeItems, getAutomationPatterns, detectTopic } from '@/data/gas-station-data'
+import { knowledgeItems, getAutomationPatterns, detectTopic } from '@/data/jolika-data'
 
 // Lazy initialization to avoid build-time errors
 let openai: OpenAI | null = null
@@ -187,7 +187,7 @@ export async function generateResponseStatic(
 
   // Use OpenAI for response generation
   try {
-    const systemPrompt = `אתה עוזר ידע פנימי לעובדי תחנת דלק אמיר בני ברק. תפקידך לענות על שאלות בהתבסס על מאגר הידע של החברה.
+    const systemPrompt = `אתה עוזר ידע פנימי לעובדי ג'וליקה שוקולד - חנות שוקולד ומתנות. תפקידך לענות על שאלות בהתבסס על מאגר הידע של החברה.
 
 כללים חשובים:
 1. ענה בעברית תמיד

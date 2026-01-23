@@ -1,1 +1,12 @@
-[{"name":"Fuel & Pumps","nameHe":"תדלוק ומשאבות","icon":"⛽"},{"name":"Payments","nameHe":"תשלומים וקופה","icon":"💳"},{"name":"Documentation","nameHe":"תיעוד וחשבונות","icon":"📄"},{"name":"HR & Shifts","nameHe":"כוח אדם ומשמרות","icon":"👥"},{"name":"Products","nameHe":"מוצרים וצרכניה","icon":"🛒"},{"name":"Safety","nameHe":"בטיחות וחירום","icon":"🚨"},{"name":"Inventory","nameHe":"מלאי והזמנות","icon":"📦"},{"name":"Customer Service","nameHe":"שירות לקוחות","icon":"🤝"},{"name":"Pricing","nameHe":"מחירים ומבצעים","icon":"💰"},{"name":"Maintenance","nameHe":"תקלות ותחזוקה","icon":"🔧"}]
+[
+  {"name": "Deliveries", "nameHe": "משלוחים", "icon": "🚚"},
+  {"name": "Orders", "nameHe": "הזמנות", "icon": "📋"},
+  {"name": "Inventory & Pralines", "nameHe": "מלאי ופרלינים", "icon": "🍫"},
+  {"name": "Payments", "nameHe": "תשלומים", "icon": "💳"},
+  {"name": "Loyalty Program", "nameHe": "מועדון לקוחות", "icon": "⭐"},
+  {"name": "Procedures", "nameHe": "נהלים ותפעול", "icon": "📝"},
+  {"name": "Allergens", "nameHe": "אלרגנים", "icon": "⚠️"},
+  {"name": "Customer Service", "nameHe": "שירות לקוחות", "icon": "🤝"},
+  {"name": "Shifts", "nameHe": "משמרות", "icon": "👥"},
+  {"name": "Packaging", "nameHe": "אריזות", "icon": "🎁"}
+]

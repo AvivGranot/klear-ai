@@ -14,7 +14,7 @@ import {
   Zap,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { getAutomationPatterns, conversations } from "@/data/gas-station-data"
+import { getAutomationPatterns, conversations } from "@/data/jolika-data"
 
 interface Notification {
   id: string

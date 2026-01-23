@@ -27,7 +27,7 @@ import {
 import { cn, formatRelativeTime } from "@/lib/utils"
 import { safeFetch } from "@/lib/safeFetch"
 import { useDropzone, Accept } from "react-dropzone"
-import { getAutomationPatterns, getAutomationPatternsByManager } from "@/data/gas-station-data"
+import { getAutomationPatterns, getAutomationPatternsByManager } from "@/data/jolika-data"
 
 // Content type configuration
 interface ContentType {
