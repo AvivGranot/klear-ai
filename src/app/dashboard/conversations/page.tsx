@@ -38,6 +38,8 @@ function useAnnounce() {
 
 // Import topics from centralized Jolika data
 import { CHOCOLATE_SHOP_TOPICS, detectTopic } from "@/data/jolika-data"
+import { TopicIcon } from "@/components/TopicIcon"
+import type { TopicIconName } from "@/data/jolika-data"
 
 const topicColorClasses: Record<string, { bg: string; text: string; border: string }> = {
   blue: { bg: 'bg-blue-50', text: 'text-blue-600', border: 'border-blue-200' },
@@ -503,7 +505,7 @@ export default function ConversationsPage() {
                 aria-pressed={isActive}
                 aria-label={`${topic.name}: ${topic.count} שיחות${isActive ? " - נבחר" : ""}`}
               >
-                <span aria-hidden="true">{topic.icon}</span>
+                <TopicIcon name={topic.icon as TopicIconName} className="w-3.5 h-3.5" aria-hidden="true" />
                 {topic.name}
                 <span className="text-xs opacity-70" aria-hidden="true">({topic.count})</span>
               </button>
@@ -771,9 +773,10 @@ export default function ConversationsPage() {
                             </Badge>
                             {topic && (
                               <Badge
-                                className={`text-[10px] px-1.5 ${topicColorClasses[topic.color]?.bg || 'bg-gray-100'} ${topicColorClasses[topic.color]?.text || 'text-gray-600'}`}
+                                className={`text-[10px] px-1.5 flex items-center gap-0.5 ${topicColorClasses[topic.color]?.bg || 'bg-gray-100'} ${topicColorClasses[topic.color]?.text || 'text-gray-600'}`}
                               >
-                                <span aria-hidden="true">{topic.icon}</span> {topic.name}
+                                <TopicIcon name={topic.icon as TopicIconName} className="w-3 h-3" aria-hidden="true" />
+                                {topic.name}
                               </Badge>
                             )}
                             {conv.duration && (

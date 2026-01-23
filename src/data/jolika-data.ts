@@ -24,18 +24,27 @@ interface ConversationsData {
   conversations: Conversation[]
 }
 
+// Lucide icon name type for topics
+export type TopicIconName = 'Truck' | 'ClipboardList' | 'Package' | 'CreditCard' | 'Star' | 'FileText' | 'AlertTriangle' | 'Users' | 'CalendarDays' | 'Gift' | 'MessageCircle'
+
 // Chocolate shop topic configuration
-export const CHOCOLATE_SHOP_TOPICS = [
-  { id: 'deliveries', name: 'משלוחים', icon: '🚚', color: 'blue', keywords: ['משלוח', 'רועי', 'מסירה', 'שליח', 'כתובת', 'תיאום', 'הגעה', 'חלוקה'] },
-  { id: 'orders', name: 'הזמנות', icon: '📋', color: 'green', keywords: ['הזמנ', 'לקוח', 'קופסא', 'גרנד', 'ג׳וליקה', 'פרימיום', 'חמישי', 'תשיעי', 'מגדל'] },
-  { id: 'inventory', name: 'מלאי ופרלינים', icon: '🍫', color: 'amber', keywords: ['טעם', 'פרלינ', 'שוקולד', 'מלאי', 'חסר', 'יש', 'מריר', 'חלב', 'לבן', 'טראפלס'] },
-  { id: 'payments', name: 'תשלומים', icon: '💳', color: 'emerald', keywords: ['תשלום', 'העברה', 'אשראי', 'קופה', 'חיוב', 'שילם', 'בנק', 'חשבונית'] },
-  { id: 'loyalty', name: 'מועדון לקוחות', icon: '⭐', color: 'yellow', keywords: ['מועדון', 'נקודות', 'וליוקארד', 'עסקי', 'הנחה', 'צבירה'] },
-  { id: 'procedures', name: 'נהלים ותפעול', icon: '📝', color: 'purple', keywords: ['נוהל', 'תפעול', 'פתיחה', 'סגירה', 'משימ', 'בבקשה'] },
-  { id: 'allergens', name: 'אלרגנים', icon: '⚠️', color: 'red', keywords: ['אלרג', 'אגוז', 'גלוטן', 'לוז', 'מרציפן', 'אלכוהול', 'ויסקי'] },
-  { id: 'customers', name: 'שירות לקוחות', icon: '🤝', color: 'teal', keywords: ['לקוח', 'שירות', 'תלונ', 'בעיה', 'פיצוי'] },
-  { id: 'shifts', name: 'משמרות', icon: '👥', color: 'indigo', keywords: ['משמרת', 'עבודה', 'יום', 'שעות', 'טבלה', 'שבוע'] },
-  { id: 'packaging', name: 'אריזות', icon: '🎁', color: 'pink', keywords: ['אריז', 'שקית', 'סרט', 'קשירה', 'קופס', 'מדבק'] },
+export const CHOCOLATE_SHOP_TOPICS: Array<{
+  id: string
+  name: string
+  icon: TopicIconName
+  color: string
+  keywords: string[]
+}> = [
+  { id: 'deliveries', name: 'משלוחים', icon: 'Truck', color: 'blue', keywords: ['משלוח', 'רועי', 'מסירה', 'שליח', 'כתובת', 'תיאום', 'הגעה', 'חלוקה'] },
+  { id: 'orders', name: 'הזמנות', icon: 'ClipboardList', color: 'green', keywords: ['הזמנ', 'לקוח', 'קופסא', 'גרנד', 'ג׳וליקה', 'פרימיום', 'חמישי', 'תשיעי', 'מגדל'] },
+  { id: 'inventory', name: 'מלאי ופרלינים', icon: 'Package', color: 'amber', keywords: ['טעם', 'פרלינ', 'שוקולד', 'מלאי', 'חסר', 'יש', 'מריר', 'חלב', 'לבן', 'טראפלס'] },
+  { id: 'payments', name: 'תשלומים', icon: 'CreditCard', color: 'emerald', keywords: ['תשלום', 'העברה', 'אשראי', 'קופה', 'חיוב', 'שילם', 'בנק', 'חשבונית'] },
+  { id: 'loyalty', name: 'מועדון לקוחות', icon: 'Star', color: 'yellow', keywords: ['מועדון', 'נקודות', 'וליוקארד', 'עסקי', 'הנחה', 'צבירה'] },
+  { id: 'procedures', name: 'נהלים ותפעול', icon: 'FileText', color: 'purple', keywords: ['נוהל', 'תפעול', 'פתיחה', 'סגירה', 'משימ', 'בבקשה'] },
+  { id: 'allergens', name: 'אלרגנים', icon: 'AlertTriangle', color: 'red', keywords: ['אלרג', 'אגוז', 'גלוטן', 'לוז', 'מרציפן', 'אלכוהול', 'ויסקי'] },
+  { id: 'customers', name: 'שירות לקוחות', icon: 'Users', color: 'teal', keywords: ['לקוח', 'שירות', 'תלונ', 'בעיה', 'פיצוי'] },
+  { id: 'shifts', name: 'משמרות', icon: 'CalendarDays', color: 'indigo', keywords: ['משמרת', 'עבודה', 'יום', 'שעות', 'טבלה', 'שבוע'] },
+  { id: 'packaging', name: 'אריזות', icon: 'Gift', color: 'pink', keywords: ['אריז', 'שקית', 'סרט', 'קשירה', 'קופס', 'מדבק'] },
 ]
 
 export const categories = categoriesData as Array<{
@@ -99,7 +108,7 @@ export function getProcessedConversations() {
       ...conv,
       id: conv.id || `conv-${index}`,
       topic: topic?.name || 'אחר',
-      topicIcon: topic?.icon || '💬',
+      topicIcon: (topic?.icon || 'MessageCircle') as TopicIconName,
       topicColor: topic?.color || 'gray',
     }
   })
@@ -130,7 +139,7 @@ export function getTopicStats() {
   stats.push({
     id: 'other',
     name: 'אחר',
-    icon: '💬',
+    icon: 'MessageCircle' as TopicIconName,
     color: 'gray',
     keywords: [],
     count: topicCounts.get('other') || 0,

@@ -79,89 +79,6 @@ interface RecentItem {
 
 type UploadState = "idle" | "dragover" | "uploading" | "success" | "error"
 
-// Circle position calculation for hexagonal layout
-function getCirclePosition(index: number, total: number, radius: number) {
-  const angle = (index / total) * 2 * Math.PI - Math.PI / 2
-  return {
-    x: Math.cos(angle) * radius,
-    y: Math.sin(angle) * radius,
-  }
-}
-
-// ContentCircle Component
-function ContentCircle({
-  type,
-  count,
-  onClick,
-  index,
-  total,
-  radius,
-}: {
-  type: ContentType
-  count: number
-  onClick: () => void
-  index: number
-  total: number
-  radius: number
-}) {
-  const position = getCirclePosition(index, total, radius)
-  const Icon = type.icon
-
-  return (
-    <motion.button
-      className={cn(
-        "absolute w-28 h-28 rounded-full flex flex-col items-center justify-center",
-        "border-4 border-white shadow-lg cursor-pointer transition-shadow",
-        type.bgColor, type.hoverBg
-      )}
-      style={{
-        left: `calc(50% + ${position.x}px - 56px)`,
-        top: `calc(50% + ${position.y}px - 56px)`,
-      }}
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{
-        type: "spring",
-        stiffness: 400,
-        damping: 20,
-        delay: index * 0.1,
-      }}
-      whileHover={{ scale: 1.1, boxShadow: "0 10px 30px rgba(0,0,0,0.2)" }}
-      whileTap={{ scale: 0.95 }}
-      onClick={onClick}
-    >
-      <Icon className="w-10 h-10 text-white mb-1" />
-      <span className="text-white text-sm font-medium">{type.label}</span>
-      {count > 0 && (
-        <span className="absolute -top-1 -right-1 w-7 h-7 bg-white rounded-full flex items-center justify-center text-xs font-bold text-gray-800 shadow">
-          {count > 99 ? "99+" : count}
-        </span>
-      )}
-    </motion.button>
-  )
-}
-
-// CentralHub Component
-function CentralHub({ totalItems, onClick }: { totalItems: number; onClick: () => void }) {
-  return (
-    <motion.button
-      className="absolute w-36 h-36 rounded-full bg-gradient-to-br from-[var(--klear-green)] to-[var(--klear-green-dark)] flex flex-col items-center justify-center border-4 border-white shadow-2xl cursor-pointer"
-      style={{
-        left: "calc(50% - 72px)",
-        top: "calc(50% - 72px)",
-      }}
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{ type: "spring", stiffness: 400, damping: 20 }}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      onClick={onClick}
-    >
-      <span className="text-3xl font-bold text-white">{totalItems}</span>
-      <span className="text-xs text-gray-300">פריטי ידע</span>
-    </motion.button>
-  )
-}
 
 // ExpandedUploader Component
 function ExpandedUploader({
@@ -748,18 +665,18 @@ export default function KnowledgePage() {
     setSelectedFilter(type.id)
   }
 
-  const handleCentralClick = () => {
-    setSelectedFilter(null)
-  }
-
   if (loading) {
     return (
       <div className="space-y-6">
         <div className="flex justify-between">
           <div className="h-8 w-32 bg-gray-200 rounded animate-pulse" />
+          <div className="h-10 w-32 bg-gray-200 rounded animate-pulse" />
         </div>
-        <div className="flex justify-center py-12">
-          <div className="w-80 h-80 rounded-full bg-gray-200 animate-pulse" />
+        <div className="h-24 bg-gray-200 rounded-lg animate-pulse" />
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="h-32 bg-gray-200 rounded-lg animate-pulse" />
+          ))}
         </div>
       </div>
     )
@@ -776,69 +693,108 @@ export default function KnowledgePage() {
         <StorageIndicator used={storageUsed} total={storageTotal} />
       </div>
 
-      {/* Pango-Style Circle Hub */}
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Circle Container */}
-        <div className="flex-1 flex items-center justify-center">
-          <div className="relative w-80 h-80 md:w-96 md:h-96">
-            {/* Central Hub */}
-            <CentralHub totalItems={totalItems} onClick={handleCentralClick} />
-
-            {/* Content Type Circles */}
-            {CONTENT_TYPES.map((type, index) => (
-              <ContentCircle
-                key={type.id}
-                type={type}
-                count={typeCounts[type.id] || 0}
-                onClick={() => handleCircleClick(type)}
-                index={index}
-                total={CONTENT_TYPES.length}
-                radius={155}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Recent Items Panel */}
-        <div className="lg:w-80">
-          <Card className="border border-gray-200">
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-base font-medium">פריטים אחרונים</CardTitle>
-                {selectedFilter && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setSelectedFilter(null)}
-                    className="text-xs"
-                  >
-                    <ChevronLeft className="w-3 h-3 ml-1" />
-                    הכל
-                  </Button>
-                )}
+      {/* Knowledge Summary Card */}
+      <Card className="border border-gray-200 bg-gradient-to-r from-[rgba(37,211,102,0.05)] to-transparent">
+        <CardContent className="p-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 rounded-2xl bg-[var(--klear-green)] flex items-center justify-center">
+                <HardDrive className="w-8 h-8 text-white" />
               </div>
-              {selectedFilter && (
-                <div className="flex items-center gap-2 mt-2">
-                  {(() => {
-                    const type = CONTENT_TYPES.find(t => t.id === selectedFilter)
-                    if (!type) return null
-                    const Icon = type.icon
-                    return (
-                      <Badge variant="outline" className={cn("text-xs", type.textColor, type.borderColor)}>
-                        <Icon className="w-3 h-3 mr-1" />
-                        {type.label}
-                      </Badge>
-                    )
-                  })()}
-                </div>
-              )}
-            </CardHeader>
-            <CardContent>
-              <RecentItems items={recentItems} typeFilter={selectedFilter} />
-            </CardContent>
-          </Card>
-        </div>
+              <div>
+                <p className="text-3xl font-bold text-gray-900">{totalItems}</p>
+                <p className="text-sm text-gray-500">פריטי ידע במאגר</p>
+              </div>
+            </div>
+            <Button
+              onClick={() => setShowTextForm(true)}
+              className="bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)] gap-2"
+            >
+              <Plus className="w-4 h-4" />
+              הוסף תוכן
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Content Type Cards Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {CONTENT_TYPES.map((type) => {
+          const Icon = type.icon
+          const count = typeCounts[type.id] || 0
+          const isSelected = selectedFilter === type.id
+          return (
+            <motion.div
+              key={type.id}
+              whileHover={{ y: -4, boxShadow: "0 10px 25px rgba(0,0,0,0.1)" }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Card
+                className={cn(
+                  "cursor-pointer transition-all border-2",
+                  isSelected
+                    ? `${type.borderColor} ${type.lightBg}`
+                    : "border-gray-200 hover:border-gray-300"
+                )}
+                onClick={() => handleCircleClick(type)}
+              >
+                <CardContent className="p-4 text-center">
+                  <div className={cn(
+                    "w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center",
+                    type.bgColor
+                  )}>
+                    <Icon className="w-6 h-6 text-white" />
+                  </div>
+                  <p className="text-sm font-medium text-gray-900 mb-1">{type.label}</p>
+                  <p className={cn("text-2xl font-bold", type.textColor)}>{count}</p>
+                  <p className="text-xs text-gray-400">פריטים</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )
+        })}
       </div>
+
+      {/* Recent Items Section */}
+      <Card className="border border-gray-200">
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-lg font-medium flex items-center gap-2">
+              <Clock className="w-5 h-5 text-gray-400" />
+              פריטים אחרונים
+            </CardTitle>
+            {selectedFilter && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSelectedFilter(null)}
+                className="text-xs"
+              >
+                <ChevronLeft className="w-3 h-3 ml-1" />
+                הכל
+              </Button>
+            )}
+          </div>
+          {selectedFilter && (
+            <div className="flex items-center gap-2 mt-2">
+              {(() => {
+                const type = CONTENT_TYPES.find(t => t.id === selectedFilter)
+                if (!type) return null
+                const Icon = type.icon
+                return (
+                  <Badge variant="outline" className={cn("text-xs", type.textColor, type.borderColor)}>
+                    <Icon className="w-3 h-3 mr-1" />
+                    {type.label}
+                  </Badge>
+                )
+              })()}
+            </div>
+          )}
+        </CardHeader>
+        <CardContent>
+          <RecentItems items={recentItems} typeFilter={selectedFilter} />
+        </CardContent>
+      </Card>
 
       {/* Toast Notification */}
       <AnimatePresence>
@@ -1068,35 +1024,6 @@ export default function KnowledgePage() {
           </div>
         </CardContent>
       </Card>
-
-      {/* Type Legend - Mobile */}
-      <div className="lg:hidden flex flex-wrap items-center justify-center gap-3">
-        {CONTENT_TYPES.map((type) => {
-          const Icon = type.icon
-          return (
-            <button
-              key={type.id}
-              onClick={() => handleCircleClick(type)}
-              className={cn(
-                "flex items-center gap-2 px-4 py-2 rounded-full transition-all",
-                selectedFilter === type.id ? type.bgColor : "bg-gray-100 hover:bg-gray-200",
-                selectedFilter === type.id && "text-white"
-              )}
-            >
-              <Icon className={cn("w-4 h-4", selectedFilter === type.id ? "text-white" : type.textColor)} />
-              <span className={cn("text-sm font-medium", selectedFilter === type.id ? "text-white" : "text-gray-700")}>
-                {type.label}
-              </span>
-              <span className={cn(
-                "text-xs px-1.5 py-0.5 rounded-full",
-                selectedFilter === type.id ? "bg-white/20 text-white" : "bg-gray-200 text-gray-600"
-              )}>
-                {typeCounts[type.id] || 0}
-              </span>
-            </button>
-          )
-        })}
-      </div>
 
       {/* Expanded Uploader Modal */}
       <AnimatePresence>

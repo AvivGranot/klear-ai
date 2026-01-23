@@ -16,6 +16,8 @@ import {
   FolderOpen,
   Database,
 } from "lucide-react"
+import { TopicIcon } from "@/components/TopicIcon"
+import type { TopicIconName } from "@/data/jolika-data"
 import {
   company,
   getProcessedFaqs,
@@ -131,7 +133,7 @@ export default function DashboardPage() {
                     className={`p-3 rounded-lg border ${colors.border} ${colors.bg} hover:shadow-sm transition-all cursor-pointer`}
                   >
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xl">{topic.icon}</span>
+                      <TopicIcon name={topic.icon as TopicIconName} className={`w-5 h-5 ${colors.text}`} />
                     </div>
                     <p className="text-sm font-medium text-gray-900 truncate">{topic.name}</p>
                     <div className="flex items-center justify-between mt-1">
@@ -203,8 +205,9 @@ export default function DashboardPage() {
                       <p className="text-sm text-gray-700 line-clamp-2">{faq.title}</p>
                       <div className="flex items-center gap-2 mt-1.5">
                         {faq.topicIcon && (
-                          <Badge variant="outline" className={`text-xs ${colors?.bg} ${colors?.text}`}>
-                            {faq.topicIcon} {faq.topic}
+                          <Badge variant="outline" className={`text-xs ${colors?.bg} ${colors?.text} flex items-center gap-1`}>
+                            <TopicIcon name={faq.topicIcon as TopicIconName} className="w-3 h-3" />
+                            {faq.topic}
                           </Badge>
                         )}
                       </div>

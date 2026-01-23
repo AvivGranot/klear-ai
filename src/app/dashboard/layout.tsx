@@ -20,6 +20,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { GlobalSearch } from "@/components/dashboard/GlobalSearch"
 import { NotificationDropdown } from "@/components/dashboard/NotificationDropdown"
+import { ThemeToggle } from "@/components/ThemeToggle"
 
 interface SidebarItem {
   icon: React.ElementType
@@ -73,7 +74,7 @@ export default function DashboardLayout({
   ]
 
   return (
-    <div className="flex h-screen bg-white" dir="rtl">
+    <div className="flex h-screen bg-[var(--aman-bg-cream)]" dir="rtl">
       {/* Desktop Sidebar (PRD) */}
       <aside className="hidden lg:flex flex-col w-60 bg-[var(--aman-card-white)] border-l border-[var(--aman-border)]">
         {/* Logo */}
@@ -257,6 +258,9 @@ export default function DashboardLayout({
               <HelpCircle className="w-4 h-4" strokeWidth={1.5} />
               עזרה
             </Button>
+
+            {/* Theme Toggle */}
+            <ThemeToggle />
 
             {/* Notifications */}
             <NotificationDropdown />
