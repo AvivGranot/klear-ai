@@ -11,9 +11,6 @@ import {
   Key,
   Link2,
   Bell,
-  Globe,
-  Shield,
-  ChevronRight,
   Copy,
   Check,
   Eye,
@@ -75,12 +72,12 @@ interface WebhookConfig {
 }
 
 const WEBHOOK_EVENTS = [
-  { id: "conversation.started", label: "התחלת שיחה", description: "נשלח כאשר שיחה חדשה מתחילה" },
-  { id: "conversation.ended", label: "סיום שיחה", description: "נשלח כאשר שיחה מסתיימת" },
-  { id: "message.received", label: "הודעה נכנסת", description: "נשלח כאשר מתקבלת הודעה" },
-  { id: "message.sent", label: "הודעה יוצאת", description: "נשלח כאשר נשלחת תשובה" },
-  { id: "escalation.created", label: "הסלמה", description: "נשלח כאשר שיחה מוסלמת למנהל" },
-  { id: "knowledge.updated", label: "עדכון ידע", description: "נשלח כאשר מאגר הידע מתעדכן" },
+  { id: "conversation.started", label: "התחלת שיחה", description: "קבל התראה כאשר עובד מתחיל שיחה חדשה עם הבוט" },
+  { id: "conversation.ended", label: "סיום שיחה", description: "קבל התראה כאשר שיחה מסתיימת (אחרי 30 דקות ללא פעילות)" },
+  { id: "message.received", label: "הודעה נכנסת", description: "קבל התראה על כל הודעה שנשלחת לבוט" },
+  { id: "message.sent", label: "הודעה יוצאת", description: "קבל התראה על כל תשובה שהבוט שולח" },
+  { id: "escalation.created", label: "הסלמה למנהל", description: "קבל התראה כאשר הבוט לא יודע לענות והשאלה מועברת למנהל" },
+  { id: "knowledge.updated", label: "עדכון מאגר ידע", description: "קבל התראה כאשר מתווספת או מתעדכנת תשובה במאגר הידע" },
 ]
 
 function WebhooksSection() {
@@ -167,7 +164,7 @@ function WebhooksSection() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Webhook className="w-5 h-5 text-gray-400" />
-              <CardTitle className="text-lg font-medium">Webhooks</CardTitle>
+              <CardTitle className="text-lg font-medium">התראות אוטומטיות (Webhooks)</CardTitle>
             </div>
             <Button
               size="sm"
@@ -175,19 +172,19 @@ function WebhooksSection() {
               onClick={() => setShowNewWebhookModal(true)}
             >
               <Plus className="w-4 h-4" />
-              הוסף Webhook
+              הוסף התראה
             </Button>
           </div>
           <CardDescription>
-            קבל התראות בזמן אמת על אירועים במערכת
+            הגדר התראות אוטומטיות שיישלחו למערכות אחרות (כמו Slack או מערכת CRM) כאשר מתרחשים אירועים במערכת
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
           {webhooks.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
               <Webhook className="w-10 h-10 mx-auto mb-3 text-gray-300" />
-              <p className="text-sm">אין Webhooks מוגדרים</p>
-              <p className="text-xs text-gray-400">הוסף webhook לקבלת התראות בזמן אמת</p>
+              <p className="text-sm">אין התראות אוטומטיות מוגדרות</p>
+              <p className="text-xs text-gray-400 mt-1">הוסף התראה כדי לקבל עדכונים אוטומטיים במערכות אחרות</p>
             </div>
           ) : (
             webhooks.map((webhook) => (
@@ -294,11 +291,11 @@ function WebhooksSection() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-white rounded-xl shadow-xl max-w-md w-full overflow-hidden"
+              className="bg-white rounded-xl shadow-xl max-w-lg w-full overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-                <h3 className="font-semibold text-gray-900">הוסף Webhook חדש</h3>
+                <h3 className="font-semibold text-gray-900">הוסף התראה אוטומטית</h3>
                 <button
                   onClick={() => setShowNewWebhookModal(false)}
                   className="p-1 hover:bg-gray-100 rounded"
@@ -307,32 +304,49 @@ function WebhooksSection() {
                 </button>
               </div>
 
-              <div className="p-6 space-y-4">
+              <div className="p-6 space-y-5">
+                {/* Explanation banner */}
+                <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                  <p className="text-sm text-blue-800">
+                    <strong>מה זה?</strong> התראה אוטומטית שולחת מידע למערכת אחרת כשמשהו קורה.
+                    לדוגמה, אפשר לשלוח הודעה ל-Slack כשעובד שואל שאלה שהבוט לא יודע לענות עליה.
+                  </p>
+                </div>
+
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">שם</label>
+                  <label className="text-sm font-medium text-gray-900 mb-1 block">שם ההתראה</label>
+                  <p className="text-xs text-gray-500 mb-2">תן שם שיעזור לך לזהות את ההתראה הזו</p>
                   <Input
-                    placeholder="לדוגמה: Slack Notifications"
+                    placeholder="לדוגמה: התראות הסלמה ל-Slack"
                     value={newWebhook.name}
                     onChange={(e) => setNewWebhook({ ...newWebhook, name: e.target.value })}
                   />
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">Endpoint URL</label>
+                  <label className="text-sm font-medium text-gray-900 mb-1 block">כתובת יעד (URL)</label>
+                  <p className="text-xs text-gray-500 mb-2">הכתובת שאליה יישלחו ההתראות. בדרך כלל מקבלים אותה מהמערכת שאליה רוצים לשלוח</p>
                   <Input
-                    placeholder="https://your-server.com/webhook"
+                    placeholder="https://hooks.slack.com/services/..."
                     value={newWebhook.url}
                     onChange={(e) => setNewWebhook({ ...newWebhook, url: e.target.value })}
+                    dir="ltr"
+                    className="text-left font-mono text-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">אירועים</label>
-                  <div className="space-y-2 max-h-48 overflow-y-auto">
+                  <label className="text-sm font-medium text-gray-900 mb-1 block">מתי לשלוח התראה?</label>
+                  <p className="text-xs text-gray-500 mb-3">בחר את האירועים שיגרמו לשליחת התראה</p>
+                  <div className="space-y-2 max-h-56 overflow-y-auto">
                     {WEBHOOK_EVENTS.map((event) => (
                       <label
                         key={event.id}
-                        className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                        className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer transition-colors ${
+                          newWebhook.events.includes(event.id)
+                            ? "bg-green-50 border border-green-200"
+                            : "bg-gray-50 border border-transparent hover:bg-gray-100"
+                        }`}
                       >
                         <input
                           type="checkbox"
@@ -344,7 +358,7 @@ function WebhooksSection() {
                               setNewWebhook({ ...newWebhook, events: newWebhook.events.filter((ev) => ev !== event.id) })
                             }
                           }}
-                          className="mt-0.5"
+                          className="mt-0.5 accent-green-600"
                         />
                         <div>
                           <p className="text-sm font-medium text-gray-900">{event.label}</p>
@@ -361,7 +375,7 @@ function WebhooksSection() {
                     onClick={handleCreate}
                     disabled={!newWebhook.name || !newWebhook.url || newWebhook.events.length === 0}
                   >
-                    צור Webhook
+                    צור התראה
                   </Button>
                   <Button variant="outline" onClick={() => setShowNewWebhookModal(false)}>
                     ביטול
@@ -388,12 +402,11 @@ export default function SettingsPage() {
     errorEmails: true,
     dailyDigest: false,
     weeklyReport: true,
+    escalationAlerts: true,
   })
 
-  // AI Configuration state
+  // AI Configuration state (simplified - only emoji and auto-suggest)
   const [aiConfig, setAiConfig] = useState({
-    tone: "professional" as "professional" | "friendly" | "casual",
-    responseLength: "medium" as "short" | "medium" | "detailed",
     includeEmoji: false,
     autoSuggest: true,
   })
@@ -492,30 +505,59 @@ export default function SettingsPage() {
     return formatDate(dateStr)
   }
 
+  const [showAddIntegrationModal, setShowAddIntegrationModal] = useState(false)
+
   const integrations = [
     {
+      id: "whatsapp",
       name: "WhatsApp Business",
-      type: "messaging",
+      type: "הודעות",
       status: "connected" as const,
       icon: "📱",
       lastSync: "לפני 5 דקות",
-      account: "+972-50-1234567"
+      account: "+972-50-1234567",
+      description: "חבר את חשבון WhatsApp Business שלך לקבלת הודעות ושליחת תשובות אוטומטיות"
     },
     {
+      id: "google-drive",
       name: "Google Drive",
-      type: "storage",
+      type: "אחסון",
       status: "disconnected" as const,
       icon: "📁",
       lastSync: null,
-      account: null
+      account: null,
+      description: "סנכרן מסמכים ממאגר הידע שלך ב-Google Drive"
+    },
+  ]
+
+  const availableIntegrations = [
+    {
+      id: "whatsapp",
+      name: "WhatsApp Business",
+      icon: "📱",
+      description: "חבר את חשבון WhatsApp Business שלך לקבלת הודעות ושליחת תשובות אוטומטיות",
+      comingSoon: false
     },
     {
-      name: "Slack",
-      type: "notifications",
-      status: "error" as const,
-      icon: "💬",
-      lastSync: "לפני שעה",
-      account: "#klear-alerts"
+      id: "google-drive",
+      name: "Google Drive",
+      icon: "📁",
+      description: "סנכרן מסמכים ממאגר הידע שלך ב-Google Drive",
+      comingSoon: false
+    },
+    {
+      id: "sheets",
+      name: "Google Sheets",
+      icon: "📊",
+      description: "יצא נתונים ודוחות ישירות ל-Google Sheets",
+      comingSoon: true
+    },
+    {
+      id: "zapier",
+      name: "Zapier",
+      icon: "⚡",
+      description: "חבר את Klear לאלפי אפליקציות אחרות דרך Zapier",
+      comingSoon: true
     },
   ]
 
@@ -545,18 +587,6 @@ export default function SettingsPage() {
     }
   }
 
-  const toneOptions = [
-    { value: "professional", label: "מקצועי", desc: "תשובות פורמליות ומדויקות" },
-    { value: "friendly", label: "ידידותי", desc: "נעים וקרוב יותר" },
-    { value: "casual", label: "לא פורמלי", desc: "שיחתי וקליל" },
-  ]
-
-  const lengthOptions = [
-    { value: "short", label: "קצר", desc: "תשובות תמציתיות" },
-    { value: "medium", label: "בינוני", desc: "איזון בין קיצור למידע" },
-    { value: "detailed", label: "מפורט", desc: "הסברים מלאים" },
-  ]
-
   return (
     <div className="max-w-4xl space-y-6">
       {/* Header */}
@@ -567,7 +597,7 @@ export default function SettingsPage() {
         </p>
       </div>
 
-      {/* AI Configuration */}
+      {/* AI Configuration - Simplified */}
       <Card className="border border-gray-200">
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
@@ -575,97 +605,52 @@ export default function SettingsPage() {
             <CardTitle className="text-lg font-medium">הגדרות AI</CardTitle>
           </div>
           <CardDescription>
-            התאם את אופי התשובות של הבוט
+            התאם את התנהגות הבוט
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Tone Selection */}
-          <div>
-            <p className="text-sm font-medium text-gray-700 mb-3">טון התשובות</p>
-            <div className="grid grid-cols-3 gap-3">
-              {toneOptions.map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => setAiConfig((prev) => ({ ...prev, tone: option.value as typeof prev.tone }))}
-                  className={`p-4 rounded-lg border-2 transition-all text-right ${
-                    aiConfig.tone === option.value
-                      ? "border-[var(--klear-green)] bg-[rgba(37,211,102,0.05)]"
-                      : "border-gray-200 hover:border-gray-300"
-                  }`}
-                >
-                  <p className="font-medium text-gray-900">{option.label}</p>
-                  <p className="text-xs text-gray-500 mt-1">{option.desc}</p>
-                </button>
-              ))}
+        <CardContent className="space-y-3">
+          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center gap-3">
+              <MessageSquare className="w-5 h-5 text-gray-400" />
+              <div>
+                <p className="font-medium text-gray-900">שימוש באמוג׳י</p>
+                <p className="text-sm text-gray-500">הבוט יוסיף אמוג׳ים לתשובות כדי להפוך אותן לידידותיות יותר</p>
+              </div>
             </div>
+            <button
+              onClick={() => setAiConfig((prev) => ({ ...prev, includeEmoji: !prev.includeEmoji }))}
+              className={`relative w-12 h-6 rounded-full transition-colors ${
+                aiConfig.includeEmoji ? "bg-green-500" : "bg-gray-300"
+              }`}
+            >
+              <span
+                className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
+                  aiConfig.includeEmoji ? "translate-x-0.5" : "translate-x-6"
+                }`}
+              />
+            </button>
           </div>
 
-          {/* Response Length */}
-          <div>
-            <p className="text-sm font-medium text-gray-700 mb-3">אורך התשובות</p>
-            <div className="grid grid-cols-3 gap-3">
-              {lengthOptions.map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => setAiConfig((prev) => ({ ...prev, responseLength: option.value as typeof prev.responseLength }))}
-                  className={`p-4 rounded-lg border-2 transition-all text-right ${
-                    aiConfig.responseLength === option.value
-                      ? "border-[var(--klear-green)] bg-[rgba(37,211,102,0.05)]"
-                      : "border-gray-200 hover:border-gray-300"
-                  }`}
-                >
-                  <p className="font-medium text-gray-900">{option.label}</p>
-                  <p className="text-xs text-gray-500 mt-1">{option.desc}</p>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Toggle Options */}
-          <div className="space-y-3">
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <div className="flex items-center gap-3">
-                <MessageSquare className="w-5 h-5 text-gray-400" />
-                <div>
-                  <p className="font-medium text-gray-900">שימוש באמוג׳י</p>
-                  <p className="text-sm text-gray-500">הוסף אמוג׳ים לתשובות הבוט</p>
-                </div>
+          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center gap-3">
+              <Zap className="w-5 h-5 text-gray-400" />
+              <div>
+                <p className="font-medium text-gray-900">הצעות אוטומטיות</p>
+                <p className="text-sm text-gray-500">הבוט יציע תשובות מהירות לעובדים על סמך שאלות נפוצות</p>
               </div>
-              <button
-                onClick={() => setAiConfig((prev) => ({ ...prev, includeEmoji: !prev.includeEmoji }))}
-                className={`relative w-12 h-6 rounded-full transition-colors ${
-                  aiConfig.includeEmoji ? "bg-green-500" : "bg-gray-300"
-                }`}
-              >
-                <span
-                  className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
-                    aiConfig.includeEmoji ? "translate-x-0.5" : "translate-x-6"
-                  }`}
-                />
-              </button>
             </div>
-
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <div className="flex items-center gap-3">
-                <Zap className="w-5 h-5 text-gray-400" />
-                <div>
-                  <p className="font-medium text-gray-900">הצעות אוטומטיות</p>
-                  <p className="text-sm text-gray-500">הצע תשובות מהירות למשתמשים</p>
-                </div>
-              </div>
-              <button
-                onClick={() => setAiConfig((prev) => ({ ...prev, autoSuggest: !prev.autoSuggest }))}
-                className={`relative w-12 h-6 rounded-full transition-colors ${
-                  aiConfig.autoSuggest ? "bg-green-500" : "bg-gray-300"
+            <button
+              onClick={() => setAiConfig((prev) => ({ ...prev, autoSuggest: !prev.autoSuggest }))}
+              className={`relative w-12 h-6 rounded-full transition-colors ${
+                aiConfig.autoSuggest ? "bg-green-500" : "bg-gray-300"
+              }`}
+            >
+              <span
+                className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
+                  aiConfig.autoSuggest ? "translate-x-0.5" : "translate-x-6"
                 }`}
-              >
-                <span
-                  className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
-                    aiConfig.autoSuggest ? "translate-x-0.5" : "translate-x-6"
-                  }`}
-                />
-              </button>
-            </div>
+              />
+            </button>
           </div>
         </CardContent>
       </Card>
@@ -953,19 +938,29 @@ export default function SettingsPage() {
       {/* Integrations with Status */}
       <Card className="border border-gray-200">
         <CardHeader className="pb-3">
-          <div className="flex items-center gap-2">
-            <Link2 className="w-5 h-5 text-gray-400" />
-            <CardTitle className="text-lg font-medium">אינטגרציות</CardTitle>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Link2 className="w-5 h-5 text-gray-400" />
+              <CardTitle className="text-lg font-medium">אינטגרציות</CardTitle>
+            </div>
+            <Button
+              size="sm"
+              className="bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)] gap-1.5"
+              onClick={() => setShowAddIntegrationModal(true)}
+            >
+              <Plus className="w-4 h-4" />
+              הוסף אינטגרציה
+            </Button>
           </div>
           <CardDescription>
-            חבר שירותים חיצוניים למערכת
+            חבר שירותים חיצוניים כדי להרחיב את יכולות המערכת
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
-          {integrations.map((integration, i) => (
+          {integrations.map((integration) => (
             <div
-              key={i}
-              className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+              key={integration.id}
+              className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
             >
               <div className="flex items-center gap-3">
                 <span className="text-2xl">{integration.icon}</span>
@@ -974,21 +969,14 @@ export default function SettingsPage() {
                     <p className="font-medium text-gray-900">{integration.name}</p>
                     {getIntegrationStatusBadge(integration.status)}
                   </div>
-                  <div className="flex items-center gap-2 mt-1">
-                    <p className="text-xs text-gray-500">{integration.type}</p>
-                    {integration.account && (
-                      <>
-                        <span className="text-gray-300">•</span>
-                        <p className="text-xs text-gray-500">{integration.account}</p>
-                      </>
-                    )}
-                    {integration.lastSync && (
-                      <>
-                        <span className="text-gray-300">•</span>
-                        <p className="text-xs text-gray-400">סנכרון: {integration.lastSync}</p>
-                      </>
-                    )}
-                  </div>
+                  <p className="text-xs text-gray-500 mt-1">{integration.description}</p>
+                  {integration.status === "connected" && (
+                    <div className="flex items-center gap-2 mt-1">
+                      <p className="text-xs text-gray-400">{integration.account}</p>
+                      <span className="text-gray-300">•</span>
+                      <p className="text-xs text-gray-400">סנכרון: {integration.lastSync}</p>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -1007,12 +995,90 @@ export default function SettingsPage() {
               </div>
             </div>
           ))}
-          <Button variant="outline" className="gap-2 w-full">
-            <Link2 className="w-4 h-4" />
-            הוסף אינטגרציה
-          </Button>
         </CardContent>
       </Card>
+
+      {/* Add Integration Modal */}
+      <AnimatePresence>
+        {showAddIntegrationModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            onClick={() => setShowAddIntegrationModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-white rounded-xl shadow-xl max-w-md w-full overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                <h3 className="font-semibold text-gray-900">הוסף אינטגרציה</h3>
+                <button
+                  onClick={() => setShowAddIntegrationModal(false)}
+                  className="p-1 hover:bg-gray-100 rounded"
+                >
+                  <X className="w-5 h-5 text-gray-400" />
+                </button>
+              </div>
+
+              <div className="p-6">
+                <p className="text-sm text-gray-500 mb-4">
+                  בחר שירות לחיבור למערכת Klear. האינטגרציה תאפשר סנכרון נתונים ופעולות אוטומטיות.
+                </p>
+                <div className="space-y-3">
+                  {availableIntegrations.map((integration) => {
+                    const isConnected = integrations.some(
+                      (i) => i.id === integration.id && i.status === "connected"
+                    )
+                    return (
+                      <div
+                        key={integration.id}
+                        className={`p-4 rounded-lg border ${
+                          integration.comingSoon
+                            ? "border-gray-100 bg-gray-50 opacity-60"
+                            : isConnected
+                            ? "border-green-200 bg-green-50"
+                            : "border-gray-200 bg-white hover:border-gray-300 cursor-pointer"
+                        } transition-colors`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <span className="text-2xl">{integration.icon}</span>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <p className="font-medium text-gray-900">{integration.name}</p>
+                                {integration.comingSoon && (
+                                  <Badge variant="outline" className="text-[10px]">בקרוב</Badge>
+                                )}
+                                {isConnected && (
+                                  <Badge className="bg-green-100 text-green-700 text-[10px]">מחובר</Badge>
+                                )}
+                              </div>
+                              <p className="text-xs text-gray-500 mt-1">{integration.description}</p>
+                            </div>
+                          </div>
+                          {!integration.comingSoon && !isConnected && (
+                            <Button
+                              size="sm"
+                              className="bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)]"
+                            >
+                              חבר
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Notifications */}
       <Card className="border border-gray-200">
@@ -1022,85 +1088,76 @@ export default function SettingsPage() {
             <CardTitle className="text-lg font-medium">התראות</CardTitle>
           </div>
           <CardDescription>
-            הגדר מתי ואיך תקבל התראות
+            הגדר מתי ואיך תקבל התראות על פעילות המערכת
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          {[
-            { key: "errorEmails", label: "התראות דוא״ל על שגיאות", desc: "קבל התראה כאשר מתרחשת שגיאה במערכת" },
-            { key: "dailyDigest", label: "סיכום יומי", desc: "קבל סיכום פעילות יומי בכל בוקר" },
-            { key: "weeklyReport", label: "דו״ח שבועי", desc: "קבל דו״ח מפורט כל יום ראשון" },
-          ].map((item) => (
-            <div
-              key={item.key}
-              className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
-            >
-              <div>
-                <p className="font-medium text-gray-900">{item.label}</p>
-                <p className="text-sm text-gray-500">{item.desc}</p>
-              </div>
-              <button
-                onClick={() =>
-                  setNotifications((prev) => ({
-                    ...prev,
-                    [item.key]: !prev[item.key as keyof typeof notifications],
-                  }))
-                }
-                className={`relative w-12 h-6 rounded-full transition-colors ${
-                  notifications[item.key as keyof typeof notifications]
-                    ? "bg-green-500"
-                    : "bg-gray-300"
-                }`}
-              >
-                <span
-                  className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
-                    notifications[item.key as keyof typeof notifications]
-                      ? "translate-x-0.5"
-                      : "translate-x-6"
-                  }`}
-                />
-              </button>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-
-      {/* Security */}
-      <Card className="border border-gray-200">
-        <CardHeader className="pb-3">
-          <div className="flex items-center gap-2">
-            <Shield className="w-5 h-5 text-gray-400" />
-            <CardTitle className="text-lg font-medium">אבטחה</CardTitle>
-          </div>
-        </CardHeader>
         <CardContent className="space-y-3">
-          <Button variant="outline" className="gap-2 w-full justify-start">
-            <Shield className="w-4 h-4" />
-            שנה סיסמה
-          </Button>
-          <Button variant="outline" className="gap-2 w-full justify-start">
-            <Globe className="w-4 h-4" />
-            הגדרות גישה
-          </Button>
+          {[
+            {
+              key: "escalationAlerts",
+              label: "התראות הסלמה",
+              desc: "קבל התראה בכל פעם ששאלה מועברת למנהל - ההתראה תישאר עד שתטופל",
+              icon: AlertCircle
+            },
+            {
+              key: "errorEmails",
+              label: "התראות על שגיאות",
+              desc: "קבל התראה כאשר מתרחשת שגיאה במערכת שדורשת טיפול",
+              icon: XCircle
+            },
+            {
+              key: "dailyDigest",
+              label: "סיכום יומי",
+              desc: "קבל סיכום של כל הפעילות מהיום הקודם בכל בוקר ב-8:00",
+              icon: Bell
+            },
+            {
+              key: "weeklyReport",
+              label: "דו״ח שבועי",
+              desc: "קבל דו״ח מפורט עם סטטיסטיקות ותובנות כל יום ראשון",
+              icon: Bell
+            },
+          ].map((item) => {
+            const IconComponent = item.icon
+            return (
+              <div
+                key={item.key}
+                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+              >
+                <div className="flex items-center gap-3">
+                  <IconComponent className="w-5 h-5 text-gray-400" />
+                  <div>
+                    <p className="font-medium text-gray-900">{item.label}</p>
+                    <p className="text-sm text-gray-500">{item.desc}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() =>
+                    setNotifications((prev) => ({
+                      ...prev,
+                      [item.key]: !prev[item.key as keyof typeof notifications],
+                    }))
+                  }
+                  className={`relative w-12 h-6 rounded-full transition-colors ${
+                    notifications[item.key as keyof typeof notifications]
+                      ? "bg-green-500"
+                      : "bg-gray-300"
+                  }`}
+                >
+                  <span
+                    className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
+                      notifications[item.key as keyof typeof notifications]
+                        ? "translate-x-0.5"
+                        : "translate-x-6"
+                    }`}
+                  />
+                </button>
+              </div>
+            )
+          })}
         </CardContent>
       </Card>
 
-      {/* Danger Zone */}
-      <Card className="border border-red-200 bg-red-50">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-medium text-red-700">
-            אזור מסוכן
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-red-600 mb-4">
-            פעולות אלו הן בלתי הפיכות. אנא היזהר.
-          </p>
-          <Button variant="outline" className="border-red-300 text-red-600 hover:bg-red-100">
-            מחק את כל הנתונים
-          </Button>
-        </CardContent>
-      </Card>
     </div>
   )
 }
