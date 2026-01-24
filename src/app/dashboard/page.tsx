@@ -188,7 +188,7 @@ export default function DashboardPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">שלום, מנהל</h1>
-          <p className="text-sm text-gray-500 mt-1">{company.name}</p>
+          <p className="text-sm text-gray-500 mt-1">{company.name} • 3 מנהלות פעילות</p>
         </div>
 
         <Link href={`/chat/${company.id}`} target="_blank">
