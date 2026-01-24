@@ -161,7 +161,7 @@ export default function ConversationsPage() {
   }
 
   return (
-    <div className="space-y-6 bg-slate-50 min-h-screen p-6">
+    <div className="space-y-6 bg-white min-h-screen p-6">
       {/* Header */}
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-3">
