@@ -8,6 +8,7 @@ import { ExternalLink, TrendingUp, TrendingDown, ArrowLeft } from "lucide-react"
 import {
   company,
   conversations,
+  getConversationsByDate,
 } from "@/data/jolika-data"
 import {
   AreaChart,
@@ -20,50 +21,82 @@ import {
   ReferenceLine,
 } from "recharts"
 
-type TimeRange = 'today' | 'week' | 'month' | 'year' | 'custom'
+// Google Finance style time ranges
+type TimeRange = '1D' | '5D' | '1M' | '6M' | '1Y' | '5Y' | 'MAX'
 
-// Generate time series data based on selected range
-function generateChartData(range: TimeRange) {
-  const data = []
+// Get chart data based on real conversation dates
+function getChartData(range: TimeRange) {
+  const allData = getConversationsByDate()
+
+  if (allData.length === 0) {
+    return []
+  }
+
+  // Parse dates for filtering
+  const parsedData = allData.map(d => ({
+    ...d,
+    dateObj: new Date(d.date),
+  }))
+
+  // Sort by date ascending
+  parsedData.sort((a, b) => a.dateObj.getTime() - b.dateObj.getTime())
+
   const today = new Date()
+  let filteredData = parsedData
 
-  const daysMap: Record<TimeRange, number> = {
-    today: 1,
-    week: 7,
-    month: 30,
-    year: 365,
-    custom: 30,
+  // Filter based on range
+  switch (range) {
+    case '1D':
+      // Show today's data (or last available day if no data today)
+      filteredData = parsedData.slice(-1)
+      break
+    case '5D':
+      const fiveDaysAgo = new Date(today)
+      fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5)
+      filteredData = parsedData.filter(d => d.dateObj >= fiveDaysAgo)
+      if (filteredData.length < 2) filteredData = parsedData.slice(-5)
+      break
+    case '1M':
+      const oneMonthAgo = new Date(today)
+      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1)
+      filteredData = parsedData.filter(d => d.dateObj >= oneMonthAgo)
+      if (filteredData.length < 2) filteredData = parsedData.slice(-30)
+      break
+    case '6M':
+      const sixMonthsAgo = new Date(today)
+      sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6)
+      filteredData = parsedData.filter(d => d.dateObj >= sixMonthsAgo)
+      if (filteredData.length < 2) filteredData = parsedData.slice(-180)
+      break
+    case '1Y':
+      const oneYearAgo = new Date(today)
+      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1)
+      filteredData = parsedData.filter(d => d.dateObj >= oneYearAgo)
+      if (filteredData.length < 2) filteredData = parsedData.slice(-365)
+      break
+    case '5Y':
+      const fiveYearsAgo = new Date(today)
+      fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5)
+      filteredData = parsedData.filter(d => d.dateObj >= fiveYearsAgo)
+      if (filteredData.length < 2) filteredData = parsedData
+      break
+    case 'MAX':
+    default:
+      filteredData = parsedData
+      break
   }
 
-  const days = daysMap[range]
-
-  for (let i = days - 1; i >= 0; i--) {
-    const date = new Date(today)
-    date.setDate(date.getDate() - i)
-
-    let dateStr: string
-    if (range === 'today') {
-      dateStr = date.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
-    } else if (range === 'year') {
-      dateStr = date.toLocaleDateString('he-IL', { month: 'short' })
-    } else {
-      dateStr = date.toLocaleDateString('he-IL', { day: 'numeric', month: 'short' })
-    }
-
-    const fullDate = date.toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long' })
-
-    const baseValue = 20 + Math.sin(i / 3) * 5
-    const noise = Math.random() * 10 - 5
-    const weekendDip = (date.getDay() === 5 || date.getDay() === 6) ? -5 : 0
-
-    data.push({
-      date: dateStr,
-      fullDate,
-      conversations: Math.max(10, Math.round(baseValue + noise + weekendDip)),
-    })
+  // If still no data, return all
+  if (filteredData.length === 0) {
+    filteredData = parsedData
   }
 
-  return data
+  return filteredData.map(d => ({
+    date: d.displayDate,
+    fullDate: d.dateObj.toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }),
+    conversations: d.count,
+    dateObj: d.dateObj,
+  }))
 }
 
 interface KPICardProps {
@@ -106,7 +139,7 @@ function CustomActiveDot(props: { cx?: number; cy?: number }) {
   )
 }
 
-// Custom cursor line
+// Custom cursor line - subtle gray
 function CustomCursor(props: { points?: Array<{ x: number; y: number }>; height?: number }) {
   const { points, height } = props
   if (!points?.length) return null
@@ -117,15 +150,15 @@ function CustomCursor(props: { points?: Array<{ x: number; y: number }>; height?
       y1={0}
       x2={points[0].x}
       y2={height}
-      stroke="#10B981"
+      stroke="#9CA3AF"
       strokeWidth={1}
       strokeDasharray="4 4"
-      opacity={0.6}
+      opacity={0.5}
     />
   )
 }
 
-// Time range button component - underline style like Google Finance
+// Google Finance style time range button
 function TimeRangeButton({
   label,
   selected,
@@ -138,10 +171,10 @@ function TimeRangeButton({
   return (
     <button
       onClick={onClick}
-      className={`px-3 py-2 text-sm transition-colors border-b-2 outline-none ${
+      className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
         selected
-          ? 'border-emerald-600 text-emerald-600 font-medium'
-          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+          ? 'bg-gray-900 text-white'
+          : 'text-gray-600 hover:bg-gray-100'
       }`}
     >
       {label}
@@ -152,19 +185,21 @@ function TimeRangeButton({
 export default function DashboardPage() {
   const totalConversations = conversations.length
 
-  // Time range state
-  const [timeRange, setTimeRange] = useState<TimeRange>('month')
+  // Time range state - default to MAX to show all available data
+  const [timeRange, setTimeRange] = useState<TimeRange>('MAX')
 
-  const chartData = useMemo(() => generateChartData(timeRange), [timeRange])
+  const chartData = useMemo(() => getChartData(timeRange), [timeRange])
 
   // Calculate average for reference line
   const averageValue = useMemo(() =>
-    Math.round(chartData.reduce((sum, d) => sum + d.conversations, 0) / chartData.length),
+    chartData.length > 0
+      ? Math.round(chartData.reduce((sum, d) => sum + d.conversations, 0) / chartData.length)
+      : 0,
     [chartData]
   )
 
   // Track hovered data for live display
-  const [activeData, setActiveData] = useState<{ date: string; conversations: number } | null>(null)
+  const [activeData, setActiveData] = useState<{ date: string; fullDate: string; conversations: number } | null>(null)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleMouseMove = useCallback((state: any) => {
@@ -178,9 +213,21 @@ export default function DashboardPage() {
   }, [])
 
   // Calculate stats for display
-  const latestValue = chartData[chartData.length - 1]?.conversations
+  const firstValue = chartData[0]?.conversations ?? 0
+  const latestValue = chartData[chartData.length - 1]?.conversations ?? 0
   const displayValue = activeData?.conversations ?? latestValue
-  const displayDate = activeData?.date ?? chartData[chartData.length - 1]?.date
+  const displayDate = activeData?.fullDate ?? chartData[chartData.length - 1]?.fullDate ?? ''
+
+  // Calculate percentage change (like Google Finance)
+  const percentChange = useMemo(() => {
+    if (chartData.length < 2 || firstValue === 0) return null
+    const change = ((latestValue - firstValue) / firstValue) * 100
+    return {
+      value: Math.abs(change).toFixed(1),
+      isPositive: change >= 0,
+      absoluteChange: latestValue - firstValue,
+    }
+  }, [chartData, firstValue, latestValue])
 
   return (
     <div className="min-h-screen bg-white p-6 space-y-8">
@@ -221,64 +268,88 @@ export default function DashboardPage() {
         />
       </div>
 
-      {/* Interactive Chart */}
+      {/* Interactive Chart - Google Finance Style */}
       <Card className="bg-white border border-gray-200">
         <CardHeader className="pb-0">
           <div className="flex items-start justify-between">
-            <CardTitle className="text-lg font-medium text-gray-900">
-              שיחות לאורך זמן
-            </CardTitle>
+            <div>
+              <CardTitle className="text-lg font-medium text-gray-900">
+                שיחות לאורך זמן
+              </CardTitle>
+              {/* Percentage Change Display - Google Finance Style */}
+              {percentChange && (
+                <div className="flex items-center gap-2 mt-1">
+                  <span className={`text-sm font-medium ${
+                    percentChange.isPositive ? 'text-green-600' : 'text-red-600'
+                  }`}>
+                    {percentChange.isPositive ? '+' : '-'}{percentChange.absoluteChange}
+                    {' '}
+                    ({percentChange.isPositive ? '+' : '-'}{percentChange.value}%)
+                  </span>
+                  <span className="text-xs text-gray-400">מתחילת התקופה</span>
+                </div>
+              )}
+            </div>
             {/* Live value display */}
             <div className="text-left">
-              <p className="text-3xl font-bold text-emerald-600 transition-all duration-150">
+              <p className="text-3xl font-bold text-gray-900 transition-all duration-150">
                 {displayValue}
               </p>
               <p className="text-sm text-gray-500">{displayDate}</p>
             </div>
           </div>
 
-          {/* Time Range Selector - underline style */}
-          <div className="flex items-center gap-1 mt-4 border-b border-gray-200">
+          {/* Time Range Selector - Google Finance Style */}
+          <div className="flex items-center gap-1 mt-4 bg-gray-50 rounded-lg p-1 w-fit">
             <TimeRangeButton
-              label="היום"
-              selected={timeRange === 'today'}
-              onClick={() => setTimeRange('today')}
+              label="1D"
+              selected={timeRange === '1D'}
+              onClick={() => setTimeRange('1D')}
             />
             <TimeRangeButton
-              label="שבוע"
-              selected={timeRange === 'week'}
-              onClick={() => setTimeRange('week')}
+              label="5D"
+              selected={timeRange === '5D'}
+              onClick={() => setTimeRange('5D')}
             />
             <TimeRangeButton
-              label="חודש"
-              selected={timeRange === 'month'}
-              onClick={() => setTimeRange('month')}
+              label="1M"
+              selected={timeRange === '1M'}
+              onClick={() => setTimeRange('1M')}
             />
             <TimeRangeButton
-              label="שנה"
-              selected={timeRange === 'year'}
-              onClick={() => setTimeRange('year')}
+              label="6M"
+              selected={timeRange === '6M'}
+              onClick={() => setTimeRange('6M')}
             />
             <TimeRangeButton
-              label="טווח מותאם"
-              selected={timeRange === 'custom'}
-              onClick={() => setTimeRange('custom')}
+              label="1Y"
+              selected={timeRange === '1Y'}
+              onClick={() => setTimeRange('1Y')}
+            />
+            <TimeRangeButton
+              label="5Y"
+              selected={timeRange === '5Y'}
+              onClick={() => setTimeRange('5Y')}
+            />
+            <TimeRangeButton
+              label="MAX"
+              selected={timeRange === 'MAX'}
+              onClick={() => setTimeRange('MAX')}
             />
           </div>
         </CardHeader>
         <CardContent className="pt-4">
-          <div className="h-[300px]" style={{ outline: 'none' }}>
+          <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
                 data={chartData}
                 margin={{ top: 10, right: 10, left: 0, bottom: 10 }}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
-                style={{ outline: 'none' }}
               >
                 <defs>
                   <linearGradient id="colorConversations" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.08}/>
+                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.1}/>
                     <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
@@ -294,7 +365,7 @@ export default function DashboardPage() {
                   axisLine={false}
                   tickLine={false}
                   tick={{ fontSize: 12, fill: '#6B7280' }}
-                  domain={['dataMin - 5', 'dataMax + 5']}
+                  domain={['dataMin - 1', 'dataMax + 1']}
                 />
                 <Tooltip
                   content={() => null}
@@ -304,7 +375,7 @@ export default function DashboardPage() {
                   type="monotone"
                   dataKey="conversations"
                   stroke="#10B981"
-                  strokeWidth={1.5}
+                  strokeWidth={2}
                   fill="url(#colorConversations)"
                   name="שיחות"
                   activeDot={<CustomActiveDot />}
