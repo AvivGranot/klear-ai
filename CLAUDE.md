@@ -85,7 +85,6 @@ npm run lint         # Run ESLint
 - `/src/data/jolika-data.ts` - Core data and topic configuration
 - `/src/data/all-conversations.json` - 156 parsed WhatsApp conversations
 - `/src/data/whatsapp-faqs.json` - FAQ patterns from managers
-- `/src/app/dashboard/page.tsx` - Main dashboard
+- `/src/app/dashboard/page.tsx` - Main dashboard with analytics and charts
 - `/src/app/dashboard/knowledge/page.tsx` - Knowledge management
-- `/src/app/dashboard/analytics/page.tsx` - Analytics and charts
 - `/src/app/dashboard/conversations/page.tsx` - Conversation history

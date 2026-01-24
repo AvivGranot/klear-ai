@@ -249,3 +249,79 @@ export function getProcessedFaqs() {
 
 // Re-export with gas station names for backward compatibility
 export const GAS_STATION_TOPICS = CHOCOLATE_SHOP_TOPICS
+
+// Get manager contact statistics from conversations
+export function getManagerStats() {
+  const managerCounts = new Map<string, number>()
+
+  conversations.forEach(conv => {
+    const manager = conv.answerSender
+    if (manager) {
+      managerCounts.set(manager, (managerCounts.get(manager) || 0) + 1)
+    }
+  })
+
+  // Convert to array and sort by count
+  const stats = Array.from(managerCounts.entries())
+    .map(([name, count]) => {
+      // Extract short name (first name only)
+      const shortName = name.split(' ')[0]
+      const isShelly = name.includes('שלי')
+      return { name, shortName, count, isShelly }
+    })
+    .sort((a, b) => b.count - a.count)
+
+  return stats
+}
+
+// Get repetitive questions sorted by frequency
+export function getRepetitiveQuestions() {
+  return knowledgeItems
+    .filter(item => item.type === 'repeated_answer' && (item.frequency || 0) >= 2)
+    .map(item => ({
+      title: item.titleHe || item.title,
+      content: item.contentHe || item.content,
+      frequency: item.frequency || 1,
+      exampleQuestions: item.example_questions || [],
+      topic: detectTopic(item.contentHe || item.content)?.name || 'אחר',
+    }))
+    .sort((a, b) => b.frequency - a.frequency)
+}
+
+// Get conversations grouped by date for timeline chart
+export function getConversationsByDate() {
+  const dateMap = new Map<string, number>()
+
+  conversations.forEach(conv => {
+    // Parse date from DD.MM.YYYY format
+    const [day, month, year] = conv.date.split('.')
+    const dateKey = `${year}-${month}-${day}` // ISO format for sorting
+    dateMap.set(dateKey, (dateMap.get(dateKey) || 0) + 1)
+  })
+
+  // Convert to array and sort by date
+  return Array.from(dateMap.entries())
+    .map(([date, count]) => {
+      const [year, month, day] = date.split('-')
+      return {
+        date,
+        displayDate: `${day}.${month}`,
+        count,
+      }
+    })
+    .sort((a, b) => a.date.localeCompare(b.date))
+}
+
+// Get count of times Shelly was contacted
+export function getShellyContactCount() {
+  return conversations.filter(conv =>
+    conv.answerSender?.includes('שלי')
+  ).length
+}
+
+// Get total repeated questions count (sum of all frequencies)
+export function getRepeatedQuestionsCount() {
+  return knowledgeItems
+    .filter(item => item.type === 'repeated_answer')
+    .reduce((sum, item) => sum + (item.frequency || 1), 0)
+}

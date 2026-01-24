@@ -9,47 +9,28 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import {
   FileText,
-  FileSpreadsheet,
-  Image,
-  Video,
-  Type,
   X,
   Upload,
-  HardDrive,
   Check,
   AlertCircle,
-  Clock,
-  ChevronLeft,
   Plus,
   Zap,
   MessageSquare,
+  Database,
+  Edit3,
+  Trash2,
 } from "lucide-react"
-import { cn, formatRelativeTime } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { safeFetch } from "@/lib/safeFetch"
-import { useDropzone, Accept } from "react-dropzone"
+import { useDropzone } from "react-dropzone"
 import { getAutomationPatterns, getAutomationPatternsByManager } from "@/data/jolika-data"
 
-// Content type configuration
-interface ContentType {
-  id: string
-  label: string
-  icon: typeof FileText
-  color: string
-  bgColor: string
-  hoverBg: string
-  lightBg: string
-  borderColor: string
-  textColor: string
-  accept: Accept
-}
-
-const CONTENT_TYPES: ContentType[] = [
-  { id: "pdf", label: "PDF", icon: FileText, color: "red", bgColor: "bg-red-500", hoverBg: "hover:bg-red-600", lightBg: "bg-red-50", borderColor: "border-red-200", textColor: "text-red-600", accept: { "application/pdf": [".pdf"] } },
-  { id: "excel", label: "Excel", icon: FileSpreadsheet, color: "green", bgColor: "bg-green-500", hoverBg: "hover:bg-green-600", lightBg: "bg-green-50", borderColor: "border-green-200", textColor: "text-green-600", accept: { "application/vnd.ms-excel": [".xls"], "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"], "text/csv": [".csv"] } },
-  { id: "word", label: "Word", icon: FileText, color: "blue", bgColor: "bg-blue-500", hoverBg: "hover:bg-blue-600", lightBg: "bg-blue-50", borderColor: "border-blue-200", textColor: "text-blue-600", accept: { "application/msword": [".doc"], "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"] } },
-  { id: "images", label: "תמונות", icon: Image, color: "purple", bgColor: "bg-purple-500", hoverBg: "hover:bg-purple-600", lightBg: "bg-purple-50", borderColor: "border-purple-200", textColor: "text-purple-600", accept: { "image/*": [".png", ".jpg", ".jpeg", ".gif", ".webp"] } },
-  { id: "video", label: "סרטונים", icon: Video, color: "orange", bgColor: "bg-orange-500", hoverBg: "hover:bg-orange-600", lightBg: "bg-orange-50", borderColor: "border-orange-200", textColor: "text-orange-600", accept: { "video/*": [".mp4", ".mov", ".avi", ".webm"] } },
-  { id: "text", label: "טקסט", icon: Type, color: "teal", bgColor: "bg-teal-500", hoverBg: "hover:bg-teal-600", lightBg: "bg-teal-50", borderColor: "border-teal-200", textColor: "text-teal-600", accept: {} },
+// Document type options for unified form
+const DOCUMENT_TYPES = [
+  { value: "procedure", label: "נוהל" },
+  { value: "policy", label: "מדיניות" },
+  { value: "faq", label: "שאלות נפוצות" },
+  { value: "document", label: "מסמך" },
 ]
 
 interface KnowledgeItem {
@@ -69,37 +50,30 @@ interface KnowledgeItem {
   }>
 }
 
-interface RecentItem {
-  id: string
-  title: string
-  type: string
-  createdAt: string
-  mimeType?: string
-}
-
 type UploadState = "idle" | "dragover" | "uploading" | "success" | "error"
 
-
-// ExpandedUploader Component
-function ExpandedUploader({
-  type,
+// Unified Content Form Component
+function UnifiedContentForm({
   onClose,
   companyId,
   onSuccess,
 }: {
-  type: ContentType
   onClose: () => void
   companyId: string
   onSuccess: () => void
 }) {
+  const [formData, setFormData] = useState({
+    titleHe: "",
+    contentHe: "",
+    type: "document",
+  })
+  const [saving, setSaving] = useState(false)
   const [uploadState, setUploadState] = useState<UploadState>("idle")
   const [uploadProgress, setUploadProgress] = useState(0)
-  const [uploadError, setUploadError] = useState<string | null>(null)
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
+  const [uploadError, setUploadError] = useState<string | null>(null)
 
-  const Icon = type.icon
-
-  const simulateUpload = async (files: File[]) => {
+  const handleFileUpload = async (files: File[]) => {
     setUploadState("uploading")
     setUploadProgress(0)
     setUploadError(null)
@@ -135,169 +109,17 @@ function ExpandedUploader({
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setUploadedFiles(acceptedFiles)
-    simulateUpload(acceptedFiles)
+    handleFileUpload(acceptedFiles)
   }, [companyId])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     onDragEnter: () => setUploadState("dragover"),
     onDragLeave: () => setUploadState("idle"),
-    accept: Object.keys(type.accept).length > 0 ? type.accept : undefined,
     multiple: true,
   })
 
-  return (
-    <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      <motion.div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-        onClick={onClose}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      />
-
-      <motion.div
-        className={cn(
-          "relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden",
-          type.borderColor, "border-4"
-        )}
-        initial={{ scale: 0.5, opacity: 0, y: 50 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.5, opacity: 0, y: 50 }}
-        transition={{ type: "spring", stiffness: 400, damping: 25 }}
-      >
-        {/* Header */}
-        <div className={cn("px-6 py-4 flex items-center justify-between", type.bgColor)}>
-          <div className="flex items-center gap-3">
-            <Icon className="w-6 h-6 text-white" />
-            <span className="text-lg font-semibold text-white">העלאת {type.label}</span>
-          </div>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-white/20 rounded-full transition-colors"
-          >
-            <X className="w-5 h-5 text-white" />
-          </button>
-        </div>
-
-        {/* Upload Area */}
-        <div className="p-6">
-          <div
-            {...getRootProps()}
-            className={cn(
-              "relative h-64 rounded-2xl border-3 border-dashed transition-all duration-300 cursor-pointer",
-              "flex flex-col items-center justify-center",
-              uploadState === "dragover" && cn(type.lightBg, type.borderColor.replace("border-", "border-")),
-              uploadState === "idle" && "border-gray-200 hover:border-gray-300 bg-gray-50 hover:bg-gray-100",
-              uploadState === "uploading" && "border-gray-200 bg-white",
-              uploadState === "success" && "border-green-300 bg-green-50",
-              uploadState === "error" && "border-red-300 bg-red-50"
-            )}
-          >
-            <input {...getInputProps()} />
-
-            {/* Progress Ring */}
-            {uploadState === "uploading" && (
-              <div className="relative">
-                <svg className="w-24 h-24 transform -rotate-90">
-                  <circle
-                    cx="48"
-                    cy="48"
-                    r="40"
-                    stroke="#e5e7eb"
-                    strokeWidth="8"
-                    fill="none"
-                  />
-                  <motion.circle
-                    cx="48"
-                    cy="48"
-                    r="40"
-                    stroke={type.color === "red" ? "#ef4444" : type.color === "green" ? "#22c55e" : type.color === "blue" ? "#3b82f6" : type.color === "purple" ? "#a855f7" : type.color === "orange" ? "#f97316" : "#14b8a6"}
-                    strokeWidth="8"
-                    fill="none"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: uploadProgress / 100 }}
-                    style={{ strokeDasharray: "251.2", strokeDashoffset: 0 }}
-                  />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className={cn("text-2xl font-bold", type.textColor)}>{uploadProgress}%</span>
-                </div>
-              </div>
-            )}
-
-            {/* Idle/Dragover State */}
-            {(uploadState === "idle" || uploadState === "dragover") && (
-              <>
-                <div className={cn(
-                  "w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-all",
-                  uploadState === "dragover" ? type.bgColor : "bg-gray-200"
-                )}>
-                  <Upload className={cn("w-8 h-8", uploadState === "dragover" ? "text-white animate-bounce" : "text-gray-500")} />
-                </div>
-                <p className={cn("font-medium text-center", uploadState === "dragover" ? type.textColor : "text-gray-600")}>
-                  {uploadState === "dragover" ? "שחררו להעלאה" : "גררו קבצים לכאן"}
-                </p>
-                <p className="text-sm text-gray-400 mt-1">או לחצו לבחירת קבצים</p>
-              </>
-            )}
-
-            {/* Success State */}
-            {uploadState === "success" && (
-              <div className="flex flex-col items-center">
-                <motion.div
-                  className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center mb-4"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                >
-                  <Check className="w-8 h-8 text-white" />
-                </motion.div>
-                <p className="font-medium text-green-600">הועלה בהצלחה!</p>
-              </div>
-            )}
-
-            {/* Error State */}
-            {uploadState === "error" && (
-              <div className="flex flex-col items-center">
-                <div className="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center mb-4">
-                  <AlertCircle className="w-8 h-8 text-white" />
-                </div>
-                <p className="font-medium text-red-600">שגיאה</p>
-                <p className="text-sm text-red-500 mt-1">{uploadError}</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
-  )
-}
-
-// TextInputForm Component
-function TextInputForm({
-  onClose,
-  companyId,
-  onSuccess,
-}: {
-  onClose: () => void
-  companyId: string
-  onSuccess: () => void
-}) {
-  const [formData, setFormData] = useState({
-    titleHe: "",
-    contentHe: "",
-    type: "document",
-  })
-  const [saving, setSaving] = useState(false)
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleTextSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSaving(true)
 
@@ -337,17 +159,17 @@ function TextInputForm({
       />
 
       <motion.div
-        className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-teal-200"
-        initial={{ scale: 0.5, opacity: 0, y: 50 }}
+        className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200"
+        initial={{ scale: 0.95, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.5, opacity: 0, y: 50 }}
+        exit={{ scale: 0.95, opacity: 0, y: 20 }}
         transition={{ type: "spring", stiffness: 400, damping: 25 }}
       >
         {/* Header */}
-        <div className="px-6 py-4 flex items-center justify-between bg-teal-500">
+        <div className="px-6 py-4 flex items-center justify-between bg-[var(--klear-green)]">
           <div className="flex items-center gap-3">
-            <Type className="w-6 h-6 text-white" />
-            <span className="text-lg font-semibold text-white">הוספת טקסט</span>
+            <Plus className="w-6 h-6 text-white" />
+            <span className="text-lg font-semibold text-white">הוספת תוכן</span>
           </div>
           <button
             onClick={onClose}
@@ -357,138 +179,260 @@ function TextInputForm({
           </button>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        {/* Content */}
+        <div className="p-6 space-y-6">
+          {/* File Upload Section */}
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1.5 block">כותרת</label>
-            <Input
-              value={formData.titleHe}
-              onChange={(e) => setFormData({ ...formData, titleHe: e.target.value })}
-              placeholder="כותרת הפריט"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-1.5 block">סוג</label>
-            <select
-              value={formData.type}
-              onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-              className="w-full border border-gray-200 rounded-lg p-2.5 text-sm bg-white"
+            <label className="text-sm font-medium text-gray-700 mb-2 block">העלאת קובץ</label>
+            <div
+              {...getRootProps()}
+              className={cn(
+                "relative h-32 rounded-xl border-2 border-dashed transition-all duration-300 cursor-pointer",
+                "flex flex-col items-center justify-center",
+                uploadState === "dragover" && "border-[var(--klear-green)] bg-green-50",
+                uploadState === "idle" && "border-gray-200 hover:border-gray-300 bg-gray-50 hover:bg-gray-100",
+                uploadState === "uploading" && "border-gray-200 bg-white",
+                uploadState === "success" && "border-green-300 bg-green-50",
+                uploadState === "error" && "border-red-300 bg-red-50"
+              )}
             >
-              <option value="document">מסמך</option>
-              <option value="procedure">נוהל</option>
-              <option value="policy">מדיניות</option>
-              <option value="faq">שאלות נפוצות</option>
-            </select>
+              <input {...getInputProps()} />
+
+              {uploadState === "uploading" && (
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-12 rounded-full border-4 border-gray-200 border-t-[var(--klear-green)] animate-spin mb-2" />
+                  <span className="text-sm text-gray-600">{uploadProgress}%</span>
+                </div>
+              )}
+
+              {(uploadState === "idle" || uploadState === "dragover") && (
+                <>
+                  <Upload className={cn("w-8 h-8 mb-2", uploadState === "dragover" ? "text-[var(--klear-green)]" : "text-gray-400")} />
+                  <p className="text-sm text-gray-600">
+                    {uploadState === "dragover" ? "שחררו להעלאה" : "גררו קבצים או לחצו לבחירה"}
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1">PDF, Word, Excel, תמונות, סרטונים</p>
+                </>
+              )}
+
+              {uploadState === "success" && (
+                <div className="flex flex-col items-center">
+                  <Check className="w-8 h-8 text-green-500 mb-2" />
+                  <p className="text-sm text-green-600">הועלה בהצלחה!</p>
+                </div>
+              )}
+
+              {uploadState === "error" && (
+                <div className="flex flex-col items-center">
+                  <AlertCircle className="w-8 h-8 text-red-500 mb-2" />
+                  <p className="text-sm text-red-600">{uploadError}</p>
+                </div>
+              )}
+            </div>
           </div>
 
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-1.5 block">תוכן</label>
-            <Textarea
-              value={formData.contentHe}
-              onChange={(e) => setFormData({ ...formData, contentHe: e.target.value })}
-              placeholder="תוכן הפריט..."
-              rows={6}
-              required
-            />
+          <div className="relative flex items-center">
+            <div className="flex-grow border-t border-gray-200"></div>
+            <span className="flex-shrink mx-4 text-gray-400 text-sm">או</span>
+            <div className="flex-grow border-t border-gray-200"></div>
           </div>
 
-          <div className="flex gap-3 pt-2">
-            <Button type="submit" disabled={saving} className="bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)]">
-              {saving ? "שומר..." : "שמור"}
-            </Button>
-            <Button type="button" variant="outline" onClick={onClose}>
-              ביטול
-            </Button>
-          </div>
-        </form>
+          {/* Text Form Section */}
+          <form onSubmit={handleTextSubmit} className="space-y-4">
+            <div>
+              <label className="text-sm font-medium text-gray-700 mb-1.5 block">כותרת</label>
+              <Input
+                value={formData.titleHe}
+                onChange={(e) => setFormData({ ...formData, titleHe: e.target.value })}
+                placeholder="כותרת הפריט"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-gray-700 mb-1.5 block">סוג מסמך</label>
+              <select
+                value={formData.type}
+                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                className="w-full border border-gray-200 rounded-lg p-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[var(--klear-green)] focus:border-transparent"
+              >
+                {DOCUMENT_TYPES.map(type => (
+                  <option key={type.value} value={type.value}>{type.label}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-gray-700 mb-1.5 block">תוכן</label>
+              <Textarea
+                value={formData.contentHe}
+                onChange={(e) => setFormData({ ...formData, contentHe: e.target.value })}
+                placeholder="תוכן הפריט..."
+                rows={4}
+                required
+              />
+            </div>
+
+            <div className="flex gap-3 pt-2">
+              <Button type="submit" disabled={saving} className="bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)]">
+                {saving ? "שומר..." : "שמור"}
+              </Button>
+              <Button type="button" variant="outline" onClick={onClose}>
+                ביטול
+              </Button>
+            </div>
+          </form>
+        </div>
       </motion.div>
     </motion.div>
   )
 }
 
-// RecentItems Component
-function RecentItems({ items, typeFilter }: { items: RecentItem[]; typeFilter: string | null }) {
-  const filteredItems = typeFilter
-    ? items.filter(item => {
-        if (typeFilter === "pdf") return item.mimeType?.includes("pdf")
-        if (typeFilter === "excel") return item.mimeType?.includes("sheet") || item.mimeType?.includes("excel") || item.mimeType?.includes("csv")
-        if (typeFilter === "word") return item.mimeType?.includes("word") || item.mimeType?.includes("document")
-        if (typeFilter === "images") return item.mimeType?.startsWith("image")
-        if (typeFilter === "video") return item.mimeType?.startsWith("video")
-        if (typeFilter === "text") return !item.mimeType || item.type === "document"
-        return true
-      })
-    : items
+// Automation Edit Screen Component
+function AutomationEditScreen({
+  pattern,
+  managerName,
+  patternIndex,
+  onClose,
+  onSave,
+}: {
+  pattern: {
+    rawAnswer: string
+    exampleQuestions: string[]
+    topic: string
+    frequency: number
+  }
+  managerName: string
+  patternIndex: number
+  onClose: () => void
+  onSave: (editedResponse: string, editedQuestions: string[]) => void
+}) {
+  const [editedResponse, setEditedResponse] = useState(pattern.rawAnswer)
+  const [editedQuestions, setEditedQuestions] = useState<string[]>([...pattern.exampleQuestions])
+  const [newQuestion, setNewQuestion] = useState("")
 
-  if (filteredItems.length === 0) {
-    return (
-      <div className="text-center py-8 text-gray-400">
-        <Clock className="w-8 h-8 mx-auto mb-2 opacity-50" />
-        <p className="text-sm">אין פריטים אחרונים</p>
-      </div>
-    )
+  const handleAddQuestion = () => {
+    if (newQuestion.trim()) {
+      setEditedQuestions([...editedQuestions, newQuestion.trim()])
+      setNewQuestion("")
+    }
+  }
+
+  const handleRemoveQuestion = (index: number) => {
+    setEditedQuestions(editedQuestions.filter((_, i) => i !== index))
+  }
+
+  const handleSave = () => {
+    onSave(editedResponse, editedQuestions)
   }
 
   return (
-    <div className="space-y-2">
-      {filteredItems.slice(0, 5).map((item, index) => {
-        const typeConfig = CONTENT_TYPES.find(t => {
-          if (t.id === "pdf") return item.mimeType?.includes("pdf")
-          if (t.id === "excel") return item.mimeType?.includes("sheet") || item.mimeType?.includes("excel")
-          if (t.id === "word") return item.mimeType?.includes("word") || item.mimeType?.includes("document")
-          if (t.id === "images") return item.mimeType?.startsWith("image")
-          if (t.id === "video") return item.mimeType?.startsWith("video")
-          return false
-        }) || CONTENT_TYPES[5] // Default to text
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={onClose}
+      />
 
-        const Icon = typeConfig.icon
-
-        return (
-          <motion.div
-            key={item.id}
-            className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.05 }}
+      <motion.div
+        className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200 max-h-[90vh] overflow-y-auto"
+        initial={{ scale: 0.95, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.95, opacity: 0, y: 20 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      >
+        {/* Header */}
+        <div className="px-6 py-4 flex items-center justify-between bg-[var(--klear-green)] sticky top-0 z-10">
+          <div className="flex items-center gap-3">
+            <Edit3 className="w-6 h-6 text-white" />
+            <span className="text-lg font-semibold text-white">עריכת אוטומציה</span>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-white/20 rounded-full transition-colors"
           >
-            <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center", typeConfig.lightBg)}>
-              <Icon className={cn("w-5 h-5", typeConfig.textColor)} />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 truncate">{item.title}</p>
-              <p className="text-xs text-gray-400">{formatRelativeTime(item.createdAt)}</p>
-            </div>
-          </motion.div>
-        )
-      })}
-    </div>
-  )
-}
-
-// StorageIndicator Component
-function StorageIndicator({ used, total }: { used: number; total: number }) {
-  const percentage = (used / total) * 100
-
-  return (
-    <div className="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-lg border border-gray-200">
-      <HardDrive className="w-4 h-4 text-gray-400" />
-      <div className="w-32">
-        <div className="flex justify-between text-xs mb-1">
-          <span className="text-gray-500">אחסון</span>
-          <span className="text-gray-700">{used}/{total}GB</span>
+            <X className="w-5 h-5 text-white" />
+          </button>
         </div>
-        <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
-          <motion.div
-            className="h-full bg-emerald-500 rounded-full"
-            initial={{ width: 0 }}
-            animate={{ width: `${percentage}%` }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          />
+
+        {/* Content */}
+        <div className="p-6 space-y-6">
+          {/* Manager Info */}
+          <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold">
+              {managerName.charAt(0)}
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-900">{managerName}</p>
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="text-xs">{pattern.topic}</Badge>
+                <Badge className="text-xs bg-amber-500 text-white">{pattern.frequency}x</Badge>
+              </div>
+            </div>
+          </div>
+
+          {/* Response Editor */}
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-2 block">תשובה אוטומטית</label>
+            <Textarea
+              value={editedResponse}
+              onChange={(e) => setEditedResponse(e.target.value)}
+              rows={6}
+              className="w-full"
+              placeholder="הקלידו את התשובה האוטומטית..."
+            />
+          </div>
+
+          {/* Trigger Questions */}
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-2 block">שאלות שמפעילות תשובה זו</label>
+            <div className="space-y-2 mb-3">
+              {editedQuestions.map((question, index) => (
+                <div key={index} className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
+                  <MessageSquare className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                  <span className="text-sm text-gray-700 flex-1">{question}</span>
+                  <button
+                    onClick={() => handleRemoveQuestion(index)}
+                    className="p-1 hover:bg-red-100 rounded text-red-500 transition-colors"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <Input
+                value={newQuestion}
+                onChange={(e) => setNewQuestion(e.target.value)}
+                placeholder="הוסיפו שאלה נוספת..."
+                onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleAddQuestion())}
+              />
+              <Button type="button" variant="outline" onClick={handleAddQuestion}>
+                <Plus className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex gap-3 pt-4 border-t border-gray-100">
+            <Button
+              onClick={handleSave}
+              className="bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)]"
+            >
+              <Check className="w-4 h-4 ml-2" />
+              אשר ושמור
+            </Button>
+            <Button type="button" variant="outline" onClick={onClose}>
+              ביטול
+            </Button>
+          </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }
 
@@ -498,25 +442,29 @@ type AutomationStatus = "pending" | "approved" | "rejected"
 interface PatternStatus {
   status: AutomationStatus
   updatedAt: string
+  editedResponse?: string
+  editedQuestions?: string[]
 }
 
 // Main Page Component
 export default function KnowledgePage() {
   const [companyId, setCompanyId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
-  const [expandedType, setExpandedType] = useState<ContentType | null>(null)
-  const [showTextForm, setShowTextForm] = useState(false)
-  const [typeCounts, setTypeCounts] = useState<Record<string, number>>({})
+  const [showContentForm, setShowContentForm] = useState(false)
   const [totalItems, setTotalItems] = useState(0)
-  const [recentItems, setRecentItems] = useState<RecentItem[]>([])
-  const [selectedFilter, setSelectedFilter] = useState<string | null>(null)
   const [patternStatuses, setPatternStatuses] = useState<Record<string, PatternStatus>>({})
   const [actionToast, setActionToast] = useState<{ message: string; type: "success" | "info" } | null>(null)
   const [statusFilter, setStatusFilter] = useState<AutomationStatus | "all">("all")
-
-  // Storage stats
-  const storageUsed = 2.4
-  const storageTotal = 10
+  const [editingAutomation, setEditingAutomation] = useState<{
+    pattern: {
+      rawAnswer: string
+      exampleQuestions: string[]
+      topic: string
+      frequency: number
+    }
+    managerName: string
+    patternIndex: number
+  } | null>(null)
 
   // Load pattern statuses from localStorage
   useEffect(() => {
@@ -526,20 +474,38 @@ export default function KnowledgePage() {
     }
   }, [])
 
-  // Save pattern statuses to localStorage
-  const savePatternStatus = (patternId: string, status: AutomationStatus) => {
+  // Save pattern status to localStorage
+  const savePatternStatus = (patternId: string, status: AutomationStatus, editedResponse?: string, editedQuestions?: string[]) => {
     const newStatuses = {
       ...patternStatuses,
-      [patternId]: { status, updatedAt: new Date().toISOString() }
+      [patternId]: {
+        status,
+        updatedAt: new Date().toISOString(),
+        editedResponse,
+        editedQuestions,
+      }
     }
     setPatternStatuses(newStatuses)
     localStorage.setItem("automationPatternStatuses", JSON.stringify(newStatuses))
   }
 
-  // Handle approve automation
-  const handleApprove = (managerName: string, patternIndex: number, patternAnswer: string) => {
-    const patternId = `${managerName}-${patternIndex}`
-    savePatternStatus(patternId, "approved")
+  // Handle opening edit screen
+  const handleOpenEditScreen = (managerName: string, patternIndex: number, pattern: {
+    rawAnswer: string
+    exampleQuestions: string[]
+    topic: string
+    frequency: number
+  }) => {
+    setEditingAutomation({ pattern, managerName, patternIndex })
+  }
+
+  // Handle save from edit screen
+  const handleSaveAutomation = (editedResponse: string, editedQuestions: string[]) => {
+    if (!editingAutomation) return
+
+    const patternId = `${editingAutomation.managerName}-${editingAutomation.patternIndex}`
+    savePatternStatus(patternId, "approved", editedResponse, editedQuestions)
+    setEditingAutomation(null)
     setActionToast({ message: "התבנית אושרה ותפעל אוטומטית", type: "success" })
     setTimeout(() => setActionToast(null), 3000)
   }
@@ -612,43 +578,7 @@ export default function KnowledgePage() {
     try {
       const data = await safeFetch<{ knowledgeItems: KnowledgeItem[] }>(`/api/knowledge?companyId=${companyId}`)
       const items = data?.knowledgeItems || []
-
-      // Calculate counts by type (based on media mime type or item type)
-      const counts: Record<string, number> = {
-        pdf: 0,
-        excel: 0,
-        word: 0,
-        images: 0,
-        video: 0,
-        text: 0,
-      }
-
-      items.forEach(item => {
-        if (item.media.length > 0) {
-          const mimeType = item.media[0].mimeType
-          if (mimeType.includes("pdf")) counts.pdf++
-          else if (mimeType.includes("sheet") || mimeType.includes("excel") || mimeType.includes("csv")) counts.excel++
-          else if (mimeType.includes("word") || mimeType.includes("document")) counts.word++
-          else if (mimeType.startsWith("image")) counts.images++
-          else if (mimeType.startsWith("video")) counts.video++
-          else counts.text++
-        } else {
-          counts.text++
-        }
-      })
-
-      setTypeCounts(counts)
       setTotalItems(items.length)
-
-      // Recent items
-      const recent = items.slice(-10).reverse().map(item => ({
-        id: item.id,
-        title: item.titleHe || item.title,
-        type: item.type,
-        createdAt: item.createdAt,
-        mimeType: item.media[0]?.mimeType,
-      }))
-      setRecentItems(recent)
     } catch (error) {
       console.error("Error loading data:", error)
     } finally {
@@ -656,31 +586,22 @@ export default function KnowledgePage() {
     }
   }
 
-  const handleCircleClick = (type: ContentType) => {
-    if (type.id === "text") {
-      setShowTextForm(true)
-    } else {
-      setExpandedType(type)
-    }
-    setSelectedFilter(type.id)
-  }
-
   if (loading) {
     return (
       <div className="space-y-6">
         <div className="flex justify-between">
           <div className="h-8 w-32 bg-gray-200 rounded animate-pulse" />
-          <div className="h-10 w-32 bg-gray-200 rounded animate-pulse" />
         </div>
-        <div className="h-24 bg-gray-200 rounded-lg animate-pulse" />
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="h-32 bg-gray-200 rounded-lg animate-pulse" />
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="h-24 bg-gray-200 rounded-lg animate-pulse" />
+          <div className="h-24 bg-gray-200 rounded-lg animate-pulse" />
         </div>
+        <div className="h-64 bg-gray-200 rounded-lg animate-pulse" />
       </div>
     )
   }
+
+  const patternCounts = getPatternCounts()
 
   return (
     <div className="space-y-8">
@@ -690,151 +611,63 @@ export default function KnowledgePage() {
           <h1 className="text-2xl font-semibold text-gray-900">מרכז הידע</h1>
           <p className="text-sm text-gray-500">העלו וארגנו את תוכן הידע של החברה</p>
         </div>
-        <StorageIndicator used={storageUsed} total={storageTotal} />
       </div>
 
-      {/* Knowledge Summary Card */}
-      <Card className="border border-gray-200 bg-gradient-to-r from-[rgba(37,211,102,0.05)] to-transparent">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between">
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Knowledge Items Count */}
+        <Card className="border border-gray-200 bg-white">
+          <CardContent className="p-6">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-[var(--klear-green)] flex items-center justify-center">
-                <HardDrive className="w-8 h-8 text-white" />
+              <div className="w-14 h-14 rounded-xl bg-[var(--klear-green)] flex items-center justify-center">
+                <Database className="w-7 h-7 text-white" />
               </div>
               <div>
                 <p className="text-3xl font-bold text-gray-900">{totalItems}</p>
                 <p className="text-sm text-gray-500">פריטי ידע במאגר</p>
               </div>
             </div>
-            <Button
-              onClick={() => setShowTextForm(true)}
-              className="bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)] gap-2"
-            >
-              <Plus className="w-4 h-4" />
-              הוסף תוכן
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
 
-      {/* Content Type Cards Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        {CONTENT_TYPES.map((type) => {
-          const Icon = type.icon
-          const count = typeCounts[type.id] || 0
-          const isSelected = selectedFilter === type.id
-          return (
-            <motion.div
-              key={type.id}
-              whileHover={{ y: -4, boxShadow: "0 10px 25px rgba(0,0,0,0.1)" }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Card
-                className={cn(
-                  "cursor-pointer transition-all border-2",
-                  isSelected
-                    ? `${type.borderColor} ${type.lightBg}`
-                    : "border-gray-200 hover:border-gray-300"
-                )}
-                onClick={() => handleCircleClick(type)}
-              >
-                <CardContent className="p-4 text-center">
-                  <div className={cn(
-                    "w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center",
-                    type.bgColor
-                  )}>
-                    <Icon className="w-6 h-6 text-white" />
-                  </div>
-                  <p className="text-sm font-medium text-gray-900 mb-1">{type.label}</p>
-                  <p className={cn("text-2xl font-bold", type.textColor)}>{count}</p>
-                  <p className="text-xs text-gray-400">פריטים</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          )
-        })}
+        {/* Automation Status Count */}
+        <Card className="border border-gray-200 bg-white">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-xl bg-amber-500 flex items-center justify-center">
+                <Zap className="w-7 h-7 text-white" />
+              </div>
+              <div className="flex-1">
+                <p className="text-3xl font-bold text-gray-900">{patternCounts.total}</p>
+                <p className="text-sm text-gray-500">תבניות אוטומציה</p>
+              </div>
+              <div className="flex flex-col gap-1 text-xs">
+                <span className="text-amber-600">{patternCounts.pending} ממתינות</span>
+                <span className="text-green-600">{patternCounts.approved} אושרו</span>
+                <span className="text-gray-500">{patternCounts.rejected} נדחו</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Recent Items Section */}
-      <Card className="border border-gray-200">
+      {/* Automation Patterns Section */}
+      <Card className="border border-gray-200 bg-white" id="automations">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg font-medium flex items-center gap-2">
-              <Clock className="w-5 h-5 text-gray-400" />
-              פריטים אחרונים
-            </CardTitle>
-            {selectedFilter && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setSelectedFilter(null)}
-                className="text-xs"
-              >
-                <ChevronLeft className="w-3 h-3 ml-1" />
-                הכל
-              </Button>
-            )}
-          </div>
-          {selectedFilter && (
-            <div className="flex items-center gap-2 mt-2">
-              {(() => {
-                const type = CONTENT_TYPES.find(t => t.id === selectedFilter)
-                if (!type) return null
-                const Icon = type.icon
-                return (
-                  <Badge variant="outline" className={cn("text-xs", type.textColor, type.borderColor)}>
-                    <Icon className="w-3 h-3 mr-1" />
-                    {type.label}
-                  </Badge>
-                )
-              })()}
-            </div>
-          )}
-        </CardHeader>
-        <CardContent>
-          <RecentItems items={recentItems} typeFilter={selectedFilter} />
-        </CardContent>
-      </Card>
-
-      {/* Toast Notification */}
-      <AnimatePresence>
-        {actionToast && (
-          <motion.div
-            initial={{ opacity: 0, y: -50, x: "-50%" }}
-            animate={{ opacity: 1, y: 0, x: "-50%" }}
-            exit={{ opacity: 0, y: -50, x: "-50%" }}
-            className={cn(
-              "fixed top-4 left-1/2 z-50 px-4 py-3 rounded-lg shadow-lg flex items-center gap-2",
-              actionToast.type === "success" ? "bg-green-500 text-white" : "bg-gray-700 text-white"
-            )}
-          >
-            {actionToast.type === "success" ? (
-              <Check className="w-5 h-5" />
-            ) : (
-              <AlertCircle className="w-5 h-5" />
-            )}
-            <span className="font-medium">{actionToast.message}</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Automation Patterns Section - By Manager */}
-      <Card className="border border-gray-200" id="automations">
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-lg font-medium flex items-center gap-2">
-              <Zap className="w-5 h-5 text-green-500" />
+              <Zap className="w-5 h-5 text-amber-500" />
               תבניות אוטומציה
             </CardTitle>
             <div className="flex items-center gap-2">
               <Badge variant="outline" className="text-xs bg-amber-50 text-amber-600 border-amber-200">
-                {getPatternCounts().pending} ממתינות
+                {patternCounts.pending} ממתינות
               </Badge>
               <Badge variant="outline" className="text-xs bg-green-50 text-green-600 border-green-200">
-                {getPatternCounts().approved} אושרו
+                {patternCounts.approved} אושרו
               </Badge>
               <Badge variant="outline" className="text-xs bg-gray-50 text-gray-600 border-gray-200">
-                {getPatternCounts().rejected} נדחו
+                {patternCounts.rejected} נדחו
               </Badge>
             </div>
           </div>
@@ -888,18 +721,18 @@ export default function KnowledgePage() {
                     </div>
                   </div>
 
-                  {/* Manager's Patterns */}
+                  {/* Manager's Patterns - Clean white cards */}
                   {filteredPatterns.slice(0, 5).map((pattern) => {
                     const patternStatus = getPatternStatus(managerName, pattern.originalIndex)
+                    const patternId = `${managerName}-${pattern.originalIndex}`
+                    const savedData = patternStatuses[patternId]
 
                     return (
                       <motion.div
                         key={pattern.originalIndex}
                         className={cn(
-                          "p-4 rounded-xl border",
-                          patternStatus === "pending" && "bg-gradient-to-r from-amber-50 to-orange-50 border-amber-100",
-                          patternStatus === "approved" && "bg-gradient-to-r from-green-50 to-emerald-50 border-green-200",
-                          patternStatus === "rejected" && "bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 opacity-60"
+                          "p-4 rounded-xl bg-white border border-gray-200",
+                          patternStatus === "rejected" && "opacity-60"
                         )}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -935,36 +768,23 @@ export default function KnowledgePage() {
                           </Badge>
                         </div>
 
-                        {/* Answer */}
+                        {/* Answer - show edited if available */}
                         <p className={cn(
-                          "text-sm font-medium mb-2",
-                          patternStatus === "rejected" ? "text-gray-500 line-through" : "text-gray-900"
+                          "text-sm font-medium mb-2 text-gray-900",
+                          patternStatus === "rejected" && "text-gray-500 line-through"
                         )}>
-                          {pattern.rawAnswer.slice(0, 100)}{pattern.rawAnswer.length > 100 ? '...' : ''}
+                          {(savedData?.editedResponse || pattern.rawAnswer).slice(0, 100)}
+                          {(savedData?.editedResponse || pattern.rawAnswer).length > 100 ? '...' : ''}
                         </p>
 
-                        {/* Associated Media */}
-                        {pattern.associatedMedia && pattern.associatedMedia.length > 0 && (
-                          <div className="mb-2 flex items-center gap-2">
-                            <Image className="w-4 h-4 text-purple-500" />
-                            <div className="flex flex-wrap gap-1">
-                              {pattern.associatedMedia.map((media, i) => (
-                                <Badge key={i} variant="outline" className="text-xs bg-purple-50 text-purple-600 border-purple-200">
-                                  {media.type === 'image' ? '🖼️' : media.type === 'video' ? '🎬' : '📄'} {media.filename?.slice(0, 20) || 'מדיה'}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Example Questions */}
-                        {pattern.exampleQuestions.length > 0 && patternStatus !== "rejected" && (
-                          <div className="mt-2 pt-2 border-t border-amber-100">
+                        {/* Example Questions - Show ALL questions */}
+                        {(savedData?.editedQuestions || pattern.exampleQuestions).length > 0 && patternStatus !== "rejected" && (
+                          <div className="mt-2 pt-2 border-t border-gray-100">
                             <p className="text-xs text-gray-500 mb-1">שאלות שמפעילות תשובה זו:</p>
                             <div className="flex flex-wrap gap-1">
-                              {pattern.exampleQuestions.slice(0, 2).map((q, i) => (
-                                <span key={i} className="text-xs bg-white px-2 py-1 rounded border border-gray-200 text-gray-600 truncate max-w-[200px]">
-                                  {q.slice(0, 40)}...
+                              {(savedData?.editedQuestions || pattern.exampleQuestions).map((q, i) => (
+                                <span key={i} className="text-xs bg-gray-50 px-2 py-1 rounded border border-gray-200 text-gray-600">
+                                  {q}
                                 </span>
                               ))}
                             </div>
@@ -973,14 +793,19 @@ export default function KnowledgePage() {
 
                         {/* Approval Actions */}
                         {patternStatus === "pending" && (
-                          <div className="mt-3 pt-2 border-t border-amber-100 flex items-center gap-2">
+                          <div className="mt-3 pt-2 border-t border-gray-100 flex items-center gap-2">
                             <Button
                               size="sm"
                               className="bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)] text-xs h-7"
-                              onClick={() => handleApprove(managerName, pattern.originalIndex, pattern.rawAnswer)}
+                              onClick={() => handleOpenEditScreen(managerName, pattern.originalIndex, {
+                                rawAnswer: pattern.rawAnswer,
+                                exampleQuestions: pattern.exampleQuestions,
+                                topic: pattern.topic,
+                                frequency: pattern.frequency,
+                              })}
                             >
                               <Check className="w-3 h-3 mr-1" />
-                              אשר אוטומציה
+                              אשר
                             </Button>
                             <Button
                               size="sm"
@@ -994,15 +819,30 @@ export default function KnowledgePage() {
                           </div>
                         )}
 
-                        {/* Undo action for approved/rejected */}
+                        {/* Edit/Undo for approved/rejected */}
                         {patternStatus !== "pending" && (
                           <div className="mt-3 pt-2 border-t border-gray-100 flex items-center gap-2">
+                            {patternStatus === "approved" && (
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="text-xs h-7 text-gray-600"
+                                onClick={() => handleOpenEditScreen(managerName, pattern.originalIndex, {
+                                  rawAnswer: savedData?.editedResponse || pattern.rawAnswer,
+                                  exampleQuestions: savedData?.editedQuestions || pattern.exampleQuestions,
+                                  topic: pattern.topic,
+                                  frequency: pattern.frequency,
+                                })}
+                              >
+                                <Edit3 className="w-3 h-3 mr-1" />
+                                ערוך
+                              </Button>
+                            )}
                             <Button
                               size="sm"
                               variant="ghost"
                               className="text-xs h-7 text-gray-500"
                               onClick={() => {
-                                const patternId = `${managerName}-${pattern.originalIndex}`
                                 const newStatuses = { ...patternStatuses }
                                 delete newStatuses[patternId]
                                 setPatternStatuses(newStatuses)
@@ -1025,25 +865,60 @@ export default function KnowledgePage() {
         </CardContent>
       </Card>
 
-      {/* Expanded Uploader Modal */}
+      {/* Add Content Button */}
+      <div className="flex justify-center">
+        <Button
+          onClick={() => setShowContentForm(true)}
+          size="lg"
+          className="bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)] gap-2 px-8"
+        >
+          <Plus className="w-5 h-5" />
+          הוסף תוכן
+        </Button>
+      </div>
+
+      {/* Toast Notification */}
       <AnimatePresence>
-        {expandedType && companyId && (
-          <ExpandedUploader
-            type={expandedType}
-            onClose={() => setExpandedType(null)}
+        {actionToast && (
+          <motion.div
+            initial={{ opacity: 0, y: -50, x: "-50%" }}
+            animate={{ opacity: 1, y: 0, x: "-50%" }}
+            exit={{ opacity: 0, y: -50, x: "-50%" }}
+            className={cn(
+              "fixed top-4 left-1/2 z-50 px-4 py-3 rounded-lg shadow-lg flex items-center gap-2",
+              actionToast.type === "success" ? "bg-green-500 text-white" : "bg-gray-700 text-white"
+            )}
+          >
+            {actionToast.type === "success" ? (
+              <Check className="w-5 h-5" />
+            ) : (
+              <AlertCircle className="w-5 h-5" />
+            )}
+            <span className="font-medium">{actionToast.message}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Unified Content Form Modal */}
+      <AnimatePresence>
+        {showContentForm && companyId && (
+          <UnifiedContentForm
+            onClose={() => setShowContentForm(false)}
             companyId={companyId}
             onSuccess={loadData}
           />
         )}
       </AnimatePresence>
 
-      {/* Text Input Form Modal */}
+      {/* Automation Edit Screen Modal */}
       <AnimatePresence>
-        {showTextForm && companyId && (
-          <TextInputForm
-            onClose={() => setShowTextForm(false)}
-            companyId={companyId}
-            onSuccess={loadData}
+        {editingAutomation && (
+          <AutomationEditScreen
+            pattern={editingAutomation.pattern}
+            managerName={editingAutomation.managerName}
+            patternIndex={editingAutomation.patternIndex}
+            onClose={() => setEditingAutomation(null)}
+            onSave={handleSaveAutomation}
           />
         )}
       </AnimatePresence>

@@ -160,7 +160,7 @@ async function executeCommand(
       const stats = await getAnalyticsSummary(companyId);
       return {
         messages: [stats],
-        links: [{ title: 'אנליטיקס מלא', url: `${baseUrl}/dashboard/analytics` }],
+        links: [{ title: 'לוח בקרה', url: `${baseUrl}/dashboard` }],
       };
 
     case 'knowledge':

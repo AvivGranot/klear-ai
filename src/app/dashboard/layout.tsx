@@ -10,7 +10,6 @@ import {
   BookOpen,
   Settings,
   Users,
-  BarChart3,
   Menu,
   X,
   LogOut,
@@ -59,7 +58,6 @@ export default function DashboardLayout({
     {
       title: "ניהול",
       items: [
-        { icon: BarChart3, label: "אנליטיקה", href: "/dashboard/analytics" },
         { icon: BookOpen, label: "מאגר ידע", href: "/dashboard/knowledge" },
         { icon: MessageSquare, label: "שיחות", href: "/dashboard/conversations" },
       ],
@@ -242,7 +240,6 @@ export default function DashboardLayout({
                 {pathname === "/dashboard" && "סקירה כללית"}
                 {pathname === "/dashboard/conversations" && "שיחות"}
                 {pathname === "/dashboard/knowledge" && "מאגר ידע"}
-                {pathname === "/dashboard/analytics" && "אנליטיקה"}
                 {pathname === "/dashboard/users" && "משתמשים"}
                 {pathname === "/dashboard/settings" && "הגדרות"}
               </span>
