@@ -4,10 +4,10 @@ import { useState, useCallback, useMemo } from "react"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, TrendingUp, TrendingDown } from "lucide-react"
+import { ExternalLink, TrendingUp, TrendingDown, ArrowLeft } from "lucide-react"
 import {
   company,
-  getAnalyticsSummary,
+  conversations,
 } from "@/data/jolika-data"
 import {
   AreaChart,
@@ -18,21 +18,40 @@ import {
   ResponsiveContainer,
   CartesianGrid,
   Brush,
-  ReferenceLine,
 } from "recharts"
 
-// Generate time series data for last 30 days (more data for interactive exploration)
-function generateMonthlyData() {
+type TimeRange = 'today' | 'week' | 'month' | 'year' | 'custom'
+
+// Generate time series data based on selected range
+function generateChartData(range: TimeRange) {
   const data = []
   const today = new Date()
 
-  for (let i = 29; i >= 0; i--) {
+  const daysMap: Record<TimeRange, number> = {
+    today: 1,
+    week: 7,
+    month: 30,
+    year: 365,
+    custom: 30,
+  }
+
+  const days = daysMap[range]
+
+  for (let i = days - 1; i >= 0; i--) {
     const date = new Date(today)
     date.setDate(date.getDate() - i)
-    const dateStr = date.toLocaleDateString('he-IL', { day: 'numeric', month: 'short' })
+
+    let dateStr: string
+    if (range === 'today') {
+      dateStr = date.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
+    } else if (range === 'year') {
+      dateStr = date.toLocaleDateString('he-IL', { month: 'short' })
+    } else {
+      dateStr = date.toLocaleDateString('he-IL', { day: 'numeric', month: 'short' })
+    }
+
     const fullDate = date.toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long' })
 
-    // Create more realistic data with some patterns
     const baseValue = 20 + Math.sin(i / 3) * 5
     const noise = Math.random() * 10 - 5
     const weekendDip = (date.getDay() === 5 || date.getDay() === 6) ? -5 : 0
@@ -78,7 +97,7 @@ function SimpleKPICard({ label, value, trend, trendValue }: KPICardProps) {
 }
 
 // Custom tooltip component
-function CustomTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; payload: { fullDate: string } }>; label?: string }) {
+function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<{ value: number; payload: { fullDate: string } }> }) {
   if (!active || !payload?.length) return null
 
   return (
@@ -90,18 +109,16 @@ function CustomTooltip({ active, payload, label }: { active?: boolean; payload?:
 }
 
 // Custom active dot
-function CustomActiveDot(props: { cx?: number; cy?: number; payload?: { conversations: number } }) {
+function CustomActiveDot(props: { cx?: number; cy?: number }) {
   const { cx, cy } = props
   if (!cx || !cy) return null
 
   return (
     <g>
-      {/* Outer pulse ring */}
       <circle cx={cx} cy={cy} r={12} fill="#10B981" fillOpacity={0.2}>
         <animate attributeName="r" from="8" to="16" dur="1s" repeatCount="indefinite" />
         <animate attributeName="fill-opacity" from="0.3" to="0" dur="1s" repeatCount="indefinite" />
       </circle>
-      {/* Inner dot */}
       <circle cx={cx} cy={cy} r={6} fill="#10B981" stroke="white" strokeWidth={2} />
     </g>
   )
@@ -126,9 +143,39 @@ function CustomCursor(props: { points?: Array<{ x: number; y: number }>; height?
   )
 }
 
+// Time range button component
+function TimeRangeButton({
+  label,
+  value,
+  selected,
+  onClick
+}: {
+  label: string
+  value: TimeRange
+  selected: boolean
+  onClick: () => void
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
+        selected
+          ? 'bg-gray-900 text-white'
+          : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+      }`}
+    >
+      {label}
+    </button>
+  )
+}
+
 export default function DashboardPage() {
-  const analyticsSummary = getAnalyticsSummary()
-  const chartData = useMemo(() => generateMonthlyData(), [])
+  const totalConversations = conversations.length
+
+  // Time range state
+  const [timeRange, setTimeRange] = useState<TimeRange>('month')
+
+  const chartData = useMemo(() => generateChartData(timeRange), [timeRange])
 
   // Track hovered data for live display
   const [activeData, setActiveData] = useState<{ date: string; conversations: number } | null>(null)
@@ -169,7 +216,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <SimpleKPICard
           label="סה״כ שיחות"
-          value={analyticsSummary.totalConversations}
+          value={totalConversations}
           trend="up"
           trendValue="+12% מהשבוע שעבר"
         />
@@ -204,6 +251,40 @@ export default function DashboardPage() {
               </p>
               <p className="text-sm text-gray-500">{displayDate}</p>
             </div>
+          </div>
+
+          {/* Time Range Selector */}
+          <div className="flex items-center gap-2 mt-4">
+            <TimeRangeButton
+              label="היום"
+              value="today"
+              selected={timeRange === 'today'}
+              onClick={() => setTimeRange('today')}
+            />
+            <TimeRangeButton
+              label="שבוע"
+              value="week"
+              selected={timeRange === 'week'}
+              onClick={() => setTimeRange('week')}
+            />
+            <TimeRangeButton
+              label="חודש"
+              value="month"
+              selected={timeRange === 'month'}
+              onClick={() => setTimeRange('month')}
+            />
+            <TimeRangeButton
+              label="שנה"
+              value="year"
+              selected={timeRange === 'year'}
+              onClick={() => setTimeRange('year')}
+            />
+            <TimeRangeButton
+              label="טווח מותאם"
+              value="custom"
+              selected={timeRange === 'custom'}
+              onClick={() => setTimeRange('custom')}
+            />
           </div>
         </CardHeader>
         <CardContent className="pt-4">
@@ -256,11 +337,22 @@ export default function DashboardPage() {
                   stroke="#10B981"
                   fill="#F8FAFC"
                   travellerWidth={10}
-                  startIndex={chartData.length - 14}
+                  startIndex={Math.max(0, chartData.length - 14)}
                   endIndex={chartData.length - 1}
                 />
               </AreaChart>
             </ResponsiveContainer>
+          </div>
+
+          {/* Link to Analytics */}
+          <div className="mt-4 pt-4 border-t border-gray-100">
+            <Link
+              href="/dashboard/conversations"
+              className="text-emerald-600 hover:underline text-sm flex items-center gap-1"
+            >
+              צפה באנליטיקה מפורטת
+              <ArrowLeft className="w-4 h-4" />
+            </Link>
           </div>
         </CardContent>
       </Card>
