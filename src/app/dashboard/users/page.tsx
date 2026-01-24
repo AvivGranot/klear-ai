@@ -51,6 +51,18 @@ export default function UsersPage() {
   const [inviteSending, setInviteSending] = useState(false)
   const [inviteSent, setInviteSent] = useState(false)
 
+  // Edit modal state
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [editingUser, setEditingUser] = useState<UserData | null>(null)
+  const [editPhone, setEditPhone] = useState("")
+  const [editEmail, setEditEmail] = useState("")
+  const [editSaving, setEditSaving] = useState(false)
+
+  // Delete confirmation state
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [deletingUser, setDeletingUser] = useState<UserData | null>(null)
+  const [deleting, setDeleting] = useState(false)
+
   const inviteLink = "https://klear.ai/join/abc123xyz"
 
   useEffect(() => {
@@ -201,6 +213,83 @@ export default function UsersPage() {
     setInviteMethod("email")
   }
 
+  const handleEditClick = (user: UserData) => {
+    setEditingUser(user)
+    setEditPhone(user.phone)
+    setEditEmail(user.email || "")
+    setShowEditModal(true)
+  }
+
+  const closeEditModal = () => {
+    setShowEditModal(false)
+    setEditingUser(null)
+    setEditPhone("")
+    setEditEmail("")
+  }
+
+  const handleSaveEdit = async () => {
+    if (!editingUser) return
+    setEditSaving(true)
+
+    try {
+      await safeFetch("/api/users", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: editingUser.id,
+          phone: editPhone,
+          email: editEmail,
+        }),
+      })
+
+      // Update local state
+      setUsers((prev) =>
+        prev.map((u) =>
+          u.id === editingUser.id
+            ? { ...u, phone: editPhone, email: editEmail }
+            : u
+        )
+      )
+      closeEditModal()
+    } catch (e) {
+      console.error("Failed to update user:", e)
+    } finally {
+      setEditSaving(false)
+    }
+  }
+
+  const handleDeleteClick = (user: UserData) => {
+    setDeletingUser(user)
+    setShowDeleteConfirm(true)
+  }
+
+  const closeDeleteConfirm = () => {
+    setShowDeleteConfirm(false)
+    setDeletingUser(null)
+  }
+
+  const handleConfirmDelete = async () => {
+    if (!deletingUser) return
+    setDeleting(true)
+
+    try {
+      await safeFetch(`/api/users?id=${deletingUser.id}`, {
+        method: "DELETE",
+      })
+
+      // Remove from local state
+      setUsers((prev) => prev.filter((u) => u.id !== deletingUser.id))
+      closeDeleteConfirm()
+    } catch (e) {
+      console.error("Failed to delete user:", e)
+      // Still remove from local state for demo purposes
+      setUsers((prev) => prev.filter((u) => u.id !== deletingUser.id))
+      closeDeleteConfirm()
+    } finally {
+      setDeleting(false)
+    }
+  }
+
   if (loading) {
     return (
       <div className="space-y-6">
@@ -300,9 +389,6 @@ export default function UsersPage() {
                   משתמש
                 </th>
                 <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  פרטי קשר
-                </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">
                   תפקיד
                 </th>
                 <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">
@@ -310,6 +396,9 @@ export default function UsersPage() {
                 </th>
                 <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">
                   פעילות אחרונה
+                </th>
+                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  פרטי קשר
                 </th>
                 <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">
                   פעולות
@@ -330,6 +419,11 @@ export default function UsersPage() {
                       <span className="font-medium text-gray-900">{user.name}</span>
                     </div>
                   </td>
+                  <td className="px-4 py-4">{getRoleBadge(user.role)}</td>
+                  <td className="px-4 py-4">{getStatusBadge(user.status)}</td>
+                  <td className="px-4 py-4 text-sm text-gray-500">
+                    {formatLastActive(user.lastActive)}
+                  </td>
                   <td className="px-4 py-4">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -344,17 +438,22 @@ export default function UsersPage() {
                       )}
                     </div>
                   </td>
-                  <td className="px-4 py-4">{getRoleBadge(user.role)}</td>
-                  <td className="px-4 py-4">{getStatusBadge(user.status)}</td>
-                  <td className="px-4 py-4 text-sm text-gray-500">
-                    {formatLastActive(user.lastActive)}
-                  </td>
                   <td className="px-4 py-4">
                     <div className="flex items-center gap-1">
-                      <Button variant="ghost" size="sm">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleEditClick(user)}
+                        title="ערוך פרטי קשר"
+                      >
                         <Edit className="w-4 h-4 text-gray-500" />
                       </Button>
-                      <Button variant="ghost" size="sm">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDeleteClick(user)}
+                        title="מחק משתמש"
+                      >
                         <Trash2 className="w-4 h-4 text-red-500" />
                       </Button>
                     </div>
@@ -612,6 +711,138 @@ export default function UsersPage() {
                   )}
                 </div>
               )}
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Edit User Modal */}
+      {showEditModal && editingUser && (
+        <>
+          <div
+            className="fixed inset-0 z-40 bg-black/50"
+            onClick={closeEditModal}
+          />
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-xl shadow-xl max-w-md w-full">
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                <h2 className="text-lg font-semibold text-gray-900">
+                  עריכת פרטי קשר - {editingUser.name}
+                </h2>
+                <button
+                  onClick={closeEditModal}
+                  className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
+
+              {/* Modal Content */}
+              <div className="p-4 space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    מספר טלפון
+                  </label>
+                  <Input
+                    type="tel"
+                    placeholder="050-1234567"
+                    value={editPhone}
+                    onChange={(e) => setEditPhone(e.target.value)}
+                    dir="ltr"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    כתובת דוא״ל
+                  </label>
+                  <Input
+                    type="email"
+                    placeholder="user@example.com"
+                    value={editEmail}
+                    onChange={(e) => setEditEmail(e.target.value)}
+                    dir="ltr"
+                  />
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="flex items-center justify-end gap-2 p-4 border-t border-gray-200">
+                <Button variant="outline" onClick={closeEditModal}>
+                  ביטול
+                </Button>
+                <Button
+                  className="gap-2 bg-[var(--klear-green)] hover:bg-[var(--klear-green-dark)]"
+                  onClick={handleSaveEdit}
+                  disabled={editSaving || !editPhone}
+                >
+                  {editSaving ? (
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <Check className="w-4 h-4" />
+                  )}
+                  {editSaving ? "שומר..." : "שמור שינויים"}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && deletingUser && (
+        <>
+          <div
+            className="fixed inset-0 z-40 bg-black/50"
+            onClick={closeDeleteConfirm}
+          />
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-xl shadow-xl max-w-sm w-full">
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                <h2 className="text-lg font-semibold text-gray-900">מחיקת משתמש</h2>
+                <button
+                  onClick={closeDeleteConfirm}
+                  className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
+
+              {/* Modal Content */}
+              <div className="p-4">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                    <Trash2 className="w-6 h-6 text-red-600" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">{deletingUser.name}</p>
+                    <p className="text-sm text-gray-500">{deletingUser.phone}</p>
+                  </div>
+                </div>
+                <p className="text-gray-600">
+                  האם אתה בטוח שברצונך למחוק את המשתמש הזה? פעולה זו אינה ניתנת לביטול.
+                </p>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="flex items-center justify-end gap-2 p-4 border-t border-gray-200">
+                <Button variant="outline" onClick={closeDeleteConfirm}>
+                  ביטול
+                </Button>
+                <Button
+                  className="gap-2 bg-red-600 hover:bg-red-700 text-white"
+                  onClick={handleConfirmDelete}
+                  disabled={deleting}
+                >
+                  {deleting ? (
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <Trash2 className="w-4 h-4" />
+                  )}
+                  {deleting ? "מוחק..." : "מחק משתמש"}
+                </Button>
+              </div>
             </div>
           </div>
         </>

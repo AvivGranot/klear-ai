@@ -262,3 +262,41 @@ export async function PUT(request: NextRequest) {
     )
   }
 }
+
+// Delete user
+export async function DELETE(request: NextRequest) {
+  const db = await initDB()
+
+  const { searchParams } = new URL(request.url)
+  const id = searchParams.get("id")
+
+  if (!id) {
+    return NextResponse.json(
+      { error: "Missing user id" },
+      { status: 400 }
+    )
+  }
+
+  // If no database, return mock success
+  if (!db) {
+    return NextResponse.json({
+      success: true,
+      deletedId: id,
+      mode: "demo"
+    })
+  }
+
+  try {
+    await prisma.user.delete({
+      where: { id },
+    })
+
+    return NextResponse.json({ success: true, deletedId: id })
+  } catch (error) {
+    console.error("User DELETE error:", error)
+    return NextResponse.json(
+      { error: "Failed to delete user" },
+      { status: 500 }
+    )
+  }
+}
