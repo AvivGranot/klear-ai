@@ -72,7 +72,7 @@ export default function DashboardLayout({
   ]
 
   return (
-    <div className="flex h-screen bg-[var(--aman-bg-cream)]" dir="rtl">
+    <div className="flex h-screen bg-white" dir="rtl">
       {/* Desktop Sidebar (PRD) */}
       <aside className="hidden lg:flex flex-col w-60 bg-[var(--aman-card-white)] border-l border-[var(--aman-border)]">
         {/* Logo */}
