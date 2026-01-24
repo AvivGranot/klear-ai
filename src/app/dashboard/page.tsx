@@ -17,7 +17,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
-  Brush,
+  ReferenceLine,
 } from "recharts"
 
 type TimeRange = 'today' | 'week' | 'month' | 'year' | 'custom'
@@ -96,31 +96,13 @@ function SimpleKPICard({ label, value, trend, trendValue }: KPICardProps) {
   )
 }
 
-// Custom tooltip component
-function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<{ value: number; payload: { fullDate: string } }> }) {
-  if (!active || !payload?.length) return null
-
-  return (
-    <div className="bg-gray-900 text-white px-3 py-2 rounded-lg shadow-lg text-sm">
-      <p className="font-medium">{payload[0].payload.fullDate}</p>
-      <p className="text-emerald-400 font-bold text-lg">{payload[0].value} שיחות</p>
-    </div>
-  )
-}
-
-// Custom active dot
+// Custom active dot - smaller and cleaner
 function CustomActiveDot(props: { cx?: number; cy?: number }) {
   const { cx, cy } = props
   if (!cx || !cy) return null
 
   return (
-    <g>
-      <circle cx={cx} cy={cy} r={12} fill="#10B981" fillOpacity={0.2}>
-        <animate attributeName="r" from="8" to="16" dur="1s" repeatCount="indefinite" />
-        <animate attributeName="fill-opacity" from="0.3" to="0" dur="1s" repeatCount="indefinite" />
-      </circle>
-      <circle cx={cx} cy={cy} r={6} fill="#10B981" stroke="white" strokeWidth={2} />
-    </g>
+    <circle cx={cx} cy={cy} r={4} fill="#10B981" stroke="white" strokeWidth={2} />
   )
 }
 
@@ -143,25 +125,23 @@ function CustomCursor(props: { points?: Array<{ x: number; y: number }>; height?
   )
 }
 
-// Time range button component
+// Time range button component - underline style like Google Finance
 function TimeRangeButton({
   label,
-  value,
   selected,
   onClick
 }: {
   label: string
-  value: TimeRange
   selected: boolean
   onClick: () => void
 }) {
   return (
     <button
       onClick={onClick}
-      className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
+      className={`px-3 py-2 text-sm transition-colors border-b-2 outline-none ${
         selected
-          ? 'bg-gray-900 text-white'
-          : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+          ? 'border-emerald-600 text-emerald-600 font-medium'
+          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
       }`}
     >
       {label}
@@ -176,6 +156,12 @@ export default function DashboardPage() {
   const [timeRange, setTimeRange] = useState<TimeRange>('month')
 
   const chartData = useMemo(() => generateChartData(timeRange), [timeRange])
+
+  // Calculate average for reference line
+  const averageValue = useMemo(() =>
+    Math.round(chartData.reduce((sum, d) => sum + d.conversations, 0) / chartData.length),
+    [chartData]
+  )
 
   // Track hovered data for live display
   const [activeData, setActiveData] = useState<{ date: string; conversations: number } | null>(null)
@@ -239,12 +225,9 @@ export default function DashboardPage() {
       <Card className="bg-white border border-gray-200">
         <CardHeader className="pb-0">
           <div className="flex items-start justify-between">
-            <div>
-              <CardTitle className="text-lg font-medium text-gray-900">
-                שיחות לאורך זמן
-              </CardTitle>
-              <p className="text-sm text-gray-500">גרור לבחירת טווח תאריכים</p>
-            </div>
+            <CardTitle className="text-lg font-medium text-gray-900">
+              שיחות לאורך זמן
+            </CardTitle>
             {/* Live value display */}
             <div className="text-left">
               <p className="text-3xl font-bold text-emerald-600 transition-all duration-150">
@@ -254,52 +237,48 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Time Range Selector */}
-          <div className="flex items-center gap-2 mt-4">
+          {/* Time Range Selector - underline style */}
+          <div className="flex items-center gap-1 mt-4 border-b border-gray-200">
             <TimeRangeButton
               label="היום"
-              value="today"
               selected={timeRange === 'today'}
               onClick={() => setTimeRange('today')}
             />
             <TimeRangeButton
               label="שבוע"
-              value="week"
               selected={timeRange === 'week'}
               onClick={() => setTimeRange('week')}
             />
             <TimeRangeButton
               label="חודש"
-              value="month"
               selected={timeRange === 'month'}
               onClick={() => setTimeRange('month')}
             />
             <TimeRangeButton
               label="שנה"
-              value="year"
               selected={timeRange === 'year'}
               onClick={() => setTimeRange('year')}
             />
             <TimeRangeButton
               label="טווח מותאם"
-              value="custom"
               selected={timeRange === 'custom'}
               onClick={() => setTimeRange('custom')}
             />
           </div>
         </CardHeader>
         <CardContent className="pt-4">
-          <div className="h-[350px]">
+          <div className="h-[300px]" style={{ outline: 'none' }}>
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
                 data={chartData}
-                margin={{ top: 10, right: 10, left: 0, bottom: 40 }}
+                margin={{ top: 10, right: 10, left: 0, bottom: 10 }}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
+                style={{ outline: 'none' }}
               >
                 <defs>
                   <linearGradient id="colorConversations" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.3}/>
+                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.08}/>
                     <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
@@ -318,28 +297,24 @@ export default function DashboardPage() {
                   domain={['dataMin - 5', 'dataMax + 5']}
                 />
                 <Tooltip
-                  content={<CustomTooltip />}
+                  content={() => null}
                   cursor={<CustomCursor />}
                 />
                 <Area
                   type="monotone"
                   dataKey="conversations"
                   stroke="#10B981"
-                  strokeWidth={2}
+                  strokeWidth={1.5}
                   fill="url(#colorConversations)"
                   name="שיחות"
                   activeDot={<CustomActiveDot />}
                   animationDuration={500}
                 />
-                {/* Range selector brush */}
-                <Brush
-                  dataKey="date"
-                  height={30}
-                  stroke="#10B981"
-                  fill="#F8FAFC"
-                  travellerWidth={10}
-                  startIndex={Math.max(0, chartData.length - 14)}
-                  endIndex={chartData.length - 1}
+                <ReferenceLine
+                  y={averageValue}
+                  stroke="#9CA3AF"
+                  strokeDasharray="4 4"
+                  strokeWidth={1}
                 />
               </AreaChart>
             </ResponsiveContainer>
