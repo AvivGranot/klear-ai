@@ -339,7 +339,7 @@ export default function DashboardPage() {
           </div>
         </CardHeader>
         <CardContent className="pt-4">
-          <div className="h-[300px]">
+          <div className="h-[300px] outline-none focus:outline-none [&_*]:outline-none [&_.recharts-wrapper]:!outline-none [&_.recharts-surface]:!outline-none">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
                 data={chartData}
