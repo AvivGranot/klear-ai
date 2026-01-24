@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useCallback, useMemo } from "react"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -16,21 +17,30 @@ import {
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
+  Brush,
+  ReferenceLine,
 } from "recharts"
 
-// Generate simple time series data for last 7 days
-function generateWeeklyData() {
+// Generate time series data for last 30 days (more data for interactive exploration)
+function generateMonthlyData() {
   const data = []
   const today = new Date()
 
-  for (let i = 6; i >= 0; i--) {
+  for (let i = 29; i >= 0; i--) {
     const date = new Date(today)
     date.setDate(date.getDate() - i)
-    const dateStr = date.toLocaleDateString('he-IL', { weekday: 'short', day: 'numeric' })
+    const dateStr = date.toLocaleDateString('he-IL', { day: 'numeric', month: 'short' })
+    const fullDate = date.toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long' })
+
+    // Create more realistic data with some patterns
+    const baseValue = 20 + Math.sin(i / 3) * 5
+    const noise = Math.random() * 10 - 5
+    const weekendDip = (date.getDay() === 5 || date.getDay() === 6) ? -5 : 0
 
     data.push({
       date: dateStr,
-      conversations: Math.floor(Math.random() * 15) + 18,
+      fullDate,
+      conversations: Math.max(10, Math.round(baseValue + noise + weekendDip)),
     })
   }
 
@@ -67,9 +77,76 @@ function SimpleKPICard({ label, value, trend, trendValue }: KPICardProps) {
   )
 }
 
+// Custom tooltip component
+function CustomTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; payload: { fullDate: string } }>; label?: string }) {
+  if (!active || !payload?.length) return null
+
+  return (
+    <div className="bg-gray-900 text-white px-3 py-2 rounded-lg shadow-lg text-sm">
+      <p className="font-medium">{payload[0].payload.fullDate}</p>
+      <p className="text-emerald-400 font-bold text-lg">{payload[0].value} שיחות</p>
+    </div>
+  )
+}
+
+// Custom active dot
+function CustomActiveDot(props: { cx?: number; cy?: number; payload?: { conversations: number } }) {
+  const { cx, cy } = props
+  if (!cx || !cy) return null
+
+  return (
+    <g>
+      {/* Outer pulse ring */}
+      <circle cx={cx} cy={cy} r={12} fill="#10B981" fillOpacity={0.2}>
+        <animate attributeName="r" from="8" to="16" dur="1s" repeatCount="indefinite" />
+        <animate attributeName="fill-opacity" from="0.3" to="0" dur="1s" repeatCount="indefinite" />
+      </circle>
+      {/* Inner dot */}
+      <circle cx={cx} cy={cy} r={6} fill="#10B981" stroke="white" strokeWidth={2} />
+    </g>
+  )
+}
+
+// Custom cursor line
+function CustomCursor(props: { points?: Array<{ x: number; y: number }>; height?: number }) {
+  const { points, height } = props
+  if (!points?.length) return null
+
+  return (
+    <line
+      x1={points[0].x}
+      y1={0}
+      x2={points[0].x}
+      y2={height}
+      stroke="#10B981"
+      strokeWidth={1}
+      strokeDasharray="4 4"
+      opacity={0.6}
+    />
+  )
+}
+
 export default function DashboardPage() {
   const analyticsSummary = getAnalyticsSummary()
-  const chartData = generateWeeklyData()
+  const chartData = useMemo(() => generateMonthlyData(), [])
+
+  // Track hovered data for live display
+  const [activeData, setActiveData] = useState<{ date: string; conversations: number } | null>(null)
+
+  const handleMouseMove = useCallback((state: { activePayload?: Array<{ payload: { date: string; conversations: number } }> }) => {
+    if (state?.activePayload?.length) {
+      setActiveData(state.activePayload[0].payload)
+    }
+  }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    setActiveData(null)
+  }, [])
+
+  // Calculate stats for display
+  const latestValue = chartData[chartData.length - 1]?.conversations
+  const displayValue = activeData?.conversations ?? latestValue
+  const displayDate = activeData?.date ?? chartData[chartData.length - 1]?.date
 
   return (
     <div className="min-h-screen bg-slate-50 p-6 space-y-8">
@@ -110,21 +187,37 @@ export default function DashboardPage() {
         />
       </div>
 
-      {/* Main Chart */}
+      {/* Interactive Chart */}
       <Card className="bg-white border border-gray-200">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-lg font-medium text-gray-900">
-            שיחות לאורך זמן
-          </CardTitle>
-          <p className="text-sm text-gray-500">7 ימים אחרונים</p>
+        <CardHeader className="pb-0">
+          <div className="flex items-start justify-between">
+            <div>
+              <CardTitle className="text-lg font-medium text-gray-900">
+                שיחות לאורך זמן
+              </CardTitle>
+              <p className="text-sm text-gray-500">גרור לבחירת טווח תאריכים</p>
+            </div>
+            {/* Live value display */}
+            <div className="text-left">
+              <p className="text-3xl font-bold text-emerald-600 transition-all duration-150">
+                {displayValue}
+              </p>
+              <p className="text-sm text-gray-500">{displayDate}</p>
+            </div>
+          </div>
         </CardHeader>
-        <CardContent>
-          <div className="h-[300px]">
+        <CardContent className="pt-4">
+          <div className="h-[350px]">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+              <AreaChart
+                data={chartData}
+                margin={{ top: 10, right: 10, left: 0, bottom: 40 }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+              >
                 <defs>
                   <linearGradient id="colorConversations" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.2}/>
+                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.3}/>
                     <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
@@ -133,22 +226,18 @@ export default function DashboardPage() {
                   dataKey="date"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 12, fill: '#6B7280' }}
+                  tick={{ fontSize: 11, fill: '#6B7280' }}
+                  interval="preserveStartEnd"
                 />
                 <YAxis
                   axisLine={false}
                   tickLine={false}
                   tick={{ fontSize: 12, fill: '#6B7280' }}
+                  domain={['dataMin - 5', 'dataMax + 5']}
                 />
                 <Tooltip
-                  contentStyle={{
-                    direction: 'rtl',
-                    textAlign: 'right',
-                    backgroundColor: 'white',
-                    border: '1px solid #E5E7EB',
-                    borderRadius: '8px',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-                  }}
+                  content={<CustomTooltip />}
+                  cursor={<CustomCursor />}
                 />
                 <Area
                   type="monotone"
@@ -157,6 +246,18 @@ export default function DashboardPage() {
                   strokeWidth={2}
                   fill="url(#colorConversations)"
                   name="שיחות"
+                  activeDot={<CustomActiveDot />}
+                  animationDuration={500}
+                />
+                {/* Range selector brush */}
+                <Brush
+                  dataKey="date"
+                  height={30}
+                  stroke="#10B981"
+                  fill="#F8FAFC"
+                  travellerWidth={10}
+                  startIndex={chartData.length - 14}
+                  endIndex={chartData.length - 1}
                 />
               </AreaChart>
             </ResponsiveContainer>
