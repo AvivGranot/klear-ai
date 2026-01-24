@@ -241,6 +241,33 @@ export const company = {
   name: "ג'וליקה שוקולד",
 }
 
+// The 3 managers of Jolika
+export const JOLIKA_MANAGERS = [
+  { name: 'שלי גולדנברג', role: 'בעלים ומנהלת ראשית', isOwner: true },
+  { name: 'שלי בן מויאל', role: 'מנהלת', isOwner: false },
+  { name: 'רותם פרחי', role: 'מנהלת', isOwner: false },
+]
+
+// Check if someone is a manager
+export function isJolikaManager(name: string): boolean {
+  return JOLIKA_MANAGERS.some(m => name.includes(m.name))
+}
+
+// Get the manager object if the name matches
+export function getJolikaManager(name: string) {
+  return JOLIKA_MANAGERS.find(m => name.includes(m.name))
+}
+
+// Get count of conversations answered by managers
+export function getManagerAnswerCount(): number {
+  return conversations.filter(c => isJolikaManager(c.answerSender || '')).length
+}
+
+// Get count of conversations answered by the owner (שלי גולדנברג)
+export function getOwnerAnswerCount(): number {
+  return conversations.filter(c => c.answerSender?.includes('שלי גולדנברג')).length
+}
+
 // Legacy export for backward compatibility
 export const faqs = knowledgeItems
 export function getProcessedFaqs() {
