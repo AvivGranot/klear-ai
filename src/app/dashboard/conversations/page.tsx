@@ -217,7 +217,7 @@ export default function ConversationsPage() {
           icon={Repeat}
         />
         <KPICard
-          label="הסלמות מהבוט"
+          label="אסקלציות מהבוט"
           value={escalationCount}
           icon={Users}
           className="opacity-60"
