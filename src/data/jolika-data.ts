@@ -8,8 +8,11 @@ import allConversationsData from './all-conversations.json'
 import categoriesData from './categories.json'
 
 // Type definitions
+export type ConversationType = 'question' | 'employee_report' | 'announcement'
+
 interface Conversation {
   id: string
+  type?: ConversationType
   question: string
   questionSender: string
   answer: string
@@ -107,11 +110,30 @@ export function getProcessedConversations() {
     return {
       ...conv,
       id: conv.id || `conv-${index}`,
+      type: conv.type || 'question',
       topic: topic?.name || 'אחר',
       topicIcon: (topic?.icon || 'MessageCircle') as TopicIconName,
       topicColor: topic?.color || 'gray',
     }
   })
+}
+
+// Get conversation type counts
+export function getConversationTypeCounts() {
+  const counts = {
+    question: 0,
+    employee_report: 0,
+    announcement: 0,
+  }
+
+  conversations.forEach(conv => {
+    const type = conv.type || 'question'
+    if (type in counts) {
+      counts[type as keyof typeof counts]++
+    }
+  })
+
+  return counts
 }
 
 // Get topic stats from ALL conversations (for analytics)
@@ -320,8 +342,10 @@ export function getConversationsByDate() {
   const dateMap = new Map<string, number>()
 
   conversations.forEach(conv => {
-    // Parse date from DD.MM.YYYY format
-    const [day, month, year] = conv.date.split('.')
+    // Parse date from DD/MM/YYYY format (WhatsApp export format)
+    const parts = conv.date.split(/[./]/)
+    if (parts.length !== 3) return
+    const [day, month, year] = parts
     const dateKey = `${year}-${month}-${day}` // ISO format for sorting
     dateMap.set(dateKey, (dateMap.get(dateKey) || 0) + 1)
   })
@@ -329,10 +353,10 @@ export function getConversationsByDate() {
   // Convert to array and sort by date
   return Array.from(dateMap.entries())
     .map(([date, count]) => {
-      const [year, month, day] = date.split('-')
+      const [, month, day] = date.split('-')
       return {
         date,
-        displayDate: `${day}.${month}`,
+        displayDate: `${day}/${month}`,
         count,
       }
     })

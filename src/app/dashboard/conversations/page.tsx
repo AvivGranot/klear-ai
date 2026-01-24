@@ -33,10 +33,18 @@ import {
   getManagerStats,
   getRepetitiveQuestions,
   getConversationsByDate,
+  getConversationTypeCounts,
   conversations as rawConversations,
 } from "@/data/jolika-data"
 import { TopicIcon } from "@/components/TopicIcon"
-import type { TopicIconName } from "@/data/jolika-data"
+import type { TopicIconName, ConversationType } from "@/data/jolika-data"
+
+// Conversation type labels in Hebrew
+const CONVERSATION_TYPE_LABELS: Record<ConversationType, { label: string; icon: React.ElementType; color: string }> = {
+  question: { label: 'שאלה', icon: MessageSquare, color: 'blue' },
+  employee_report: { label: 'דיווח', icon: User, color: 'amber' },
+  announcement: { label: 'הודעה', icon: Phone, color: 'purple' },
+}
 
 // The 3 real managers at Jolika
 const MANAGERS = [
@@ -113,6 +121,7 @@ function KPICard({
 export default function ConversationsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [topicFilter, setTopicFilter] = useState<string | null>(null)
+  const [typeFilter, setTypeFilter] = useState<ConversationType | null>(null)
   const [expandedConversations, setExpandedConversations] = useState<Set<string>>(new Set())
 
   // Get processed data
@@ -120,6 +129,7 @@ export default function ConversationsPage() {
   const allStaffStats = useMemo(() => getManagerStats(), [])
   const repetitiveQuestions = useMemo(() => getRepetitiveQuestions(), [])
   const timelineData = useMemo(() => getConversationsByDate(), [])
+  const typeCounts = useMemo(() => getConversationTypeCounts(), [])
 
   // Split staff stats into managers and employees
   const { managerStats, employeeStats } = useMemo(() => {
@@ -139,6 +149,11 @@ export default function ConversationsPage() {
   // Filter conversations
   const filteredConversations = useMemo(() => {
     return conversations.filter((conv) => {
+      // Type filter
+      if (typeFilter && conv.type !== typeFilter) {
+        return false
+      }
+
       // Topic filter
       if (topicFilter && conv.topic !== CHOCOLATE_SHOP_TOPICS.find(t => t.id === topicFilter)?.name) {
         return false
@@ -157,7 +172,7 @@ export default function ConversationsPage() {
 
       return true
     })
-  }, [conversations, topicFilter, searchQuery])
+  }, [conversations, topicFilter, typeFilter, searchQuery])
 
   // Get topic counts for filter badges
   const topicCounts = useMemo(() => {
@@ -202,7 +217,7 @@ export default function ConversationsPage() {
           value={rawConversations.length}
           icon={MessageSquare}
           trend="up"
-          trendValue="+156 מ-WhatsApp"
+          trendValue="5+ שנות היסטוריה"
         />
         <KPICard
           label="תשובות מנהלות"
@@ -212,9 +227,10 @@ export default function ConversationsPage() {
           trendValue={`${Math.round((managerResponseCount / rawConversations.length) * 100)}% מהשיחות`}
         />
         <KPICard
-          label="שאלות חוזרות"
-          value={repetitiveQuestions.length}
+          label="שאלות עם ?"
+          value={typeCounts.question}
           icon={Repeat}
+          trendValue={`${typeCounts.employee_report} דיווחים, ${typeCounts.announcement} הודעות`}
         />
         <KPICard
           label="אסקלציות מהבוט"
@@ -417,22 +433,43 @@ export default function ConversationsPage() {
           />
         </div>
 
-        {/* Status Filters - Hidden since all WhatsApp data is "closed" */}
-        {/* Keeping the structure for future use */}
-
-        {/* Topic Filters */}
-        <div className="flex items-center gap-2 flex-wrap">
+        {/* Type Filters */}
+        <div className="flex items-center gap-2">
           <button
-            onClick={() => setTopicFilter(null)}
+            onClick={() => setTypeFilter(null)}
             className={cn(
               "px-3 py-1.5 text-sm rounded-full transition-colors",
-              topicFilter === null
+              typeFilter === null
                 ? "bg-gray-900 text-white"
                 : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
             )}
           >
             הכל ({conversations.length})
           </button>
+          {(Object.entries(CONVERSATION_TYPE_LABELS) as [ConversationType, typeof CONVERSATION_TYPE_LABELS.question][]).map(([type, config]) => {
+            const isActive = typeFilter === type
+            const count = typeCounts[type]
+            const colors = topicColorClasses[config.color] || topicColorClasses.gray
+            return (
+              <button
+                key={type}
+                onClick={() => setTypeFilter(isActive ? null : type)}
+                className={cn(
+                  "px-3 py-1.5 text-sm rounded-full transition-colors flex items-center gap-1.5",
+                  isActive
+                    ? `${colors.bg} ${colors.text} border ${colors.border}`
+                    : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
+                )}
+              >
+                {config.label}
+                <span className="text-xs opacity-70">({count})</span>
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Topic Filters */}
+        <div className="flex items-center gap-2 flex-wrap">
           {topicCounts.slice(0, 6).map(topic => {
             const colors = topicColorClasses[topic.color] || topicColorClasses.gray
             const isActive = topicFilter === topic.id
@@ -501,6 +538,19 @@ export default function ConversationsPage() {
                           <span className="text-xs text-gray-400">
                             {conv.date}
                           </span>
+                          {/* Type Badge */}
+                          {conv.type && CONVERSATION_TYPE_LABELS[conv.type as ConversationType] && (
+                            <Badge
+                              className={cn(
+                                "text-[10px] px-1.5",
+                                topicColorClasses[CONVERSATION_TYPE_LABELS[conv.type as ConversationType].color]?.bg,
+                                topicColorClasses[CONVERSATION_TYPE_LABELS[conv.type as ConversationType].color]?.text
+                              )}
+                            >
+                              {CONVERSATION_TYPE_LABELS[conv.type as ConversationType].label}
+                            </Badge>
+                          )}
+                          {/* Topic Badge */}
                           <Badge
                             className={cn(
                               "text-[10px] px-1.5",
