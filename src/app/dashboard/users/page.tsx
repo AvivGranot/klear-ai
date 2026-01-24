@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -20,8 +20,16 @@ import {
   Copy,
   Check,
   Link2,
+  Crown,
+  MessageSquare,
 } from "lucide-react"
 import { safeFetch } from "@/lib/safeFetch"
+import {
+  JOLIKA_MANAGERS,
+  getJolikaManager,
+  getManagerAnswerCount,
+  conversations,
+} from "@/data/jolika-data"
 
 interface UserData {
   id: string
@@ -100,29 +108,58 @@ export default function UsersPage() {
         // Add some mock users if none exist
         if (transformedUsers.length === 0) {
           transformedUsers.push(
+            // The 3 managers
             {
               id: "1",
-              name: "יוסי כהן",
+              name: "שלי גולדנברג",
               phone: "050-1234567",
-              email: "yosi@example.com",
-              role: "manager",
+              email: "shelly@jolika.co.il",
+              role: "admin",
               status: "active",
               lastActive: new Date().toISOString(),
             },
             {
               id: "2",
-              name: "שרה לוי",
+              name: "שלי בן מויאל",
               phone: "052-9876543",
-              email: "sara@example.com",
-              role: "employee",
+              email: "shelly.bm@jolika.co.il",
+              role: "manager",
               status: "active",
               lastActive: new Date(Date.now() - 3600000).toISOString(),
             },
             {
               id: "3",
-              name: "דני אברהם",
+              name: "רותם פרחי",
               phone: "054-5555555",
-              email: "dani@example.com",
+              email: "rotem@jolika.co.il",
+              role: "manager",
+              status: "active",
+              lastActive: new Date(Date.now() - 7200000).toISOString(),
+            },
+            // Employees from conversation data
+            {
+              id: "4",
+              name: "לירז שאבי",
+              phone: "053-1111111",
+              email: "liraz@jolika.co.il",
+              role: "employee",
+              status: "active",
+              lastActive: new Date(Date.now() - 86400000).toISOString(),
+            },
+            {
+              id: "5",
+              name: "רוני גרף",
+              phone: "055-2222222",
+              email: "roni@jolika.co.il",
+              role: "employee",
+              status: "active",
+              lastActive: new Date(Date.now() - 86400000 * 2).toISOString(),
+            },
+            {
+              id: "6",
+              name: "שירה גלס",
+              phone: "058-3333333",
+              email: "shira@jolika.co.il",
               role: "employee",
               status: "inactive",
               lastActive: new Date(Date.now() - 86400000 * 5).toISOString(),
@@ -148,8 +185,24 @@ export default function UsersPage() {
       (u.email && u.email.toLowerCase().includes(search.toLowerCase()))
   )
 
-  const getRoleBadge = (role: string) => {
-    switch (role) {
+  const getRoleBadge = (user: UserData) => {
+    // Check if this is one of the 3 real managers
+    const jolikaManager = getJolikaManager(user.name)
+
+    if (jolikaManager) {
+      return (
+        <Badge className={`${
+          jolikaManager.isOwner
+            ? 'bg-emerald-100 text-emerald-700'
+            : 'bg-blue-100 text-blue-700'
+        }`}>
+          {jolikaManager.role}
+        </Badge>
+      )
+    }
+
+    // Fallback to original logic
+    switch (user.role) {
       case "admin":
         return <Badge className="bg-purple-100 text-purple-700">מנהל מערכת</Badge>
       case "manager":
@@ -336,37 +389,85 @@ export default function UsersPage() {
             </div>
           </CardContent>
         </Card>
+
         <Card className="border border-gray-200">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <Shield className="w-5 h-5 text-green-600" />
+              <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+                <Shield className="w-5 h-5 text-emerald-600" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-gray-900">
-                  {users.filter((u) => u.status === "active").length}
-                </p>
-                <p className="text-sm text-gray-500">פעילים</p>
+                <p className="text-2xl font-semibold text-gray-900">{JOLIKA_MANAGERS.length}</p>
+                <p className="text-sm text-gray-500">מנהלות פעילות</p>
               </div>
             </div>
           </CardContent>
         </Card>
+
         <Card className="border border-gray-200">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[rgba(37,211,102,0.1)] rounded-lg flex items-center justify-center">
-                <UserPlus className="w-5 h-5 text-[var(--klear-green)]" />
+              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                <MessageSquare className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-gray-900">
-                  {users.filter((u) => u.role === "manager" || u.role === "admin").length}
-                </p>
-                <p className="text-sm text-gray-500">מנהלים</p>
+                <p className="text-2xl font-semibold text-gray-900">{getManagerAnswerCount()}</p>
+                <p className="text-sm text-gray-500">תשובות מנהלות</p>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
+
+      {/* Managers Section */}
+      <Card className="border border-gray-200">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-medium flex items-center gap-2">
+            <Crown className="w-5 h-5 text-amber-500" />
+            מנהלות ג׳וליקה
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-3 gap-4">
+            {JOLIKA_MANAGERS.map((manager, index) => {
+              const answerCount = conversations.filter(c =>
+                c.answerSender?.includes(manager.name)
+              ).length
+
+              return (
+                <div
+                  key={index}
+                  className={`p-4 rounded-lg border-2 ${
+                    manager.isOwner
+                      ? 'border-emerald-200 bg-emerald-50'
+                      : 'border-gray-200 bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-medium ${
+                      manager.isOwner ? 'bg-emerald-500' : 'bg-gray-400'
+                    }`}>
+                      {manager.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900">{manager.name}</p>
+                      <p className="text-xs text-gray-500">{manager.role}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-500">תשובות</span>
+                    <span className={`font-semibold ${
+                      manager.isOwner ? 'text-emerald-600' : 'text-gray-700'
+                    }`}>
+                      {answerCount}
+                    </span>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Search */}
       <div className="relative">
@@ -419,7 +520,7 @@ export default function UsersPage() {
                       <span className="font-medium text-gray-900">{user.name}</span>
                     </div>
                   </td>
-                  <td className="px-4 py-4">{getRoleBadge(user.role)}</td>
+                  <td className="px-4 py-4">{getRoleBadge(user)}</td>
                   <td className="px-4 py-4">{getStatusBadge(user.status)}</td>
                   <td className="px-4 py-4 text-sm text-gray-500">
                     {formatLastActive(user.lastActive)}
