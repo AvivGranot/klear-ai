@@ -33,11 +33,25 @@ import {
   getManagerStats,
   getRepetitiveQuestions,
   getConversationsByDate,
-  getShellyContactCount,
   conversations as rawConversations,
 } from "@/data/jolika-data"
 import { TopicIcon } from "@/components/TopicIcon"
 import type { TopicIconName } from "@/data/jolika-data"
+
+// The 3 real managers at Jolika
+const MANAGERS = [
+  { name: 'שלי גולדנברג', role: 'בעלים ומנהלת ראשית' },
+  { name: 'שלי בן מויאל', role: 'מנהלת' },
+  { name: 'רותם פרחי', role: 'מנהלת' },
+]
+
+const isManager = (name: string) =>
+  MANAGERS.some(m => name.includes(m.name))
+
+const getManagerRole = (name: string) => {
+  const manager = MANAGERS.find(m => name.includes(m.name))
+  return manager?.role || null
+}
 
 const topicColorClasses: Record<string, { bg: string; text: string; border: string }> = {
   blue: { bg: 'bg-blue-50', text: 'text-blue-600', border: 'border-blue-200' },
@@ -103,10 +117,21 @@ export default function ConversationsPage() {
 
   // Get processed data
   const conversations = useMemo(() => getProcessedConversations(), [])
-  const managerStats = useMemo(() => getManagerStats(), [])
+  const allStaffStats = useMemo(() => getManagerStats(), [])
   const repetitiveQuestions = useMemo(() => getRepetitiveQuestions(), [])
   const timelineData = useMemo(() => getConversationsByDate(), [])
-  const shellyCount = useMemo(() => getShellyContactCount(), [])
+
+  // Split staff stats into managers and employees
+  const { managerStats, employeeStats } = useMemo(() => {
+    const managers = allStaffStats.filter(s => isManager(s.name))
+    const employees = allStaffStats.filter(s => !isManager(s.name))
+    return { managerStats: managers, employeeStats: employees }
+  }, [allStaffStats])
+
+  // Count responses from actual managers (not just Shelly)
+  const managerResponseCount = useMemo(() => {
+    return rawConversations.filter(conv => isManager(conv.answerSender || '')).length
+  }, [])
 
   // Mock escalation count (will be real in Phase B)
   const escalationCount = 12
@@ -180,11 +205,11 @@ export default function ConversationsPage() {
           trendValue="+156 מ-WhatsApp"
         />
         <KPICard
-          label="פניות לשלי"
-          value={shellyCount}
+          label="תשובות מנהלות"
+          value={managerResponseCount}
           icon={Phone}
           trend="up"
-          trendValue={`${Math.round((shellyCount / rawConversations.length) * 100)}% מהשיחות`}
+          trendValue={`${Math.round((managerResponseCount / rawConversations.length) * 100)}% מהשיחות`}
         />
         <KPICard
           label="שאלות חוזרות"
@@ -293,43 +318,87 @@ export default function ConversationsPage() {
           </CardContent>
         </Card>
 
-        {/* Manager Distribution */}
+        {/* Staff Distribution */}
         <Card className="border border-gray-200">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-medium flex items-center gap-2">
               <Users className="w-5 h-5 text-gray-500" />
-              פילוח לפי מנהלים
+              פילוח לפי צוות
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              {managerStats.slice(0, 5).map((manager, index) => {
-                const percentage = Math.round((manager.count / rawConversations.length) * 100)
-                return (
-                  <div key={index} className="space-y-1">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className={cn(
-                        "font-medium",
-                        manager.isShelly && "text-[var(--klear-green)]"
-                      )}>
-                        {manager.shortName}
-                      </span>
-                      <span className="text-gray-500">
-                        {manager.count} ({percentage}%)
-                      </span>
-                    </div>
-                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                      <div
-                        className={cn(
-                          "h-full rounded-full transition-all",
-                          manager.isShelly ? "bg-[var(--klear-green)]" : "bg-gray-400"
-                        )}
-                        style={{ width: `${percentage}%` }}
-                      />
-                    </div>
+            <div className="space-y-4">
+              {/* Managers Section */}
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wide">מנהלות</span>
+                  <div className="flex-1 h-px bg-emerald-200" />
+                </div>
+                <div className="space-y-2">
+                  {managerStats.map((manager, index) => {
+                    const percentage = Math.round((manager.count / rawConversations.length) * 100)
+                    const role = getManagerRole(manager.name)
+                    return (
+                      <div key={index} className="space-y-1">
+                        <div className="flex items-center justify-between text-sm">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium text-emerald-700">
+                              {manager.shortName}
+                            </span>
+                            {role && (
+                              <span className="text-[10px] text-emerald-500">
+                                ({role})
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-gray-500">
+                            {manager.count} ({percentage}%)
+                          </span>
+                        </div>
+                        <div className="h-2 bg-emerald-100 rounded-full overflow-hidden">
+                          <div
+                            className="h-full rounded-full bg-emerald-500 transition-all"
+                            style={{ width: `${percentage}%` }}
+                          />
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Employees Section */}
+              {employeeStats.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">עובדים</span>
+                    <div className="flex-1 h-px bg-gray-200" />
                   </div>
-                )
-              })}
+                  <div className="space-y-2">
+                    {employeeStats.slice(0, 4).map((employee, index) => {
+                      const percentage = Math.round((employee.count / rawConversations.length) * 100)
+                      return (
+                        <div key={index} className="space-y-1">
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="font-medium text-gray-600">
+                              {employee.shortName}
+                            </span>
+                            <span className="text-gray-400">
+                              {employee.count} ({percentage}%)
+                            </span>
+                          </div>
+                          <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                            <div
+                              className="h-full rounded-full bg-gray-400 transition-all"
+                              style={{ width: `${percentage}%` }}
+                            />
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -478,12 +547,30 @@ export default function ConversationsPage() {
                           </div>
 
                           {/* Answer */}
-                          <div className="bg-[#DCF8C6] rounded-lg p-3 mr-4">
+                          <div className={cn(
+                            "rounded-lg p-3 mr-4",
+                            isManager(conv.answerSender) ? "bg-emerald-50 border border-emerald-200" : "bg-[#DCF8C6]"
+                          )}>
                             <div className="flex items-center gap-2 mb-2">
-                              <User className="w-4 h-4 text-green-600" />
-                              <span className="text-xs font-medium text-green-700">
+                              <User className={cn(
+                                "w-4 h-4",
+                                isManager(conv.answerSender) ? "text-emerald-600" : "text-green-600"
+                              )} />
+                              <span className={cn(
+                                "text-xs font-medium",
+                                isManager(conv.answerSender) ? "text-emerald-700" : "text-green-700"
+                              )}>
                                 {conv.answerSender}
                               </span>
+                              {isManager(conv.answerSender) ? (
+                                <Badge className="text-[10px] bg-emerald-100 text-emerald-700 border-emerald-300">
+                                  מנהלת
+                                </Badge>
+                              ) : (
+                                <Badge className="text-[10px] bg-gray-100 text-gray-600">
+                                  עובד/ת
+                                </Badge>
+                              )}
                             </div>
                             <p className="text-sm text-gray-800">
                               {conv.isMedia ? (
