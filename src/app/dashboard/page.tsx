@@ -180,7 +180,8 @@ export default function DashboardPage() {
   // Track hovered data for live display
   const [activeData, setActiveData] = useState<{ date: string; conversations: number } | null>(null)
 
-  const handleMouseMove = useCallback((state: { activePayload?: Array<{ payload: { date: string; conversations: number } }> }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleMouseMove = useCallback((state: any) => {
     if (state?.activePayload?.length) {
       setActiveData(state.activePayload[0].payload)
     }
