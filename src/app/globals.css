@@ -318,6 +318,18 @@ p, span, label {
   outline-offset: 2px;
 }
 
+/* Remove focus styles from charts */
+.recharts-wrapper:focus,
+.recharts-wrapper:focus-visible,
+.recharts-surface:focus,
+.recharts-surface:focus-visible,
+.recharts-wrapper *:focus,
+.recharts-wrapper *:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  ring: none !important;
+}
+
 /* ==================== Animations ==================== */
 
 @keyframes fadeIn {
