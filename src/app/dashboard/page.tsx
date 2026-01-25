@@ -4,7 +4,7 @@ import { useState, useCallback, useMemo } from "react"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, TrendingUp, TrendingDown, ArrowLeft } from "lucide-react"
+import { ExternalLink, TrendingUp, TrendingDown } from "lucide-react"
 import {
   company,
   conversations,
@@ -391,16 +391,6 @@ export default function DashboardPage() {
             </ResponsiveContainer>
           </div>
 
-          {/* Link to Analytics */}
-          <div className="mt-4 pt-4 border-t border-gray-100">
-            <Link
-              href="/dashboard/conversations"
-              className="text-emerald-600 hover:underline text-sm flex items-center gap-1"
-            >
-              צפה באנליטיקה מפורטת
-              <ArrowLeft className="w-4 h-4" />
-            </Link>
-          </div>
         </CardContent>
       </Card>
     </div>
