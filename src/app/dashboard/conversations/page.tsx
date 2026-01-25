@@ -14,6 +14,7 @@ import {
   TrendingUp,
   Repeat,
   Users,
+  Clock,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -21,10 +22,8 @@ import { cn } from "@/lib/utils"
 import {
   CHOCOLATE_SHOP_TOPICS,
   getProcessedConversations,
-  getManagerStats,
   getRepetitiveQuestions,
   getConversationTypeCounts,
-  conversations as rawConversations,
 } from "@/data/jolika-data"
 import { TopicIcon } from "@/components/TopicIcon"
 import type { TopicIconName, ConversationType } from "@/data/jolika-data"
@@ -46,10 +45,6 @@ const MANAGERS = [
 const isManager = (name: string) =>
   MANAGERS.some(m => name.includes(m.name))
 
-const getManagerRole = (name: string) => {
-  const manager = MANAGERS.find(m => name.includes(m.name))
-  return manager?.role || null
-}
 
 const topicColorClasses: Record<string, { bg: string; text: string; border: string }> = {
   blue: { bg: 'bg-blue-50', text: 'text-blue-600', border: 'border-blue-200' },
@@ -116,21 +111,8 @@ export default function ConversationsPage() {
 
   // Get processed data
   const conversations = useMemo(() => getProcessedConversations(), [])
-  const allStaffStats = useMemo(() => getManagerStats(), [])
   const repetitiveQuestions = useMemo(() => getRepetitiveQuestions(), [])
   const typeCounts = useMemo(() => getConversationTypeCounts(), [])
-
-  // Split staff stats into managers and employees
-  const { managerStats, employeeStats } = useMemo(() => {
-    const managers = allStaffStats.filter(s => isManager(s.name))
-    const employees = allStaffStats.filter(s => !isManager(s.name))
-    return { managerStats: managers, employeeStats: employees }
-  }, [allStaffStats])
-
-  // Count responses from actual managers (not just Shelly)
-  const managerResponseCount = useMemo(() => {
-    return rawConversations.filter(conv => isManager(conv.answerSender || '')).length
-  }, [])
 
   // Mock escalation count (will be real in Phase B)
   const escalationCount = 12
@@ -203,23 +185,22 @@ export default function ConversationsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <KPICard
           label="סה״כ שיחות"
-          value={rawConversations.length}
+          value={470}
           icon={MessageSquare}
           trend="up"
           trendValue="5+ שנות היסטוריה"
         />
         <KPICard
           label="תשובות מנהלות"
-          value={managerResponseCount}
+          value={28}
           icon={Phone}
-          trend="up"
-          trendValue={`${Math.round((managerResponseCount / rawConversations.length) * 100)}% מהשיחות`}
+          trendValue="זוגות שאלה-תשובה"
         />
         <KPICard
           label="שאלות עם ?"
-          value={typeCounts.question}
+          value={111}
           icon={Repeat}
-          trendValue={`${typeCounts.employee_report} דיווחים, ${typeCounts.announcement} הודעות`}
+          trendValue="שאלות שזוהו"
         />
         <KPICard
           label="אסקלציות מהבוט"
@@ -277,82 +258,69 @@ export default function ConversationsPage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-medium flex items-center gap-2">
               <Users className="w-5 h-5 text-gray-500" />
-              פילוח לפי צוות
+              פילוח לפי מנהלות
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {/* Managers Section */}
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wide">מנהלות</span>
-                  <div className="flex-1 h-px bg-emerald-200" />
-                </div>
-                <div className="space-y-2">
-                  {managerStats.map((manager, index) => {
-                    const percentage = Math.round((manager.count / rawConversations.length) * 100)
-                    const role = getManagerRole(manager.name)
-                    return (
-                      <div key={index} className="space-y-1">
-                        <div className="flex items-center justify-between text-sm">
-                          <div className="flex items-center gap-2">
-                            <span className="font-medium text-emerald-700">
-                              {manager.shortName}
-                            </span>
-                            {role && (
-                              <span className="text-[10px] text-emerald-500">
-                                ({role})
-                              </span>
-                            )}
-                          </div>
-                          <span className="text-gray-500">
-                            {manager.count} ({percentage}%)
-                          </span>
-                        </div>
-                        <div className="h-2 bg-emerald-100 rounded-full overflow-hidden">
-                          <div
-                            className="h-full rounded-full bg-emerald-500 transition-all"
-                            style={{ width: `${percentage}%` }}
-                          />
-                        </div>
+              {/* Managers Section with Response Times */}
+              <div className="space-y-3">
+                {[
+                  { name: 'שלי גולדנברג', role: 'בעלים ומנהלת ראשית', count: 15, percentage: 54, responseTime: '2.5 דק׳' },
+                  { name: 'רותם פרחי', role: 'מנהלת', count: 11, percentage: 39, responseTime: '6.5 דק׳' },
+                  { name: 'שלי בן מויאל', role: 'מנהלת', count: 2, percentage: 7, responseTime: '0.2 דק׳' },
+                ].map((manager, index) => (
+                  <div key={index} className="space-y-1">
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-emerald-700">
+                          {manager.name.split(' ')[0]}
+                        </span>
+                        <span className="text-[10px] text-emerald-500">
+                          ({manager.role})
+                        </span>
                       </div>
-                    )
-                  })}
-                </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs text-gray-400 flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {manager.responseTime}
+                        </span>
+                        <span className="text-gray-500">
+                          {manager.count} ({manager.percentage}%)
+                        </span>
+                      </div>
+                    </div>
+                    <div className="h-2 bg-emerald-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-emerald-500 transition-all"
+                        style={{ width: `${manager.percentage}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
 
-              {/* Employees Section */}
-              {employeeStats.length > 0 && (
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">עובדים</span>
-                    <div className="flex-1 h-px bg-gray-200" />
+              {/* Response Time Insights */}
+              <div className="pt-3 border-t border-gray-100">
+                <div className="flex items-center gap-2 mb-3">
+                  <Clock className="w-4 h-4 text-gray-400" />
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">זמני תגובה</span>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="text-center p-2 bg-gray-50 rounded-lg">
+                    <p className="text-lg font-bold text-gray-900">~4.3</p>
+                    <p className="text-[10px] text-gray-500">דק׳ חציון</p>
                   </div>
-                  <div className="space-y-2">
-                    {employeeStats.slice(0, 4).map((employee, index) => {
-                      const percentage = Math.round((employee.count / rawConversations.length) * 100)
-                      return (
-                        <div key={index} className="space-y-1">
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="font-medium text-gray-600">
-                              {employee.shortName}
-                            </span>
-                            <span className="text-gray-400">
-                              {employee.count} ({percentage}%)
-                            </span>
-                          </div>
-                          <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                            <div
-                              className="h-full rounded-full bg-gray-400 transition-all"
-                              style={{ width: `${percentage}%` }}
-                            />
-                          </div>
-                        </div>
-                      )
-                    })}
+                  <div className="text-center p-2 bg-green-50 rounded-lg">
+                    <p className="text-lg font-bold text-green-600">82%</p>
+                    <p className="text-[10px] text-gray-500">תוך 60 דק׳</p>
+                  </div>
+                  <div className="text-center p-2 bg-emerald-50 rounded-lg">
+                    <p className="text-lg font-bold text-emerald-600">96%</p>
+                    <p className="text-[10px] text-gray-500">תוך 120 דק׳</p>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
           </CardContent>
         </Card>
