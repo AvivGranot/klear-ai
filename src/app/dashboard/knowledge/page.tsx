@@ -141,7 +141,7 @@ function AllQuestionsModal({
           <div className="flex items-center gap-3">
             <MessageSquare className="w-6 h-6 text-white" />
             <span className="text-lg font-semibold text-white">
-              שאלות שמפעילות תשובה זו ({frequency})
+              דוגמאות לשאלות ({questions.length} מתוך {frequency})
             </span>
           </div>
           <button
@@ -799,12 +799,19 @@ export default function KnowledgePage() {
                               )} />
                             </div>
 
-                            {/* Answer Preview - 80 chars max */}
+                            {/* Hebrew Title */}
                             <p className={cn(
-                              "text-sm text-gray-700 mb-2 leading-relaxed",
+                              "text-sm font-medium text-gray-900 mb-1",
                               patternStatus === "rejected" && "line-through text-gray-400"
                             )}>
-                              {displayAnswer.slice(0, 80)}{displayAnswer.length > 80 ? "..." : ""}
+                              {pattern.title}
+                            </p>
+                            {/* Answer Preview */}
+                            <p className={cn(
+                              "text-xs text-gray-500 leading-relaxed",
+                              patternStatus === "rejected" && "line-through text-gray-400"
+                            )}>
+                              {displayAnswer.slice(0, 60)}{displayAnswer.length > 60 ? "..." : ""}
                             </p>
 
                             {/* Questions Count (collapsed) */}
@@ -818,7 +825,7 @@ export default function KnowledgePage() {
                                 className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
                               >
                                 <MessageSquare className="w-3 h-3" />
-                                {(savedData?.editedQuestions || pattern.exampleQuestions).length} שאלות
+                                {pattern.frequency} שאילתות ({(savedData?.editedQuestions || pattern.exampleQuestions).length} דוגמאות)
                               </button>
 
                               {/* Action Buttons - Subtle */}

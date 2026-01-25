@@ -185,6 +185,7 @@ export function getKBSummary() {
 
 // Extended type for automation patterns with manager info
 interface AutomationPattern {
+  title: string
   answer: string
   rawAnswer: string
   frequency: number
@@ -213,11 +214,12 @@ export function getAutomationPatterns(): AutomationPattern[] {
       }
 
       return {
-        answer: item.content,
-        rawAnswer: extItem.raw_answer || item.content,
+        title: item.titleHe || item.title,
+        answer: item.contentHe || item.content,
+        rawAnswer: extItem.raw_answer || item.contentHe || item.content,
         frequency: item.frequency || 1,
         exampleQuestions: item.example_questions || [],
-        topic: detectTopic(item.content)?.name || 'אחר',
+        topic: detectTopic(item.contentHe || item.content)?.name || 'אחר',
         managerId: extItem.manager_id || 'unknown',
         managerName: extItem.manager_name || 'שלי גולדנברג',
         status: extItem.status || 'pending_approval',
