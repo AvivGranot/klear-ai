@@ -20,8 +20,8 @@ import {
   ReferenceLine,
 } from "recharts"
 
-// Google Finance style time ranges
-type TimeRange = '1D' | '5D' | '1M' | '6M' | '1Y' | '5Y' | 'MAX'
+// Google Finance style time ranges (up to 1Y)
+type TimeRange = '1D' | '5D' | '1M' | '6M' | '1Y'
 
 // Get chart data based on real conversation dates
 function getChartData(range: TimeRange) {
@@ -68,20 +68,11 @@ function getChartData(range: TimeRange) {
       if (filteredData.length < 2) filteredData = parsedData.slice(-180)
       break
     case '1Y':
+    default:
       const oneYearAgo = new Date(today)
       oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1)
       filteredData = parsedData.filter(d => d.dateObj >= oneYearAgo)
       if (filteredData.length < 2) filteredData = parsedData.slice(-365)
-      break
-    case '5Y':
-      const fiveYearsAgo = new Date(today)
-      fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5)
-      filteredData = parsedData.filter(d => d.dateObj >= fiveYearsAgo)
-      if (filteredData.length < 2) filteredData = parsedData
-      break
-    case 'MAX':
-    default:
-      filteredData = parsedData
       break
   }
 
@@ -337,16 +328,6 @@ export default function DashboardPage() {
               label="1Y"
               selected={timeRange === '1Y'}
               onClick={() => setTimeRange('1Y')}
-            />
-            <TimeRangeButton
-              label="5Y"
-              selected={timeRange === '5Y'}
-              onClick={() => setTimeRange('5Y')}
-            />
-            <TimeRangeButton
-              label="MAX"
-              selected={timeRange === 'MAX'}
-              onClick={() => setTimeRange('MAX')}
             />
           </div>
         </CardHeader>

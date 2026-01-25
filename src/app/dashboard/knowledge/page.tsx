@@ -694,7 +694,6 @@ export default function KnowledgePage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">מרכז הידע</h1>
-          <p className="text-sm text-gray-500">ניהול תוכן ואוטומציות</p>
         </div>
       </div>
 
@@ -710,10 +709,6 @@ export default function KnowledgePage() {
                     <Zap className="w-5 h-5 text-amber-500" />
                     תבניות אוטומציה
                   </CardTitle>
-                  <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    28 שאילתות ב-12 החודשים האחרונים
-                  </p>
                 </div>
                 <div className="flex items-center gap-2">
                   <Badge variant="outline" className="text-xs bg-amber-50 text-amber-600 border-amber-200">
