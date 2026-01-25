@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import { ExternalLink, TrendingUp, TrendingDown } from "lucide-react"
 import {
   company,
-  conversations,
   getConversationsByDate,
 } from "@/data/jolika-data"
 import {
@@ -182,11 +181,24 @@ function TimeRangeButton({
   )
 }
 
-export default function DashboardPage() {
-  const totalConversations = conversations.length
+// Real data from last 12 months analysis (Jan 2025 - Jan 2026)
+const REAL_STATS = {
+  totalConversations: 470,
+  managerResponses: 28,
+  questionsWithMark: 111,
+  medianResponseTime: 4.3, // minutes
+  answeredWithin60Min: 82, // percent
+  answeredWithin2Hours: 96, // percent
+  managers: {
+    'שלי גולדנברג': { count: 15, percent: 54 },
+    'רותם פרחי': { count: 11, percent: 39 },
+    'שלי בן מויאל': { count: 2, percent: 7 },
+  }
+}
 
-  // Time range state - default to MAX to show all available data
-  const [timeRange, setTimeRange] = useState<TimeRange>('MAX')
+export default function DashboardPage() {
+  // Time range state - default to 1Y to show last year data
+  const [timeRange, setTimeRange] = useState<TimeRange>('1Y')
 
   const chartData = useMemo(() => getChartData(timeRange), [timeRange])
 
@@ -246,25 +258,25 @@ export default function DashboardPage() {
         </Link>
       </div>
 
-      {/* 3 KPI Cards */}
+      {/* 3 KPI Cards - Real data from last 12 months */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <SimpleKPICard
           label="סה״כ שיחות"
-          value={totalConversations}
+          value={REAL_STATS.totalConversations}
           trend="up"
-          trendValue="+12% מהשבוע שעבר"
+          trendValue="12 חודשים אחרונים"
         />
         <SimpleKPICard
-          label="אחוז הצלחה"
-          value="78%"
+          label="תשובות מנהלות"
+          value={REAL_STATS.managerResponses}
           trend="up"
-          trendValue="+4% מהשבוע שעבר"
+          trendValue="שלי 54% • רותם 39%"
         />
         <SimpleKPICard
-          label="זמן תגובה ממוצע"
-          value="1.2 דק׳"
-          trend="down"
-          trendValue="-8% מהשבוע שעבר"
+          label="זמן תגובה חציוני"
+          value={`${REAL_STATS.medianResponseTime} דק׳`}
+          trend="up"
+          trendValue={`${REAL_STATS.answeredWithin60Min}% תוך שעה`}
         />
       </div>
 
