@@ -16,15 +16,6 @@ import {
   Users,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts"
 
 // Import data and helpers from centralized Jolika data
 import {
@@ -32,7 +23,6 @@ import {
   getProcessedConversations,
   getManagerStats,
   getRepetitiveQuestions,
-  getConversationsByDate,
   getConversationTypeCounts,
   conversations as rawConversations,
 } from "@/data/jolika-data"
@@ -128,7 +118,6 @@ export default function ConversationsPage() {
   const conversations = useMemo(() => getProcessedConversations(), [])
   const allStaffStats = useMemo(() => getManagerStats(), [])
   const repetitiveQuestions = useMemo(() => getRepetitiveQuestions(), [])
-  const timelineData = useMemo(() => getConversationsByDate(), [])
   const typeCounts = useMemo(() => getConversationTypeCounts(), [])
 
   // Split staff stats into managers and employees
@@ -239,57 +228,6 @@ export default function ConversationsPage() {
           className="opacity-60"
         />
       </div>
-
-      {/* Timeline Chart */}
-      <Card className="border border-gray-200">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-lg font-medium">שיחות לאורך זמן</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="h-[200px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={timelineData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="colorConversations" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                <XAxis
-                  dataKey="displayDate"
-                  tick={{ fontSize: 12 }}
-                  tickLine={false}
-                  axisLine={false}
-                />
-                <YAxis
-                  tick={{ fontSize: 12 }}
-                  tickLine={false}
-                  axisLine={false}
-                  width={30}
-                />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'white',
-                    border: '1px solid #E5E7EB',
-                    borderRadius: '8px',
-                    direction: 'rtl',
-                  }}
-                  labelFormatter={(label) => `תאריך: ${label}`}
-                  formatter={(value) => [`${value} שיחות`, '']}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="count"
-                  stroke="#10B981"
-                  strokeWidth={2}
-                  fill="url(#colorConversations)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Insights Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
