@@ -1,335 +1,483 @@
 [
   {
-    "title": "Box Must Include Bag",
+    "title": "",
     "titleHe": "חובה לצרף שקית לכל קופסה",
-    "content": "Every box must be accompanied by a matching bag",
+    "content": "",
     "contentHe": "כשמישהו מזמין יותר מקופסת פרלינים אחת, וכמובן כשמזמין כמות של עשר עשרים וכו - ההנחה היא שנותן את זה כמובן במתנה. תמיד תמיד צריך לצרף לקופסאות שקיות תואמות. אין מצב שקופסה יוצאת אצלנו בלי שקית. אלא אם כן ביקשו במפורש ללא שקיות.",
     "type": "repeated_answer",
     "frequency": 12,
-    "example_questions": ["צריך לצרף שקית?", "האם לשים שקית?", "מה עם השקיות?"]
+    "example_questions": [
+      "צריך לצרף שקית?",
+      "האם לשים שקית?",
+      "מה עם השקיות?"
+    ]
   },
   {
-    "title": "Delivery Timing Friday",
+    "title": "",
     "titleHe": "תיאום משלוחים ליום שישי",
-    "content": "Friday delivery schedule by area",
+    "content": "",
     "contentHe": "מה שמוזמן לרמהש, הרצליה, צפון תל אביב יגיע עד 15:00 ומה שיותר רחוק עד 17:00. בבקשה לא לתאם לשעות מוגבלות ללא אישור של רועי ורישום עם מיליון סימני קריאה ביומן. בכל מקרה לא להתחייב למסירה לפני 11:00.",
     "type": "repeated_answer",
     "frequency": 18,
-    "example_questions": ["עד מתי יגיע המשלוח בשישי?", "מה השעות למשלוחים?", "מתי מגיע לרמת השרון?"]
+    "example_questions": [
+      "עד מתי יגיע המשלוח בשישי?",
+      "מה השעות למשלוחים?",
+      "מתי מגיע לרמת השרון?"
+    ]
   },
   {
-    "title": "Remote Delivery Areas",
+    "title": "",
     "titleHe": "משלוחים רחוקים",
-    "content": "Remote deliveries require extra day",
+    "content": "",
     "contentHe": "נתניה, ראשון לציון, חולון - זה משלוח רחוק. רק מהיום למחר. לגבי רחוקים צריך לבדוק עם רועי. אפשר גם עם ניק אבל ניק צריך לפחות 2 משלוחים לאותו אזור.",
     "type": "repeated_answer",
     "frequency": 8,
-    "example_questions": ["אפשר משלוח לנתניה?", "כמה עולה משלוח לראשון?", "מתי אפשר לשלוח לחולון?"]
+    "example_questions": [
+      "אפשר משלוח לנתניה?",
+      "כמה עולה משלוח לראשון?",
+      "מתי אפשר לשלוח לחולון?"
+    ]
   },
   {
-    "title": "Three Layer Box Contents",
+    "title": "",
     "titleHe": "תכולת שוקולד לגובה",
-    "content": "Three layer tower box contents",
+    "content": "",
     "contentHe": "בקומה התחתונה גרנד. בקומה האמצעית לוקחים קופסת ג׳וליקה, מוציאים את החלקים הפנימיים, שמים טבליה ועליה מקלות ומנדיאנט או קוקוס סוגרים עם חבק. בקומה העליונה תשיעיית טראפלס. מחברים עם סרט חום כהה מהמגירה.",
     "type": "repeated_answer",
     "frequency": 6,
-    "example_questions": ["מה יש בשוקולד לגובה?", "איך מכינים מגדל?", "מה שמים בקומותיים?"]
+    "example_questions": [
+      "מה יש בשוקולד לגובה?",
+      "איך מכינים מגדל?",
+      "מה שמים בקומותיים?"
+    ]
   },
   {
-    "title": "Flavors Not for Jolika Box",
+    "title": "",
     "titleHe": "טעמים שלא שמים בג׳וליקה",
-    "content": "Flavors only for Grand box",
+    "content": "",
     "contentHe": "בג׳וליקה לא שמים את הטעמים הבאים בדרך כלל אבל כן בגרנד: צ׳ילי, יוזו, מרציפן, פיסטוק.",
     "type": "repeated_answer",
     "frequency": 5,
-    "example_questions": ["אפשר מרציפן בג׳וליקה?", "איזה טעמים רק בגרנד?", "מה לא שמים בג׳וליקה?"]
+    "example_questions": [
+      "אפשר מרציפן בג׳וליקה?",
+      "איזה טעמים רק בגרנד?",
+      "מה לא שמים בג׳וליקה?"
+    ]
   },
   {
-    "title": "Business Customer Registration",
+    "title": "",
     "titleHe": "פתיחת לקוח עסקי",
-    "content": "How to register business customers",
+    "content": "",
     "contentHe": "לוקחים פרטים וישר עושים פתיחת לקוח ווליוקארד: שם, שם חברה (במקום שם משפחה לרשום שם חברה), אימייל, טלפון, תאריך לידה לא לבקש רק לרשום 1/1, ולוחצים כן על הכפתור ״עסקי״ ושומרים אותו. ברגע שלחצנו על עסקי זה שומר לי אותו במערכת אבל לא מקבל אימיילים ונקודות.",
     "type": "repeated_answer",
     "frequency": 10,
-    "example_questions": ["איך רושמים לקוח עסקי?", "מה עושים עם לקוח חברה?", "איך פותחים לקוח למתנות ראש השנה?"]
+    "example_questions": [
+      "איך רושמים לקוח עסקי?",
+      "מה עושים עם לקוח חברה?",
+      "איך פותחים לקוח למתנות ראש השנה?"
+    ]
   },
   {
-    "title": "Business Discount Rates",
+    "title": "",
     "titleHe": "הנחות ללקוחות עסקיים",
-    "content": "Discount rates for business orders",
+    "content": "",
     "contentHe": "בהזמנות עד 3000 שח נהנים מצבירת נקודות במועדון ששווה כמו הנחה של 5% רק שאפשר לממש בחנות. מעל 3000 שח יש הנחה של 7%. אם מישהו ממשיך ללחוץ תגידו שאתן מעבירות את הפרטים לשלי.",
     "type": "repeated_answer",
     "frequency": 14,
-    "example_questions": ["כמה הנחה על הזמנה גדולה?", "מה ההנחה ללקוח עסקי?", "יש מחיר מיוחד על כמויות?"]
+    "example_questions": [
+      "כמה הנחה על הזמנה גדולה?",
+      "מה ההנחה ללקוח עסקי?",
+      "יש מחיר מיוחד על כמויות?"
+    ]
   },
   {
-    "title": "Call Forward Instructions",
+    "title": "",
     "titleHe": "הפניית שיחות",
-    "content": "How to set up call forwarding",
+    "content": "",
     "contentHe": "קודם צריך לעשות ביטול שזה: *73. אחכ צריך הפנית שיחות בתפוס שזה: *73 ואת הטלפון הסלולרי של החנות 0585333675. שירות עקוב אחרי רגיל (*72) זה רק אם אין אף אחד בחנות וצריך לעשות עקוב אחרי לכל השיחות. השירות של 73 זה אם תפוס בחנות עובר לסלולרי של החנות.",
     "type": "repeated_answer",
     "frequency": 7,
-    "example_questions": ["איך עושים עקוב אחרי?", "מה הקוד להפניית שיחות?", "איך מעבירים שיחות לסלולרי?"]
+    "example_questions": [
+      "איך עושים עקוב אחרי?",
+      "מה הקוד להפניית שיחות?",
+      "איך מעבירים שיחות לסלולרי?"
+    ]
   },
   {
-    "title": "Order Storage",
+    "title": "",
     "titleHe": "אחסון הזמנות מוכנות",
-    "content": "How to store prepared orders",
+    "content": "",
     "contentHe": "הכי טוב ויעיל מבחינת מקום שזה תופס לשים את ההזמנות בארגז סגור, להדביק פתק גדול על הצד שאומר מה הארגז מכיל. ולהוציא את הארגז מהמחסן לקדמת החנות לאזור של השולחן העגול. ככה אפשר לשים כמה ארגזים אחד על השני, חוסך מקום ורואים מה מכיל. נסו להשאיר את המקרר הגדול פנוי להכנת אריזות של גרנדים וג׳וליקות.",
     "type": "repeated_answer",
     "frequency": 4,
-    "example_questions": ["איפה לשים הזמנות מוכנות?", "איך מאחסנים הזמנות?", "מה עושים עם הזמנות שמוכנות?"]
+    "example_questions": [
+      "איפה לשים הזמנות מוכנות?",
+      "איך מאחסנים הזמנות?",
+      "מה עושים עם הזמנות שמוכנות?"
+    ]
   },
   {
-    "title": "Upselling Techniques",
+    "title": "",
     "titleHe": "הגדלת מכירה",
-    "content": "How to increase sales with each customer",
+    "content": "",
     "contentHe": "כל מכירה מנסים להגדיל - צריכה עוד משהו? משהו הביתה? צריכה משהו לשבועיים הקרובים? נסו לשדר שיש לכן את כל הזמן לתת ללקוח מה שצריך. תשאלו אם צריך משהו הביתה, צריך עוד משהו, תספרו על 2-3 דברים שהגיעו מהשקיות.",
     "type": "repeated_answer",
     "frequency": 11,
-    "example_questions": ["איך מגדילים מכירה?", "מה לשאול את הלקוח?", "איך לעודד לקוחות לקנות יותר?"]
+    "example_questions": [
+      "איך מגדילים מכירה?",
+      "מה לשאול את הלקוח?",
+      "איך לעודד לקוחות לקנות יותר?"
+    ]
   },
   {
-    "title": "Free Praline for Pickup",
+    "title": "",
     "titleHe": "פרלין במתנה לאיסוף",
-    "content": "Give free praline to pickup customers",
+    "content": "",
     "contentHe": "לתת לכל מי שבא לאסוף פרלין במתנה ולהגיד לו שצירפנו לנו פרלין מאיתנו.",
     "type": "repeated_answer",
     "frequency": 6,
-    "example_questions": ["לתת פרלין במתנה?", "מה נותנים למי שאוסף?", "יש מתנה לאיסוף עצמי?"]
+    "example_questions": [
+      "לתת פרלין במתנה?",
+      "מה נותנים למי שאוסף?",
+      "יש מתנה לאיסוף עצמי?"
+    ]
   },
   {
-    "title": "North Tel Aviv Definition",
+    "title": "",
     "titleHe": "הגדרת צפון תל אביב",
-    "content": "What counts as North Tel Aviv for delivery",
+    "content": "",
     "contentHe": "צפון תל אביב זה רק השכונות הצפוניות כמו רמת אביב. בבלי והצפון הישן של תל אביב כמו בזל ממש לא נחשב צפון תל אביב. אם אתן לא בטוחות תפתחו גוגל מפות ותראו - רק מה שעד נחל הירקון לא כולל שכונת בבלי.",
     "type": "repeated_answer",
     "frequency": 5,
-    "example_questions": ["בבלי זה צפון תל אביב?", "מה נחשב צפון ת״א?", "רמת אביב זה צפון?"]
+    "example_questions": [
+      "בבלי זה צפון תל אביב?",
+      "מה נחשב צפון ת״א?",
+      "רמת אביב זה צפון?"
+    ]
   },
   {
-    "title": "Website Order Handling",
+    "title": "",
     "titleHe": "טיפול בהזמנות מהאתר",
-    "content": "How to handle Wix website orders",
+    "content": "",
     "contentHe": "כשמסיימים הזמנה מהאתר סמנו בבקשה באפליקציית וויקס fulfilled. זה מחליף את האימייל של יצאה חשבונית וכך אני יודעת שאכן ראיתם שנכנס. החל מחשבונית 11090 אין צורך להזין בקופה - החשבונית יוצאת אוטומטית.",
     "type": "repeated_answer",
     "frequency": 9,
-    "example_questions": ["מה עושים עם הזמנה מהאתר?", "איך מסמנים הזמנת ויקס?", "צריך להזין בקופה הזמנה מהאתר?"]
+    "example_questions": [
+      "מה עושים עם הזמנה מהאתר?",
+      "איך מסמנים הזמנת ויקס?",
+      "צריך להזין בקופה הזמנה מהאתר?"
+    ]
   },
   {
-    "title": "Lockdown Operations",
+    "title": "",
     "titleHe": "עבודה בזמן סגר",
-    "content": "How to operate during lockdown",
+    "content": "",
     "contentHe": "במהלך הסגר אין אפשרות ללקוחות להיכנס לחנות, אפשר להזמין באתר איסוף או משלוח. שימו את הספסל מחוץ לחנות כך שהוא חוסם את הכניסה וכשלקוח מגיע תגידו שאי אפשר להיכנס לחנות ״אבל תגיד לי את המספר אתקשר אליך הרגע ונעשה בשניות הזמנה״.",
     "type": "document",
     "frequency": 3,
-    "example_questions": ["מה עושים בסגר?", "איך עובדים בקורונה?", "אפשר להיכנס לחנות בסגר?"]
+    "example_questions": [
+      "מה עושים בסגר?",
+      "איך עובדים בקורונה?",
+      "אפשר להיכנס לחנות בסגר?"
+    ]
   },
   {
-    "title": "Essential Worker Letter",
+    "title": "",
     "titleHe": "אישור עובד חיוני",
-    "content": "Food store can operate normally",
+    "content": "",
     "contentHe": "כל חנויות המזון יכולות לעבוד. אנחנו כמו מכולת, פיצוציה, ירקן. את רק צריכה את המכתב שמסביר איפה את עובדת - לא צריך אישור רשמי מהמדינה.",
     "type": "document",
     "frequency": 4,
-    "example_questions": ["צריך אישור עובד חיוני?", "אפשר לעבוד בסגר?", "מה להראות לשוטר?"]
+    "example_questions": [
+      "צריך אישור עובד חיוני?",
+      "אפשר לעבוד בסגר?",
+      "מה להראות לשוטר?"
+    ]
   },
   {
-    "title": "Delivery Coordination Details",
+    "title": "",
     "titleHe": "פרטים לתיאום משלוח",
-    "content": "Information needed for delivery coordination",
+    "content": "",
     "contentHe": "לקחת קומה, דירה, קוד כניסה ולהגיד שאם לא יהיו נשאיר תלוי על הדלת. אם האינטרקום לא עובד - להתקשר מלמטה. אם המקבל כבד שמיעה - לתאם בווטסאפ.",
     "type": "repeated_answer",
     "frequency": 8,
-    "example_questions": ["מה לקחת לתיאום משלוח?", "איזה פרטים צריך למשלוח?", "מה אם אין מישהו בבית?"]
+    "example_questions": [
+      "מה לקחת לתיאום משלוח?",
+      "איזה פרטים צריך למשלוח?",
+      "מה אם אין מישהו בבית?"
+    ]
   },
   {
-    "title": "Don't Promise Specific Times",
+    "title": "",
     "titleHe": "לא להבטיח שעות ספציפיות",
-    "content": "Do not commit to specific delivery times",
+    "content": "",
     "contentHe": "בבקשה אל תבטיחו שעה ספציפית למשלוח ולא שלא נתקשר לתאם. למי שממש חייב שעה ספציפית אפשר להציע שנוציא מונית, זה עולה בדרך כלל כפול מהתעריף שלנו.",
     "type": "repeated_answer",
     "frequency": 6,
-    "example_questions": ["אפשר להבטיח שעה?", "מה אם הלקוח רוצה שעה מדויקת?", "אפשר משלוח ב10 בבוקר?"]
+    "example_questions": [
+      "אפשר להבטיח שעה?",
+      "מה אם הלקוח רוצה שעה מדויקת?",
+      "אפשר משלוח ב10 בבוקר?"
+    ]
   },
   {
-    "title": "Loyalty Points Registration",
+    "title": "",
     "titleHe": "רישום נקודות מועדון",
-    "content": "How to register loyalty points",
+    "content": "",
     "contentHe": "כשיש באימייל אימייל מוויקס עם פרטי לקוח שהצטרף למועדון אז בבקשה תרשמו אותו. בדרך כלל זה מישהו שישר אחר עשה הזמנה אז צריך אחרי שרושמים ישר לשלוח אימייל לווליוקארד עם הטלפון שלו ובקשה לצבור לו נקודות על סכום x.",
     "type": "repeated_answer",
     "frequency": 5,
-    "example_questions": ["איך רושמים נקודות?", "מה עושים עם לקוח חדש מהאתר?", "איך מצברים נקודות ללקוח?"]
+    "example_questions": [
+      "איך רושמים נקודות?",
+      "מה עושים עם לקוח חדש מהאתר?",
+      "איך מצברים נקודות ללקוח?"
+    ]
   },
   {
-    "title": "Chocolate Storage Instructions",
+    "title": "",
     "titleHe": "אחסון שוקולד מהמטבח",
-    "content": "How to store chocolate from kitchen",
+    "content": "",
     "contentHe": "מה שעל השולחן זה לשימוש. מה שעל הפריזר זה למקרר בערמות של 4-5 מנויילנות. כשמגיעים ארגזי קרטון מהמטבח אם אין אפשרות להדביק אותם בארבע חמש שעות הראשונות - נסו להעביר אותן לארגזי פלסטיק שלנו.",
     "type": "document",
     "frequency": 4,
-    "example_questions": ["איפה לשים שוקולד שהגיע?", "איך מאחסנים פרלינים?", "מה עושים עם ארגזים מהמטבח?"]
+    "example_questions": [
+      "איפה לשים שוקולד שהגיע?",
+      "איך מאחסנים פרלינים?",
+      "מה עושים עם ארגזים מהמטבח?"
+    ]
   },
   {
-    "title": "Filling Empty Shelves",
+    "title": "",
     "titleHe": "מילוי מדפים ריקים",
-    "content": "What to do with empty shelf spots",
+    "content": "",
     "contentHe": "עד שמגיעות לאריזות חדשות - אם אין במה למלא טורים מסויימים במדפים בבקשה שימו טור של קופסאות רביעיות. שלא יהיה ריק.",
     "type": "document",
     "frequency": 2,
-    "example_questions": ["מה לעשות אם אין מלאי?", "איך ממלאים מדפים ריקים?", "מה שמים כשחסר מוצר?"]
+    "example_questions": [
+      "מה לעשות אם אין מלאי?",
+      "איך ממלאים מדפים ריקים?",
+      "מה שמים כשחסר מוצר?"
+    ]
   },
   {
-    "title": "Holiday Delivery Deadline",
+    "title": "",
     "titleHe": "מועד אחרון למשלוחים לפני חג",
-    "content": "Last day for holiday deliveries",
+    "content": "",
     "contentHe": "המועד האחרון להזמנת משלוחים רחוקים זה יום שני לפני החג. לאחר מועד זה אנחנו לא יכולים להבטיח הגעה לפני ערב החג וצפויות תקלות של חברת המשלוחים. אם מישהו עדיין רוצה להזמין אחרי שזה הוסבר לו - לשלוח לו אימייל בנושא ושיאשר.",
     "type": "document",
     "frequency": 3,
-    "example_questions": ["עד מתי אפשר להזמין לפני ראש השנה?", "מה המועד האחרון למשלוח?", "אפשר משלוח לערב החג?"]
+    "example_questions": [
+      "עד מתי אפשר להזמין לפני ראש השנה?",
+      "מה המועד האחרון למשלוח?",
+      "אפשר משלוח לערב החג?"
+    ]
   },
   {
-    "title": "Invoice Receipt Instructions",
+    "title": "",
     "titleHe": "חשבונית על שם החנות",
-    "content": "Always get invoice in store name",
+    "content": "",
     "contentHe": "רק תזכרו לקחת חשבונית על שם ג׳וליקה שוקולד.",
     "type": "document",
     "frequency": 3,
-    "example_questions": ["על איזה שם לקחת חשבונית?", "צריך קבלה?", "מה השם לחשבונית?"]
+    "example_questions": [
+      "על איזה שם לקחת חשבונית?",
+      "צריך קבלה?",
+      "מה השם לחשבונית?"
+    ]
   },
   {
-    "title": "Billing Items in Register",
+    "title": "",
     "titleHe": "פריטים בקופה",
-    "content": "Different items have different prices",
+    "content": "",
     "contentHe": "שימו לב יש בקופה פריט שנקרא קומותיים קטן ויש קומותיים גרנד. השני עולה כפול מהראשון.",
     "type": "document",
     "frequency": 2,
-    "example_questions": ["מה ההבדל בין קומותיים?", "כמה עולה קומותיים?", "מה לחייב על מגדל?"]
+    "example_questions": [
+      "מה ההבדל בין קומותיים?",
+      "כמה עולה קומותיים?",
+      "מה לחייב על מגדל?"
+    ]
   },
   {
-    "title": "Daily Preparation Quantities",
+    "title": "",
     "titleHe": "כמויות להכנה יומית",
-    "content": "Standard quantities to prepare",
+    "content": "",
     "contentHe": "לקראת שישי בבקשה תכינו: 20 גרנד, 20 ג׳וליקה, 10 תשיעיות, 7 חמישיות טראפלס.",
     "type": "document",
     "frequency": 6,
-    "example_questions": ["כמה גרנדים להכין?", "מה הכמויות ליום שישי?", "כמה קופסאות צריך?"]
+    "example_questions": [
+      "כמה גרנדים להכין?",
+      "מה הכמויות ליום שישי?",
+      "כמה קופסאות צריך?"
+    ]
   },
   {
-    "title": "Allergen: Marzipan Contains Hazelnuts",
+    "title": "",
     "titleHe": "אלרגן: מרציפן מכיל לוז",
-    "content": "Marzipan pralines contain tree nuts",
+    "content": "",
     "contentHe": "מרציפן הדרים מכיל לוז. יש לציין זאת ללקוחות עם אלרגיה לאגוזי עץ.",
     "type": "document",
     "frequency": 8,
-    "example_questions": ["מה מכיל אגוזים?", "יש לוז במרציפן?", "מה האלרגנים?"]
+    "example_questions": [
+      "מה מכיל אגוזים?",
+      "יש לוז במרציפן?",
+      "מה האלרגנים?"
+    ]
   },
   {
-    "title": "Alcohol Content",
+    "title": "",
     "titleHe": "מוצרים עם אלכוהול",
-    "content": "Products containing alcohol",
+    "content": "",
     "contentHe": "מוצרים עם אלכוהול: וודקה פטל, קוניאק, תפוז קוונטרו. יש לציין ללקוחות הרגישים לאלכוהול.",
     "type": "document",
     "frequency": 6,
-    "example_questions": ["מה מכיל אלכוהול?", "יש פרלינים בלי אלכוהול?", "וודקה פטל זה עם אלכוהול?"]
+    "example_questions": [
+      "מה מכיל אלכוהול?",
+      "יש פרלינים בלי אלכוהול?",
+      "וודקה פטל זה עם אלכוהול?"
+    ]
   },
   {
-    "title": "Phone Orders vs Website",
+    "title": "",
     "titleHe": "הזמנות טלפוניות מול אתר",
-    "content": "Prefer phone orders to reduce abandonment",
+    "content": "",
     "contentHe": "כשאין עומס ומתקשרים עדיף לשאול: יש לך אפשרות להזמין ישירות באתר או רוצה לעשות הזמנה איתי? וכן לקחת זריז הזמנה. כי אני לא רוצה מצב שאנשים נמנעים מהזמנה. יותר מ70% מהאנשים שמילאו עגלה באתר זונחים אותה ולא משלימים קניה.",
     "type": "repeated_answer",
     "frequency": 5,
-    "example_questions": ["לכוון לקוחות לאתר?", "מה עדיף הזמנה באתר או בטלפון?", "למה לקחת הזמנה ולא לשלוח לאתר?"]
+    "example_questions": [
+      "לכוון לקוחות לאתר?",
+      "מה עדיף הזמנה באתר או בטלפון?",
+      "למה לקחת הזמנה ולא לשלוח לאתר?"
+    ]
   },
   {
-    "title": "Dealing with Flavor Shortage",
+    "title": "",
     "titleHe": "התמודדות עם מחסור בטעמים",
-    "content": "How to handle missing flavors",
+    "content": "",
     "contentHe": "לא לעשות עניין מהנושא של מחסור בטעמים. קלילות!",
     "type": "document",
     "frequency": 3,
-    "example_questions": ["מה לעשות אם אין טעם?", "איך להגיד שחסר משהו?", "מה אם לקוח רוצה טעם שאין?"]
+    "example_questions": [
+      "מה לעשות אם אין טעם?",
+      "איך להגיד שחסר משהו?",
+      "מה אם לקוח רוצה טעם שאין?"
+    ]
   },
   {
-    "title": "WiFi Troubleshooting",
+    "title": "",
     "titleHe": "בעיות אינטרנט",
-    "content": "How to fix WiFi issues",
+    "content": "",
     "contentHe": "תלכי שניה לsettings של האייפד ותראי לאיזה רשת מחובר. תנסי לנתק ולחבר מחדש.",
     "type": "document",
     "frequency": 2,
-    "example_questions": ["האינטרנט לא עובד", "מה לעשות אם אין רשת?", "איך מתקנים את הוויפי?"]
+    "example_questions": [
+      "האינטרנט לא עובד",
+      "מה לעשות אם אין רשת?",
+      "איך מתקנים את הוויפי?"
+    ]
   },
   {
-    "title": "Customer at Door Protocol",
+    "title": "",
     "titleHe": "טיפול בלקוח בדלת",
-    "content": "How to handle walk-in customers",
+    "content": "",
     "contentHe": "לגשת לדלת עם טלפון נייר ועט וישר לרשום את הטלפון כדי לנסות לעשות שיחה רגועה בטלפון ולא דרך הדלת. יותר נעים לכולם.",
     "type": "repeated_answer",
     "frequency": 4,
-    "example_questions": ["איך מטפלים בלקוח שמגיע?", "מה לעשות כשמישהו בדלת?", "איך לקחת הזמנה בדלת?"]
+    "example_questions": [
+      "איך מטפלים בלקוח שמגיע?",
+      "מה לעשות כשמישהו בדלת?",
+      "איך לקחת הזמנה בדלת?"
+    ]
   },
   {
-    "title": "Opening Store Procedure",
+    "title": "",
     "titleHe": "נוהל פתיחת חנות",
-    "content": "Daily opening checklist",
+    "content": "",
     "contentHe": "בעת פתיחת החנות: לפתוח את האפליקציות, לבדוק הודעות בווטסאפ, לעשות עקוב אחרי בממתינה לנייד של החנות, לבדוק מלאי ולהכין קופסאות לפי הצורך.",
     "type": "procedure",
     "frequency": 5,
-    "example_questions": ["מה עושים בפתיחה?", "איך פותחים את החנות?", "מה הסדר בבוקר?"]
+    "example_questions": [
+      "מה עושים בפתיחה?",
+      "איך פותחים את החנות?",
+      "מה הסדר בבוקר?"
+    ]
   },
   {
-    "title": "Closing Store Procedure",
+    "title": "",
     "titleHe": "נוהל סגירת חנות",
-    "content": "Daily closing checklist",
+    "content": "",
     "contentHe": "לפני שהולכים: לעדכן מה נשאר למחר בבוקר, להשאיר את המקרר פנוי, להוציא קופסאות לבנות מכל טעם למקרר, לעשות ביטול עקוב אחרי ולהחזיר לשלי אם יש צורך.",
     "type": "procedure",
     "frequency": 4,
-    "example_questions": ["מה עושים לפני סגירה?", "איך סוגרים את החנות?", "מה צריך לעשות בסוף היום?"]
+    "example_questions": [
+      "מה עושים לפני סגירה?",
+      "איך סוגרים את החנות?",
+      "מה צריך לעשות בסוף היום?"
+    ]
   },
   {
-    "title": "Credit Error Fix",
+    "title": "",
     "titleHe": "תיקון טעות חיוב",
-    "content": "How to fix billing errors",
+    "content": "",
     "contentHe": "אם היתה טעות בחיוב - לרשום ביומן שצריך להתקשר ללקוח ולזכות אותו. לכתוב את המספר טלפון והסכום. חשוב לטפל בזה ביום למחרת.",
     "type": "document",
     "frequency": 3,
-    "example_questions": ["מה עושים אם טעיתי בחיוב?", "איך מזכים לקוח?", "טעיתי בסכום מה לעשות?"]
+    "example_questions": [
+      "מה עושים אם טעיתי בחיוב?",
+      "איך מזכים לקוח?",
+      "טעיתי בסכום מה לעשות?"
+    ]
   },
   {
-    "title": "Store Mobile Phone",
+    "title": "",
     "titleHe": "סלולרי החנות",
-    "content": "Store mobile phone details",
+    "content": "",
     "contentHe": "הסלולרי של החנות: 0585333675. להתקשר ללקוחות מהסלולרי ולהגיד להם לשמור אותו. הבטריה די גמורה - הוא צריך להיות על הזמן בטעינה.",
     "type": "document",
     "frequency": 3,
-    "example_questions": ["מה מספר הסלולרי של החנות?", "איזה טלפון לתת ללקוחות?", "איפה הטלפון הנייד?"]
+    "example_questions": [
+      "מה מספר הסלולרי של החנות?",
+      "איזה טלפון לתת ללקוחות?",
+      "איפה הטלפון הנייד?"
+    ]
   },
   {
-    "title": "Available Flavors Today",
+    "title": "",
     "titleHe": "טעמים זמינים",
-    "content": "Current praline flavors by chocolate type",
+    "content": "",
     "contentHe": "שוקולד לבן: וודקה פטל, פיסטוק, וניל. שוקולד חלב: קרמל מלח ים, קפוצינו, חלב חלב. שוקולד מריר: דובדבן, בלסמי תות שדה, ארל גרי, פירות יער, תפוז קוונטרו, טראפלס, קרמל מלח ים, מרציפן הדרים.",
     "type": "document",
     "frequency": 7,
-    "example_questions": ["מה הטעמים היום?", "יש וודקה פטל?", "איזה טעמים יש בשוקולד מריר?"]
+    "example_questions": [
+      "מה הטעמים היום?",
+      "יש וודקה פטל?",
+      "איזה טעמים יש בשוקולד מריר?"
+    ]
   },
   {
-    "title": "Greeting Card Writing",
+    "title": "",
     "titleHe": "כתיבת כרטיסי ברכה",
-    "content": "When to write greeting cards",
+    "content": "",
     "contentHe": "הכרטיסים כבר בפנים אם הלקוחה כתבה. לא צריך לרשום כרטיסי ברכה אם הלקוח כבר מילא באתר.",
     "type": "document",
     "frequency": 2,
-    "example_questions": ["צריך לרשום כרטיס ברכה?", "איפה הברכות?", "הלקוח רוצה ברכה מה עושים?"]
+    "example_questions": [
+      "צריך לרשום כרטיס ברכה?",
+      "איפה הברכות?",
+      "הלקוח רוצה ברכה מה עושים?"
+    ]
   },
   {
-    "title": "Premium Box Cutting",
+    "title": "",
     "titleHe": "חיתוך קופסת פרימיום",
-    "content": "How to cut premium box base",
+    "content": "",
     "contentHe": "בפרימיום בבקשה להשתמש בגיליוטינה כדי לחתוך את הבסיס (לחתוך את כל הצדדים) ומהקומה השניה לחתוך רק 2 ממ.",
     "type": "document",
     "frequency": 2,
-    "example_questions": ["איך חותכים פרימיום?", "מה עושים עם הבסיס?", "צריך לחתוך את הקופסה?"]
+    "example_questions": [
+      "איך חותכים פרימיום?",
+      "מה עושים עם הבסיס?",
+      "צריך לחתוך את הקופסה?"
+    ]
   }
 ]
