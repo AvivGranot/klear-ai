@@ -60,6 +60,13 @@ const getHebrewTopic = (topic: string): string => {
   return TOPIC_HEBREW[topic] || topic
 }
 
+// Scale frequency to reflect actual 28 Q&A pairs in last 12 months
+// Original data has ~143 total frequency, scaling to 28
+const FREQUENCY_SCALE = 0.196
+const scaleFrequency = (freq: number): number => {
+  return Math.max(1, Math.round(freq * FREQUENCY_SCALE))
+}
+
 // Get related topics based on current topic
 const getRelatedTopics = (currentTopic: string): string[] => {
   const topicRelations: Record<string, string[]> = {
@@ -467,7 +474,7 @@ function AutomationEditScreen({
               <p className="text-sm font-medium text-gray-900">{managerName}</p>
               <div className="flex items-center gap-2">
                 <Badge variant="outline" className="text-xs">{getHebrewTopic(pattern.topic)}</Badge>
-                <Badge className="text-xs bg-amber-500 text-white">{pattern.frequency}×</Badge>
+                <Badge className="text-xs bg-amber-500 text-white">{scaleFrequency(pattern.frequency)}×</Badge>
               </div>
             </div>
           </div>
@@ -698,10 +705,16 @@ export default function KnowledgePage() {
           <Card className="border border-gray-200 bg-white h-full">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg font-medium flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-amber-500" />
-                  תבניות אוטומציה
-                </CardTitle>
+                <div>
+                  <CardTitle className="text-lg font-medium flex items-center gap-2">
+                    <Zap className="w-5 h-5 text-amber-500" />
+                    תבניות אוטומציה
+                  </CardTitle>
+                  <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                    <Calendar className="w-3 h-3" />
+                    28 שאילתות ב-12 החודשים האחרונים
+                  </p>
+                </div>
                 <div className="flex items-center gap-2">
                   <Badge variant="outline" className="text-xs bg-amber-50 text-amber-600 border-amber-200">
                     {patternCounts.pending} ממתינות
@@ -778,7 +791,7 @@ export default function KnowledgePage() {
                                 <button
                                   onClick={() => setViewingQuestions({
                                     questions: savedData?.editedQuestions || pattern.exampleQuestions,
-                                    frequency: pattern.frequency,
+                                    frequency: scaleFrequency(pattern.frequency),
                                     topic: pattern.topic
                                   })}
                                   className={cn(
@@ -788,7 +801,7 @@ export default function KnowledgePage() {
                                     patternStatus === "rejected" && "bg-gray-100 text-gray-500"
                                   )}
                                 >
-                                  {pattern.frequency}×
+                                  {scaleFrequency(pattern.frequency)}×
                                 </button>
                               </div>
                               <div className={cn(
@@ -819,13 +832,13 @@ export default function KnowledgePage() {
                               <button
                                 onClick={() => setViewingQuestions({
                                   questions: savedData?.editedQuestions || pattern.exampleQuestions,
-                                  frequency: pattern.frequency,
+                                  frequency: scaleFrequency(pattern.frequency),
                                   topic: pattern.topic
                                 })}
                                 className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
                               >
                                 <MessageSquare className="w-3 h-3" />
-                                {pattern.frequency} שאילתות ({(savedData?.editedQuestions || pattern.exampleQuestions).length} דוגמאות)
+                                {scaleFrequency(pattern.frequency)} שאילתות ({(savedData?.editedQuestions || pattern.exampleQuestions).length} דוגמאות)
                               </button>
 
                               {/* Action Buttons - Subtle */}
