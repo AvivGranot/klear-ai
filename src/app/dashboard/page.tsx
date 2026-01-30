@@ -116,13 +116,20 @@ function InteractiveChart({ data }: { data: ChartDataPoint[] }) {
 
   // Total is the last cumulative value (total messages to date)
   const totalMessages = data.length > 0 ? data[data.length - 1].cumulativeValue : 0
-  // Daily messages for the hovered/selected point
-  const dailyValue = activeIndex !== null ? data[activeIndex]?.dailyValue : data[data.length - 1]?.dailyValue ?? 0
-  const currentDate = activeIndex !== null ? data[activeIndex]?.fullDate : data[data.length - 1]?.fullDate ?? ''
 
-  // Calculate percentage change from start of period
-  const startValue = data.length > 0 ? (data[0].cumulativeValue - data[0].dailyValue) : 0
-  const percentChange = startValue > 0 ? Math.round(((totalMessages - startValue) / startValue) * 100) : 100
+  // Get the display index - prioritize selected, then active, then last
+  const displayIndex = selectedIndex !== null ? selectedIndex : (activeIndex !== null ? activeIndex : data.length - 1)
+
+  // Daily messages for the displayed point
+  const dailyValue = data[displayIndex]?.dailyValue ?? 0
+  const currentDate = data[displayIndex]?.fullDate ?? ''
+  const currentCumulative = data[displayIndex]?.cumulativeValue ?? 0
+
+  // Calculate percentage change - compare current point's cumulative to the first point
+  const firstCumulative = data.length > 0 ? data[0].cumulativeValue : 0
+  const percentChange = firstCumulative > 0
+    ? Math.round(((currentCumulative - firstCumulative) / firstCumulative) * 100)
+    : (displayIndex > 0 ? 100 : 0)
 
   const chartColor = '#22C55E'
   const maxValue = Math.max(...data.map(d => d.cumulativeValue), 1)
@@ -138,6 +145,7 @@ function InteractiveChart({ data }: { data: ChartDataPoint[] }) {
   }, [data.length])
 
   const handleMouseLeave = useCallback(() => {
+    // Only reset if nothing is selected
     if (selectedIndex === null) {
       setActiveIndex(null)
     }
@@ -170,19 +178,28 @@ function InteractiveChart({ data }: { data: ChartDataPoint[] }) {
       {/* Header */}
       <div className="flex items-start justify-between mb-2">
         <div>
-          {/* Left side - Daily messages indicator */}
-          <div className="flex items-baseline gap-2">
-            <p className="text-4xl font-bold text-gray-900 tabular-nums">{dailyValue}</p>
-            <span className="text-sm text-emerald-600 font-medium flex items-center gap-1">
-              <TrendingUp className="w-4 h-4" />
-              +{percentChange}% מתחילת התקופה
-            </span>
+          {/* Left side - Dynamic daily messages indicator */}
+          <div className="flex items-baseline gap-3">
+            <p className="text-4xl font-bold text-gray-900 tabular-nums transition-all duration-150">{dailyValue}</p>
+            {percentChange !== 0 && (
+              <span className={`text-sm font-medium flex items-center gap-1 ${percentChange >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
+                {percentChange >= 0 ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
+                {percentChange >= 0 ? '+' : ''}{percentChange}%
+              </span>
+            )}
           </div>
-          <p className="text-sm text-gray-500 mt-1">שיחות ביום זה</p>
+          <p className="text-sm text-gray-500 mt-1">
+            שיחות ביום • סה״כ: <span className="font-semibold text-gray-700">{currentCumulative}</span>
+          </p>
         </div>
         <div className="text-left">
           <h2 className="text-lg font-semibold text-gray-900">שיחות לאורך זמן</h2>
-          <p className="text-sm text-gray-500 mt-0.5">{currentDate}</p>
+          <p className="text-sm text-gray-500 mt-0.5 transition-all duration-150">{currentDate}</p>
+          {(activeIndex !== null || selectedIndex !== null) && (
+            <p className="text-xs text-emerald-600 mt-1">
+              {selectedIndex !== null ? '📌 נבחר' : '👆 מעביר עכבר'}
+            </p>
+          )}
         </div>
       </div>
 
