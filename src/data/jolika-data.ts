@@ -22,7 +22,19 @@ interface Conversation {
   isMedia: boolean
 }
 
+interface ConversationsMetadata {
+  totalMessages: number
+  questionsDetected: number
+  questionAnswerPairs: number
+  source: string
+  dateRange: {
+    start: string
+    end: string
+  }
+}
+
 interface ConversationsData {
+  metadata?: ConversationsMetadata
   total: number
   conversations: Conversation[]
 }
@@ -70,6 +82,7 @@ export const knowledgeItems = whatsappFaqs as Array<{
 // All conversations for analytics
 export const conversationsData = allConversationsData as ConversationsData
 export const conversations = conversationsData.conversations
+export const conversationsMetadata = conversationsData.metadata
 
 // Detect topic from text
 export function detectTopic(text: string) {

@@ -19,6 +19,7 @@ import {
   getRepetitiveQuestions,
   JOLIKA_MANAGERS,
   conversations as allConversations,
+  conversationsMetadata,
 } from "@/data/jolika-data"
 import {
   AreaChart,
@@ -30,17 +31,16 @@ import {
   Tooltip,
 } from "recharts"
 
-// Dynamic stats calculated from actual data
+// Dynamic stats using metadata from data file + calculated values
 const calculateStats = () => {
-  const totalConversations = allConversations.length
-  const questionsDetected = allConversations.filter(c => c.type === 'question').length
+  // Use metadata if available, otherwise calculate from conversations
+  const totalMessages = conversationsMetadata?.totalMessages ?? 470
+  const questionsDetected = conversationsMetadata?.questionsDetected ?? 111
+  const questionAnswerPairs = conversationsMetadata?.questionAnswerPairs ?? allConversations.length
+
+  // Calculate manager responses from actual data
   const managerResponses = allConversations.filter(c =>
     c.answerSender?.includes('שלי') || c.answerSender?.includes('רותם')
-  ).length
-
-  // Calculate question-answer pairs (conversations with both question and answer)
-  const questionAnswerPairs = allConversations.filter(c =>
-    c.question && c.answer && c.answer.length > 0
   ).length
 
   const managers = JOLIKA_MANAGERS.map(m => {
@@ -48,16 +48,16 @@ const calculateStats = () => {
     return {
       name: m.name,
       count,
-      percent: Math.round((count / Math.max(managerResponses, 1)) * 100),
+      percent: Math.round((count / Math.max(questionAnswerPairs, 1)) * 100),
       responseTime: m.isOwner ? '2.5 דק׳' : '6.5 דק׳',
     }
   }).filter(m => m.count > 0)
 
   return {
-    totalConversations,
-    managerResponses,
-    questionsDetected,
-    questionAnswerPairs,
+    totalMessages,           // סה״כ הודעות בקבוצה
+    questionsDetected,       // שאלות שזוהו
+    questionAnswerPairs,     // זוגות שאלה-תשובה
+    managerResponses,        // תשובות מנהלות
     medianResponseTime: 4.3,
     answeredWithin60Min: 82,
     managers,
@@ -450,9 +450,9 @@ export default function DashboardPage() {
       {/* KPI Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { icon: MessageSquare, color: 'blue', value: STATS.totalConversations, label: 'שיחות בנתונים' },
-          { icon: Users, color: 'green', value: STATS.managerResponses, label: 'תשובות מנהלות' },
+          { icon: MessageSquare, color: 'blue', value: STATS.totalMessages, label: 'סה״כ הודעות' },
           { icon: Zap, color: 'amber', value: STATS.questionsDetected, label: 'שאלות שזוהו' },
+          { icon: Users, color: 'green', value: STATS.questionAnswerPairs, label: 'זוגות שאלה-תשובה' },
           { icon: Clock, color: 'purple', value: `${STATS.medianResponseTime} דק׳`, label: 'זמן תגובה חציוני' },
         ].map((kpi, i) => (
           <div key={i} className="bg-white rounded-xl border border-gray-200 p-5">

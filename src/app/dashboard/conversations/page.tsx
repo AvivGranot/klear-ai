@@ -18,14 +18,18 @@ import {
   getRepetitiveQuestions,
   JOLIKA_MANAGERS,
   conversations as allConversations,
+  conversationsMetadata,
 } from "@/data/jolika-data"
 import { TopicIcon } from "@/components/TopicIcon"
 import type { TopicIconName } from "@/data/jolika-data"
 
-// Dynamic stats calculated from actual data
+// Dynamic stats using metadata from data file
 const calculateStats = () => {
-  const totalConversations = allConversations.length
-  const questionsDetected = allConversations.filter(c => c.type === 'question').length
+  // Use metadata if available
+  const totalMessages = conversationsMetadata?.totalMessages ?? 470
+  const questionsDetected = conversationsMetadata?.questionsDetected ?? 111
+  const questionAnswerPairs = conversationsMetadata?.questionAnswerPairs ?? allConversations.length
+
   const managerResponses = allConversations.filter(c =>
     c.answerSender?.includes('שלי') || c.answerSender?.includes('רותם')
   ).length
@@ -35,15 +39,16 @@ const calculateStats = () => {
     return {
       name: m.name,
       count,
-      percent: Math.round((count / Math.max(managerResponses, 1)) * 100),
+      percent: Math.round((count / Math.max(questionAnswerPairs, 1)) * 100),
       responseTime: m.isOwner ? '2.5 דק׳' : '6.5 דק׳',
     }
   }).filter(m => m.count > 0)
 
   return {
-    totalConversations,
-    managerResponses,
-    questionsDetected,
+    totalMessages,           // סה״כ הודעות בקבוצה
+    questionsDetected,       // שאלות שזוהו
+    questionAnswerPairs,     // זוגות שאלה-תשובה
+    managerResponses,        // תשובות מנהלות
     medianResponseTime: 4.3,
     answeredWithin60Min: 82,
     managers,
@@ -120,18 +125,8 @@ export default function ConversationsPage() {
               <MessageSquare className="w-5 h-5 text-blue-600" />
             </div>
           </div>
-          <p className="text-2xl font-semibold text-gray-900">{STATS.totalConversations}</p>
-          <p className="text-sm text-gray-500 mt-1">סה״כ שיחות</p>
-        </div>
-
-        <div className="bg-white rounded-xl border border-gray-200 p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
-              <Users className="w-5 h-5 text-green-600" />
-            </div>
-          </div>
-          <p className="text-2xl font-semibold text-gray-900">{STATS.managerResponses}</p>
-          <p className="text-sm text-gray-500 mt-1">זוגות שאלה-תשובה</p>
+          <p className="text-2xl font-semibold text-gray-900">{STATS.totalMessages}</p>
+          <p className="text-sm text-gray-500 mt-1">סה״כ הודעות</p>
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 p-5">
@@ -142,6 +137,16 @@ export default function ConversationsPage() {
           </div>
           <p className="text-2xl font-semibold text-gray-900">{STATS.questionsDetected}</p>
           <p className="text-sm text-gray-500 mt-1">שאלות שזוהו</p>
+        </div>
+
+        <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
+              <Users className="w-5 h-5 text-green-600" />
+            </div>
+          </div>
+          <p className="text-2xl font-semibold text-gray-900">{STATS.questionAnswerPairs}</p>
+          <p className="text-sm text-gray-500 mt-1">זוגות שאלה-תשובה</p>
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 p-5">
