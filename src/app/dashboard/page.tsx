@@ -55,12 +55,13 @@ type TimeRange = '1W' | '1M' | '3M' | '1Y'
 interface ChartDataPoint {
   date: string
   fullDate: string
-  value: number
+  dailyValue: number      // Messages on this specific day
+  cumulativeValue: number // Total messages up to this day
   timestamp: number
   messages: Array<{ question: string; sender: string; time: string; answer: string }>
 }
 
-// Get chart data with actual message details
+// Get chart data with cumulative totals
 function getChartData(): ChartDataPoint[] {
   const rawData = getConversationsByDate()
 
@@ -68,25 +69,34 @@ function getChartData(): ChartDataPoint[] {
     return []
   }
 
-  // Parse real data and include messages
-  return rawData.map(d => {
-    const [year, month, day] = d.date.split('-')
-    const dateObj = new Date(parseInt(year), parseInt(month) - 1, parseInt(day))
+  // Parse real data and calculate cumulative values
+  let cumulativeTotal = 0
+  const sortedData = rawData
+    .map(d => {
+      const [year, month, day] = d.date.split('-')
+      const dateObj = new Date(parseInt(year), parseInt(month) - 1, parseInt(day))
+      return { ...d, timestamp: dateObj.getTime(), year, month, day, dateObj }
+    })
+    .sort((a, b) => a.timestamp - b.timestamp)
 
+  return sortedData.map(d => {
     // Get actual messages for this date (format: DD/MM/YYYY)
-    const dateStr = `${day}/${month}/${year}`
+    const dateStr = `${d.day}/${d.month}/${d.year}`
     const messagesOnDay = allConversations.filter(c => c.date === dateStr)
+
+    cumulativeTotal += d.count
 
     return {
       date: d.displayDate,
-      fullDate: dateObj.toLocaleDateString('he-IL', {
+      fullDate: d.dateObj.toLocaleDateString('he-IL', {
         weekday: 'long',
         day: 'numeric',
         month: 'long',
         year: 'numeric'
       }),
-      value: d.count,
-      timestamp: dateObj.getTime(),
+      dailyValue: d.count,
+      cumulativeValue: cumulativeTotal,
+      timestamp: d.timestamp,
       messages: messagesOnDay.map(m => ({
         question: m.question || '',
         sender: m.questionSender?.replace(/[^\u0590-\u05FF\s]/g, '').trim() || 'לא ידוע',
@@ -94,7 +104,7 @@ function getChartData(): ChartDataPoint[] {
         answer: m.answer?.slice(0, 100) || '',
       })),
     }
-  }).sort((a, b) => a.timestamp - b.timestamp)
+  })
 }
 
 // Google Finance style interactive chart with click-to-view details
@@ -104,12 +114,18 @@ function InteractiveChart({ data }: { data: ChartDataPoint[] }) {
   const [isDragging, setIsDragging] = useState(false)
   const chartRef = useRef<HTMLDivElement>(null)
 
-  const totalInPeriod = useMemo(() => data.reduce((sum, d) => sum + d.value, 0), [data])
-  const currentValue = activeIndex !== null ? data[activeIndex]?.value : data[data.length - 1]?.value ?? 0
+  // Total is the last cumulative value (total messages to date)
+  const totalMessages = data.length > 0 ? data[data.length - 1].cumulativeValue : 0
+  // Daily messages for the hovered/selected point
+  const dailyValue = activeIndex !== null ? data[activeIndex]?.dailyValue : data[data.length - 1]?.dailyValue ?? 0
   const currentDate = activeIndex !== null ? data[activeIndex]?.fullDate : data[data.length - 1]?.fullDate ?? ''
 
+  // Calculate percentage change from start of period
+  const startValue = data.length > 0 ? (data[0].cumulativeValue - data[0].dailyValue) : 0
+  const percentChange = startValue > 0 ? Math.round(((totalMessages - startValue) / startValue) * 100) : 100
+
   const chartColor = '#22C55E'
-  const maxValue = Math.max(...data.map(d => d.value), 1)
+  const maxValue = Math.max(...data.map(d => d.cumulativeValue), 1)
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!chartRef.current || data.length === 0) return
@@ -154,12 +170,19 @@ function InteractiveChart({ data }: { data: ChartDataPoint[] }) {
       {/* Header */}
       <div className="flex items-start justify-between mb-2">
         <div>
-          <h2 className="text-lg font-semibold text-gray-900">שיחות לאורך זמן</h2>
-          <p className="text-sm text-gray-500 mt-0.5">{currentDate}</p>
+          {/* Left side - Daily messages indicator */}
+          <div className="flex items-baseline gap-2">
+            <p className="text-4xl font-bold text-gray-900 tabular-nums">{dailyValue}</p>
+            <span className="text-sm text-emerald-600 font-medium flex items-center gap-1">
+              <TrendingUp className="w-4 h-4" />
+              +{percentChange}% מתחילת התקופה
+            </span>
+          </div>
+          <p className="text-sm text-gray-500 mt-1">שיחות ביום זה</p>
         </div>
         <div className="text-left">
-          <p className="text-3xl font-bold text-gray-900 tabular-nums">{totalInPeriod}</p>
-          <p className="text-xs text-gray-500 mt-1">סה״כ שיחות בתקופה</p>
+          <h2 className="text-lg font-semibold text-gray-900">שיחות לאורך זמן</h2>
+          <p className="text-sm text-gray-500 mt-0.5">{currentDate}</p>
         </div>
       </div>
 
@@ -221,7 +244,7 @@ function InteractiveChart({ data }: { data: ChartDataPoint[] }) {
             )}
             <Area
               type="monotone"
-              dataKey="value"
+              dataKey="cumulativeValue"
               stroke={chartColor}
               strokeWidth={2.5}
               fill="url(#chartGradient)"
@@ -248,30 +271,44 @@ function InteractiveChart({ data }: { data: ChartDataPoint[] }) {
               className="absolute pointer-events-none transform -translate-x-1/2 -translate-y-1/2 transition-all duration-150"
               style={{
                 left: activeX,
-                top: `${20 + ((maxValue * 1.2 - data[activeIndex].value) / (maxValue * 1.2)) * (300 - 50)}px`,
+                top: `${20 + ((maxValue * 1.2 - data[activeIndex].cumulativeValue) / (maxValue * 1.2)) * (300 - 50)}px`,
                 width: '18px',
                 height: '18px',
-                backgroundColor: '#fff',
+                backgroundColor: '#ffffff',
                 borderRadius: '50%',
                 border: `3px solid ${chartColor}`,
                 boxShadow: `0 0 0 6px ${chartColor}20, 0 4px 12px rgba(0,0,0,0.15)`,
               }}
             />
-            {/* Hover Tooltip - Airbnb style: clean white with shadow */}
+            {/* Hover Tooltip - PURE WHITE with shadow */}
             <div
-              className="absolute bg-white text-gray-900 px-4 py-3 rounded-2xl pointer-events-none transform -translate-x-1/2 whitespace-nowrap z-10 shadow-xl border border-gray-100"
+              className="absolute px-4 py-3 rounded-2xl pointer-events-none transform -translate-x-1/2 whitespace-nowrap z-50"
               style={{
                 left: activeX,
                 top: '-20px',
-                boxShadow: '0 8px 30px rgba(0,0,0,0.12), 0 4px 10px rgba(0,0,0,0.06)'
+                backgroundColor: '#ffffff',
+                color: '#111827',
+                boxShadow: '0 8px 30px rgba(0,0,0,0.12), 0 4px 10px rgba(0,0,0,0.06)',
+                border: '1px solid #f3f4f6',
               }}
             >
-              <div className="text-2xl font-bold text-gray-900">{data[activeIndex].value}</div>
-              <div className="text-sm text-gray-500 font-medium">שיחות</div>
-              <div className="text-[10px] text-emerald-600 mt-1 font-medium">לחץ לפרטים →</div>
+              <div style={{ fontSize: '24px', fontWeight: 700, color: '#111827' }}>{data[activeIndex].dailyValue}</div>
+              <div style={{ fontSize: '14px', color: '#6b7280', fontWeight: 500 }}>שיחות ביום</div>
+              <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '4px' }}>סה״כ: {data[activeIndex].cumulativeValue}</div>
+              <div style={{ fontSize: '10px', color: '#10b981', marginTop: '4px', fontWeight: 500 }}>לחץ לפרטים →</div>
               {/* Arrow pointing down */}
               <div
-                className="absolute left-1/2 -translate-x-1/2 -bottom-2 w-4 h-4 bg-white rotate-45 border-r border-b border-gray-100"
+                style={{
+                  position: 'absolute',
+                  left: '50%',
+                  transform: 'translateX(-50%) rotate(45deg)',
+                  bottom: '-8px',
+                  width: '16px',
+                  height: '16px',
+                  backgroundColor: '#ffffff',
+                  borderRight: '1px solid #f3f4f6',
+                  borderBottom: '1px solid #f3f4f6',
+                }}
               />
             </div>
           </>
@@ -289,10 +326,10 @@ function InteractiveChart({ data }: { data: ChartDataPoint[] }) {
             <div>
               <div className="flex items-center gap-3 mb-1">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
-                  <span className="text-white text-xl font-bold">{data[selectedIndex].value}</span>
+                  <span className="text-white text-xl font-bold">{data[selectedIndex].dailyValue}</span>
                 </div>
                 <div>
-                  <p className="text-xl font-bold text-gray-900">שיחות</p>
+                  <p className="text-xl font-bold text-gray-900">שיחות ביום</p>
                   <p className="text-sm text-gray-500">{data[selectedIndex].fullDate}</p>
                 </div>
               </div>
