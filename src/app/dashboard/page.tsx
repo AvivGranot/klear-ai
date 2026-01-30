@@ -2,12 +2,20 @@
 
 import { useState, useCallback, useMemo } from "react"
 import Link from "next/link"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ExternalLink, TrendingUp, TrendingDown } from "lucide-react"
+import {
+  MessageSquare,
+  Users,
+  Clock,
+  TrendingUp,
+  ArrowUpRight,
+  Zap,
+  BookOpen,
+} from "lucide-react"
 import {
   company,
   getConversationsByDate,
+  getRepetitiveQuestions,
+  JOLIKA_MANAGERS,
 } from "@/data/jolika-data"
 import {
   AreaChart,
@@ -17,43 +25,42 @@ import {
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
-  ReferenceLine,
 } from "recharts"
 
-// Google Finance style time ranges (up to 1Y)
-type TimeRange = '1D' | '5D' | '1M' | '6M' | '1Y'
+// Real data from last 12 months analysis
+const STATS = {
+  totalConversations: 470,
+  managerResponses: 28,
+  questionsDetected: 111,
+  medianResponseTime: 4.3,
+  answeredWithin60Min: 82,
+  managers: [
+    { name: 'שלי גולדנברג', count: 15, percent: 54, responseTime: '2.5 דק׳' },
+    { name: 'רותם פרחי', count: 11, percent: 39, responseTime: '6.5 דק׳' },
+    { name: 'שלי בן מויאל', count: 2, percent: 7, responseTime: '0.2 דק׳' },
+  ]
+}
 
-// Get chart data based on real conversation dates
+type TimeRange = '1W' | '1M' | '3M' | '1Y'
+
 function getChartData(range: TimeRange) {
   const allData = getConversationsByDate()
+  if (allData.length === 0) return []
 
-  if (allData.length === 0) {
-    return []
-  }
-
-  // Parse dates for filtering
   const parsedData = allData.map(d => ({
     ...d,
     dateObj: new Date(d.date),
-  }))
-
-  // Sort by date ascending
-  parsedData.sort((a, b) => a.dateObj.getTime() - b.dateObj.getTime())
+  })).sort((a, b) => a.dateObj.getTime() - b.dateObj.getTime())
 
   const today = new Date()
   let filteredData = parsedData
 
-  // Filter based on range
   switch (range) {
-    case '1D':
-      // Show today's data (or last available day if no data today)
-      filteredData = parsedData.slice(-1)
-      break
-    case '5D':
-      const fiveDaysAgo = new Date(today)
-      fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5)
-      filteredData = parsedData.filter(d => d.dateObj >= fiveDaysAgo)
-      if (filteredData.length < 2) filteredData = parsedData.slice(-5)
+    case '1W':
+      const oneWeekAgo = new Date(today)
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
+      filteredData = parsedData.filter(d => d.dateObj >= oneWeekAgo)
+      if (filteredData.length < 2) filteredData = parsedData.slice(-7)
       break
     case '1M':
       const oneMonthAgo = new Date(today)
@@ -61,11 +68,11 @@ function getChartData(range: TimeRange) {
       filteredData = parsedData.filter(d => d.dateObj >= oneMonthAgo)
       if (filteredData.length < 2) filteredData = parsedData.slice(-30)
       break
-    case '6M':
-      const sixMonthsAgo = new Date(today)
-      sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6)
-      filteredData = parsedData.filter(d => d.dateObj >= sixMonthsAgo)
-      if (filteredData.length < 2) filteredData = parsedData.slice(-180)
+    case '3M':
+      const threeMonthsAgo = new Date(today)
+      threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
+      filteredData = parsedData.filter(d => d.dateObj >= threeMonthsAgo)
+      if (filteredData.length < 2) filteredData = parsedData.slice(-90)
       break
     case '1Y':
     default:
@@ -76,274 +83,153 @@ function getChartData(range: TimeRange) {
       break
   }
 
-  // If still no data, return all
-  if (filteredData.length === 0) {
-    filteredData = parsedData
-  }
+  if (filteredData.length === 0) filteredData = parsedData
 
   return filteredData.map(d => ({
     date: d.displayDate,
-    fullDate: d.dateObj.toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }),
-    conversations: d.count,
-    dateObj: d.dateObj,
+    fullDate: d.dateObj.toLocaleDateString('he-IL', { weekday: 'short', day: 'numeric', month: 'short' }),
+    value: d.count,
   }))
 }
 
-interface KPICardProps {
-  label: string
-  value: string | number
-  trend?: 'up' | 'down'
-  trendValue?: string
-}
-
-function SimpleKPICard({ label, value, trend, trendValue }: KPICardProps) {
-  return (
-    <Card className="bg-white border border-gray-200">
-      <CardContent className="p-6">
-        <p className="text-sm text-gray-500 mb-2">{label}</p>
-        <p className="text-3xl font-semibold text-gray-900">{value}</p>
-        {trend && trendValue && (
-          <div className={`flex items-center gap-1 mt-2 text-sm ${
-            trend === 'up' ? 'text-green-600' : 'text-red-600'
-          }`}>
-            {trend === 'up' ? (
-              <TrendingUp className="w-4 h-4" />
-            ) : (
-              <TrendingDown className="w-4 h-4" />
-            )}
-            <span>{trendValue}</span>
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  )
-}
-
-// Custom active dot - smaller and cleaner
-function CustomActiveDot(props: { cx?: number; cy?: number }) {
-  const { cx, cy } = props
-  if (!cx || !cy) return null
-
-  return (
-    <circle cx={cx} cy={cy} r={4} fill="#10B981" stroke="white" strokeWidth={2} />
-  )
-}
-
-// Custom cursor line - subtle gray
-function CustomCursor(props: { points?: Array<{ x: number; y: number }>; height?: number }) {
-  const { points, height } = props
-  if (!points?.length) return null
-
-  return (
-    <line
-      x1={points[0].x}
-      y1={0}
-      x2={points[0].x}
-      y2={height}
-      stroke="#9CA3AF"
-      strokeWidth={1}
-      strokeDasharray="4 4"
-      opacity={0.5}
-    />
-  )
-}
-
-// Google Finance style time range button
-function TimeRangeButton({
-  label,
-  selected,
-  onClick
-}: {
-  label: string
-  selected: boolean
-  onClick: () => void
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
-        selected
-          ? 'bg-gray-900 text-white'
-          : 'text-gray-600 hover:bg-gray-100'
-      }`}
-    >
-      {label}
-    </button>
-  )
-}
-
-// Real data from last 12 months analysis (Jan 2025 - Jan 2026)
-const REAL_STATS = {
-  totalConversations: 470,
-  managerResponses: 28,
-  questionsWithMark: 111,
-  medianResponseTime: 4.3, // minutes
-  answeredWithin60Min: 82, // percent
-  answeredWithin2Hours: 96, // percent
-  managers: {
-    'שלי גולדנברג': { count: 15, percent: 54 },
-    'רותם פרחי': { count: 11, percent: 39 },
-    'שלי בן מויאל': { count: 2, percent: 7 },
-  }
-}
-
 export default function DashboardPage() {
-  // Time range state - default to 1Y to show last year data
   const [timeRange, setTimeRange] = useState<TimeRange>('1Y')
+  const [hoveredData, setHoveredData] = useState<{ date: string; fullDate: string; value: number } | null>(null)
 
   const chartData = useMemo(() => getChartData(timeRange), [timeRange])
+  const topQuestions = useMemo(() => getRepetitiveQuestions().slice(0, 5), [])
 
-  // Calculate average for reference line
-  const averageValue = useMemo(() =>
-    chartData.length > 0
-      ? Math.round(chartData.reduce((sum, d) => sum + d.conversations, 0) / chartData.length)
-      : 0,
-    [chartData]
-  )
+  const latestValue = chartData[chartData.length - 1]?.value ?? 0
+  const firstValue = chartData[0]?.value ?? 0
+  const displayValue = hoveredData?.value ?? latestValue
+  const displayDate = hoveredData?.fullDate ?? 'סה״כ בתקופה'
 
-  // Track hovered data for live display
-  const [activeData, setActiveData] = useState<{ date: string; fullDate: string; conversations: number } | null>(null)
+  const percentChange = useMemo(() => {
+    if (chartData.length < 2 || firstValue === 0) return null
+    const change = ((latestValue - firstValue) / firstValue) * 100
+    return { value: Math.abs(change).toFixed(0), isPositive: change >= 0 }
+  }, [chartData, firstValue, latestValue])
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleMouseMove = useCallback((state: any) => {
     if (state?.activePayload?.length) {
-      setActiveData(state.activePayload[0].payload)
+      setHoveredData(state.activePayload[0].payload)
     }
   }, [])
-
-  const handleMouseLeave = useCallback(() => {
-    setActiveData(null)
-  }, [])
-
-  // Calculate stats for display
-  const firstValue = chartData[0]?.conversations ?? 0
-  const latestValue = chartData[chartData.length - 1]?.conversations ?? 0
-  const displayValue = activeData?.conversations ?? latestValue
-  const displayDate = activeData?.fullDate ?? chartData[chartData.length - 1]?.fullDate ?? ''
-
-  // Calculate percentage change (like Google Finance)
-  const percentChange = useMemo(() => {
-    if (chartData.length < 2 || firstValue === 0) return null
-    const change = ((latestValue - firstValue) / firstValue) * 100
-    return {
-      value: Math.abs(change).toFixed(1),
-      isPositive: change >= 0,
-      absoluteChange: latestValue - firstValue,
-    }
-  }, [chartData, firstValue, latestValue])
 
   return (
-    <div className="min-h-screen bg-white p-6 space-y-8">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">שלום, מנהל</h1>
-          <p className="text-sm text-gray-500 mt-1">{company.name} • 3 מנהלות פעילות</p>
+          <h1 className="text-2xl font-semibold text-gray-900">שלום, מנהל 👋</h1>
+          <p className="text-gray-500 mt-1">{company.name} • {JOLIKA_MANAGERS.length} מנהלות פעילות</p>
         </div>
-
-        <Link href={`/chat/${company.id}`} target="_blank">
-          <Button className="gap-2 bg-emerald-600 hover:bg-emerald-700 text-white">
-            פתח צ׳אט עובדים
-            <ExternalLink className="w-4 h-4" />
-          </Button>
+        <Link
+          href={`/chat/${company.id}`}
+          target="_blank"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#25D366] text-white font-medium rounded-lg hover:bg-[#128C7E] transition-colors"
+        >
+          פתח צ׳אט עובדים
+          <ArrowUpRight className="w-4 h-4" />
         </Link>
       </div>
 
-      {/* 3 KPI Cards - Real data from last 12 months */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <SimpleKPICard
-          label="סה״כ שיחות"
-          value={REAL_STATS.totalConversations}
-          trend="up"
-          trendValue="12 חודשים אחרונים"
-        />
-        <SimpleKPICard
-          label="תשובות מנהלות"
-          value={REAL_STATS.managerResponses}
-          trend="up"
-          trendValue="שלי 54% • רותם 39%"
-        />
-        <SimpleKPICard
-          label="זמן תגובה חציוני"
-          value={`${REAL_STATS.medianResponseTime} דק׳`}
-          trend="up"
-          trendValue={`${REAL_STATS.answeredWithin60Min}% תוך שעה`}
-        />
+      {/* KPI Grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+              <MessageSquare className="w-5 h-5 text-blue-600" />
+            </div>
+          </div>
+          <p className="text-2xl font-semibold text-gray-900">{STATS.totalConversations}</p>
+          <p className="text-sm text-gray-500 mt-1">שיחות השנה</p>
+        </div>
+
+        <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
+              <Users className="w-5 h-5 text-green-600" />
+            </div>
+          </div>
+          <p className="text-2xl font-semibold text-gray-900">{STATS.managerResponses}</p>
+          <p className="text-sm text-gray-500 mt-1">תשובות מנהלות</p>
+        </div>
+
+        <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center">
+              <Zap className="w-5 h-5 text-amber-600" />
+            </div>
+          </div>
+          <p className="text-2xl font-semibold text-gray-900">{STATS.questionsDetected}</p>
+          <p className="text-sm text-gray-500 mt-1">שאלות שזוהו</p>
+        </div>
+
+        <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center">
+              <Clock className="w-5 h-5 text-purple-600" />
+            </div>
+          </div>
+          <p className="text-2xl font-semibold text-gray-900">{STATS.medianResponseTime} דק׳</p>
+          <p className="text-sm text-gray-500 mt-1">זמן תגובה חציוני</p>
+        </div>
       </div>
 
-      {/* Interactive Chart - Google Finance Style */}
-      <Card className="bg-white border border-gray-200">
-        <CardHeader className="pb-0">
-          <div className="flex items-start justify-between">
+      {/* Main Content Grid */}
+      <div className="grid lg:grid-cols-3 gap-6">
+        {/* Chart - 2 columns */}
+        <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6">
+          <div className="flex items-start justify-between mb-6">
             <div>
-              <CardTitle className="text-lg font-medium text-gray-900">
-                שיחות לאורך זמן
-              </CardTitle>
-              {/* Percentage Change Display - Google Finance Style */}
+              <h2 className="text-lg font-semibold text-gray-900">שיחות לאורך זמן</h2>
               {percentChange && (
                 <div className="flex items-center gap-2 mt-1">
-                  <span className={`text-sm font-medium ${
-                    percentChange.isPositive ? 'text-green-600' : 'text-red-600'
-                  }`}>
-                    {percentChange.isPositive ? '+' : '-'}{percentChange.absoluteChange}
-                    {' '}
-                    ({percentChange.isPositive ? '+' : '-'}{percentChange.value}%)
+                  <span className={`text-sm font-medium ${percentChange.isPositive ? 'text-green-600' : 'text-red-600'}`}>
+                    {percentChange.isPositive ? '+' : '-'}{percentChange.value}%
                   </span>
                   <span className="text-xs text-gray-400">מתחילת התקופה</span>
                 </div>
               )}
             </div>
-            {/* Live value display */}
             <div className="text-left">
-              <p className="text-3xl font-bold text-gray-900 transition-all duration-150">
-                {displayValue}
-              </p>
+              <p className="text-3xl font-bold text-gray-900">{displayValue}</p>
               <p className="text-sm text-gray-500">{displayDate}</p>
             </div>
           </div>
 
-          {/* Time Range Selector - Google Finance Style */}
-          <div className="flex items-center gap-1 mt-4 bg-gray-50 rounded-lg p-1 w-fit">
-            <TimeRangeButton
-              label="1D"
-              selected={timeRange === '1D'}
-              onClick={() => setTimeRange('1D')}
-            />
-            <TimeRangeButton
-              label="5D"
-              selected={timeRange === '5D'}
-              onClick={() => setTimeRange('5D')}
-            />
-            <TimeRangeButton
-              label="1M"
-              selected={timeRange === '1M'}
-              onClick={() => setTimeRange('1M')}
-            />
-            <TimeRangeButton
-              label="6M"
-              selected={timeRange === '6M'}
-              onClick={() => setTimeRange('6M')}
-            />
-            <TimeRangeButton
-              label="1Y"
-              selected={timeRange === '1Y'}
-              onClick={() => setTimeRange('1Y')}
-            />
+          {/* Time Range Selector */}
+          <div className="flex gap-1 mb-4 bg-gray-100 rounded-lg p-1 w-fit">
+            {(['1W', '1M', '3M', '1Y'] as TimeRange[]).map(range => (
+              <button
+                key={range}
+                onClick={() => setTimeRange(range)}
+                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                  timeRange === range
+                    ? 'bg-white text-gray-900 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                {range}
+              </button>
+            ))}
           </div>
-        </CardHeader>
-        <CardContent className="pt-4">
-          <div className="h-[300px] outline-none focus:outline-none focus-visible:outline-none [&_*]:outline-none [&_*]:ring-0 [&_*]:focus:ring-0 [&_*]:focus:outline-none [&_*]:focus-visible:outline-none [&_*]:focus-visible:ring-0 [&_.recharts-wrapper]:!outline-none [&_.recharts-surface]:!outline-none" style={{ outline: 'none' }}>
+
+          {/* Chart */}
+          <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
                 data={chartData}
-                margin={{ top: 10, right: 10, left: 0, bottom: 10 }}
+                margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
                 onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
+                onMouseLeave={() => setHoveredData(null)}
               >
                 <defs>
-                  <linearGradient id="colorConversations" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.1}/>
-                    <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
+                  <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#22C55E" stopOpacity={0.15} />
+                    <stop offset="100%" stopColor="#22C55E" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
@@ -351,41 +237,132 @@ export default function DashboardPage() {
                   dataKey="date"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 11, fill: '#6B7280' }}
+                  tick={{ fontSize: 11, fill: '#9CA3AF' }}
                   interval="preserveStartEnd"
                 />
                 <YAxis
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 12, fill: '#6B7280' }}
-                  domain={['dataMin - 1', 'dataMax + 1']}
+                  tick={{ fontSize: 11, fill: '#9CA3AF' }}
+                  width={30}
                 />
-                <Tooltip
-                  content={() => null}
-                  cursor={<CustomCursor />}
-                />
+                <Tooltip content={() => null} />
                 <Area
                   type="monotone"
-                  dataKey="conversations"
-                  stroke="#10B981"
+                  dataKey="value"
+                  stroke="#22C55E"
                   strokeWidth={2}
-                  fill="url(#colorConversations)"
-                  name="שיחות"
-                  activeDot={<CustomActiveDot />}
-                  animationDuration={500}
-                />
-                <ReferenceLine
-                  y={averageValue}
-                  stroke="#9CA3AF"
-                  strokeDasharray="4 4"
-                  strokeWidth={1}
+                  fill="url(#chartGradient)"
+                  activeDot={{ r: 5, fill: '#22C55E', stroke: '#fff', strokeWidth: 2 }}
                 />
               </AreaChart>
             </ResponsiveContainer>
           </div>
+        </div>
 
-        </CardContent>
-      </Card>
+        {/* Manager Stats */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-lg font-semibold text-gray-900">מנהלות פעילות</h2>
+            <Link href="/dashboard/conversations" className="text-sm text-[#25D366] hover:underline">
+              צפה בכל
+            </Link>
+          </div>
+
+          <div className="space-y-4">
+            {STATS.managers.map((manager, i) => (
+              <div key={i} className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-sm font-medium text-gray-700">
+                  {manager.name.charAt(0)}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-gray-900 truncate">{manager.name}</p>
+                  <p className="text-sm text-gray-500">{manager.count} תשובות • {manager.responseTime}</p>
+                </div>
+                <div className="text-left">
+                  <span className="text-sm font-semibold text-gray-900">{manager.percent}%</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 pt-4 border-t border-gray-100">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-500">{STATS.answeredWithin60Min}% תוך שעה</span>
+              <span className="text-green-600 font-medium flex items-center gap-1">
+                <TrendingUp className="w-4 h-4" />
+                מהיר
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Section */}
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Top Questions */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-lg font-semibold text-gray-900">שאלות נפוצות</h2>
+            <Link href="/dashboard/knowledge" className="text-sm text-[#25D366] hover:underline flex items-center gap-1">
+              <BookOpen className="w-4 h-4" />
+              מאגר ידע
+            </Link>
+          </div>
+
+          <div className="space-y-3">
+            {topQuestions.map((q, i) => (
+              <div key={i} className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                <span className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-medium text-gray-600 flex-shrink-0">
+                  {i + 1}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-gray-900 line-clamp-2">{q.title}</p>
+                  <p className="text-xs text-gray-500 mt-1">{q.frequency} פעמים • {q.topic}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="bg-gradient-to-br from-[#25D366]/10 to-[#128C7E]/10 rounded-xl border border-[#25D366]/20 p-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">התחל עכשיו</h2>
+          <p className="text-gray-600 mb-6">
+            Klear AI לומד מהשיחות שלך ומציע תשובות אוטומטיות לשאלות נפוצות.
+          </p>
+
+          <div className="grid gap-3">
+            <Link
+              href="/dashboard/knowledge"
+              className="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:border-[#25D366] transition-colors group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-[#25D366]/10 flex items-center justify-center group-hover:bg-[#25D366]/20 transition-colors">
+                <BookOpen className="w-5 h-5 text-[#25D366]" />
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">סקור אוטומציות</p>
+                <p className="text-sm text-gray-500">אשר תבניות תשובה חדשות</p>
+              </div>
+              <ArrowUpRight className="w-5 h-5 text-gray-400 mr-auto group-hover:text-[#25D366] transition-colors" />
+            </Link>
+
+            <Link
+              href="/dashboard/conversations"
+              className="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:border-[#25D366] transition-colors group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-[#25D366]/10 flex items-center justify-center group-hover:bg-[#25D366]/20 transition-colors">
+                <MessageSquare className="w-5 h-5 text-[#25D366]" />
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">צפה בשיחות</p>
+                <p className="text-sm text-gray-500">ניתוח שאלות ותשובות</p>
+              </div>
+              <ArrowUpRight className="w-5 h-5 text-gray-400 mr-auto group-hover:text-[#25D366] transition-colors" />
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
