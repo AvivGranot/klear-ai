@@ -401,13 +401,11 @@ export default function HomePage() {
             </Link>
 
             <div className="flex items-center gap-3">
-              {companyId && (
-                <Link href={`/chat/${companyId}`}>
-                  <Button variant="ghost" className="hidden sm:flex">
-                    נסה את הצ'אט
-                  </Button>
-                </Link>
-              )}
+              <Link href="/pricing">
+                <Button variant="ghost" className="hidden sm:flex">
+                  נסה את הצ'אט
+                </Button>
+              </Link>
               <Link href="/dashboard">
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   <Button className="bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:opacity-90 shadow-lg shadow-green-500/20">
@@ -491,37 +489,29 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="flex flex-wrap gap-4 justify-center"
             >
-              {loading ? (
-                <div className="w-10 h-10 border-4 border-[#25D366] border-t-transparent rounded-full animate-spin" />
-              ) : (
-                <>
-                  {companyId && (
-                    <Link href={`/chat/${companyId}`}>
-                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                        <Button
-                          size="lg"
-                          className="gap-2 bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:opacity-90 shadow-xl shadow-green-500/30 px-8 py-6 text-lg"
-                        >
-                          <Play className="w-5 h-5" />
-                          נסה את הצ'אט עכשיו
-                        </Button>
-                      </motion.div>
-                    </Link>
-                  )}
-                  <Link href="/dashboard">
-                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                      <Button
-                        size="lg"
-                        variant="outline"
-                        className="gap-2 px-8 py-6 text-lg border-2 hover:bg-gray-50"
-                      >
-                        כניסה ללוח הבקרה
-                        <ArrowLeft className="w-5 h-5" />
-                      </Button>
-                    </motion.div>
-                  </Link>
-                </>
-              )}
+              <Link href="/pricing">
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    size="lg"
+                    className="gap-2 bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:opacity-90 shadow-xl shadow-green-500/30 px-8 py-6 text-lg"
+                  >
+                    <Play className="w-5 h-5" />
+                    נסה את הצ'אט עכשיו
+                  </Button>
+                </motion.div>
+              </Link>
+              <Link href="/dashboard">
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="gap-2 px-8 py-6 text-lg border-2 hover:bg-gray-50"
+                  >
+                    כניסה ללוח הבקרה
+                    <ArrowLeft className="w-5 h-5" />
+                  </Button>
+                </motion.div>
+              </Link>
             </motion.div>
           </motion.div>
 
@@ -889,31 +879,29 @@ export default function HomePage() {
             transition={{ delay: 0.2 }}
             className="flex flex-wrap gap-4 justify-center"
           >
-            <Link href="/dashboard">
+            <Link href="/pricing">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   size="lg"
                   className="bg-white text-[#25D366] hover:bg-gray-100 shadow-xl px-8 py-6 text-lg font-bold"
                 >
-                  כניסה ללוח הבקרה
+                  התחל עכשיו
                   <ChevronRight className="w-5 h-5 mr-2" />
                 </Button>
               </motion.div>
             </Link>
-            {companyId && (
-              <Link href={`/chat/${companyId}`}>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg bg-transparent"
-                  >
-                    <Play className="w-5 h-5 ml-2" />
-                    נסה את הצ'אט
-                  </Button>
-                </motion.div>
-              </Link>
-            )}
+            <Link href="/dashboard">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg bg-transparent"
+                >
+                  <Play className="w-5 h-5 ml-2" />
+                  כניסה ללוח הבקרה
+                </Button>
+              </motion.div>
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -937,14 +925,12 @@ export default function HomePage() {
             </p>
 
             <div className="flex gap-6">
+              <Link href="/pricing" className="hover:text-white transition-colors">
+                תמחור
+              </Link>
               <Link href="/dashboard" className="hover:text-white transition-colors">
                 לוח בקרה
               </Link>
-              {companyId && (
-                <Link href={`/chat/${companyId}`} className="hover:text-white transition-colors">
-                  צ'אט
-                </Link>
-              )}
             </div>
           </div>
         </div>
