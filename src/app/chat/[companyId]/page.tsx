@@ -1,157 +1,208 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import { useParams } from "next/navigation"
-import { ChatInterface } from "@/components/chat/ChatInterface"
+import { Send, Sparkles, RotateCcw, Copy, Check, Zap, MessageCircle } from "lucide-react"
+import { cn } from "@/lib/utils"
 
-interface Company {
+interface Message {
   id: string
-  name: string
-  logo: string | null
+  role: "user" | "assistant"
+  content: string
+  timestamp: Date
+  isTyping?: boolean
 }
 
-interface User {
-  id: string
-  name: string
-  phone: string
+const COMPANY_DATA: Record<string, { name: string; id: string }> = {
+  "jolika-chocolate": { name: "ג'וליקה שוקולד", id: "jolika-chocolate" },
+  "demo-company-001": { name: "חברת הדגמה", id: "demo-company-001" },
 }
 
-// Static company data for when database is unavailable
-const STATIC_COMPANIES: Record<string, Company> = {
-  "jolika-chocolate": {
-    id: "jolika-chocolate",
-    name: "ג'וליקה שוקולד",
-    logo: null,
-  },
-  "demo-company-001": {
-    id: "demo-company-001",
-    name: "חברת הדגמה",
-    logo: null,
-  },
-}
+const SUGGESTED_QUESTIONS = [
+  "מה שעות הפעילות של המשלוחים?",
+  "איך רושמים לקוח עסקי?",
+  "מה ההנחות ללקוחות עסקיים?",
+  "איך מכינים שוקולד לגובה?",
+]
 
-export default function ChatPage() {
+export default function EmployeeChatPage() {
   const params = useParams()
   const companyId = params.companyId as string
+  const company = COMPANY_DATA[companyId] || { name: "Klear AI", id: companyId }
 
-  const [company, setCompany] = useState<Company | null>(null)
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [messages, setMessages] = useState<Message[]>([])
+  const [input, setInput] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [copiedId, setCopiedId] = useState<string | null>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
 
-  useEffect(() => {
-    async function loadData() {
-      try {
-        // First try to use static company data
-        const staticCompany = STATIC_COMPANIES[companyId]
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [])
 
-        if (staticCompany) {
-          setCompany(staticCompany)
+  useEffect(() => { scrollToBottom() }, [messages, scrollToBottom])
+  useEffect(() => { inputRef.current?.focus() }, [])
 
-          // Create a session user (no database needed)
-          const sessionUser: User = {
-            id: `session-${Date.now()}`,
-            name: "משתמש אורח",
-            phone: `session-${Date.now()}`,
-          }
-          setUser(sessionUser)
-          setLoading(false)
-          return
-        }
+  const handleSubmit = async (e?: React.FormEvent, overrideMessage?: string) => {
+    e?.preventDefault()
+    const text = overrideMessage || input.trim()
+    if (!text || isLoading) return
 
-        // Fallback: Try API for other companies
-        const companyRes = await fetch(`/api/companies?id=${companyId}`)
-        if (!companyRes.ok) throw new Error("Company not found")
-        const companyData = await companyRes.json()
-        setCompany(companyData.company)
+    const userMessage: Message = { id: `user-${Date.now()}`, role: "user", content: text, timestamp: new Date() }
+    setMessages(prev => [...prev, userMessage])
+    setInput("")
+    setIsLoading(true)
 
-        // Get or create demo user for this session
-        const storedUserId = localStorage.getItem(`klear_user_${companyId}`)
+    const typingMessage: Message = { id: `typing-${Date.now()}`, role: "assistant", content: "", timestamp: new Date(), isTyping: true }
+    setMessages(prev => [...prev, typingMessage])
 
-        if (storedUserId) {
-          const userRes = await fetch(`/api/users?id=${storedUserId}`)
-          if (userRes.ok) {
-            const userData = await userRes.json()
-            setUser(userData.user)
-          }
-        }
-
-        if (!user) {
-          // Create a session user
-          const userRes = await fetch("/api/users", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              phone: `session-${Date.now()}`,
-              name: "משתמש אורח",
-              role: "employee",
-              companyId,
-            }),
-          })
-
-          if (userRes.ok) {
-            const userData = await userRes.json()
-            setUser(userData.user)
-            localStorage.setItem(`klear_user_${companyId}`, userData.user.id)
-          }
-        }
-      } catch (e) {
-        console.error("Error loading data:", e)
-
-        // Final fallback: use static data anyway
-        const staticCompany = STATIC_COMPANIES[companyId] || {
-          id: companyId,
-          name: "Klear AI",
-          logo: null,
-        }
-        setCompany(staticCompany)
-        setUser({
-          id: `session-${Date.now()}`,
-          name: "משתמש אורח",
-          phone: `session-${Date.now()}`,
-        })
-      } finally {
-        setLoading(false)
-      }
+    try {
+      const history = messages.slice(-10).map(m => ({ role: m.role, content: m.content }))
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text, companyId: company.id, userId: `employee-${Date.now()}`, conversationHistory: history }),
+      })
+      if (!res.ok) throw new Error("Failed")
+      const data = await res.json()
+      setMessages(prev => {
+        const filtered = prev.filter(m => !m.isTyping)
+        return [...filtered, { id: data.messageId || `assistant-${Date.now()}`, role: "assistant", content: data.response, timestamp: new Date() }]
+      })
+    } catch {
+      setMessages(prev => {
+        const filtered = prev.filter(m => !m.isTyping)
+        return [...filtered, { id: `error-${Date.now()}`, role: "assistant", content: "מצטער, אירעה שגיאה. אנא נסה שוב.", timestamp: new Date() }]
+      })
+    } finally {
+      setIsLoading(false)
     }
-
-    loadData()
-  }, [companyId])
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-[#E5DDD5]">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-[#25D366] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">טוען...</p>
-        </div>
-      </div>
-    )
   }
 
-  if (error || !company || !user) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-[#E5DDD5]">
-        <div className="bg-white rounded-lg p-8 shadow-lg text-center max-w-md">
-          <h2 className="text-xl font-bold text-red-600 mb-2">שגיאה</h2>
-          <p className="text-gray-600 mb-4">{error || "לא ניתן לטעון את הצ'אט"}</p>
-          <a
-            href="/"
-            className="inline-block bg-[#25D366] text-white px-6 py-2 rounded-full hover:bg-[#128C7E] transition-colors"
-          >
-            חזרה לדף הבית
-          </a>
-        </div>
-      </div>
-    )
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmit() }
   }
+
+  const copyToClipboard = async (text: string, id: string) => {
+    await navigator.clipboard.writeText(text)
+    setCopiedId(id)
+    setTimeout(() => setCopiedId(null), 2000)
+  }
+
+  const startNewChat = () => { setMessages([]); setInput(""); inputRef.current?.focus() }
 
   return (
-    <ChatInterface
-      companyId={company.id}
-      companyName={company.name}
-      companyLogo={company.logo}
-      userId={user.id}
-    />
+    <div className="flex flex-col h-screen bg-white" dir="rtl">
+      {/* Header */}
+      <header className="h-16 bg-gradient-to-r from-[#25D366] to-[#128C7E] flex items-center justify-between px-4 lg:px-6 shadow-lg">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+            <MessageCircle className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h1 className="text-white font-semibold">{company.name}</h1>
+            <p className="text-white/70 text-xs flex items-center gap-1">
+              <span className="w-1.5 h-1.5 bg-green-300 rounded-full animate-pulse" />
+              {isLoading ? "מעבד..." : "Klear AI מחובר"}
+            </p>
+          </div>
+        </div>
+        {messages.length > 0 && (
+          <button onClick={startNewChat} className="flex items-center gap-2 px-3 py-1.5 text-sm text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+            <RotateCcw className="w-4 h-4" />
+            שיחה חדשה
+          </button>
+        )}
+      </header>
+
+      {/* Chat Container */}
+      <div className="flex-1 overflow-y-auto bg-gray-50">
+        {messages.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full p-6 text-center">
+            <div className="w-20 h-20 bg-gradient-to-br from-[#25D366] to-[#128C7E] rounded-2xl flex items-center justify-center mb-6 shadow-xl shadow-green-500/20">
+              <Sparkles className="w-10 h-10 text-white" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">שלום! איך אפשר לעזור?</h2>
+            <p className="text-gray-500 mb-8 max-w-md">
+              אני יכול לענות על שאלות לגבי נהלים, מדיניות והנחיות של {company.name}
+            </p>
+            <div className="w-full max-w-lg">
+              <p className="text-xs text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2 justify-center">
+                <Zap className="w-3 h-3" />שאלות נפוצות
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {SUGGESTED_QUESTIONS.map((q, i) => (
+                  <button key={i} onClick={() => handleSubmit(undefined, q)} className="p-3 text-sm text-right text-gray-700 bg-white hover:bg-gray-100 rounded-xl border border-gray-200 hover:border-gray-300 transition-all shadow-sm">
+                    {q}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="max-w-3xl mx-auto p-4 lg:p-6 space-y-4">
+            {messages.map(message => (
+              <div key={message.id} className={cn("flex gap-3", message.role === "user" ? "flex-row-reverse" : "")}>
+                <div className={cn("w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0",
+                  message.role === "user" ? "bg-gray-200 text-gray-600" : "bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white"
+                )}>
+                  {message.role === "user" ? <span className="text-sm font-medium">א</span> : <Sparkles className="w-4 h-4" />}
+                </div>
+                <div className={cn("flex-1 max-w-[85%]", message.role === "user" ? "text-left" : "text-right")}>
+                  {message.isTyping ? (
+                    <div className="inline-flex items-center gap-1.5 px-4 py-3 bg-white rounded-2xl shadow-sm border border-gray-100">
+                      {[0, 1, 2].map(i => <span key={i} className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />)}
+                    </div>
+                  ) : (
+                    <>
+                      <div className={cn("inline-block px-4 py-3 rounded-2xl shadow-sm",
+                        message.role === "user" ? "bg-[#25D366] text-white" : "bg-white text-gray-900 border border-gray-100"
+                      )}>
+                        <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
+                      </div>
+                      {message.role === "assistant" && (
+                        <div className="flex items-center gap-2 mt-1.5 mr-1">
+                          <button onClick={() => copyToClipboard(message.content, message.id)} className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded transition-colors">
+                            {copiedId === message.id ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5" />}
+                          </button>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+        )}
+      </div>
+
+      {/* Input Area */}
+      <div className="border-t border-gray-200 bg-white p-4">
+        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto relative">
+          <textarea
+            ref={inputRef}
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="שאל שאלה..."
+            rows={1}
+            disabled={isLoading}
+            className="w-full px-4 py-3 pr-12 bg-gray-50 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-[#25D366]/20 focus:border-[#25D366] disabled:opacity-50 text-sm"
+            style={{ minHeight: "48px", maxHeight: "120px" }}
+          />
+          <button type="submit" disabled={!input.trim() || isLoading} className={cn(
+            "absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-lg transition-colors",
+            input.trim() && !isLoading ? "bg-[#25D366] text-white hover:bg-[#128C7E]" : "bg-gray-200 text-gray-400 cursor-not-allowed"
+          )}>
+            <Send className="w-4 h-4" />
+          </button>
+        </form>
+        <p className="text-[10px] text-gray-400 text-center mt-2">
+          מופעל על ידי Llama 3.1 · Klear AI
+        </p>
+      </div>
+    </div>
   )
 }
