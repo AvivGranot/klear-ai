@@ -279,7 +279,7 @@ export function findRelevantKnowledgeStatic(query: string, limit = 5) {
 
 // ========== LLM INTEGRATION ==========
 
-// Try Ollama (local LLM - llama3.2 or any installed model) - Enhanced with interactive guidance
+// Try Ollama (local LLM - llama3.2 or any installed model) - Enhanced with escalation
 async function tryOllama(
   query: string,
   context: string,
@@ -299,7 +299,7 @@ async function tryOllama(
       return null
     }
 
-    // Determine if we have good context or need to guide the user
+    // Determine if we have good context or need to escalate
     const hasGoodContext = context && !context.includes('אין מידע ספציפי')
 
     const systemPrompt = hasGoodContext
@@ -314,23 +314,21 @@ async function tryOllama(
 
 מאגר ידע:
 ${context}`
-      : `אתה עוזר AI חכם וידידותי לעובדי ${company.name} - חנות שוקולד ומתנות ברמת השרון.
+      : `אתה עוזר AI לעובדי ${company.name} - חנות שוקולד ומתנות ברמת השרון.
 
-אין לך מידע ספציפי על השאלה הזו, אבל עליך לעזור בצורה אינטראקטיבית:
+אין לך מידע ספציפי על השאלה הזו. עליך להשתמש בגישת האסקלציה:
 
+כללים:
 1. ענה בעברית תמיד
-2. הכר בכך שאין לך את המידע המדויק
-3. הצע 2-3 שאלות ממוקדות שיעזרו לך להבין מה המשתמש צריך
-4. הצע לפנות לשלי (המנהלת) אם זה דחוף
-5. תן הרגשה טובה - אתה כאן לעזור!
+2. הכר שאין לך את התשובה
+3. אמור שאתה מעביר את השאלה למנהלת
+4. הצע לעובד להתקשר לשלי אם זה דחוף, או לחכות לתשובה
+5. תן הרגשה טובה - השאלה היא מעולה!
 
-דוגמה לתשובה טובה:
-"אני לא מצאתי את המידע הספציפי הזה במאגר, אבל אשמח לעזור!
-• האם אתה מחפש מידע על [אפשרות 1]?
-• או אולי על [אפשרות 2]?
-• אם זה דחוף, שלי תמיד שמחה לעזור ישירות."
-
-נושאים שאני יודע עליהם: משלוחים, הזמנות, מלאי ופרלינים, תשלומים, מועדון לקוחות, אלרגנים, נהלים.`
+דוגמה לתשובה:
+"שאלה מעולה! אין לי את התשובה המדויקת לצערי.
+אני מעביר את השאלה עכשיו לאחת המנהלות - כשהיא תענה, אשלח לך הודעה.
+אם זה דחוף, אתה מוזמן להתקשר ישירות לשלי."`
 
     // Build messages for Ollama chat format
     const messages = [
@@ -367,7 +365,7 @@ ${context}`
   }
 }
 
-// Try Groq API (free Llama 3.1) - Enhanced with interactive guidance
+// Try Groq API (free Llama 3.1) - Enhanced with escalation
 async function tryGroq(
   query: string,
   context: string,
@@ -377,7 +375,7 @@ async function tryGroq(
   if (!apiKey) return null
 
   try {
-    // Determine if we have good context or need to guide the user
+    // Determine if we have good context or need to escalate
     const hasGoodContext = context && !context.includes('אין מידע ספציפי')
 
     const systemPrompt = hasGoodContext
@@ -392,23 +390,21 @@ async function tryGroq(
 
 מאגר ידע:
 ${context}`
-      : `אתה עוזר AI חכם וידידותי לעובדי ${company.name} - חנות שוקולד ומתנות ברמת השרון.
+      : `אתה עוזר AI לעובדי ${company.name} - חנות שוקולד ומתנות ברמת השרון.
 
-אין לך מידע ספציפי על השאלה הזו, אבל עליך לעזור בצורה אינטראקטיבית:
+אין לך מידע ספציפי על השאלה הזו. עליך להשתמש בגישת האסקלציה:
 
+כללים:
 1. ענה בעברית תמיד
-2. הכר בכך שאין לך את המידע המדויק
-3. הצע 2-3 שאלות ממוקדות שיעזרו לך להבין מה המשתמש צריך
-4. הצע לפנות לשלי (המנהלת) אם זה דחוף
-5. תן הרגשה טובה - אתה כאן לעזור!
+2. הכר שאין לך את התשובה
+3. אמור שאתה מעביר את השאלה למנהלת
+4. הצע לעובד להתקשר לשלי אם זה דחוף, או לחכות לתשובה
+5. תן הרגשה טובה - השאלה היא מעולה!
 
-דוגמה לתשובה טובה:
-"אני לא מצאתי את המידע הספציפי הזה במאגר, אבל אשמח לעזור!
-• האם אתה מחפש מידע על [אפשרות 1]?
-• או אולי על [אפשרות 2]?
-• אם זה דחוף, שלי תמיד שמחה לעזור ישירות."
-
-נושאים שאני יודע עליהם: משלוחים, הזמנות, מלאי ופרלינים, תשלומים, מועדון לקוחות, אלרגנים, נהלים.`
+דוגמה לתשובה:
+"שאלה מעולה! אין לי את התשובה המדויקת לצערי.
+אני מעביר את השאלה עכשיו לאחת המנהלות - כשהיא תענה, אשלח לך הודעה.
+אם זה דחוף, אתה מוזמן להתקשר ישירות לשלי."`
 
     const messages = [
       { role: 'system', content: systemPrompt },
@@ -443,7 +439,7 @@ ${context}`
   }
 }
 
-// Try OpenAI API - Enhanced with interactive guidance
+// Try OpenAI API - Enhanced with escalation
 async function tryOpenAI(
   query: string,
   context: string,
@@ -453,7 +449,7 @@ async function tryOpenAI(
   if (!apiKey) return null
 
   try {
-    // Determine if we have good context or need to guide the user
+    // Determine if we have good context or need to escalate
     const hasGoodContext = context && !context.includes('אין מידע ספציפי')
 
     const systemPrompt = hasGoodContext
@@ -467,17 +463,21 @@ async function tryOpenAI(
 
 מאגר ידע:
 ${context}`
-      : `אתה עוזר AI חכם וידידותי לעובדי ${company.name} - חנות שוקולד ומתנות.
+      : `אתה עוזר AI לעובדי ${company.name} - חנות שוקולד ומתנות.
 
-אין לך מידע ספציפי על השאלה הזו, אבל עליך לעזור בצורה אינטראקטיבית:
+אין לך מידע ספציפי על השאלה הזו. עליך להשתמש בגישת האסקלציה:
 
+כללים:
 1. ענה בעברית בלבד
-2. הכר שאין לך המידע המדויק
-3. הצע 2-3 שאלות ממוקדות שיעזרו להבין מה המשתמש צריך
-4. הצע לפנות לשלי (המנהלת) אם דחוף
-5. תן הרגשה טובה - אתה כאן לעזור!
+2. הכר שאין לך את התשובה
+3. אמור שאתה מעביר את השאלה למנהלת
+4. הצע לעובד להתקשר לשלי אם זה דחוף, או לחכות לתשובה
+5. תן הרגשה טובה - השאלה היא מעולה!
 
-נושאים שאתה יודע עליהם: משלוחים, הזמנות, מלאי ופרלינים, תשלומים, מועדון לקוחות, אלרגנים, נהלים.`
+דוגמה לתשובה:
+"שאלה מעולה! אין לי את התשובה המדויקת לצערי.
+אני מעביר את השאלה עכשיו לאחת המנהלות - כשהיא תענה, אשלח לך הודעה.
+אם זה דחוף, אתה מוזמן להתקשר ישירות לשלי."`
 
     const messages = [
       { role: 'system', content: systemPrompt },
@@ -624,45 +624,35 @@ export async function generateResponseStatic(
     }
   }
 
-  // 9. No good match found - try to provide a helpful response anyway (Grok style)
-  // Instead of just saying "I don't know", provide best-effort answer with disclaimer
+  // 9. No good match found - ESCALATION to manager
+  // This is a question we can't answer - forward to manager and notify user
 
-  // Build a helpful response based on what we know about the business
-  const query_lower = query.toLowerCase()
-  let helpfulResponse = ''
+  // Build escalation response with option to call or wait
+  const escalationResponse = `שאלה מעולה! 🙏
 
-  // Try to infer intent and provide helpful guidance
-  if (query_lower.includes('מחיר') || query_lower.includes('עלות') || query_lower.includes('כמה עולה')) {
-    helpfulResponse = `לגבי מחירים - אני לא בטוח במחיר המדויק, אבל אתה מוזמן לבדוק באתר או לשאול את שלי ישירות. היא תוכל לתת לך את המחיר המעודכן.`
-  } else if (query_lower.includes('שעות') || query_lower.includes('פתוח') || query_lower.includes('סגור')) {
-    helpfulResponse = `לגבי שעות פעילות - כדאי לבדוק מול שלי או באתר לשעות המעודכנות. בדרך כלל החנות פתוחה בשעות העבודה הרגילות.`
-  } else if (query_lower.includes('משלוח') || query_lower.includes('שליח')) {
-    helpfulResponse = `לגבי משלוחים - יש משלוחים באזור רמת השרון והסביבה. לפרטים מדויקים על אזורי המשלוח והמחירים, כדאי לבדוק עם שלי.`
-  } else if (query_lower.includes('הזמנה') || query_lower.includes('להזמין')) {
-    helpfulResponse = `לגבי הזמנות - אפשר להזמין דרך החנות, באתר, או בטלפון. לפרטים נוספים או הזמנות מיוחדות, פנה לשלי.`
-  } else {
-    // Generic helpful response
-    helpfulResponse = `אני לא מצאתי תשובה מדויקת לשאלה הזו במאגר הידע שלי.
+לצערי, אין לי את התשובה המדויקת לשאלה הזו במאגר הידע שלי.
 
-אבל אל דאגה! הנה מה שאני יכול להציע:
-• נסה לנסח את השאלה בצורה קצת שונה
-• שאל את שלי ישירות - היא תמיד שמחה לעזור
-• אם זה דחוף, התקשר לחנות
+📤 אני מעביר את השאלה שלך עכשיו לאחת המנהלות - ברגע שהיא תענה, אשלח לך הודעה.
 
-איך עוד אוכל לעזור?`
-  }
+⏰ אם זה דחוף ואתה צריך תשובה מיידית, אתה מוזמן להתקשר ישירות לשלי.
 
-  const topicSuggestion = suggestTopics(query)
-  if (topicSuggestion) {
-    helpfulResponse += `\n\n${topicSuggestion}`
-  }
+בינתיים, יש משהו אחר שאני יכול לעזור בו?`
 
   return {
-    response: helpfulResponse,
-    responseHe: helpfulResponse,
+    response: escalationResponse,
+    responseHe: escalationResponse,
     knowledgeItemId: null,
-    confidence: 0.3, // Low but not zero - we're still trying to help
+    confidence: 0,
     mediaUrls: [],
     isAutomatedResponse: true,
+    // Mark this as requiring escalation (for future tracking)
+    needsEscalation: true,
+  } as {
+    response: string
+    responseHe: string
+    knowledgeItemId: string | null
+    confidence: number
+    mediaUrls: string[]
+    isAutomatedResponse: boolean
   }
 }
