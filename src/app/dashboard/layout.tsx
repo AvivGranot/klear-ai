@@ -18,10 +18,12 @@ import {
   Search,
   Bell,
   ChevronDown,
+  Sparkles,
 } from "lucide-react"
 
 const navigation = [
   { name: "סקירה כללית", href: "/dashboard", icon: LayoutDashboard },
+  { name: "צ׳אט AI", href: "/dashboard/chat", icon: Sparkles, highlight: true },
   { name: "מאגר ידע", href: "/dashboard/knowledge", icon: BookOpen },
   { name: "שיחות", href: "/dashboard/conversations", icon: MessageSquare },
   { name: "משתמשים", href: "/dashboard/users", icon: Users },
@@ -74,6 +76,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
             {navigation.map((item) => {
               const isActive = pathname === item.href
+              const isHighlight = 'highlight' in item && item.highlight
               return (
                 <Link
                   key={item.href}
@@ -83,11 +86,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
                     isActive
                       ? "bg-[#25D366]/10 text-[#25D366]"
-                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                      : isHighlight
+                        ? "text-[#25D366] bg-[#25D366]/5 hover:bg-[#25D366]/10"
+                        : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                   )}
                 >
-                  <item.icon className={cn("w-5 h-5", isActive ? "text-[#25D366]" : "text-gray-400")} />
+                  <item.icon className={cn("w-5 h-5", isActive || isHighlight ? "text-[#25D366]" : "text-gray-400")} />
                   {item.name}
+                  {isHighlight && !isActive && (
+                    <span className="mr-auto text-[10px] px-1.5 py-0.5 bg-[#25D366] text-white rounded">חדש</span>
+                  )}
                 </Link>
               )
             })}
