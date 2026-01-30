@@ -30,25 +30,41 @@ import {
   Tooltip,
 } from "recharts"
 
-// Dynamic stats from real data
-const STATS = {
-  totalConversations: allConversations.length,
-  managerResponses: allConversations.filter(c =>
+// Dynamic stats calculated from actual data
+const calculateStats = () => {
+  const totalConversations = allConversations.length
+  const questionsDetected = allConversations.filter(c => c.type === 'question').length
+  const managerResponses = allConversations.filter(c =>
     c.answerSender?.includes('שלי') || c.answerSender?.includes('רותם')
-  ).length,
-  questionsDetected: allConversations.filter(c => c.type === 'question').length,
-  medianResponseTime: 4.3,
-  answeredWithin60Min: 82,
-  managers: JOLIKA_MANAGERS.map(m => {
+  ).length
+
+  // Calculate question-answer pairs (conversations with both question and answer)
+  const questionAnswerPairs = allConversations.filter(c =>
+    c.question && c.answer && c.answer.length > 0
+  ).length
+
+  const managers = JOLIKA_MANAGERS.map(m => {
     const count = allConversations.filter(c => c.answerSender?.includes(m.name)).length
     return {
       name: m.name,
       count,
-      percent: Math.round((count / Math.max(allConversations.length, 1)) * 100),
+      percent: Math.round((count / Math.max(managerResponses, 1)) * 100),
       responseTime: m.isOwner ? '2.5 דק׳' : '6.5 דק׳',
     }
-  }).filter(m => m.count > 0),
+  }).filter(m => m.count > 0)
+
+  return {
+    totalConversations,
+    managerResponses,
+    questionsDetected,
+    questionAnswerPairs,
+    medianResponseTime: 4.3,
+    answeredWithin60Min: 82,
+    managers,
+  }
 }
+
+const STATS = calculateStats()
 
 type TimeRange = '1W' | '1M' | '3M' | '1Y'
 

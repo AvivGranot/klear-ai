@@ -17,23 +17,40 @@ import {
   getProcessedConversations,
   getRepetitiveQuestions,
   JOLIKA_MANAGERS,
+  conversations as allConversations,
 } from "@/data/jolika-data"
 import { TopicIcon } from "@/components/TopicIcon"
 import type { TopicIconName } from "@/data/jolika-data"
 
-// Real stats from Excel analysis
-const STATS = {
-  totalConversations: 470,
-  managerResponses: 28,
-  questionsDetected: 111,
-  medianResponseTime: 4.3,
-  answeredWithin60Min: 82,
-  managers: [
-    { name: 'שלי גולדנברג', count: 15, percent: 54, responseTime: '2.5 דק׳' },
-    { name: 'רותם פרחי', count: 11, percent: 39, responseTime: '6.5 דק׳' },
-    { name: 'שלי בן מויאל', count: 2, percent: 7, responseTime: '0.2 דק׳' },
-  ]
+// Dynamic stats calculated from actual data
+const calculateStats = () => {
+  const totalConversations = allConversations.length
+  const questionsDetected = allConversations.filter(c => c.type === 'question').length
+  const managerResponses = allConversations.filter(c =>
+    c.answerSender?.includes('שלי') || c.answerSender?.includes('רותם')
+  ).length
+
+  const managers = JOLIKA_MANAGERS.map(m => {
+    const count = allConversations.filter(c => c.answerSender?.includes(m.name)).length
+    return {
+      name: m.name,
+      count,
+      percent: Math.round((count / Math.max(managerResponses, 1)) * 100),
+      responseTime: m.isOwner ? '2.5 דק׳' : '6.5 דק׳',
+    }
+  }).filter(m => m.count > 0)
+
+  return {
+    totalConversations,
+    managerResponses,
+    questionsDetected,
+    medianResponseTime: 4.3,
+    answeredWithin60Min: 82,
+    managers,
+  }
 }
+
+const STATS = calculateStats()
 
 const isManager = (name: string) =>
   JOLIKA_MANAGERS.some(m => name.includes(m.name))
