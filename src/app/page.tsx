@@ -34,6 +34,265 @@ const stagger = {
   },
 }
 
+// Pricing data
+const pricingPlans = [
+  {
+    name: "Starter",
+    description: "לעסקים קטנים שרוצים להתחיל",
+    monthlyPrice: 10,
+    yearlyPrice: 8,
+    conversations: "עד 100 שיחות בחודש",
+    cta: "התחל עכשיו",
+    ctaStyle: "primary",
+    features: [
+      "בוט וואטסאפ חכם",
+      "למידה מההיסטוריה שלך",
+      "עברית מושלמת",
+      "דשבורד ניהול",
+      "תמיכה באימייל",
+    ],
+    featuresTitle: "כולל",
+  },
+  {
+    name: "Growth",
+    description: "לעסקים צומחים עם נפח שיחות גבוה",
+    monthlyPrice: 20,
+    yearlyPrice: 16,
+    conversations: "עד 500 שיחות בחודש",
+    cta: "בחר Growth",
+    ctaStyle: "green",
+    popular: true,
+    features: [
+      "זמני תגובה של הצוות",
+      "ייצוא דוחות",
+      "אוטומציות מותאמות",
+      "תמיכה בצ׳אט",
+    ],
+    featuresTitle: "הכל ב-Starter, ועוד",
+  },
+  {
+    name: "Business",
+    description: "לעסקים עם דרישות מתקדמות",
+    monthlyPrice: 50,
+    yearlyPrice: 40,
+    conversations: "עד 1,000 שיחות בחודש",
+    cta: "בחר Business",
+    ctaStyle: "primary",
+    features: [
+      "משתמשים ללא הגבלה",
+      "גישת API מלאה",
+      "אינטגרציות מתקדמות",
+      "מנהל לקוח ייעודי",
+      "SLA מובטח",
+    ],
+    featuresTitle: "הכל ב-Growth, ועוד",
+    overage: "$10 לכל 100 שיחות נוספות",
+  },
+  {
+    name: "Enterprise",
+    description: "פתרון מותאם לארגונים גדולים",
+    customPrice: true,
+    conversations: "שיחות ללא הגבלה",
+    cta: "צור קשר",
+    ctaStyle: "outline",
+    features: [
+      "התאמה אישית מלאה",
+      "On-premise אפשרות",
+      "SSO & Security מתקדם",
+      "הדרכה צוותית",
+      "תמיכה 24/7",
+    ],
+    featuresTitle: "הכל ב-Business, ועוד",
+  },
+]
+
+function PricingSection() {
+  const [isYearly, setIsYearly] = useState(false)
+
+  return (
+    <section className="py-24 px-4 bg-[#fafafa]" id="pricing">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
+            תמחור פשוט ושקוף
+          </h2>
+          <p className="text-lg text-gray-600 max-w-lg mx-auto">
+            בחר את התוכנית שמתאימה לגודל העסק שלך. ללא הפתעות, ללא עלויות נסתרות.
+          </p>
+        </motion.div>
+
+        {/* Toggle */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="flex justify-center mb-12"
+        >
+          <div className="inline-flex bg-white border border-gray-200 rounded-xl p-1 shadow-sm">
+            <button
+              onClick={() => setIsYearly(false)}
+              className={`px-6 py-2.5 text-sm font-medium rounded-lg transition-all ${
+                !isYearly
+                  ? "bg-gray-900 text-white shadow-sm"
+                  : "text-gray-600 hover:text-gray-900"
+              }`}
+            >
+              חודשי
+            </button>
+            <button
+              onClick={() => setIsYearly(true)}
+              className={`px-6 py-2.5 text-sm font-medium rounded-lg transition-all flex items-center gap-2 ${
+                isYearly
+                  ? "bg-gray-900 text-white shadow-sm"
+                  : "text-gray-600 hover:text-gray-900"
+              }`}
+            >
+              <span className="bg-green-100 text-green-700 text-[10px] font-semibold px-2 py-0.5 rounded">
+                חסוך 20%
+              </span>
+              שנתי
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Pricing Grid */}
+        <motion.div
+          variants={stagger}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          {pricingPlans.map((plan, i) => (
+            <motion.div
+              key={plan.name}
+              variants={fadeInUp}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              whileHover={{ y: -4, transition: { duration: 0.2 } }}
+              className={`relative bg-white rounded-2xl p-6 transition-all ${
+                plan.popular
+                  ? "border-2 border-[#22c55e] shadow-lg shadow-green-500/10"
+                  : "border border-gray-200 hover:shadow-lg"
+              }`}
+            >
+              {plan.popular && (
+                <span className="absolute -top-3 right-6 bg-[#22c55e] text-white text-xs font-semibold px-3 py-1 rounded-md">
+                  הכי פופולרי
+                </span>
+              )}
+
+              {/* Plan Name */}
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                {plan.name}
+              </h3>
+              <p className="text-sm text-gray-500 mb-6 min-h-[40px]">
+                {plan.description}
+              </p>
+
+              {/* Price */}
+              <div className="mb-2">
+                {plan.customPrice ? (
+                  <span className="text-3xl font-bold text-gray-900">Custom</span>
+                ) : (
+                  <div className="flex items-baseline">
+                    <span className="text-5xl font-bold text-gray-900 tracking-tight">
+                      {isYearly ? plan.yearlyPrice : plan.monthlyPrice}
+                    </span>
+                    <span className="text-2xl font-semibold text-gray-900 mr-1">
+                      $
+                    </span>
+                  </div>
+                )}
+              </div>
+              <p className="text-sm text-gray-500 mb-2">
+                {plan.customPrice
+                  ? "מותאם אישית"
+                  : isYearly
+                  ? "לחודש (בחיוב שנתי)"
+                  : "לחודש"}
+              </p>
+              <p className="text-sm text-gray-500 mb-6 pb-6 border-b border-gray-100">
+                {plan.conversations}
+              </p>
+
+              {/* CTA Button */}
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`w-full py-3.5 px-6 rounded-xl text-sm font-semibold transition-all mb-6 ${
+                  plan.ctaStyle === "green"
+                    ? "bg-[#22c55e] text-white hover:bg-[#16a34a] shadow-lg shadow-green-500/20"
+                    : plan.ctaStyle === "primary"
+                    ? "bg-gray-900 text-white hover:bg-gray-800"
+                    : "bg-transparent text-gray-900 border border-gray-200 hover:bg-gray-50"
+                }`}
+              >
+                {plan.cta}
+              </motion.button>
+
+              {/* Features */}
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-4">
+                {plan.featuresTitle}
+              </p>
+              <ul className="space-y-3">
+                {plan.features.map((feature, j) => (
+                  <li key={j} className="flex items-start gap-2.5 text-sm text-gray-700">
+                    <CheckCircle className="w-4 h-4 text-[#22c55e] flex-shrink-0 mt-0.5" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Overage */}
+              {plan.overage && (
+                <div className="mt-6 pt-4 border-t border-gray-100">
+                  <p className="text-xs text-gray-500">
+                    <span className="font-semibold text-gray-700">{plan.overage.split(" ")[0]}</span>{" "}
+                    {plan.overage.split(" ").slice(1).join(" ")}
+                  </p>
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Footer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="text-center mt-12 pt-8 border-t border-gray-200"
+        >
+          <p className="text-sm text-gray-500">
+            יש שאלות?{" "}
+            <a
+              href="mailto:hello@klear.ai"
+              className="text-[#22c55e] font-medium hover:underline"
+            >
+              דברו איתנו
+            </a>{" "}
+            או שלחו מייל ל-
+            <a
+              href="mailto:hello@klear.ai"
+              className="text-[#22c55e] font-medium hover:underline"
+            >
+              hello@klear.ai
+            </a>
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
 export default function HomePage() {
   const [companyId, setCompanyId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -581,6 +840,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Pricing Section */}
+      <PricingSection />
 
       {/* CTA */}
       <section className="py-24 px-4 relative overflow-hidden">

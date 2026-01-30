@@ -107,9 +107,10 @@ async function searchAndAnswer(
   const knowledgeItems = await searchKnowledgeBase(companyId, query);
 
   if (knowledgeItems.length === 0) {
+    // Grok style - try to be helpful even without exact match
     return {
-      answer: 'לא מצאתי מידע רלוונטי במאגר הידע.',
-      confidence: 0.3,
+      answer: `אני לא מצאתי תשובה מדויקת לשאלה הזו במאגר הידע שלי, אבל אשמח לנסות לעזור בדרך אחרת. נסה לנסח את השאלה מחדש, או שאל את המנהל ישירות לתשובה מהירה.`,
+      confidence: 0.4,
     };
   }
 

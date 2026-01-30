@@ -330,6 +330,35 @@ p, span, label {
   ring: none !important;
 }
 
+/* Force hide ALL Recharts tooltips - use custom tooltips instead */
+.recharts-tooltip-wrapper,
+.recharts-default-tooltip,
+.recharts-tooltip-item-list,
+.recharts-tooltip-item,
+.recharts-tooltip-label,
+.recharts-tooltip-cursor {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Override any dark tooltip styling - ensure white background */
+.recharts-tooltip-wrapper div,
+.recharts-default-tooltip,
+[class*="tooltip"] {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  border-color: #e5e7eb !important;
+}
+
+/* Custom tooltip override for any charts */
+.recharts-wrapper .recharts-tooltip-wrapper > div {
+  background: white !important;
+  background-color: white !important;
+  color: #111827 !important;
+}
+
 /* ==================== Animations ==================== */
 
 @keyframes fadeIn {
