@@ -7,7 +7,7 @@
 import { prisma } from '@/lib/prisma'
 import { cookies } from 'next/headers'
 import crypto from 'crypto'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 // bcrypt cost factor - 12 is recommended for production (2^12 = 4096 iterations)
 const BCRYPT_ROUNDS = 12
