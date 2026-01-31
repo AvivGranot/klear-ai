@@ -56,22 +56,98 @@ async function main() {
 
   console.log('✅ Created subscription for', jolika.name)
 
-  // Create admin user (single internal login)
-  const adminPassword = await hashPassword('12345678')
-  const admin = await prisma.user.upsert({
+  // Create users with different roles
+  const password = await hashPassword('12345678')
+
+  // Owner
+  const owner = await prisma.user.upsert({
     where: { email: 'hello@klear.ai' },
     update: {},
     create: {
       email: 'hello@klear.ai',
       name: 'Klear Admin',
-      passwordHash: adminPassword,
+      passwordHash: password,
       role: 'owner',
       companyId: jolika.id,
       emailVerified: new Date(),
     },
   })
+  console.log('✅ Created owner:', owner.email)
 
-  console.log('✅ Created admin user:', admin.email)
+  // Manager 1
+  const manager1 = await prisma.user.upsert({
+    where: { email: 'sheli@jolika.co.il' },
+    update: {},
+    create: {
+      email: 'sheli@jolika.co.il',
+      name: 'שלי כהן',
+      passwordHash: password,
+      role: 'manager',
+      companyId: jolika.id,
+      emailVerified: new Date(),
+    },
+  })
+  console.log('✅ Created manager:', manager1.email)
+
+  // Manager 2
+  const manager2 = await prisma.user.upsert({
+    where: { email: 'david@jolika.co.il' },
+    update: {},
+    create: {
+      email: 'david@jolika.co.il',
+      name: 'דוד לוי',
+      passwordHash: password,
+      role: 'manager',
+      companyId: jolika.id,
+      emailVerified: new Date(),
+    },
+  })
+  console.log('✅ Created manager:', manager2.email)
+
+  // Employee 1
+  const employee1 = await prisma.user.upsert({
+    where: { email: 'yael@jolika.co.il' },
+    update: {},
+    create: {
+      email: 'yael@jolika.co.il',
+      name: 'יעל אברהם',
+      passwordHash: password,
+      role: 'employee',
+      companyId: jolika.id,
+      emailVerified: new Date(),
+    },
+  })
+  console.log('✅ Created employee:', employee1.email)
+
+  // Employee 2
+  const employee2 = await prisma.user.upsert({
+    where: { email: 'moshe@jolika.co.il' },
+    update: {},
+    create: {
+      email: 'moshe@jolika.co.il',
+      name: 'משה ישראלי',
+      passwordHash: password,
+      role: 'employee',
+      companyId: jolika.id,
+      emailVerified: new Date(),
+    },
+  })
+  console.log('✅ Created employee:', employee2.email)
+
+  // Employee 3
+  const employee3 = await prisma.user.upsert({
+    where: { email: 'rachel@jolika.co.il' },
+    update: {},
+    create: {
+      email: 'rachel@jolika.co.il',
+      name: 'רחל מזרחי',
+      passwordHash: password,
+      role: 'employee',
+      companyId: jolika.id,
+      emailVerified: new Date(),
+    },
+  })
+  console.log('✅ Created employee:', employee3.email)
 
   // Create categories
   const categories = [
