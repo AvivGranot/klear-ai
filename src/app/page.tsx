@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import {
   MessageSquare,
@@ -12,6 +12,7 @@ import {
   Shield,
   Clock,
   ArrowLeft,
+  ArrowRight,
   CheckCircle,
   Play,
   Sparkles,
@@ -19,6 +20,9 @@ import {
   BarChart3,
   FileText,
   Video,
+  X,
+  Rocket,
+  Mail,
 } from "lucide-react"
 
 const fadeInUp = {
@@ -106,11 +110,258 @@ const pricingPlans = [
   },
 ]
 
+// Coming Soon Modal Component
+function ComingSoonModal({
+  isOpen,
+  onClose,
+  selectedPlan
+}: {
+  isOpen: boolean
+  onClose: () => void
+  selectedPlan: string | null
+}) {
+  const [email, setEmail] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email) return
+
+    setIsSubmitting(true)
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    console.log("Waitlist signup:", { email, plan: selectedPlan })
+    setIsSubmitting(false)
+    setIsSubmitted(true)
+  }
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ type: "spring", duration: 0.5 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          >
+            <div
+              className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden"
+              onClick={e => e.stopPropagation()}
+            >
+              <button
+                onClick={onClose}
+                className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100 transition-colors z-10"
+              >
+                <X className="w-5 h-5 text-gray-500" />
+              </button>
+
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#25D366]/20 to-transparent rounded-full blur-3xl" />
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-blue-500/10 to-transparent rounded-full blur-3xl" />
+
+              <div className="relative p-8 pt-12">
+                {!isSubmitted ? (
+                  <>
+                    <motion.div
+                      initial={{ y: 10, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.1 }}
+                      className="flex justify-center mb-6"
+                    >
+                      <div className="relative">
+                        <motion.div
+                          animate={{ y: [0, -8, 0] }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                          className="w-20 h-20 bg-gradient-to-br from-[#25D366] to-[#128C7E] rounded-2xl flex items-center justify-center shadow-lg shadow-green-500/30"
+                        >
+                          <Rocket className="w-10 h-10 text-white" />
+                        </motion.div>
+                        <motion.div
+                          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                          className="absolute -top-2 -right-2 w-4 h-4 bg-yellow-400 rounded-full"
+                        />
+                        <motion.div
+                          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
+                          className="absolute -bottom-1 -left-1 w-3 h-3 bg-blue-400 rounded-full"
+                        />
+                      </div>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ y: 10, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.2 }}
+                      className="text-center mb-6"
+                    >
+                      <h2 className="text-3xl font-bold text-gray-900 mb-3">Coming Soon! 🚀</h2>
+                      <p className="text-gray-600 leading-relaxed">
+                        אנחנו עובדים על משהו מדהים.
+                        <br />
+                        <span className="text-[#25D366] font-semibold">הצטרף לרשימת ההמתנה</span> וקבל גישה מוקדמת + הטבות בלעדיות!
+                      </p>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ y: 10, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                      className="flex justify-center gap-6 mb-8"
+                    >
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                          <Zap className="w-4 h-4 text-green-600" />
+                        </div>
+                        <span>גישה מוקדמת</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                          <Users className="w-4 h-4 text-blue-600" />
+                        </div>
+                        <span>הנחת מייסדים</span>
+                      </div>
+                    </motion.div>
+
+                    <motion.form
+                      initial={{ y: 10, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.4 }}
+                      onSubmit={handleSubmit}
+                      className="space-y-4"
+                    >
+                      <div className="relative">
+                        <Mail className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="your@email.com"
+                          required
+                          className="w-full pr-12 pl-4 py-4 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:border-transparent transition-all text-left"
+                          dir="ltr"
+                        />
+                      </div>
+
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full py-4 bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-semibold rounded-xl shadow-lg shadow-green-500/30 hover:shadow-green-500/40 transition-all disabled:opacity-70 flex items-center justify-center gap-2"
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <motion.div
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                              className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                            />
+                            נרשם...
+                          </>
+                        ) : (
+                          <>
+                            הצטרף לרשימת ההמתנה
+                            <ArrowRight className="w-5 h-5" />
+                          </>
+                        )}
+                      </motion.button>
+                    </motion.form>
+
+                    <motion.div
+                      initial={{ y: 10, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.5 }}
+                      className="mt-6 pt-6 border-t border-gray-100"
+                    >
+                      <div className="flex items-center justify-center gap-3">
+                        <div className="flex -space-x-2 rtl:space-x-reverse">
+                          {[
+                            "bg-gradient-to-br from-orange-400 to-pink-500",
+                            "bg-gradient-to-br from-blue-400 to-purple-500",
+                            "bg-gradient-to-br from-green-400 to-cyan-500",
+                            "bg-gradient-to-br from-yellow-400 to-orange-500",
+                          ].map((gradient, i) => (
+                            <div
+                              key={i}
+                              className={`w-8 h-8 ${gradient} rounded-full border-2 border-white flex items-center justify-center text-white text-xs font-bold`}
+                            >
+                              {["א", "ב", "ג", "ד"][i]}
+                            </div>
+                          ))}
+                        </div>
+                        <p className="text-sm text-gray-600">
+                          <span className="font-semibold text-gray-900">127+</span> כבר ברשימה
+                        </p>
+                      </div>
+                    </motion.div>
+                  </>
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center py-8"
+                  >
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", duration: 0.5 }}
+                      className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"
+                    >
+                      <CheckCircle className="w-10 h-10 text-green-600" />
+                    </motion.div>
+
+                    <h2 className="text-2xl font-bold text-gray-900 mb-3">🎉 נרשמת בהצלחה!</h2>
+                    <p className="text-gray-600 mb-6">
+                      תודה שהצטרפת! נעדכן אותך ברגע שנשיק.
+                      <br />
+                      <span className="text-[#25D366] font-medium">בדוק את המייל שלך להפתעה קטנה 😉</span>
+                    </p>
+
+                    <button
+                      onClick={onClose}
+                      className="text-gray-500 hover:text-gray-700 text-sm font-medium"
+                    >
+                      סגור
+                    </button>
+                  </motion.div>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  )
+}
+
 function PricingSection() {
   const [isYearly, setIsYearly] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
+
+  const handlePlanClick = (planName: string) => {
+    setSelectedPlan(planName)
+    setShowModal(true)
+  }
 
   return (
     <section className="py-24 px-4 bg-[#fafafa]" id="pricing">
+      {/* Coming Soon Modal */}
+      <ComingSoonModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        selectedPlan={selectedPlan}
+      />
+
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -222,10 +473,11 @@ function PricingSection() {
                 {plan.conversations}
               </p>
 
-              {/* CTA Button */}
+              {/* CTA Button - Opens Coming Soon Modal */}
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                onClick={() => handlePlanClick(plan.name)}
                 className={`w-full py-3.5 px-6 rounded-xl text-sm font-semibold transition-all mb-6 ${
                   plan.ctaStyle === "green"
                     ? "bg-[#22c55e] text-white hover:bg-[#16a34a] shadow-lg shadow-green-500/20"
