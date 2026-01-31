@@ -1,9 +1,18 @@
 "use client"
 
 import { useState, useRef, useEffect, useCallback } from "react"
-import { Send, Sparkles, RotateCcw, Copy, Check, Zap, BookOpen } from "lucide-react"
+import { Send, Sparkles, RotateCcw, Copy, Check, Zap, BookOpen, History } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { getRepetitiveQuestions, company } from "@/data/jolika-data"
+import {
+  createConversation,
+  getConversation,
+  addMessage,
+  getAllConversations,
+  Message as StoredMessage,
+  Conversation,
+  formatTimestamp,
+} from "@/lib/conversation-store"
 
 interface Message {
   id: string
@@ -15,11 +24,24 @@ interface Message {
 
 const SUGGESTED_QUESTIONS = getRepetitiveQuestions().slice(0, 4).map(q => q.title)
 
+// Convert stored messages to UI messages
+function storedToUIMessages(stored: StoredMessage[]): Message[] {
+  return stored.map(m => ({
+    id: m.id,
+    role: m.role,
+    content: m.content,
+    timestamp: new Date(m.timestamp),
+  }))
+}
+
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [copiedId, setCopiedId] = useState<string | null>(null)
+  const [currentConversationId, setCurrentConversationId] = useState<string | null>(null)
+  const [recentConversations, setRecentConversations] = useState<Conversation[]>([])
+  const [showHistory, setShowHistory] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -33,6 +55,19 @@ export default function ChatPage() {
 
   useEffect(() => {
     inputRef.current?.focus()
+    // Load recent conversations on mount
+    const convs = getAllConversations(company.id)
+    setRecentConversations(convs.slice(0, 10))
+  }, [])
+
+  // Load a conversation from history
+  const loadConversation = useCallback((conversationId: string) => {
+    const conversation = getConversation(conversationId)
+    if (conversation) {
+      setMessages(storedToUIMessages(conversation.messages))
+      setCurrentConversationId(conversationId)
+      setShowHistory(false)
+    }
   }, [])
 
   const handleSubmit = async (e?: React.FormEvent, overrideMessage?: string) => {
@@ -40,11 +75,21 @@ export default function ChatPage() {
     const messageText = overrideMessage || input.trim()
     if (!messageText || isLoading) return
 
+    // Create conversation if needed
+    let convId = currentConversationId
+    if (!convId) {
+      const newConv = createConversation(company.id, messageText)
+      convId = newConv.id
+      setCurrentConversationId(convId)
+    }
+
+    // Add user message to store
+    const userMsg = addMessage(convId, "user", messageText)
     const userMessage: Message = {
-      id: `user-${Date.now()}`,
+      id: userMsg.id,
       role: "user",
       content: messageText,
-      timestamp: new Date(),
+      timestamp: new Date(userMsg.timestamp),
     }
 
     setMessages(prev => [...prev, userMessage])
@@ -82,16 +127,22 @@ export default function ChatPage() {
 
       const data = await response.json()
 
+      // Store assistant message
+      const assistantMsg = addMessage(convId, "assistant", data.response)
+
       // Remove typing indicator and add real response
       setMessages(prev => {
         const filtered = prev.filter(m => !m.isTyping)
         return [...filtered, {
-          id: data.messageId || `assistant-${Date.now()}`,
+          id: assistantMsg.id,
           role: "assistant",
           content: data.response,
-          timestamp: new Date(),
+          timestamp: new Date(assistantMsg.timestamp),
         }]
       })
+
+      // Refresh recent conversations
+      setRecentConversations(getAllConversations(company.id).slice(0, 10))
     } catch (error) {
       console.error("Error:", error)
       setMessages(prev => {
@@ -127,7 +178,9 @@ export default function ChatPage() {
 
   const startNewChat = () => {
     setMessages([])
+    setCurrentConversationId(null)
     setInput("")
+    setShowHistory(false)
     inputRef.current?.focus()
   }
 
@@ -139,16 +192,63 @@ export default function ChatPage() {
           <h1 className="text-2xl font-semibold text-gray-900">צ׳אט AI</h1>
           <p className="text-gray-500 mt-1">שאל שאלות על מאגר הידע של {company.name}</p>
         </div>
-        {messages.length > 0 && (
+        <div className="flex items-center gap-2">
           <button
-            onClick={startNewChat}
-            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+            onClick={() => setShowHistory(!showHistory)}
+            className={cn(
+              "flex items-center gap-2 px-4 py-2 text-sm rounded-lg transition-colors",
+              showHistory
+                ? "bg-[#25D366] text-white"
+                : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+            )}
           >
-            <RotateCcw className="w-4 h-4" />
-            שיחה חדשה
+            <History className="w-4 h-4" />
+            היסטוריה
           </button>
-        )}
+          {messages.length > 0 && (
+            <button
+              onClick={startNewChat}
+              className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <RotateCcw className="w-4 h-4" />
+              שיחה חדשה
+            </button>
+          )}
+        </div>
       </div>
+
+      {/* History Panel */}
+      {showHistory && (
+        <div className="mb-4 bg-white rounded-2xl border border-gray-200 p-4 max-h-64 overflow-y-auto">
+          <h3 className="font-medium text-gray-900 mb-3 flex items-center gap-2">
+            <History className="w-4 h-4" />
+            שיחות אחרונות
+          </h3>
+          {recentConversations.length === 0 ? (
+            <p className="text-sm text-gray-500 text-center py-4">אין שיחות קודמות</p>
+          ) : (
+            <div className="space-y-2">
+              {recentConversations.map((conv) => (
+                <button
+                  key={conv.id}
+                  onClick={() => loadConversation(conv.id)}
+                  className={cn(
+                    "w-full text-right px-3 py-2 rounded-lg transition-colors flex items-center justify-between",
+                    currentConversationId === conv.id
+                      ? "bg-[#25D366]/10 text-[#25D366]"
+                      : "hover:bg-gray-100 text-gray-700"
+                  )}
+                >
+                  <span className="truncate text-sm">{conv.title}</span>
+                  <span className="text-xs text-gray-400 flex-shrink-0 mr-2">
+                    {formatTimestamp(conv.updatedAt)}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Chat Container */}
       <div className="flex-1 bg-white rounded-2xl border border-gray-200 flex flex-col overflow-hidden">
