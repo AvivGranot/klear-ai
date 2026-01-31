@@ -4,7 +4,10 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server'
-import { authenticateWithPassword, createSession, setSessionCookie } from '@/lib/auth'
+import { authenticateWithPassword, createSession } from '@/lib/auth'
+
+const SESSION_COOKIE_NAME = 'klear_session'
+const SESSION_EXPIRY_DAYS = 30
 
 export async function POST(request: NextRequest) {
   try {
@@ -35,10 +38,8 @@ export async function POST(request: NextRequest) {
       deviceType: 'web',
     })
 
-    // Set cookie
-    await setSessionCookie(token)
-
-    return NextResponse.json({
+    // Create response with cookie set directly on response object
+    const response = NextResponse.json({
       success: true,
       user: {
         id: user.id,
@@ -49,6 +50,17 @@ export async function POST(request: NextRequest) {
       company: user.company,
       redirectTo: '/dashboard',
     })
+
+    // Set cookie on the response
+    response.cookies.set(SESSION_COOKIE_NAME, token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: SESSION_EXPIRY_DAYS * 24 * 60 * 60,
+      path: '/',
+    })
+
+    return response
   } catch (error) {
     console.error('Login error:', error)
     return NextResponse.json(

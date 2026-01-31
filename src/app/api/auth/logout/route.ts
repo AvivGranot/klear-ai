@@ -3,24 +3,29 @@
  * Logout current session
  */
 
-import { NextResponse } from 'next/server'
-import { getSessionCookie, destroySession, clearSessionCookie } from '@/lib/auth'
+import { NextRequest, NextResponse } from 'next/server'
+import { destroySession } from '@/lib/auth'
 
-export async function POST() {
+const SESSION_COOKIE_NAME = 'klear_session'
+
+export async function POST(request: NextRequest) {
   try {
-    const token = await getSessionCookie()
+    const token = request.cookies.get(SESSION_COOKIE_NAME)?.value
 
     if (token) {
       await destroySession(token)
     }
 
-    await clearSessionCookie()
+    // Create response and clear cookie
+    const response = NextResponse.json({ success: true })
+    response.cookies.delete(SESSION_COOKIE_NAME)
 
-    return NextResponse.json({ success: true })
+    return response
   } catch (error) {
     console.error('Logout error:', error)
     // Still clear the cookie even if there's an error
-    await clearSessionCookie()
-    return NextResponse.json({ success: true })
+    const response = NextResponse.json({ success: true })
+    response.cookies.delete(SESSION_COOKIE_NAME)
+    return response
   }
 }

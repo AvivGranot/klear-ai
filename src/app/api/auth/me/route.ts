@@ -3,13 +3,23 @@
  * Returns current authenticated user and tenant info
  */
 
-import { NextResponse } from 'next/server'
-import { getCurrentUser } from '@/lib/auth'
+import { NextRequest, NextResponse } from 'next/server'
+import { validateSession } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
-export async function GET() {
+const SESSION_COOKIE_NAME = 'klear_session'
+
+export async function GET(request: NextRequest) {
   try {
-    const user = await getCurrentUser()
+    const token = request.cookies.get(SESSION_COOKIE_NAME)?.value
+    if (!token) {
+      return NextResponse.json(
+        { error: 'Not authenticated' },
+        { status: 401 }
+      )
+    }
+
+    const user = await validateSession(token)
 
     if (!user) {
       return NextResponse.json(
