@@ -58,14 +58,14 @@ async function main() {
 
   console.log('✅ Created subscription for', jolika.name)
 
-  // Create admin user
-  const adminPassword = hashPassword('admin123')
+  // Create admin user (single internal login)
+  const adminPassword = hashPassword('12345678')
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@jolika.co.il' },
+    where: { email: 'hello@klear.ai' },
     update: {},
     create: {
-      email: 'admin@jolika.co.il',
-      name: 'מנהל ג\'וליקה',
+      email: 'hello@klear.ai',
+      name: 'Klear Admin',
       passwordHash: adminPassword,
       role: 'owner',
       companyId: jolika.id,
@@ -74,23 +74,6 @@ async function main() {
   })
 
   console.log('✅ Created admin user:', admin.email)
-
-  // Create manager user
-  const managerPassword = hashPassword('manager123')
-  const manager = await prisma.user.upsert({
-    where: { email: 'manager@jolika.co.il' },
-    update: {},
-    create: {
-      email: 'manager@jolika.co.il',
-      name: 'שלי',
-      passwordHash: managerPassword,
-      role: 'manager',
-      companyId: jolika.id,
-      emailVerified: new Date(),
-    },
-  })
-
-  console.log('✅ Created manager user:', manager.email)
 
   // Create categories
   const categories = [
@@ -156,60 +139,12 @@ async function main() {
 
   console.log('✅ Created knowledge items')
 
-  // Create a demo company for testing
-  const demoCompany = await prisma.company.upsert({
-    where: { slug: 'demo-company' },
-    update: {},
-    create: {
-      name: 'Demo Company',
-      slug: 'demo-company',
-      industry: 'technology',
-      primaryColor: '#3B82F6',
-      welcomeMessage: 'Hello! I\'m the Demo Company AI assistant. How can I help you today?',
-      botName: 'Demo AI',
-      timezone: 'UTC',
-      language: 'en',
-    },
-  })
-
-  // Create trial subscription for demo
-  await prisma.subscription.upsert({
-    where: { companyId: demoCompany.id },
-    update: {},
-    create: {
-      companyId: demoCompany.id,
-      plan: 'STARTER',
-      status: 'TRIAL',
-      maxUsers: 10,
-      maxKnowledgeItems: 100,
-      maxQueriesPerMonth: 1000,
-      trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days
-    },
-  })
-
-  const demoPassword = hashPassword('demo123')
-  await prisma.user.upsert({
-    where: { email: 'demo@example.com' },
-    update: {},
-    create: {
-      email: 'demo@example.com',
-      name: 'Demo User',
-      passwordHash: demoPassword,
-      role: 'owner',
-      companyId: demoCompany.id,
-      emailVerified: new Date(),
-    },
-  })
-
-  console.log('✅ Created demo company')
-
   console.log('')
   console.log('🎉 Seeding complete!')
   console.log('')
   console.log('📝 Login credentials:')
-  console.log('   Jolika Admin: admin@jolika.co.il / admin123')
-  console.log('   Jolika Manager: manager@jolika.co.il / manager123')
-  console.log('   Demo User: demo@example.com / demo123')
+  console.log('   Email: hello@klear.ai')
+  console.log('   Password: 12345678')
 }
 
 main()
