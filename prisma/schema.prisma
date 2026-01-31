@@ -7,10 +7,9 @@ generator client {
 }
 
 datasource db {
-  // SQLite for local dev, PostgreSQL for production (Render)
-  // For production deployment: change provider to "postgresql"
-  // Render will use DATABASE_URL from render.yaml
-  provider = "sqlite"
+  // Use PostgreSQL for both local (via Neon/Supabase free tier) and production
+  // This ensures consistent behavior across environments
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
