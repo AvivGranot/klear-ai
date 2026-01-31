@@ -323,7 +323,10 @@ async function main() {
     company = await prisma.company.create({
       data: {
         name: 'תחנת דלק אמיר בני ברק',
+        slug: 'amir-bnei-brak',
         industry: 'gas_station',
+        botName: 'בוט אמיר',
+        welcomeMessage: 'שלום! איך אוכל לעזור?',
       },
     });
   }

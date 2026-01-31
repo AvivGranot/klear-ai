@@ -1,5 +1,5 @@
 import OpenAI from 'openai'
-import prisma from './db'
+import prisma from './prisma'
 
 // Lazy initialization to avoid build-time errors
 let openai: OpenAI | null = null

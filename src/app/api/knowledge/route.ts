@@ -75,7 +75,7 @@ let indexKnowledgeItem: any = null
 async function initDB() {
   if (prisma !== null) return prisma
   try {
-    const db = await import("@/lib/db")
+    const db = await import("@/lib/prisma")
     prisma = db.default
     const ai = await import("@/lib/ai")
     indexKnowledgeItem = ai.indexKnowledgeItem

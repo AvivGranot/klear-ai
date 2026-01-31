@@ -1,5 +1,6 @@
-// Klear AI Database Schema
-// AI-powered internal knowledge assistant for SMB retail chains
+// Klear AI Multi-Tenant SaaS Database Schema
+// AI-powered internal knowledge assistant for businesses
+// Designed by Boris Cherny principles: Type-safe, scalable, isolated
 
 generator client {
   provider = "prisma-client-js"
@@ -10,274 +11,478 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Company/Organization (multi-tenant support)
+// ==================== SUBSCRIPTION & BILLING ====================
+
+model Subscription {
+  id                 String             @id @default(uuid())
+  companyId          String             @unique
+  company            Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  // Plan Details
+  plan               String             @default("STARTER") // STARTER, GROWTH, BUSINESS, ENTERPRISE
+  status             String             @default("TRIAL")   // TRIAL, ACTIVE, PAST_DUE, CANCELED, PAUSED
+
+  // Limits based on plan
+  maxUsers           Int                @default(10)
+  maxKnowledgeItems  Int                @default(100)
+  maxQueriesPerMonth Int                @default(1000)
+
+  // Current Usage
+  currentUsers       Int                @default(0)
+  currentKnowledge   Int                @default(0)
+  queriesThisMonth   Int                @default(0)
+  usageResetAt       DateTime?
+
+  // Stripe Billing
+  stripeCustomerId   String?
+  stripeSubId        String?
+  stripePriceId      String?
+
+  // Trial & Dates
+  trialEndsAt        DateTime?
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  canceledAt         DateTime?
+
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+}
+
+// ==================== COMPANY (TENANT) ====================
+
 model Company {
-  id          String   @id @default(uuid())
-  name        String
-  industry    String?  // gas_station, coffee_shop, fashion, bakery
-  logo        String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id               String            @id @default(uuid())
+
+  // Identity
+  name             String
+  slug             String            @unique // URL-safe: "jolika-chocolate"
+  industry         String?
+  logo             String?
+
+  // Branding
+  primaryColor     String            @default("#25D366")
+  welcomeMessage   String?
+  botName          String            @default("Klear AI")
+
+  // Settings
+  timezone         String            @default("Asia/Jerusalem")
+  language         String            @default("he")
 
   // Relations
-  users          User[]
-  knowledgeItems KnowledgeItem[]
-  conversations  Conversation[]
-  categories     Category[]
+  subscription     Subscription?
+  users            User[]
+  knowledgeItems   KnowledgeItem[]
+  categories       Category[]
+  conversations    Conversation[]
+  escalations      Escalation[]
   whatsappSessions WhatsAppSession[]
-  escalations    Escalation[]
+  whatsappConfig   WhatsAppConfig?
+  queryLogs        QueryLog[]
+
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@index([slug])
 }
 
-// Users (both managers and employees)
+model WhatsAppConfig {
+  id              String   @id @default(uuid())
+  companyId       String   @unique
+  company         Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  // WhatsApp Business API
+  phoneNumber     String?
+  phoneNumberId   String?
+  businessId      String?
+  accessToken     String?
+
+  // Webhook
+  webhookVerifyToken String?
+
+  // Status
+  isActive        Boolean  @default(false)
+  verifiedAt      DateTime?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// ==================== USERS & AUTH ====================
+
 model User {
-  id          String   @id @default(uuid())
-  phone       String   @unique
-  name        String
-  role        String   @default("employee") // employee, manager, admin
-  avatarUrl   String?
-  companyId   String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String    @id @default(uuid())
+
+  // Authentication
+  email         String?   @unique
+  phone         String?
+  passwordHash  String?
+
+  // Profile
+  name          String
+  avatarUrl     String?
+
+  // Authorization
+  role          String    @default("employee") // employee, manager, admin, owner
+  companyId     String
+  company       Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  // Status
+  isActive      Boolean   @default(true)
+  emailVerified DateTime?
+  lastLoginAt   DateTime?
+  lastActiveAt  DateTime?
 
   // Relations
-  company       Company        @relation(fields: [companyId], references: [id])
-  conversations Conversation[]
-  messages      Message[]
-  corrections   AnswerCorrection[]
-  whatsappSessions WhatsAppSession[]
+  sessions           Session[]
+  conversations      Conversation[]
+  corrections        AnswerCorrection[]
+  messages           Message[]
+  whatsappSessions   WhatsAppSession[]
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([phone, companyId])
+  @@index([companyId, role])
+  @@index([email])
 }
 
-// Knowledge Base Categories
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Token
+  token        String   @unique
+
+  // Context
+  userAgent    String?
+  ipAddress    String?
+  deviceType   String?  // web, mobile, whatsapp
+
+  // Validity
+  expiresAt    DateTime
+  lastUsedAt   DateTime @default(now())
+  createdAt    DateTime @default(now())
+
+  @@index([token])
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model MagicLink {
+  id        String   @id @default(uuid())
+  email     String
+  token     String   @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([token])
+  @@index([email])
+}
+
+// ==================== KNOWLEDGE BASE ====================
+
 model Category {
-  id          String   @id @default(uuid())
+  id          String     @id @default(uuid())
   name        String
-  nameHe      String?  // Hebrew name
+  nameHe      String?
   description String?
   icon        String?
+  color       String?
+  order       Int        @default(0)
+
   companyId   String
+  company     Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  // Hierarchical
   parentId    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  parent      Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryHierarchy")
 
   // Relations
-  company        Company         @relation(fields: [companyId], references: [id])
-  parent         Category?       @relation("CategoryHierarchy", fields: [parentId], references: [id])
-  children       Category[]      @relation("CategoryHierarchy")
   knowledgeItems KnowledgeItem[]
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@unique([name, companyId])
+  @@index([companyId])
 }
 
-// Knowledge Base Items (procedures, policies, how-to guides)
 model KnowledgeItem {
-  id          String   @id @default(uuid())
-  title       String
-  titleHe     String?  // Hebrew title
-  content     String   // Main text content
-  contentHe   String?  // Hebrew content
-  type        String   @default("document") // document, procedure, policy, faq
-  categoryId  String?
-  companyId   String
+  id          String    @id @default(uuid())
 
-  // For RAG/AI retrieval
-  embedding   String?  // JSON array of embeddings
+  // Content
+  title       String
+  titleHe     String?
+  content     String
+  contentHe   String?
+
+  // Classification
+  type        String    @default("faq") // faq, document, procedure, policy, announcement
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id])
+  tags        String?   // JSON array of tags
+
+  // AI
+  embedding   String?   // JSON array for vector search
+  keywords    String?   // Extracted keywords
 
   // Metadata
-  tags        String?  // JSON array of tags
-  priority    Int      @default(0)
-  isActive    Boolean  @default(true)
-  viewCount   Int      @default(0)
+  priority    Int       @default(0)
+  frequency   Int       @default(0) // How often referenced
+  isActive    Boolean   @default(true)
+  viewCount   Int       @default(0)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  // Company scope
+  companyId   String
+  company     Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
   // Relations
-  company     Company      @relation(fields: [companyId], references: [id])
-  category    Category?    @relation(fields: [categoryId], references: [id])
-  media       MediaItem[]
   usedInMessages Message[]
-  escalations Escalation[]
+  media          MediaItem[]
+  escalations    Escalation[]
+
+  // Source tracking
+  sourceType  String?   // manual, import, learned
+  sourceUrl   String?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([companyId, isActive])
+  @@index([companyId, type])
+  @@index([categoryId])
 }
 
-// Media Items (videos, images, PDFs)
 model MediaItem {
-  id              String   @id @default(uuid())
+  id              String        @id @default(uuid())
+  knowledgeItemId String?
+  knowledgeItem   KnowledgeItem? @relation(fields: [knowledgeItemId], references: [id], onDelete: Cascade)
+  companyId       String
+
   filename        String
   originalName    String
   mimeType        String
   size            Int
-  url             String   // Local path or cloud URL
+  url             String
   thumbnailUrl    String?
-  duration        Int?     // For videos (in seconds)
-  knowledgeItemId String?
-  companyId       String
-  createdAt       DateTime @default(now())
+  duration        Int?          // For video/audio
 
-  // Relations
-  knowledgeItem   KnowledgeItem? @relation(fields: [knowledgeItemId], references: [id])
+  createdAt       DateTime      @default(now())
+
+  @@index([knowledgeItemId])
 }
 
-// Conversations (chat sessions)
+// ==================== CONVERSATIONS & MESSAGES ====================
+
 model Conversation {
   id          String   @id @default(uuid())
-  userId      String
   companyId   String
-  status      String   @default("active") // active, resolved, pending_review
-  rating      Int?     // 1-5 satisfaction rating
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  // User (nullable for anonymous web chat)
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+
+  // Status
+  status      String   @default("active") // active, resolved, pending_review, escalated
+
+  // Feedback
+  rating      Int?     // 1-5 satisfaction
+  feedback    String?
+
+  // Source
+  channel     String   @default("web") // web, whatsapp, api
+
+  // Relations
+  messages    Message[]
+
+  resolvedAt  DateTime?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  // Relations
-  user        User      @relation(fields: [userId], references: [id])
-  company     Company   @relation(fields: [companyId], references: [id])
-  messages    Message[]
+  @@index([companyId, status])
+  @@index([userId])
+  @@index([createdAt])
 }
 
-// Chat Messages
 model Message {
-  id              String   @id @default(uuid())
+  id              String        @id @default(uuid())
   conversationId  String
-  senderId        String?  // null for bot messages
+  conversation    Conversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  senderId        String?
+  sender          User?         @relation(fields: [senderId], references: [id])
+
+  // Content
   content         String
-  contentHe       String?  // Hebrew content if applicable
-  role            String   // user, assistant, system
+  contentHe       String?
+  role            String        // user, assistant, system
 
-  // For AI responses
-  knowledgeItemId String?  // Source knowledge item used
-  confidence      Float?   // AI confidence score
+  // AI Response Metadata
+  knowledgeItemId String?
+  knowledgeItem   KnowledgeItem? @relation(fields: [knowledgeItemId], references: [id])
+  confidence      Float?
+  responseTimeMs  Int?
 
-  // Media attachments
-  mediaUrls       String?  // JSON array of media URLs
+  // Media
+  mediaUrls       String?       // JSON array
 
-  // Metadata
-  isEdited        Boolean  @default(false)
+  // Editing
+  isEdited        Boolean       @default(false)
   editedAt        DateTime?
 
-  createdAt       DateTime @default(now())
-
-  // Relations
-  conversation    Conversation    @relation(fields: [conversationId], references: [id])
-  sender          User?           @relation(fields: [senderId], references: [id])
-  knowledgeItem   KnowledgeItem?  @relation(fields: [knowledgeItemId], references: [id])
+  // Corrections
   corrections     AnswerCorrection[]
+
+  createdAt       DateTime      @default(now())
+
+  @@index([conversationId])
+  @@index([createdAt])
 }
 
-// Answer Corrections by Managers
 model AnswerCorrection {
   id              String   @id @default(uuid())
   messageId       String
+  message         Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
   managerId       String
+  manager         User     @relation(fields: [managerId], references: [id])
+
   originalContent String
   correctedContent String
   reason          String?
 
-  // Should this correction be learned?
+  // Learning
   shouldLearn     Boolean  @default(true)
+  appliedAt       DateTime?
 
   createdAt       DateTime @default(now())
 
-  // Relations
-  message         Message  @relation(fields: [messageId], references: [id])
-  manager         User     @relation(fields: [managerId], references: [id])
+  @@index([messageId])
+  @@index([managerId])
 }
 
-// Analytics / Usage Tracking
-model QueryLog {
-  id          String   @id @default(uuid())
-  companyId   String
-  query       String
-  response    String?
-  wasHelpful  Boolean?
-  responseTime Int?    // in milliseconds
-  createdAt   DateTime @default(now())
-}
+// ==================== WHATSAPP SESSIONS ====================
 
-// WhatsApp Session - tracks onboarding state and role for 1:1 chats
 model WhatsAppSession {
-  id              String    @id @default(uuid())
-  phoneNumber     String
-  companyId       String
+  id             String    @id @default(uuid())
+  phoneNumber    String
 
-  // Onboarding state
-  onboardingStep  String    @default("intro") // intro, role_select, complete
-  userRole        String?   // employee | manager (null until selected)
+  companyId      String
+  company        Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
-  // Link to User record (after verification)
-  userId          String?
-  userName        String?   // Name they provided
+  userId         String?
+  user           User?     @relation(fields: [userId], references: [id])
 
-  // State
-  isActive        Boolean   @default(true)
-  lastMessageAt   DateTime?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  // Onboarding
+  onboardingStep String    @default("intro") // intro, role_select, name_input, complete
+  userRole       String?   // employee, manager
+  userName       String?
+
+  // Status
+  isActive       Boolean   @default(true)
+  lastMessageAt  DateTime  @default(now())
 
   // Relations
-  company         Company   @relation(fields: [companyId], references: [id])
-  user            User?     @relation(fields: [userId], references: [id])
-  messages        BotMessage[]
+  messages               BotMessage[]
+  pendingEscalations     Escalation[] @relation("EmployeeEscalations")
+  handledEscalations     Escalation[] @relation("ManagerEscalations")
 
-  // For employees - pending escalations
-  pendingEscalations Escalation[] @relation("EmployeeEscalations")
-
-  // For managers - escalations they handle
-  handledEscalations Escalation[] @relation("ManagerEscalations")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
   @@unique([phoneNumber, companyId])
+  @@index([companyId, isActive])
   @@index([companyId, userRole])
 }
 
-// Bot Messages - all messages in WhatsApp sessions
 model BotMessage {
-  id              String    @id @default(uuid())
-  sessionId       String
-  direction       String    // inbound | outbound
-  content         String
-  mediaUrls       String?   // JSON array of media URLs
-  messageType     String    @default("text") // text, image, video, audio, document
+  id          String          @id @default(uuid())
+  sessionId   String
+  session     WhatsAppSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 
-  // WhatsApp message ID for tracking
-  waMessageId     String?
+  direction   String          // inbound, outbound
+  content     String
+  mediaUrls   String?         // JSON array
+  messageType String          @default("text")
+  waMessageId String?         // WhatsApp message ID
 
-  createdAt       DateTime  @default(now())
+  createdAt   DateTime        @default(now())
 
-  // Relations
-  session         WhatsAppSession @relation(fields: [sessionId], references: [id])
-
-  @@index([sessionId, createdAt])
+  @@index([sessionId])
+  @@index([createdAt])
 }
 
-// Escalation - links employee question to manager response
+// ==================== ESCALATIONS ====================
+
 model Escalation {
-  id              String    @id @default(uuid())
-  companyId       String
+  id                   String            @id @default(uuid())
+  companyId            String
+  company              Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
-  // Employee side
-  employeeSessionId String
-  employeeQuery     String    // The original question
-  employeeMessageId String?   // Reference to the BotMessage
+  // Employee Side
+  employeeSessionId    String
+  employeeSession      WhatsAppSession   @relation("EmployeeEscalations", fields: [employeeSessionId], references: [id])
+  employeeQuery        String
+  employeeMessageId    String?
 
-  // Manager side
-  managerSessionId  String?   // Which manager is handling
-  managerResponse   String?   // Manager's answer
-  managerMediaUrls  String?   // JSON array of media URLs
+  // Manager Side
+  managerSessionId     String?
+  managerSession       WhatsAppSession?  @relation("ManagerEscalations", fields: [managerSessionId], references: [id])
+  managerResponse      String?
+  managerMediaUrls     String?           // JSON array
 
   // Status
-  status          String    @default("pending") // pending, in_progress, resolved
+  status               String            @default("pending") // pending, in_progress, resolved, canceled
+  priority             Int               @default(0)
 
-  // Timing
-  createdAt       DateTime  @default(now())
-  assignedAt      DateTime? // When manager received it
-  resolvedAt      DateTime?
+  // Learning
+  shouldAddToKB        Boolean           @default(true)
+  knowledgeItemId      String?
+  knowledgeItem        KnowledgeItem?    @relation(fields: [knowledgeItemId], references: [id])
 
-  // Knowledge enrichment
-  shouldAddToKB   Boolean   @default(true)
-  knowledgeItemId String?   // If added to KB
-
-  // Relations
-  company         Company   @relation(fields: [companyId], references: [id])
-  employeeSession WhatsAppSession @relation("EmployeeEscalations", fields: [employeeSessionId], references: [id])
-  managerSession  WhatsAppSession? @relation("ManagerEscalations", fields: [managerSessionId], references: [id])
-  knowledgeItem   KnowledgeItem? @relation(fields: [knowledgeItemId], references: [id])
+  // Timestamps
+  createdAt            DateTime          @default(now())
+  assignedAt           DateTime?
+  resolvedAt           DateTime?
+  updatedAt            DateTime          @updatedAt
 
   @@index([companyId, status])
+  @@index([employeeSessionId])
   @@index([managerSessionId, status])
+}
+
+// ==================== ANALYTICS ====================
+
+model QueryLog {
+  id            String   @id @default(uuid())
+  companyId     String
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  // Query
+  query         String
+  queryEmbedding String? // JSON array
+
+  // Response
+  response      String?
+  confidence    Float?
+  responseTime  Int?     // in milliseconds
+
+  // Feedback
+  wasHelpful    Boolean?
+  feedbackText  String?
+
+  // Source
+  channel       String   @default("web") // web, whatsapp, api
+  userId        String?
+  sessionId     String?
+
+  createdAt     DateTime @default(now())
+
+  @@index([companyId, createdAt])
+  @@index([companyId, wasHelpful])
 }

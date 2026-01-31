@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { TenantProvider, useTenant } from "@/providers/TenantProvider"
 import {
   LayoutDashboard,
   MessageSquare,
@@ -19,6 +20,7 @@ import {
   Bell,
   ChevronDown,
   Sparkles,
+  CreditCard,
 } from "lucide-react"
 
 const navigation = [
@@ -28,16 +30,24 @@ const navigation = [
   { name: "שיחות", href: "/dashboard/conversations", icon: MessageSquare },
   { name: "משתמשים", href: "/dashboard/users", icon: Users },
   { name: "הגדרות", href: "/dashboard/settings", icon: Settings },
+  { name: "מנוי וחיוב", href: "/dashboard/billing", icon: CreditCard },
 ]
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+function DashboardContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const { company, user, subscription, logout, isLoading } = useTenant()
 
-  const company = {
+  // Default values for backwards compatibility
+  const companyData = company || {
     name: "ג'וליקה שוקולד",
-    id: "jolika-chocolate"
+    slug: "jolika-chocolate"
+  }
+
+  const userData = user || {
+    name: "מנהל",
+    email: null
   }
 
   return (
@@ -104,7 +114,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {/* Bottom section */}
           <div className="p-4 border-t border-gray-100 space-y-3">
             <Link
-              href={`/chat/${company.id}`}
+              href={`/chat/${companyData.slug}`}
               target="_blank"
               className="flex items-center justify-center gap-2 w-full py-3 bg-[#25D366] text-white rounded-lg font-medium hover:bg-[#128C7E] transition-colors"
             >
@@ -112,12 +122,30 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <ExternalLink className="w-4 h-4" />
             </Link>
 
+            {/* Subscription status */}
+            {subscription && (
+              <div className={cn(
+                "px-3 py-2 rounded-lg text-xs",
+                subscription.status === 'TRIAL' ? "bg-amber-50 text-amber-700" :
+                subscription.status === 'ACTIVE' ? "bg-green-50 text-green-700" :
+                "bg-red-50 text-red-700"
+              )}>
+                {subscription.status === 'TRIAL' && '🎁 תקופת ניסיון'}
+                {subscription.status === 'ACTIVE' && `✓ מנוי ${subscription.plan}`}
+                {subscription.status === 'PAST_DUE' && '⚠️ תשלום נדרש'}
+                {subscription.status === 'CANCELED' && '❌ מנוי בוטל'}
+              </div>
+            )}
+
             <button className="flex items-center gap-3 w-full px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
               <HelpCircle className="w-4 h-4" />
               עזרה ותמיכה
             </button>
 
-            <button className="flex items-center gap-3 w-full px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+            <button
+              onClick={logout}
+              className="flex items-center gap-3 w-full px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            >
               <LogOut className="w-4 h-4" />
               התנתק
             </button>
@@ -165,9 +193,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                  <span className="text-sm font-medium text-gray-700">מ</span>
+                  <span className="text-sm font-medium text-gray-700">{userData.name.charAt(0)}</span>
                 </div>
-                <span className="hidden sm:block text-sm font-medium text-gray-700">מנהל</span>
+                <span className="hidden sm:block text-sm font-medium text-gray-700">{userData.name}</span>
                 <ChevronDown className="w-4 h-4 text-gray-400" />
               </button>
 
@@ -179,8 +207,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   />
                   <div className="absolute left-0 top-full mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-20">
                     <div className="px-3 py-2 border-b border-gray-100">
-                      <p className="text-sm font-medium text-gray-900">מנהל</p>
-                      <p className="text-xs text-gray-500">{company.name}</p>
+                      <p className="text-sm font-medium text-gray-900">{userData.name}</p>
+                      <p className="text-xs text-gray-500">{companyData.name}</p>
                     </div>
                     <Link
                       href="/dashboard/settings"
@@ -189,7 +217,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     >
                       הגדרות חשבון
                     </Link>
-                    <button className="w-full text-right px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                    <button
+                      onClick={logout}
+                      className="w-full text-right px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    >
                       התנתק
                     </button>
                   </div>
@@ -205,5 +236,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </main>
       </div>
     </div>
+  )
+}
+
+// Main layout wrapper with TenantProvider
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <TenantProvider>
+      <DashboardContent>{children}</DashboardContent>
+    </TenantProvider>
   )
 }

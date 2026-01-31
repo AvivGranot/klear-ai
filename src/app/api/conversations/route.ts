@@ -79,7 +79,7 @@ let prisma: any = null
 async function initDB() {
   if (prisma !== null) return prisma
   try {
-    const db = await import("@/lib/db")
+    const db = await import("@/lib/prisma")
     prisma = db.default
     await prisma.$connect()
     return prisma

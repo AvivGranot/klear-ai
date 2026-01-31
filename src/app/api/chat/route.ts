@@ -2,14 +2,14 @@ import { NextRequest, NextResponse } from "next/server"
 import { generateResponseStatic } from "@/lib/ai-static"
 
 // Try to import prisma, but handle if it fails
-let prisma: typeof import("@/lib/db").default | null = null
+let prisma: typeof import("@/lib/prisma").default | null = null
 let generateResponse: typeof import("@/lib/ai").generateResponse | null = null
 
 // Lazy load database dependencies
 async function loadDbDependencies() {
   if (prisma === null) {
     try {
-      const dbModule = await import("@/lib/db")
+      const dbModule = await import("@/lib/prisma")
       prisma = dbModule.default
       const aiModule = await import("@/lib/ai")
       generateResponse = aiModule.generateResponse
