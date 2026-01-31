@@ -5,12 +5,34 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { authenticateWithPassword, createSession } from '@/lib/auth'
+import {
+  checkRateLimit,
+  rateLimitHeaders,
+  getClientIdentifier,
+  getRateLimitKey,
+  RateLimits,
+} from '@/lib/rate-limit'
 
 const SESSION_COOKIE_NAME = 'klear_session'
 const SESSION_EXPIRY_DAYS = 30
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting - prevent brute force attacks
+    const clientId = getClientIdentifier(request)
+    const rateLimitKey = getRateLimitKey(clientId, 'auth-login')
+    const rateLimitResult = checkRateLimit(rateLimitKey, RateLimits.auth)
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { error: 'Too many login attempts. Please try again later.', retryAfter: rateLimitResult.retryAfter },
+        {
+          status: 429,
+          headers: rateLimitHeaders(rateLimitResult),
+        }
+      )
+    }
+
     const body = await request.json()
     const { email, password } = body
 

@@ -4,15 +4,13 @@
  */
 
 import { PrismaClient } from '@prisma/client'
-import crypto from 'crypto'
+import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient()
 
-// Password hashing function (same as in auth/index.ts)
-function hashPassword(password: string): string {
-  const salt = crypto.randomBytes(16).toString('hex')
-  const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex')
-  return `${salt}:${hash}`
+// Password hashing function using bcrypt (12 rounds)
+async function hashPassword(password: string): Promise<string> {
+  return bcrypt.hash(password, 12)
 }
 
 async function main() {
@@ -59,7 +57,7 @@ async function main() {
   console.log('✅ Created subscription for', jolika.name)
 
   // Create admin user (single internal login)
-  const adminPassword = hashPassword('12345678')
+  const adminPassword = await hashPassword('12345678')
   const admin = await prisma.user.upsert({
     where: { email: 'hello@klear.ai' },
     update: {},

@@ -7,6 +7,10 @@
 import { prisma } from '@/lib/prisma'
 import { cookies } from 'next/headers'
 import crypto from 'crypto'
+import bcrypt from 'bcrypt'
+
+// bcrypt cost factor - 12 is recommended for production (2^12 = 4096 iterations)
+const BCRYPT_ROUNDS = 12
 
 // ==================== TYPES ====================
 
@@ -39,16 +43,29 @@ const MAGIC_LINK_EXPIRY_MINUTES = 15
 
 // ==================== PASSWORD HASHING ====================
 
+/**
+ * Hash a password using bcrypt
+ * Uses 12 rounds (2^12 = 4096 iterations) - secure for production
+ */
 export async function hashPassword(password: string): Promise<string> {
-  const salt = crypto.randomBytes(16).toString('hex')
-  const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex')
-  return `${salt}:${hash}`
+  return bcrypt.hash(password, BCRYPT_ROUNDS)
 }
 
+/**
+ * Verify a password against a stored hash
+ * Supports both bcrypt (new) and legacy PBKDF2 hashes (for migration)
+ */
 export async function verifyPassword(password: string, storedHash: string): Promise<boolean> {
-  const [salt, hash] = storedHash.split(':')
-  const verifyHash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex')
-  return hash === verifyHash
+  // Check if this is a legacy PBKDF2 hash (contains colon separator)
+  if (storedHash.includes(':')) {
+    // Legacy PBKDF2 verification
+    const [salt, hash] = storedHash.split(':')
+    const verifyHash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex')
+    return hash === verifyHash
+  }
+
+  // Modern bcrypt verification
+  return bcrypt.compare(password, storedHash)
 }
 
 // ==================== TOKEN GENERATION ====================

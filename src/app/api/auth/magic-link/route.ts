@@ -6,9 +6,31 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createMagicLink } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import {
+  checkRateLimit,
+  rateLimitHeaders,
+  getClientIdentifier,
+  getRateLimitKey,
+  RateLimits,
+} from '@/lib/rate-limit'
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting - prevent abuse
+    const clientId = getClientIdentifier(request)
+    const rateLimitKey = getRateLimitKey(clientId, 'auth-magic-link')
+    const rateLimitResult = checkRateLimit(rateLimitKey, RateLimits.auth)
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.', retryAfter: rateLimitResult.retryAfter },
+        {
+          status: 429,
+          headers: rateLimitHeaders(rateLimitResult),
+        }
+      )
+    }
+
     const body = await request.json()
     const { email } = body
 

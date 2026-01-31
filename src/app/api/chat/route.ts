@@ -1,5 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
 import { generateResponseStatic } from "@/lib/ai-static"
+import {
+  checkRateLimit,
+  rateLimitHeaders,
+  getClientIdentifier,
+  getRateLimitKey,
+  RateLimits,
+} from "@/lib/rate-limit"
 
 // Try to import prisma, but handle if it fails
 let prisma: typeof import("@/lib/prisma").default | null = null
@@ -24,6 +31,21 @@ async function loadDbDependencies() {
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting - critical for protecting OpenAI costs
+    const clientId = getClientIdentifier(request)
+    const rateLimitKey = getRateLimitKey(clientId, 'chat')
+    const rateLimitResult = checkRateLimit(rateLimitKey, RateLimits.chat)
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please slow down.", retryAfter: rateLimitResult.retryAfter },
+        {
+          status: 429,
+          headers: rateLimitHeaders(rateLimitResult),
+        }
+      )
+    }
+
     const body = await request.json()
     const { message, companyId, userId, conversationId, conversationHistory: clientHistory } = body
 

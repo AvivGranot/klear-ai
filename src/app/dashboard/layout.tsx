@@ -4,7 +4,6 @@ import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { TenantProvider, useTenant } from "@/providers/TenantProvider"
 import {
   LayoutDashboard,
   MessageSquare,
@@ -13,14 +12,12 @@ import {
   Users,
   Menu,
   X,
-  LogOut,
   ExternalLink,
   HelpCircle,
   Search,
   Bell,
   ChevronDown,
   Sparkles,
-  CreditCard,
 } from "lucide-react"
 
 const navigation = [
@@ -30,25 +27,23 @@ const navigation = [
   { name: "שיחות", href: "/dashboard/conversations", icon: MessageSquare },
   { name: "משתמשים", href: "/dashboard/users", icon: Users },
   { name: "הגדרות", href: "/dashboard/settings", icon: Settings },
-  { name: "מנוי וחיוב", href: "/dashboard/billing", icon: CreditCard },
 ]
 
-function DashboardContent({ children }: { children: React.ReactNode }) {
+// MVP: Hardcoded company data - no auth required
+const companyData = {
+  name: "ג'וליקה שוקולד",
+  slug: "jolika-chocolate"
+}
+
+const userData = {
+  name: "מנהל",
+  email: "hello@klear.ai"
+}
+
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
-  const { company, user, subscription, logout, isLoading } = useTenant()
-
-  // Default values for backwards compatibility
-  const companyData = company || {
-    name: "ג'וליקה שוקולד",
-    slug: "jolika-chocolate"
-  }
-
-  const userData = user || {
-    name: "מנהל",
-    email: null
-  }
 
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
@@ -122,32 +117,9 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
               <ExternalLink className="w-4 h-4" />
             </Link>
 
-            {/* Subscription status */}
-            {subscription && (
-              <div className={cn(
-                "px-3 py-2 rounded-lg text-xs",
-                subscription.status === 'TRIAL' ? "bg-amber-50 text-amber-700" :
-                subscription.status === 'ACTIVE' ? "bg-green-50 text-green-700" :
-                "bg-red-50 text-red-700"
-              )}>
-                {subscription.status === 'TRIAL' && '🎁 תקופת ניסיון'}
-                {subscription.status === 'ACTIVE' && `✓ מנוי ${subscription.plan}`}
-                {subscription.status === 'PAST_DUE' && '⚠️ תשלום נדרש'}
-                {subscription.status === 'CANCELED' && '❌ מנוי בוטל'}
-              </div>
-            )}
-
             <button className="flex items-center gap-3 w-full px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
               <HelpCircle className="w-4 h-4" />
               עזרה ותמיכה
-            </button>
-
-            <button
-              onClick={logout}
-              className="flex items-center gap-3 w-full px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <LogOut className="w-4 h-4" />
-              התנתק
             </button>
           </div>
         </div>
@@ -217,12 +189,6 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
                     >
                       הגדרות חשבון
                     </Link>
-                    <button
-                      onClick={logout}
-                      className="w-full text-right px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                    >
-                      התנתק
-                    </button>
                   </div>
                 </>
               )}
@@ -236,14 +202,5 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
         </main>
       </div>
     </div>
-  )
-}
-
-// Main layout wrapper with TenantProvider
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <TenantProvider>
-      <DashboardContent>{children}</DashboardContent>
-    </TenantProvider>
   )
 }
