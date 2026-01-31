@@ -96,7 +96,7 @@ async function main() {
 
   console.log('✅ Created categories')
 
-  // Create some knowledge items
+  // Create some knowledge items (using upsert to avoid duplicates on re-runs)
   const knowledgeItems = [
     {
       title: 'שעות פעילות החנות',
@@ -125,17 +125,25 @@ async function main() {
     },
   ]
 
-  for (const item of knowledgeItems) {
-    await prisma.knowledgeItem.create({
-      data: {
-        ...item,
-        companyId: jolika.id,
-        isActive: true,
-      },
-    })
-  }
+  // Check if knowledge items already exist for this company
+  const existingItems = await prisma.knowledgeItem.count({
+    where: { companyId: jolika.id }
+  })
 
-  console.log('✅ Created knowledge items')
+  if (existingItems === 0) {
+    for (const item of knowledgeItems) {
+      await prisma.knowledgeItem.create({
+        data: {
+          ...item,
+          companyId: jolika.id,
+          isActive: true,
+        },
+      })
+    }
+    console.log('✅ Created knowledge items')
+  } else {
+    console.log('⏭️ Knowledge items already exist, skipping')
+  }
 
   console.log('')
   console.log('🎉 Seeding complete!')

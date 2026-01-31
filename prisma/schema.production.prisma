@@ -1,16 +1,13 @@
 // Klear AI Multi-Tenant SaaS Database Schema
 // AI-powered internal knowledge assistant for businesses
-// Designed by Boris Cherny principles: Type-safe, scalable, isolated
+// PRODUCTION VERSION - Uses PostgreSQL
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  // SQLite for local dev, PostgreSQL for production (Render)
-  // For production deployment: change provider to "postgresql"
-  // Render will use DATABASE_URL from render.yaml
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
